@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="SmartInbox is one fast inbox for links, notes and ideas. Drop anything in — AI files it into the right group, so you find it in seconds.">
+<title>SmartInbox — Save everything. Find it in seconds.</title>
+<style>
+  :root {
+    --bg: #131129;
+    --panel: #1e1b4b;
+    --panel-soft: #232052;
+    --line: #34306b;
+    --indigo: #6366f1;
+    --indigo-bright: #818cf8;
+    --text: #eef0ff;
+    --text-dim: #a3a6cc;
+    --pink: #ec4899;
+    --amber: #f59e0b;
+    --cyan: #06b6d4;
+    --emerald: #10b981;
+    --purple: #a855f7;
+    --yellow: #eab308;
+    --sky: #0ea5e9;
+    --green: #22c55e;
+    --red: #ef4444;
+    --teal: #14b8a6;
+    --violet: #8b5cf6;
+    --font-display: "Avenir Next", Futura, "Century Gothic", ui-sans-serif, system-ui, sans-serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, ui-sans-serif, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---- nav ---- */
+  header {
+    position: sticky; top: 0; z-index: 10;
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid color-mix(in srgb, var(--line) 60%, transparent);
+  }
+  .nav { display: flex; align-items: center; gap: 28px; height: 64px; }
+  .nav .brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 700; font-size: 19px; text-decoration: none; margin-right: auto; }
+  .nav .brand svg { display: block; border-radius: 7px; }
+  .nav a.link { text-decoration: none; color: var(--text-dim); font-size: 15px; }
+  .nav a.link:hover { color: var(--text); }
+  .btn {
+    display: inline-block; text-decoration: none; font-family: var(--font-display);
+    font-weight: 600; font-size: 15px; padding: 10px 20px; border-radius: 999px;
+    background: var(--indigo); color: #fff; border: 1px solid transparent;
+    transition: background .15s;
+  }
+  .btn:hover { background: var(--indigo-bright); }
+  .btn:focus-visible, a:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; }
+
+  /* ---- hero ---- */
+  .hero {
+    padding: 84px 0 96px;
+    background:
+      radial-gradient(900px 480px at 12% -10%, color-mix(in srgb, #4f46e5 26%, transparent), transparent 70%),
+      radial-gradient(700px 420px at 95% 8%, color-mix(in srgb, var(--purple) 13%, transparent), transparent 70%);
+  }
+  .hero .wrap { display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; }
+  .eyebrow {
+    font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--indigo-bright); margin-bottom: 20px;
+  }
+  h1 {
+    font-family: var(--font-display); font-weight: 700; font-size: clamp(38px, 5.2vw, 58px);
+    line-height: 1.06; letter-spacing: -0.015em; text-wrap: balance; margin-bottom: 22px;
+  }
+  h1 .find { color: var(--indigo-bright); }
+  .hero p.sub { color: var(--text-dim); font-size: 19px; max-width: 30em; margin-bottom: 34px; }
+  .stores { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .store-badge {
+    display: flex; flex-direction: column; text-decoration: none; line-height: 1.25;
+    border: 1px solid var(--line); border-radius: 14px; padding: 9px 22px;
+    background: color-mix(in srgb, var(--panel) 55%, transparent);
+    transition: border-color .15s, background .15s;
+  }
+  .store-badge:hover { border-color: var(--indigo); background: var(--panel); }
+  .store-badge small { font-size: 11.5px; color: var(--text-dim); }
+  .store-badge strong { font-family: var(--font-display); font-size: 17px; font-weight: 700; }
+  .stores .web-link { font-size: 15px; color: var(--indigo-bright); text-decoration: none; margin-left: 6px; }
+  .stores .web-link:hover { text-decoration: underline; }
+
+  /* ---- demo card ---- */
+  .demo {
+    background: linear-gradient(160deg, var(--panel) 0%, #191640 100%);
+    border: 1px solid var(--line); border-radius: 22px; padding: 22px;
+    box-shadow: 0 26px 70px -30px rgba(0,0,0,.75);
+  }
+  .demo-input {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--bg); border: 1px solid var(--line); border-radius: 14px;
+    padding: 13px 16px; font-family: var(--font-mono); font-size: 13.5px; color: var(--text);
+    min-height: 48px;
+  }
+  .demo-input .caret {
+    width: 2px; height: 17px; background: var(--indigo-bright); flex: none;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+  .demo-input .add {
+    margin-left: auto; flex: none; width: 30px; height: 30px; border-radius: 999px;
+    background: var(--indigo); color: #fff; display: grid; place-items: center;
+    font-size: 18px; font-family: var(--font-body);
+  }
+  .demo-saved {
+    display: flex; align-items: center; gap: 8px; min-height: 34px;
+    margin: 12px 2px 14px; font-size: 14px; color: var(--text-dim);
+    opacity: 0; transition: opacity .3s;
+  }
+  .demo-saved.show { opacity: 1; }
+  .demo-saved .dot { width: 10px; height: 10px; border-radius: 999px; flex: none; }
+  .demo-saved b { color: var(--text); font-weight: 600; }
+  .demo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .cell {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--panel-soft); border: 1px solid transparent; border-radius: 14px;
+    padding: 12px 14px; font-size: 14.5px; font-weight: 500;
+    transition: border-color .3s, transform .3s;
+  }
+  .cell .dot { width: 11px; height: 11px; border-radius: 999px; flex: none; }
+  .cell .count {
+    margin-left: auto; font-family: var(--font-mono); font-size: 12px;
+    color: var(--text-dim); font-variant-numeric: tabular-nums;
+  }
+  .cell.hit { border-color: var(--cell-color, var(--indigo)); transform: scale(1.04); }
+
+  /* ---- sections ---- */
+  section { padding: 88px 0; }
+  section.alt { background: color-mix(in srgb, var(--panel) 32%, var(--bg)); }
+  .kicker {
+    font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--indigo-bright); margin-bottom: 14px;
+  }
+  h2 {
+    font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.6vw, 38px);
+    letter-spacing: -0.01em; line-height: 1.15; text-wrap: balance; margin-bottom: 14px;
+  }
+  .lede { color: var(--text-dim); max-width: 38em; margin-bottom: 48px; }
+
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; counter-reset: step; }
+  .step {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 26px 24px;
+  }
+  .step h3 {
+    display: flex; align-items: center; gap: 12px;
+    font-family: var(--font-display); font-size: 19px; font-weight: 700; margin-bottom: 10px;
+  }
+  .step h3::before {
+    counter-increment: step; content: counter(step);
+    flex: none; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 999px;
+    background: color-mix(in srgb, var(--indigo) 22%, transparent); color: var(--indigo-bright);
+    font-family: var(--font-mono); font-size: 14px; font-weight: 400;
+  }
+  .step p { color: var(--text-dim); font-size: 15.5px; }
+
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .feature { border-top: 2px solid var(--f-color, var(--indigo)); padding: 20px 4px 0; }
+  .feature h3 { font-family: var(--font-display); font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  .feature p { color: var(--text-dim); font-size: 15.5px; }
+
+  .cloud { display: flex; flex-wrap: wrap; gap: 10px; max-width: 860px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 7px 15px; border-radius: 999px; font-size: 14.5px; font-weight: 500;
+    background: color-mix(in srgb, var(--c) 16%, transparent);
+    border: 1px solid color-mix(in srgb, var(--c) 34%, transparent);
+  }
+  .chip::before { content: ""; width: 8px; height: 8px; border-radius: 999px; background: var(--c); }
+  .chip.more { --c: var(--indigo); color: var(--text-dim); }
+
+  .cta { text-align: center; }
+  .cta h2 { margin-bottom: 10px; }
+  .cta .lede { margin: 0 auto 36px; }
+  .cta .stores { justify-content: center; }
+
+  footer { border-top: 1px solid var(--line); padding: 34px 0; }
+  footer .wrap { display: flex; align-items: center; gap: 14px; color: var(--text-dim); font-size: 14px; }
+  footer .spacer { margin-left: auto; }
+
+  @media (max-width: 880px) {
+    .hero { padding: 56px 0 72px; }
+    .hero .wrap { grid-template-columns: 1fr; gap: 44px; }
+    .steps, .features { grid-template-columns: 1fr; }
+    .nav a.link { display: none; }
+    section { padding: 64px 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .demo-input .caret { animation: none; }
+    .cell.hit { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#">
+      <svg width="28" height="28" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="SmartInbox logo">
+        <defs>
+          <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#4F46E5"/><stop offset="1" stop-color="#1E1B4B"/>
+          </linearGradient>
+          <clipPath id="lc"><rect width="512" height="512" rx="114"/></clipPath>
+        </defs>
+        <rect width="512" height="512" rx="114" fill="url(#lg)"/>
+        <g clip-path="url(#lc)">
+          <rect x="134" y="107" width="132" height="86" rx="18" fill="#EC4899" transform="rotate(-16 200 150)"/>
+          <rect x="264" y="95" width="132" height="86" rx="18" fill="#F59E0B" transform="rotate(12 330 138)"/>
+          <rect x="196" y="147" width="132" height="86" rx="18" fill="#06B6D4" transform="rotate(-4 262 190)"/>
+          <path d="M256 250 l0 34 m-17 -17 l17 17 l17 -17" stroke="#FFF" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity=".92"/>
+          <rect x="111" y="312" width="290" height="46" rx="23" fill="#10B981"/>
+          <rect x="111" y="372" width="290" height="46" rx="23" fill="#6366F1"/>
+          <rect x="111" y="432" width="290" height="46" rx="23" fill="#A855F7"/>
+        </g>
+      </svg>
+      SmartInbox
+    </a>
+    <a class="link" href="#how">How it works</a>
+    <a class="link" href="#features">Features</a>
+    <a class="btn" href="#get">Get the app</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">AI-sorted inbox for notes &amp; links</p>
+      <h1>Save everything. <span class="find">Find it in seconds.</span></h1>
+      <p class="sub">SmartInbox is one fast inbox for links, notes and ideas. Drop anything in — AI files it into the right group, so you never dig through a graveyard of saves again.</p>
+      <div class="stores">
+        <a class="store-badge" href="#get"><small>Download on the</small><strong>App Store</strong></a>
+        <a class="store-badge" href="#get"><small>Get it on</small><strong>Google Play</strong></a>
+        <a class="web-link" href="#get">or try the web app →</a>
+      </div>
+    </div>
+    <div class="demo" aria-label="Demo: a saved note is filed into a group automatically">
+      <div class="demo-input"><span id="typed"></span><span class="caret"></span><span class="add" aria-hidden="true">+</span></div>
+      <div class="demo-saved" id="saved"><span class="dot" id="saved-dot"></span><span>Saved to <b id="saved-group"></b> · Change group</span></div>
+      <div class="demo-grid" id="grid"></div>
+    </div>
+  </div>
+</div>
+
+<section id="how">
+  <div class="wrap">
+    <p class="kicker">How it works</p>
+    <h2>You add. AI organizes. You find.</h2>
+    <p class="lede">No folders to create, no tags to manage, no cleanup day. The sorting you always postpone is the part that happens on its own.</p>
+    <div class="steps">
+      <div class="step">
+        <h3>Drop it in</h3>
+        <p>Paste text, or share straight from YouTube, TikTok, Instagram or your browser — SmartInbox lives in your share sheet.</p>
+      </div>
+      <div class="step">
+        <h3>AI files it</h3>
+        <p>SmartInbox reads what it is and puts it in the right group: Travel, Cooking, Wish list, Movies, Health — 30+ groups, zero setup.</p>
+      </div>
+      <div class="step">
+        <h3>Find it fast</h3>
+        <p>One colorful dashboard with rich link previews. Open the group, and it's exactly where you'd expect it to be.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="features">
+  <div class="wrap">
+    <p class="kicker">Features</p>
+    <h2>Built for the two seconds you're willing to spend</h2>
+    <p class="lede">Saving something should cost nothing. Finding it should cost even less.</p>
+    <div class="features">
+      <div class="feature" style="--f-color: var(--pink)">
+        <h3>Share-sheet saving</h3>
+        <p>SmartInbox sits in the system share menu on Android and iOS. Two taps and it's saved — you never leave the app you're in.</p>
+      </div>
+      <div class="feature" style="--f-color: var(--amber)">
+        <h3>30+ smart groups</h3>
+        <p>AI picks the group the moment you save. Disagree? Change it with one tap — right from the confirmation.</p>
+      </div>
+      <div class="feature" style="--f-color: var(--cyan)">
+        <h3>Link previews</h3>
+        <p>Saved links keep their thumbnail and title — a YouTube frame, a product shot, an article cover — so you recognize them at a glance.</p>
+      </div>
+      <div class="feature" style="--f-color: var(--emerald)">
+        <h3>Saves in the background</h3>
+        <p>Switch away mid-save — the item still lands safely in its group. Nothing gets lost between apps.</p>
+      </div>
+      <div class="feature" style="--f-color: var(--purple)">
+        <h3>Everywhere you are</h3>
+        <p>Android, iOS and the web. Save on your phone, find it on your laptop.</p>
+      </div>
+      <div class="feature" style="--f-color: var(--sky)">
+        <h3>Yours to look at</h3>
+        <p>Light and dark themes. English, Ukrainian, Russian, Spanish, French and German.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">Groups</p>
+    <h2>A place for everything you'd ever save</h2>
+    <p class="lede">These groups already exist the moment you install — no empty-notebook anxiety, no taxonomy homework.</p>
+    <div class="cloud">
+      <span class="chip" style="--c:#ec4899">Wish list</span>
+      <span class="chip" style="--c:#f59e0b">Shopping</span>
+      <span class="chip" style="--c:#0ea5e9">Travel</span>
+      <span class="chip" style="--c:#eab308">Cooking</span>
+      <span class="chip" style="--c:#ef4444">Health</span>
+      <span class="chip" style="--c:#22c55e">Sport</span>
+      <span class="chip" style="--c:#a855f7">Movies</span>
+      <span class="chip" style="--c:#b45309">Books</span>
+      <span class="chip" style="--c:#8b5cf6">Music</span>
+      <span class="chip" style="--c:#14b8a6">Inspiration</span>
+      <span class="chip" style="--c:#0d9488">Ideas</span>
+      <span class="chip" style="--c:#6366f1">Work</span>
+      <span class="chip" style="--c:#84cc16">Tasks</span>
+      <span class="chip" style="--c:#06b6d4">Education</span>
+      <span class="chip" style="--c:#10b981">Finance</span>
+      <span class="chip" style="--c:#3b82f6">Tech</span>
+      <span class="chip" style="--c:#f97316">Family</span>
+      <span class="chip" style="--c:#ea580c">Home</span>
+      <span class="chip" style="--c:#d946ef">Beauty</span>
+      <span class="chip" style="--c:#f43f5e">Personal</span>
+      <span class="chip more">…and a dozen more</span>
+    </div>
+  </div>
+</section>
+
+<section class="alt cta" id="get">
+  <div class="wrap">
+    <p class="kicker">Get SmartInbox</p>
+    <h2>Your future self will find it.</h2>
+    <p class="lede">Coming soon to the App Store and Google Play. The web app works in any modern browser.</p>
+    <div class="stores">
+      <a class="store-badge" href="#get"><small>Download on the</small><strong>App Store</strong></a>
+      <a class="store-badge" href="#get"><small>Get it on</small><strong>Google Play</strong></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 SmartInbox</span>
+    <span class="spacer"></span>
+    <span>Android · iOS · Web</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var groups = [
+    { name: "Cooking",   color: "#eab308", count: 12 },
+    { name: "Travel",    color: "#0ea5e9", count: 8 },
+    { name: "Wish list", color: "#ec4899", count: 15 },
+    { name: "Sport",     color: "#22c55e", count: 5 },
+    { name: "Movies",    color: "#a855f7", count: 9 },
+    { name: "Ideas",     color: "#14b8a6", count: 21 },
+    { name: "Finance",   color: "#10b981", count: 4 },
+    { name: "Books",     color: "#b45309", count: 7 },
+  ];
+  var items = [
+    { text: "youtube.com/best-carbonara-recipe", group: "Cooking" },
+    { text: "3-day itinerary for Lisbon", group: "Travel" },
+    { text: "Wireless headphones for dad", group: "Wish list" },
+    { text: "Stretching routine after running", group: "Sport" },
+  ];
+
+  var grid = document.getElementById("grid");
+  var typed = document.getElementById("typed");
+  var saved = document.getElementById("saved");
+  var savedDot = document.getElementById("saved-dot");
+  var savedGroup = document.getElementById("saved-group");
+  var cells = {};
+
+  groups.forEach(function (g) {
+    var cell = document.createElement("div");
+    cell.className = "cell";
+    cell.style.setProperty("--cell-color", g.color);
+    cell.innerHTML = '<span class="dot" style="background:' + g.color + '"></span>' +
+      "<span>" + g.name + "</span>" + '<span class="count">' + g.count + "</span>";
+    grid.appendChild(cell);
+    cells[g.name] = { el: cell, base: g.count, count: g.count };
+  });
+
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduceMotion) {
+    typed.textContent = items[0].text;
+    show(items[0]);
+    return;
+  }
+
+  var idx = 0;
+  function show(item) {
+    var g = groups.filter(function (x) { return x.name === item.group; })[0];
+    savedDot.style.background = g.color;
+    savedGroup.textContent = item.group;
+    saved.classList.add("show");
+    var c = cells[item.group];
+    c.count += 1;
+    c.el.querySelector(".count").textContent = c.count;
+    c.el.classList.add("hit");
+  }
+  function hide(item) {
+    saved.classList.remove("show");
+    cells[item.group].el.classList.remove("hit");
+  }
+  function typeNext() {
+    var item = items[idx];
+    var pos = 0;
+    typed.textContent = "";
+    var t = setInterval(function () {
+      typed.textContent = item.text.slice(0, ++pos);
+      if (pos >= item.text.length) {
+        clearInterval(t);
+        setTimeout(function () { show(item); }, 500);
+        setTimeout(function () {
+          hide(item);
+          typed.textContent = "";
+          idx = (idx + 1) % items.length;
+          if (idx === 0) {
+            groups.forEach(function (g) {
+              var cell = cells[g.name];
+              cell.count = cell.base;
+              cell.el.querySelector(".count").textContent = cell.base;
+            });
+          }
+          setTimeout(typeNext, 700);
+        }, 3200);
+      }
+    }, 45);
+  }
+  setTimeout(typeNext, 800);
+})();
+</script>
+
+</body>
+</html>
