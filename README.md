@@ -1,7 +1,8 @@
 # SmartInboxWeb
 
-Marketing landing page for [SmartInbox](../SmartInbox) — a fast, AI-sorted
-inbox for notes and links (Android, iOS, Web).
+Marketing landing page for [Assorta](../SmartInbox) — a fast, AI-sorted
+inbox for notes and links (Android, iOS, Web). (The app is being renamed
+from SmartInbox to Assorta; the repo/folder names still use the old name.)
 
 The page is a single self-contained `index.html`: no build step, no external
 assets, inline CSS/JS, brand colors and logo taken from `SmartInbox/brand/`.
