@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Assorta privacy policy — what we collect, how AI classification works, and your choices.">
+<meta name="robots" content="index, follow">
+<title>Privacy Policy — Assorta</title>
+<style>
+  :root {
+    --bg: #131129;
+    --panel: #1e1b4b;
+    --panel-soft: #232052;
+    --line: #34306b;
+    --indigo: #6366f1;
+    --indigo-bright: #818cf8;
+    --text: #eef0ff;
+    --text-dim: #a3a6cc;
+    --pink: #ec4899;
+    --font-display: "Avenir Next", Futura, "Century Gothic", ui-sans-serif, system-ui, sans-serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, ui-sans-serif, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--indigo-bright); }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---- nav ---- */
+  header {
+    position: sticky; top: 0; z-index: 10;
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid color-mix(in srgb, var(--line) 60%, transparent);
+  }
+  .nav { display: flex; align-items: center; gap: 28px; height: 64px; max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+  .nav .brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 700; font-size: 19px; text-decoration: none; color: var(--text); margin-right: auto; }
+  .nav .brand svg { display: block; border-radius: 7px; }
+  .nav a.link { text-decoration: none; color: var(--text-dim); font-size: 15px; }
+  .nav a.link:hover { color: var(--text); text-decoration: none; }
+
+  /* ---- doc ---- */
+  .doc { padding: 64px 0 40px; }
+  .eyebrow {
+    font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--indigo-bright); margin-bottom: 16px;
+  }
+  h1 {
+    font-family: var(--font-display); font-weight: 700; font-size: clamp(32px, 5vw, 44px);
+    line-height: 1.1; letter-spacing: -0.015em; margin-bottom: 12px;
+  }
+  .updated { color: var(--text-dim); font-size: 15px; margin-bottom: 40px; }
+  .doc h2 {
+    font-family: var(--font-display); font-weight: 700; font-size: 24px;
+    letter-spacing: -0.01em; margin: 44px 0 12px; scroll-margin-top: 80px;
+  }
+  .doc h3 { font-family: var(--font-display); font-weight: 700; font-size: 18px; margin: 24px 0 8px; }
+  .doc p { color: var(--text); margin-bottom: 14px; }
+  .doc p.dim { color: var(--text-dim); }
+  .doc ul { margin: 0 0 16px 22px; }
+  .doc li { margin-bottom: 8px; }
+  .doc strong { font-weight: 700; }
+  .callout {
+    background: color-mix(in srgb, var(--indigo) 12%, var(--panel));
+    border: 1px solid color-mix(in srgb, var(--indigo) 34%, transparent);
+    border-radius: 14px; padding: 16px 18px; margin: 24px 0; font-size: 15.5px; color: var(--text-dim);
+  }
+  .toc {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 16px;
+    padding: 20px 24px; margin-bottom: 40px;
+  }
+  .toc strong { display: block; font-family: var(--font-display); margin-bottom: 10px; }
+  .toc ol { margin-left: 18px; color: var(--text-dim); columns: 2; column-gap: 32px; }
+  .toc a { text-decoration: none; }
+
+  footer { border-top: 1px solid var(--line); padding: 34px 0; margin-top: 48px; }
+  footer .wrap { display: flex; align-items: center; gap: 14px; color: var(--text-dim); font-size: 14px; max-width: 1060px; }
+  footer .spacer { margin-left: auto; }
+  footer a { color: var(--text-dim); text-decoration: none; }
+  footer a:hover { color: var(--text); }
+
+  @media (max-width: 620px) {
+    .toc ol { columns: 1; }
+    .nav a.link { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a class="brand" href="index.html">
+      <svg width="28" height="28" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Assorta logo">
+        <defs>
+          <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#4F46E5"/><stop offset="1" stop-color="#1E1B4B"/>
+          </linearGradient>
+        </defs>
+        <rect width="512" height="512" rx="114" fill="url(#lg)"/>
+        <g transform="translate(256,256) scale(1.25) translate(-256,-262)">
+          <path d="M256 140 L360 384" fill="none" stroke="#FFFFFF" stroke-width="46" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="201" y="181" width="50" height="50" rx="14" transform="rotate(-18 226 206)" fill="#FFFFFF"/>
+          <rect x="173" y="247" width="50" height="50" rx="14" transform="rotate(12 198 272)" fill="#FFFFFF"/>
+          <rect x="143" y="311" width="54" height="54" rx="15" transform="rotate(-14 170 338)" fill="#FFFFFF"/>
+          <rect x="196" y="300" width="150" height="40" rx="20" fill="#FB2576"/>
+        </g>
+      </svg>
+      Assorta
+    </a>
+    <a class="link" href="index.html">Home</a>
+    <a class="link" href="index.html#get">Get the app</a>
+  </div>
+</header>
+
+<main class="doc">
+  <div class="wrap">
+    <div class="eyebrow">Legal</div>
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated: July 16, 2026</p>
+
+    <p>This Privacy Policy explains how <strong>Assorta</strong> ("Assorta", "we", "us")
+      collects, uses, and shares information when you use the Assorta app and website
+      (the "Service"). Assorta is a fast inbox for notes, links, and ideas that uses AI to
+      sort what you add into groups.</p>
+
+    <div class="callout">
+      In short: your items are stored to run the app, the text you add is sent to our AI
+      provider to decide which group it belongs to, and we use standard services (Google
+      Firebase, RevenueCat) for accounts, crash reports, and subscriptions. We do not sell
+      your data.
+    </div>
+
+    <div class="toc">
+      <strong>Contents</strong>
+      <ol>
+        <li><a href="#collect">Information we collect</a></li>
+        <li><a href="#ai">AI classification</a></li>
+        <li><a href="#use">How we use information</a></li>
+        <li><a href="#share">Third parties &amp; sharing</a></li>
+        <li><a href="#storage">Storage &amp; retention</a></li>
+        <li><a href="#rights">Your rights &amp; choices</a></li>
+        <li><a href="#deletion">Deleting your data</a></li>
+        <li><a href="#children">Children</a></li>
+        <li><a href="#security">Security</a></li>
+        <li><a href="#transfers">International transfers</a></li>
+        <li><a href="#changes">Changes</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ol>
+    </div>
+
+    <h2 id="collect">1. Information we collect</h2>
+
+    <h3>Account information</h3>
+    <p>When you create an account we use <strong>Firebase Authentication</strong> (Google).
+      If you sign up with email and password, we store your email address. If you sign in with
+      Google, we receive your basic Google profile (name, email address, and profile picture).
+      Passwords are handled by Firebase and are never stored by us in readable form.</p>
+
+    <h3>Content you add</h3>
+    <p>Assorta stores the <strong>notes, links, and text you add</strong> so it can show them
+      back to you, grouped by topic. If an item contains a link, our AI provider may open and
+      read that web page to classify it by its content (see
+      <a href="#ai">AI classification</a>).</p>
+
+    <h3>Usage and device data</h3>
+    <p>We use <strong>Firebase Analytics</strong> to understand how the app is used
+      (screens viewed, features used, session information) together with device and app data
+      such as device model, operating system version, app version, language, and an
+      app-instance identifier. We use <strong>Firebase Crashlytics</strong> to collect crash
+      reports and diagnostic data (including device state at the time of a crash) so we can
+      fix problems.</p>
+
+    <h3>Subscription and purchase data</h3>
+    <p>Subscriptions are handled through the <strong>Apple App Store</strong> and
+      <strong>Google Play</strong>, with <strong>RevenueCat</strong> managing entitlements on
+      our behalf. We receive your subscription status and a purchase identifier. We never
+      receive or store your full payment card details — those stay with Apple and Google.</p>
+
+    <h2 id="ai">2. AI classification</h2>
+    <p>To sort your items automatically, the text of an item you add is sent to our backend and
+      then to <strong>Google's Gemini API</strong> (Google AI), which returns a suggested group
+      such as "cooking", "travel", or "wish list". When an item contains a URL, the AI's
+      web-reading tool may fetch that page so it can classify the link by its topic rather than
+      just tagging it as a link.</p>
+    <p class="dim">This means the text you add, and the content of links you save, are processed
+      by Google as our AI sub-processor. Please avoid adding highly sensitive information (for
+      example passwords, government IDs, or financial account numbers) as note text.</p>
+
+    <h2 id="use">3. How we use information</h2>
+    <ul>
+      <li>To provide the Service — store your items and classify them into groups.</li>
+      <li>To create and secure your account and keep you signed in.</li>
+      <li>To process and restore subscriptions and Pro features.</li>
+      <li>To diagnose crashes, fix bugs, and improve reliability and features.</li>
+      <li>To respond to your support requests.</li>
+      <li>To comply with legal obligations and protect against abuse.</li>
+    </ul>
+
+    <h2 id="share">4. Third parties &amp; sharing</h2>
+    <p>We do not sell your personal data. We share data only with service providers that help us
+      run the Service, each acting on our behalf:</p>
+    <ul>
+      <li><strong>Google Firebase</strong> (Authentication, Analytics, Crashlytics) — accounts, usage analytics, crash diagnostics.</li>
+      <li><strong>Google Gemini API</strong> — AI classification of the text and links you add.</li>
+      <li><strong>RevenueCat</strong> — subscription management.</li>
+      <li><strong>Apple App Store / Google Play</strong> — app distribution and payment processing.</li>
+    </ul>
+    <p>We may also disclose information if required by law, to enforce our terms, or to protect
+      the rights, safety, and security of our users and the Service.</p>
+
+    <h2 id="storage">5. Storage &amp; retention</h2>
+    <p>Your items are stored primarily <strong>on your device</strong>. Account and diagnostic
+      data are held by Firebase (Google) for as long as your account is active. We keep personal
+      data only as long as needed to provide the Service or as required by law. When you delete
+      your account, we delete or anonymize the personal data associated with it, except where we
+      must retain it for legal reasons.</p>
+
+    <h2 id="rights">6. Your rights &amp; choices</h2>
+    <p>Depending on where you live (for example under the EU/UK GDPR or the California CCPA),
+      you may have the right to access, correct, export, or delete your personal data, and to
+      object to or restrict certain processing. You can exercise these rights by contacting us
+      (see <a href="#contact">Contact</a>). You can also disable analytics collection through
+      your device settings where your platform offers that control.</p>
+
+    <h2 id="deletion">7. Deleting your data</h2>
+    <p>You can delete your account and its associated data from within the app, or by emailing us
+      at the address below and we will process your request. Deleting the app from your device
+      removes the items stored locally on that device.</p>
+
+    <h2 id="children">8. Children</h2>
+    <p>Assorta is not directed to children under 13 (or under 16 in the European Economic Area),
+      and we do not knowingly collect personal data from them. If you believe a child has provided
+      us with personal data, please contact us and we will delete it.</p>
+
+    <h2 id="security">9. Security</h2>
+    <p>We use industry-standard measures — including encryption in transit and access controls on
+      our providers — to protect your information. No method of transmission or storage is
+      completely secure, so we cannot guarantee absolute security.</p>
+
+    <h2 id="transfers">10. International transfers</h2>
+    <p>Our providers (including Google and RevenueCat) may process and store data in the United
+      States and other countries. Where required, such transfers rely on appropriate safeguards
+      such as the European Commission's Standard Contractual Clauses.</p>
+
+    <h2 id="changes">11. Changes to this policy</h2>
+    <p>We may update this Privacy Policy from time to time. When we do, we will revise the
+      "Last updated" date above and, where appropriate, notify you in the app.</p>
+
+    <h2 id="contact">12. Contact</h2>
+    <p>If you have questions about this Privacy Policy or your data, contact us at
+      <a href="mailto:privacy@assorta.app">privacy@assorta.app</a>.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Assorta</span>
+    <span class="spacer"></span>
+    <a href="index.html">Home</a>
+    <span>·</span>
+    <a href="privacy.html">Privacy</a>
+  </div>
+</footer>
+
+</body>
+</html>
