@@ -101,6 +101,17 @@
     border: 1px solid var(--line); border-radius: 22px; padding: 22px;
     box-shadow: 0 26px 70px -30px rgba(0,0,0,.75);
   }
+  .demo-head { display: flex; align-items: center; margin: 2px 4px 16px; }
+  .demo-head .title { font-family: var(--font-display); font-weight: 700; font-size: 21px; letter-spacing: -0.01em; }
+  .demo-head .gear { margin-left: auto; color: var(--text-dim); display: grid; place-items: center; }
+  .demo-pill {
+    display: inline-flex; align-items: center; gap: 7px;
+    margin: 14px 2px 4px; padding: 6px 13px; border-radius: 999px;
+    font-size: 13px; font-weight: 600; color: var(--indigo-bright);
+    background: color-mix(in srgb, var(--indigo) 15%, transparent);
+    border: 1px solid color-mix(in srgb, var(--indigo) 34%, transparent);
+  }
+  .demo-pill .spark { color: var(--indigo-bright); font-size: 12px; }
   .demo-input {
     display: flex; align-items: center; gap: 10px;
     background: var(--bg); border: 1px solid var(--line); border-radius: 14px;
@@ -128,16 +139,22 @@
   .demo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .cell {
     display: flex; align-items: center; gap: 10px;
-    background: var(--panel-soft); border: 1px solid transparent; border-radius: 14px;
-    padding: 12px 14px; font-size: 14.5px; font-weight: 500;
-    transition: border-color .3s, transform .3s;
+    background: color-mix(in srgb, var(--cell-color, var(--indigo)) 13%, var(--panel-soft));
+    border: 1px solid color-mix(in srgb, var(--cell-color, var(--indigo)) 38%, transparent);
+    border-radius: 14px;
+    padding: 12px 14px; font-size: 14.5px; font-weight: 600;
+    transition: border-color .3s, background .3s, transform .3s;
   }
   .cell .dot { width: 11px; height: 11px; border-radius: 999px; flex: none; }
   .cell .count {
     margin-left: auto; font-family: var(--font-mono); font-size: 12px;
     color: var(--text-dim); font-variant-numeric: tabular-nums;
   }
-  .cell.hit { border-color: var(--cell-color, var(--indigo)); transform: scale(1.04); }
+  .cell.hit {
+    border-color: var(--cell-color, var(--indigo));
+    background: color-mix(in srgb, var(--cell-color, var(--indigo)) 26%, var(--panel-soft));
+    transform: scale(1.04);
+  }
 
   /* ---- sections ---- */
   section { padding: 88px 0; }
@@ -204,6 +221,124 @@
     .demo-input .caret { animation: none; }
     .cell.hit { transform: none; }
   }
+
+  /* ---- screens carousel ---- */
+  .screens {
+    --indigo-700:#4F46E5; --indigo-600:#6366F1; --raspberry:#FB2576;
+    --screen-bg:#EEF0FB; --screen-bg-2:#E3E7FA; --ink:#12132E; --ink-soft:#4A4C6B;
+    --link:#4F5BD5; --paper:#F7F8FF; --thumb-radius:14px;
+    padding: 88px 0;
+    background: color-mix(in srgb, var(--panel) 32%, var(--bg));
+    overflow: hidden;
+  }
+  .screens .screens-head { margin-bottom: 34px; }
+  .screens-track {
+    display: flex; gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory;
+    padding: 8px 4px 24px; -webkit-overflow-scrolling: touch;
+  }
+  .screens-track::-webkit-scrollbar { height: 8px; }
+  .screens-track::-webkit-scrollbar-thumb { background: var(--line); border-radius: 8px; }
+  .screen-slide { scroll-snap-align: center; flex: 0 0 auto; width: 264px; }
+  .screens .phone {
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.05);
+  }
+  .screens .thumb .photo { display: block; }
+  .screens .thumb .emoji { display: none; }
+  .screens .scroll-hint { text-align: center; font-size: 13px; color: var(--text-dim); margin-top: 6px; }
+
+/* ---- Phone ---- */
+  .phone {
+    background: var(--screen-bg); border-radius: 26px; padding: 0; overflow: hidden;
+    box-shadow: 0 16px 40px -18px rgba(15,16,48,.6), 0 0 0 8px rgba(255,255,255,.06);
+    color: var(--ink); position: relative; margin: 0 auto; width: 100%;
+  }
+  .phone .statusbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 18px 6px; font-size: 12px; font-weight: 600; color: #23243f;
+  }
+  .phone .statusbar .sig { display: flex; gap: 6px; align-items: center; color: #23243f; }
+  .phone .statusbar .sig .bars { fill: currentColor; display: block; }
+  .phone .statusbar .sig .batt-n { font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .phone .statusbar .sig .batt { position: relative; width: 22px; height: 11px; border: 1.4px solid currentColor; border-radius: 3px; padding: 1.5px; opacity: .9; }
+  .phone .statusbar .sig .batt::after { content: ""; position: absolute; right: -3px; top: 3.2px; width: 2px; height: 4.5px; background: currentColor; border-radius: 0 1px 1px 0; }
+  .phone .statusbar .sig .batt i { display: block; height: 100%; width: 68%; background: currentColor; border-radius: 1px; }
+  .scr-head {
+    display: flex; align-items: center; gap: 9px; padding: 8px 16px 14px;
+  }
+  .scr-head .chev { color: var(--indigo-600); font-size: 20px; font-weight: 700; }
+  .scr-head .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .scr-head .dot.on { background: var(--dot-active); }
+  .scr-head .dot.off { background: var(--dot-idle); }
+  .scr-head .ttl { font-size: 20px; font-weight: 800; letter-spacing: -0.01em; }
+  .scr-head .cnt { font-size: 15px; color: #8A8CA6; font-weight: 600; }
+
+  .list { display: flex; flex-direction: column; gap: 11px; padding: 2px 12px 18px; }
+  .card {
+    background: #fff; border-radius: 16px; padding: 11px; display: flex; gap: 11px; align-items: center;
+    box-shadow: 0 6px 16px -12px rgba(15,16,48,.5);
+  }
+  .card.nothumb { align-items: flex-start; }
+  .thumb {
+    width: 62px; height: 62px; border-radius: var(--thumb-radius); flex: 0 0 62px;
+    display: flex; align-items: center; justify-content: center; font-size: 26px; position: relative;
+    overflow: hidden;
+  }
+  .thumb.wide { width: 74px; flex-basis: 74px; height: 50px; border-radius: 10px; }
+  .thumb .check {
+    position: absolute; top: 5px; right: 5px; width: 20px; height: 20px; border-radius: 6px;
+    background: #7CB342; color: #fff; font-size: 12px; display: flex; align-items: center; justify-content: center; z-index: 2;
+  }
+  .thumb .emoji { font-size: 26px; line-height: 1; }
+  .thumb .photo { display: none; position: absolute; inset: 0; background: #E7EAF7; }
+  .thumb .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .thumb .play {
+    position: absolute; right: 5px; bottom: 5px; width: 22px; height: 22px; border-radius: 50%;
+    background: #FB2576; align-items: center; justify-content: center; display: none; z-index: 2;
+    box-shadow: 0 2px 6px rgba(0,0,0,.35);
+  }
+  .thumb .play::after {
+    content: ""; border-style: solid; border-width: 5px 0 5px 8px;
+    border-color: transparent transparent transparent #fff; margin-left: 2px;
+  }
+  .strip.photo .thumb .emoji { display: none; }
+  .strip.photo .thumb .photo { display: block; }
+  .strip.photo .thumb .play { display: flex; }
+
+  /* ---- adding screen ---- */
+  .phone .app-head { display: flex; align-items: center; gap: 8px; padding: 10px 16px 12px; }
+  .phone .app-head .app-ttl { font-size: 21px; font-weight: 800; letter-spacing: -0.01em; color: #12132E; }
+  .phone .app-head .gear { margin-left: auto; color: #5b5d80; display: grid; place-items: center; }
+  .phone .add-input { margin: 0 14px; display: flex; align-items: center; gap: 10px; background: #fff; border: 1.5px solid #6366F1; border-radius: 16px; padding: 12px; }
+  .phone .add-input .url { flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #2b2c4a; word-break: break-all; }
+  .phone .add-input .go { flex: none; width: 36px; height: 36px; border-radius: 50%; background: #6366F1; display: grid; place-items: center; }
+  .phone .add-input .spinner { width: 17px; height: 17px; border: 2.2px solid rgba(255,255,255,.4); border-top-color: #fff; border-radius: 50%; animation: spin .8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .phone .add-pill { margin: 14px 16px 0; display: inline-flex; align-items: center; gap: 7px; width: max-content; padding: 7px 13px; border-radius: 999px; font-size: 13px; font-weight: 600; color: #6366F1; background: color-mix(in srgb, #6366F1 12%, #fff); border: 1px solid color-mix(in srgb, #6366F1 32%, transparent); }
+  .phone .add-status { margin: 14px 14px 0; background: #fff; border-radius: 16px; padding: 16px; box-shadow: 0 6px 16px -12px rgba(15,16,48,.5); }
+  .phone .add-status p { font-size: 14px; color: #2b2c4a; line-height: 1.4; margin-bottom: 13px; }
+  .phone .add-bar { height: 6px; border-radius: 999px; background: #E6E8F5; overflow: hidden; position: relative; }
+  .phone .add-bar::after { content: ""; position: absolute; top: 0; height: 100%; width: 42%; border-radius: 999px; background: #6366F1; animation: indet 1.4s ease-in-out infinite; }
+  @keyframes indet { 0% { left: -42%; } 100% { left: 100%; } }
+  .phone .add-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; padding: 14px 12px; }
+  .phone .add-tile { display: flex; align-items: center; gap: 7px; background: #fff; border-radius: 13px; padding: 11px 10px; font-weight: 700; font-size: 13px; color: #1c1d33; box-shadow: 0 6px 16px -12px rgba(15,16,48,.5); overflow: hidden; }
+  .phone .add-tile .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+  .phone .add-tile .cnt { margin-left: auto; padding-left: 4px; color: #9092b3; font-weight: 600; font-size: 12px; }
+  @media (prefers-reduced-motion: reduce) {
+    .phone .add-input .spinner { animation: none; }
+    .phone .add-bar::after { animation: none; left: 0; width: 45%; }
+  }
+  .card .meta { min-width: 0; flex: 1; }
+  .card .name { font-size: 13.5px; font-weight: 700; line-height: 1.22; color: #1c1d33; margin-bottom: 3px;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .card .dom { font-size: 12.5px; color: var(--link); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .card .kebab { color: #B9BBce; font-size: 18px; line-height: 1; align-self: center; padding: 0 2px; }
+  .card.nothumb .kebab { align-self: flex-start; margin-top: 2px; }
+
+  /* thumbs */
+  .t-shoe { background: linear-gradient(135deg,#F4F5F8,#E7E9F0); }
+  .t-jacket { background: linear-gradient(135deg,#FBEAD9,#F3D3B0); }
+  .t-yt { background: linear-gradient(135deg,#1b1b1b,#3a3a3a); color:#fff; }
+  .t-plant { background: linear-gradient(135deg,#20301f,#101b10); }
 </style>
 </head>
 <body>
@@ -230,6 +365,7 @@
     </a>
     <a class="link" href="#how">How it works</a>
     <a class="link" href="#features">Features</a>
+    <a class="link" href="#screens">Screens</a>
     <a class="btn" href="#get">Get the app</a>
   </div>
 </header>
@@ -247,12 +383,94 @@
       </div>
     </div>
     <div class="demo" aria-label="Demo: a saved note is filed into a group automatically">
+      <div class="demo-head">
+        <span class="title">Assorta</span>
+        <span class="gear" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </span>
+      </div>
       <div class="demo-input"><span id="typed"></span><span class="caret"></span><span class="add" aria-hidden="true">+</span></div>
+      <div class="demo-pill"><span class="spark" aria-hidden="true">✦</span>172 free AI sorts left</div>
       <div class="demo-saved" id="saved"><span class="dot" id="saved-dot"></span><span>Saved to <b id="saved-group"></b> · Change group</span></div>
       <div class="demo-grid" id="grid"></div>
     </div>
   </div>
 </div>
+
+<section class="screens" id="screens">
+  <div class="wrap">
+    <div class="screens-head">
+      <p class="kicker">A look inside</p>
+      <h2>Six steps through Assorta</h2>
+      <p class="lede">Paste a link, watch AI file it, then browse groups with rich previews — Sport, Auto, Shopping, Hobby and more.</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="screens-track">
+      <div class="screen-slide"><div class="phone">
+        <div class="statusbar"><span>12:06</span><span class="sig"><svg class="bars" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1" opacity=".3"/></svg><span class="batt-n">68</span><span class="batt"><i></i></span></span></div>
+        <div class="app-head"><span class="app-ttl">Assorta</span><span class="gear"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span></div>
+        <div class="add-input"><span class="url">https://sportano.ua/p/881403/kofta-trekingova-cholovicha-patagonia-r1-air-coal-orange</span><span class="go"><span class="spinner"></span></span></div>
+        <div class="add-pill"><span aria-hidden="true">✦</span>15 free AI sorts left</div>
+        <div class="add-status"><p>Reading it and figuring out where it belongs… this can take a moment.</p><div class="add-bar"></div></div>
+        <div class="add-tiles">
+          <div class="add-tile"><span class="dot" style="background:#22C55E"></span>Sport<span class="cnt">4</span></div>
+          <div class="add-tile"><span class="dot" style="background:#9CA3AF"></span>Auto<span class="cnt">5</span></div>
+          <div class="add-tile"><span class="dot" style="background:#EC4899"></span>Shopping<span class="cnt">4</span></div>
+          <div class="add-tile"><span class="dot" style="background:#A855F7"></span>Hobby<span class="cnt">4</span></div>
+        </div>
+      </div></div>
+      <div class="screen-slide"><div class="phone">
+        <div class="statusbar"><span>11:19</span><span class="sig"><svg class="bars" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1" opacity=".3"/></svg><span class="batt-n">68</span><span class="batt"><i></i></span></span></div>
+        <div class="scr-head"><span class="chev">‹</span><span class="dot on"></span><span class="ttl">Sport</span><span class="cnt">4</span></div>
+        <div class="list">
+          <div class="card"><div class="thumb t-shoe"><span class="emoji">👟</span><span class="photo"><img alt="" src="screens/img/44ef75f9e95f.png"></span></div><div class="meta"><div class="name">Women's running shoes</div><div class="dom">asics.com</div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb t-yt"><span class="emoji">🏋️</span><span class="photo"><img alt="" src="screens/img/b40eef114ecf.jpg"></span></div><div class="meta"><div class="name">The Perfect Squat | Grow your glutes</div><div class="dom">youtube.com</div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb t-jacket"><span class="emoji">🥤</span><span class="photo"><img alt="" src="screens/img/370263fb2979.webp"></span></div><div class="meta"><div class="name">Under Armour women's top</div><div class="dom">underarmour.com</div></div><span class="kebab">⋮</span></div>
+          <div class="card nothumb"><div class="meta"><div class="name">WILSON Rush Tour Men's Tennis Shoes</div><div class="dom">amazon.com</div></div><span class="kebab">⋮</span></div>
+        </div>
+      </div></div>
+      <div class="screen-slide"><div class="phone">
+        <div class="statusbar"><span>11:20</span><span class="sig"><svg class="bars" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1" opacity=".3"/></svg><span class="batt-n">68</span><span class="batt"><i></i></span></span></div>
+        <div class="scr-head"><span class="chev">‹</span><span class="dot off"></span><span class="ttl">Auto</span><span class="cnt">5</span></div>
+        <div class="list">
+          <div class="card"><div class="thumb wide t-yt"><span class="emoji">🏎️</span><span class="photo"><img alt="" src="screens/img/2a4726367cb2.jpg"></span></div><div class="meta"><div class="name">10 BEST sports cars of 2025</div><div class="dom">youtube.com</div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb wide t-yt"><span class="emoji">🚙</span><span class="photo"><img alt="" src="screens/img/49d5b14ee86e.jpg"></span></div><div class="meta"><div class="name">Lexus NX 350h vs Audi Q5, BMW X3, GLC</div><div class="dom">youtube.com</div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb wide t-yt"><span class="emoji">🛻</span><span class="photo"><img alt="" src="screens/img/3d1813ba35d4.jpg"></span></div><div class="meta"><div class="name">New Ford Bronco review: better than a Land Rover?</div><div class="dom">youtube.com</div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb wide t-yt"><span class="emoji">⚡</span><span class="photo"><img alt="" src="screens/img/105a1b6ce6f5.jpg"></span></div><div class="meta"><div class="name">BMW polishes its electric SUV flagship! 2025 iX</div><div class="dom">youtube.com</div></div><span class="kebab">⋮</span></div>
+        </div>
+      </div></div>
+      <div class="screen-slide"><div class="phone">
+        <div class="statusbar"><span>11:23</span><span class="sig"><svg class="bars" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1" opacity=".3"/></svg><span class="batt-n">68</span><span class="batt"><i></i></span></span></div>
+        <div class="scr-head"><span class="chev">‹</span><span class="dot" style="background:#EC4899"></span><span class="ttl">Shopping</span><span class="cnt">4</span></div>
+        <div class="list">
+          <div class="card"><div class="thumb t-shoe"><span class="emoji">👜</span><span class="photo"><img alt="" src="screens/img/df601f2420bf.jpg"></span></div><div class="meta"><div class="name">Leather shoulder bag, beige</div><div class="dom">zara.com</div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb t-shoe"><span class="emoji">👠</span><span class="photo"><img alt="" src="screens/img/63353b532efa.jpg"></span></div><div class="meta"><div class="name">Red pointed-toe heels</div><div class="dom">zara.com</div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb t-shoe"><span class="emoji">⌚</span><span class="photo"><img alt="" src="screens/img/ce9a2c322891.jpg"></span></div><div class="meta"><div class="name">Gold women's wristwatch</div><div class="dom">danielwellington.com</div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb t-shoe"><span class="emoji">🌸</span><span class="photo"><img alt="" style="object-position:50% 24%" src="screens/img/260ba0f97aa5.webp"></span></div><div class="meta"><div class="name">Ray-Ban sunglasses</div><div class="dom">ray-ban.com</div></div><span class="kebab">⋮</span></div>
+        </div>
+      </div></div>
+      <div class="screen-slide"><div class="phone">
+        <div class="statusbar"><span>11:26</span><span class="sig"><svg class="bars" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1" opacity=".3"/></svg><span class="batt-n">68</span><span class="batt"><i></i></span></span></div>
+        <div class="scr-head"><span class="chev">‹</span><span class="dot" style="background:#A855F7"></span><span class="ttl">Hobby</span><span class="cnt">4</span></div>
+        <div class="list">
+          <div class="card"><div class="thumb t-yt"><span class="emoji">🎸</span><span class="photo"><img alt="" src="screens/img/6afd2dc7b2d0.jpg"></span></div><div class="meta"><div class="name">Guitar lessons for beginners</div><div class="dom">youtube.com</div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb t-shoe"><span class="emoji">🎸</span><span class="photo"><img alt="" src="screens/img/ece95057c543.jpg"></span></div><div class="meta"><div class="name">Fingerstyle guitar masterclass</div><div class="dom">udemy.com</div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb t-shoe"><span class="emoji">🎸</span><span class="photo"><img alt="" src="screens/img/914af9a7678e.jpg"></span></div><div class="meta"><div class="name">Yamaha F310 acoustic guitar</div><div class="dom">thomann.de</div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb t-yt"><span class="emoji">🎸</span><span class="photo"><img alt="" src="screens/img/88f84510487b.jpg"></span></div><div class="meta"><div class="name">Learn 10 songs with 4 chords</div><div class="dom">youtube.com</div></div><span class="kebab">⋮</span></div>
+        </div>
+      </div></div>
+      <div class="screen-slide"><div class="phone">
+        <div class="statusbar"><span>11:21</span><span class="sig"><svg class="bars" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1" opacity=".3"/></svg><span class="batt-n">68</span><span class="batt"><i></i></span></span></div>
+        <div style="display:flex;align-items:center;justify-content:center;height:360px;flex-direction:column;gap:10px;color:#9092b3;padding:24px;text-align:center">
+          <div style="font-size:30px">📤</div>
+          <div style="font-size:13px;font-weight:600;line-height:1.5">Need a Share-sheet screenshot<br>(sharing a link into Assorta)</div>
+        </div>
+      </div></div>
+    </div>
+    <p class="scroll-hint">← swipe through the screens →</p>
+  </div>
+</section>
 
 <section id="how">
   <div class="wrap">
@@ -357,6 +575,8 @@
   <div class="wrap">
     <span>© 2026 Assorta</span>
     <span class="spacer"></span>
+    <a href="privacy.html" style="color:inherit;text-decoration:none">Privacy</a>
+    <span>·</span>
     <span>Android · iOS · Web</span>
   </div>
 </footer>
