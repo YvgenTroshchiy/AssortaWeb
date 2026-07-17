@@ -1,11 +1,10 @@
-# SmartInboxWeb
+# AssortaWeb
 
-Marketing landing page for [Assorta](../SmartInbox) — a fast, AI-sorted
-inbox for notes and links (Android, iOS, Web). (The app is being renamed
-from SmartInbox to Assorta; the repo/folder names still use the old name.)
+Marketing landing page for [Assorta](../AssortaKMP) — a fast, AI-sorted
+inbox for notes and links (Android, iOS, Web).
 
 The page is a single self-contained `index.html`: no build step, no external
-assets, inline CSS/JS, brand colors and logo taken from `SmartInbox/brand/`.
+assets, inline CSS/JS, brand colors and logo taken from `AssortaKMP/brand/`.
 
 ## Preview
 
@@ -24,4 +23,4 @@ python3 -m http.server 8080
 - [ ] Hook up hosting (Firebase Hosting fits the existing project setup).
 
 Store listing texts, slogans, and ASO notes live in the main repo:
-`SmartInbox/docs/marketing/aso.md`.
+`AssortaKMP/docs/marketing/aso.md`.
