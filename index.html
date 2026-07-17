@@ -63,6 +63,9 @@
   }
   .btn:hover { background: var(--indigo-bright); }
   .btn:focus-visible, a:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; }
+  .btn-lg { font-size: 16.5px; padding: 14px 28px; }
+  .hero-cta { margin-bottom: 18px; }
+  .cta-btn { margin-bottom: 26px; }
 
   /* ---- hero ---- */
   .hero {
@@ -339,6 +342,39 @@
   .t-jacket { background: linear-gradient(135deg,#FBEAD9,#F3D3B0); }
   .t-yt { background: linear-gradient(135deg,#1b1b1b,#3a3a3a); color:#fff; }
   .t-plant { background: linear-gradient(135deg,#20301f,#101b10); }
+
+  /* ---- coming-soon strip ---- */
+  .soon-strip {
+    padding: 30px 0; text-align: center;
+    background: color-mix(in srgb, var(--indigo) 9%, var(--bg));
+    border-top: 1px solid color-mix(in srgb, var(--line) 60%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--line) 60%, transparent);
+  }
+  .soon-strip p {
+    font-family: var(--font-display); font-weight: 600;
+    font-size: clamp(15.5px, 2.1vw, 19px); letter-spacing: -0.01em;
+    line-height: 1.5; color: var(--text);
+  }
+  .soon-strip .spark { color: var(--indigo-bright); margin-right: 9px; }
+  .soon-strip .dim { color: var(--text-dim); font-weight: 500; }
+
+  /* ---- coming-soon toast ---- */
+  .soon-toast {
+    position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 16px);
+    z-index: 50; pointer-events: none; opacity: 0;
+    display: inline-flex; align-items: center; gap: 9px; max-width: calc(100vw - 32px);
+    padding: 12px 20px; border-radius: 999px;
+    background: color-mix(in srgb, var(--panel) 92%, #000);
+    border: 1px solid var(--line); color: var(--text);
+    font-family: var(--font-display); font-weight: 600; font-size: 15px;
+    box-shadow: 0 20px 50px -20px rgba(0,0,0,.7);
+    transition: opacity .22s ease, transform .22s ease;
+  }
+  .soon-toast.show { opacity: 1; transform: translate(-50%, 0); }
+  .soon-toast .spark { color: var(--indigo-bright); flex: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .soon-toast { transform: translate(-50%, 0); transition: opacity .22s ease; }
+  }
 </style>
 </head>
 <body>
@@ -366,7 +402,7 @@
     <a class="link" href="#how">How it works</a>
     <a class="link" href="#features">Features</a>
     <a class="link" href="#screens">Screens</a>
-    <a class="btn" href="#get">Get the app</a>
+    <a class="btn" href="https://forms.gle/514Lhi45PJmxCVHy5" target="_blank" rel="noopener">Join the waitlist</a>
   </div>
 </header>
 
@@ -376,10 +412,11 @@
       <p class="eyebrow">AI-sorted inbox for notes &amp; links</p>
       <h1>Save everything. <span class="find">Find it in seconds.</span></h1>
       <p class="sub">Assorta is one fast inbox for links, notes and ideas. Drop anything in — AI files it into the right group, so you never dig through a graveyard of saves again.</p>
+      <a class="btn btn-lg hero-cta" href="https://forms.gle/514Lhi45PJmxCVHy5" target="_blank" rel="noopener">Join the waitlist →</a>
       <div class="stores">
-        <a class="store-badge" href="#get"><small>Download on the</small><strong>App Store</strong></a>
-        <a class="store-badge" href="#get"><small>Get it on</small><strong>Google Play</strong></a>
-        <a class="web-link" href="#get">or try the web app →</a>
+        <a class="store-badge" href="#get" data-soon="App Store"><small>Download on the</small><strong>App Store</strong></a>
+        <a class="store-badge" href="#get" data-soon="Google Play"><small>Get it on</small><strong>Google Play</strong></a>
+        <a class="web-link" href="#get" data-soon="The web app">or try the web app →</a>
       </div>
     </div>
     <div class="demo" aria-label="Demo: a saved note is filed into a group automatically">
@@ -394,6 +431,12 @@
       <div class="demo-saved" id="saved"><span class="dot" id="saved-dot"></span><span>Saved to <b id="saved-group"></b> · Change group</span></div>
       <div class="demo-grid" id="grid"></div>
     </div>
+  </div>
+</div>
+
+<div class="soon-strip">
+  <div class="wrap">
+    <p><span class="spark" aria-hidden="true">✦</span>Coming soon to the App Store, Google Play and the web.<span class="dim"> We're putting on the finishing touches.</span></p>
   </div>
 </div>
 
@@ -563,10 +606,11 @@
   <div class="wrap">
     <p class="kicker">Get Assorta</p>
     <h2>Your future self will find it.</h2>
-    <p class="lede">Coming soon to the App Store and Google Play. The web app works in any modern browser.</p>
+    <p class="lede">Coming soon to the App Store, Google Play and the web. Join the waitlist and we'll email your invite the moment it's ready.</p>
+    <a class="btn btn-lg cta-btn" href="https://forms.gle/514Lhi45PJmxCVHy5" target="_blank" rel="noopener">Join the waitlist →</a>
     <div class="stores">
-      <a class="store-badge" href="#get"><small>Download on the</small><strong>App Store</strong></a>
-      <a class="store-badge" href="#get"><small>Get it on</small><strong>Google Play</strong></a>
+      <a class="store-badge" href="#get" data-soon="App Store"><small>Download on the</small><strong>App Store</strong></a>
+      <a class="store-badge" href="#get" data-soon="Google Play"><small>Get it on</small><strong>Google Play</strong></a>
     </div>
   </div>
 </section>
@@ -595,9 +639,10 @@
   ];
   var items = [
     { text: "youtube.com/best-carbonara-recipe", group: "Cooking" },
-    { text: "3-day itinerary for Lisbon", group: "Travel" },
-    { text: "Wireless headphones for dad", group: "Wish list" },
-    { text: "Stretching routine after running", group: "Sport" },
+    { text: "youtube.com/15-min-squat-workout", group: "Sport" },
+    { text: "zara.com/oversized-wool-coat", group: "Wish list" },
+    { text: "youtube.com/dune-part-two-trailer", group: "Movies" },
+    { text: "booking.com/lisbon-old-town-loft", group: "Travel" },
   ];
 
   var grid = document.getElementById("grid");
@@ -665,6 +710,28 @@
     }, 45);
   }
   setTimeout(typeNext, 800);
+})();
+</script>
+
+<div class="soon-toast" id="soon-toast" role="status" aria-live="polite"><span class="spark" aria-hidden="true">✦</span><span id="soon-toast-msg">Coming soon</span></div>
+
+<script>
+(function () {
+  var toast = document.getElementById("soon-toast");
+  var msg = document.getElementById("soon-toast-msg");
+  var hideTimer;
+  function soon(label) {
+    msg.textContent = label ? label + " — coming soon" : "Coming soon";
+    toast.classList.add("show");
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(function () { toast.classList.remove("show"); }, 2600);
+  }
+  Array.prototype.forEach.call(document.querySelectorAll("[data-soon]"), function (el) {
+    el.addEventListener("click", function (e) {
+      e.preventDefault();
+      soon(el.getAttribute("data-soon"));
+    });
+  });
 })();
 </script>
 
