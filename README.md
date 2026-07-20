@@ -28,6 +28,15 @@ which stays dim on dark exactly as it does in the app.
 `index.html` and `privacy.html` each carry their own copy of the tokens, the
 toggle and the script — keep the two in sync when editing either.
 
+## llms.txt
+
+`llms.txt` is the Markdown summary AI agents read at `https://assorta.app/llms.txt`
+([spec](https://llmstxt.org)). It has to open with an H1 and carry Markdown links,
+or Lighthouse's Agentic Browsing audit fails it. Without the file that URL served
+`index.html` — Cloudflare answers unknown paths with the landing page — so the audit
+saw HTML with no H1 and no links. Keep its links and the pre-release wording in step
+with `index.html`.
+
 ## Preview
 
 Open `index.html` in a browser, or serve the folder:

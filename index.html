@@ -19,6 +19,10 @@
     --line: #34306b;
     --indigo: #6366f1;           /* Indigo.v600 — accentPrimary, shared by both themes */
     --indigo-bright: #818cf8;
+    /* accentPrimary is the brand hue but is too light to carry text: white on it is 4.46:1
+       and it reads 3.1-3.8:1 as a glyph on its own tint. This mirrors the app's bgAccent -
+       the fill that sits under white text. Borders, glows and tints keep --indigo. */
+    --accent-fill: #4f46e5;      /* Indigo.v700 — bgAccent */
     --text: #eef0ff;
     --text-dim: #a3a6cc;
     /* The app's own screen background, verbatim from SemanticColors
@@ -36,12 +40,15 @@
     --app-fg-faint: rgba(148,163,184,.5);     /* no app token: recessive glyphs */
     --app-link: #93a4ff;                      /* domain line, lifted to read on dark */
     --app-accent: #6366f1;                    /* accentPrimary - shared */
+    --app-accent-fill: #4f46e5;               /* bgAccent - Indigo.v700, shared */
+    --app-accent-fg: #818cf8;                 /* fgAccent - Indigo.v500 */
     --app-on-accent: #fff;                    /* fgOnAccent - shared */
     --app-card: rgba(30,41,59,.85);           /* bgCard - Gray.v900a80 */
     --app-card-ring: rgba(148,163,184,.2);    /* borderCard, drawn as a shadow so it costs no layout */
     --app-card-shadow: rgba(0,0,0,.55);
     --app-track: rgba(148,163,184,.2);        /* bgSegmentedControl */
-    --app-inset: rgba(148,163,184,.12);
+    /* Only the share-sheet URL field. Kept light enough that --app-fg-dim clears AA on it. */
+    --app-inset: rgba(148,163,184,.06);
     --app-tile: rgba(148,163,184,.14);
     --app-grab: rgba(148,163,184,.35);
     --app-img: rgba(148,163,184,.16);
@@ -87,17 +94,17 @@
     --line: #d2dae9;             /* borderCard, lifted from Gray.v500a20 to stay visible on light */
     --indigo-bright: #4f46e5;    /* Indigo.v700 — the accent that still reads on a light background */
     --text: #0f172a;             /* Gray.v950 — fgPrimary */
-    /* Kept at the app's fgSecondary on purpose. It clears AA on the app's own
-       backgrounds (#f8fafc / #eef2ff) but lands at 3.3-4.4:1 on the tinted
-       panels this site invents (.cell, .step, section.alt). Matching the app
-       won that trade-off - do not "fix" this to a darker grey. */
-    --text-dim: #64748b;         /* Gray.v600 — fgSecondary */
+    /* Still the app's fgSecondary, which moved to Gray.v700 for the same reason:
+       the old Gray.v600 (#64748b) landed at 3.4-4.4:1 on the tinted panels this
+       site invents (.cell, .step, section.alt) and on the app's own gradient end.
+       v700 clears AA everywhere, worst case 5.4:1 on the .cell tints. */
+    --text-dim: #475569;         /* Gray.v700 — fgSecondary */
     --app-grad-start: #f8fafc;   /* Gray.v50 */
     --app-grad-end:   #eef2ff;   /* Indigo.v50 */
     /* Mockup palette, light. Rows with an app token take it; the rest reproduce
        today's literal so the light mockups render byte-identically to before. */
     --app-fg: #0f172a;                        /* fgPrimary   - Gray.v950 */
-    --app-fg-dim: #64748b;                    /* fgSecondary - Gray.v600 */
+    --app-fg-dim: #475569;                    /* fgSecondary - Gray.v700 */
     --app-fg-faint: #b9bbce;
     --app-link: #4f5bd5;
     --app-card: #fff;
@@ -108,6 +115,7 @@
     --app-tile: #eef0f8;
     --app-grab: #d9dbe9;
     --app-img: #e7eaf7;
+    --app-accent-fg: #4f46e5;                 /* fgAccent - Indigo.v700 */
     --app-accent-subtle: color-mix(in srgb, #6366f1 12%, #fff);
     --app-accent-glow: rgba(79,70,229,.95);
     --app-phone-shadow: rgba(15,16,48,.6);
@@ -157,10 +165,10 @@
   .btn {
     display: inline-block; text-decoration: none; font-family: var(--font-display);
     font-weight: 600; font-size: 15px; padding: 10px 20px; border-radius: 999px;
-    background: var(--indigo); color: #fff; border: 1px solid transparent;
+    background: var(--accent-fill); color: #fff; border: 1px solid transparent;
     transition: background .15s;
   }
-  .btn:hover { background: var(--indigo-bright); }
+  .btn:hover { background: color-mix(in srgb, var(--accent-fill) 84%, #000); }
   .btn:focus-visible, a:focus-visible, .theme-btn:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; }
   /* Theme toggle: shows the icon of the theme it switches TO */
   .theme-btn {
@@ -243,7 +251,7 @@
   @keyframes blink { 50% { opacity: 0; } }
   .demo-input .add {
     margin-left: auto; flex: none; width: 30px; height: 30px; border-radius: 999px;
-    background: var(--indigo); color: #fff; display: grid; place-items: center;
+    background: var(--accent-fill); color: #fff; display: grid; place-items: center;
     font-size: 18px; font-family: var(--font-body);
   }
   .demo-saved {
@@ -433,10 +441,10 @@
   .phone .app-head .gear { margin-left: auto; color: var(--app-fg-dim); display: grid; place-items: center; }
   .phone .add-input { margin: 0 14px; display: flex; align-items: center; gap: 10px; background: var(--app-card); border: 1.5px solid var(--app-accent); border-radius: 16px; padding: 12px; }
   .phone .add-input .url { flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: var(--app-fg); word-break: break-all; }
-  .phone .add-input .go { flex: none; width: 36px; height: 36px; border-radius: 50%; background: var(--app-accent); display: grid; place-items: center; }
+  .phone .add-input .go { flex: none; width: 36px; height: 36px; border-radius: 50%; background: var(--app-accent-fill); display: grid; place-items: center; }
   .phone .add-input .spinner { width: 17px; height: 17px; border: 2.2px solid rgba(255,255,255,.4); border-top-color: #fff; border-radius: 50%; animation: spin .8s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
-  .phone .add-pill { margin: 14px 16px 0; display: inline-flex; align-items: center; gap: 7px; width: max-content; padding: 7px 13px; border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--app-accent); background: var(--app-accent-subtle); border: 1px solid color-mix(in srgb, var(--app-accent) 32%, transparent); }
+  .phone .add-pill { margin: 14px 16px 0; display: inline-flex; align-items: center; gap: 7px; width: max-content; padding: 7px 13px; border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--app-accent-fg); background: var(--app-accent-subtle); border: 1px solid color-mix(in srgb, var(--app-accent) 32%, transparent); }
   .phone .add-status { margin: 14px 14px 0; background: var(--app-card); border-radius: 16px; padding: 16px; box-shadow: 0 6px 16px -12px var(--app-card-shadow), 0 0 0 1px var(--app-card-ring); }
   .phone .add-status p { font-size: 14px; color: var(--app-fg); line-height: 1.4; margin-bottom: 13px; }
   .phone .add-bar { height: 6px; border-radius: 999px; background: var(--app-track); overflow: hidden; position: relative; }
@@ -599,6 +607,7 @@
   </div>
 </header>
 
+<main>
 <div class="hero">
   <div class="wrap">
     <div>
@@ -679,30 +688,30 @@
         <div class="statusbar"><span>11:05</span><span class="sig"><svg class="bars" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1" opacity=".3"/></svg><span class="batt-n">68</span><span class="batt"><i></i></span></span></div>
         <div class="scr-head"><span class="chev">‹</span><span class="dot" style="background:#22C55E"></span><span class="ttl">Sport</span><span class="cnt">4</span></div>
         <div class="list">
-          <div class="card"><div class="thumb t-shoe"><span class="emoji">👟</span><span class="photo"><img alt="" src="screens/img/384a2c9fe9ab.webp"></span></div><div class="meta"><div class="name">Women's running shoes</div><div class="dom">asics.com</div></div><span class="kebab">⋮</span></div>
-          <div class="card"><div class="thumb t-yt"><span class="emoji">🏋️</span><span class="photo"><img alt="" src="screens/img/b40eef114ecf.jpg"></span></div><div class="meta"><div class="name">The Perfect Squat | Grow your glutes</div><div class="dom">youtube.com</div></div><span class="kebab">⋮</span></div>
-          <div class="card"><div class="thumb t-jacket"><span class="emoji">🥤</span><span class="photo"><img alt="" src="screens/img/370263fb2979.webp"></span></div><div class="meta"><div class="name">Under Armour women's top</div><div class="dom">underarmour.com</div></div><span class="kebab">⋮</span></div>
-          <div class="card"><div class="thumb t-shoe"><span class="emoji">💍</span><span class="photo"><img alt="" src="screens/img/ab5a4be498c5.webp"></span></div><div class="meta"><div class="name">Oura Ring 4 Ceramic</div><div class="dom">ouraring.com</div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb t-shoe"><span class="emoji">👟</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/384a2c9fe9ab.webp"></span></div><div class="meta"><div class="name">Women's running shoes</div><div class="dom">asics.com</div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb t-yt"><span class="emoji">🏋️</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/b40eef114ecf.webp"></span></div><div class="meta"><div class="name">The Perfect Squat | Grow your glutes</div><div class="dom">youtube.com</div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb t-jacket"><span class="emoji">🥤</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/370263fb2979.webp"></span></div><div class="meta"><div class="name">Under Armour women's top</div><div class="dom">underarmour.com</div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb t-shoe"><span class="emoji">💍</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/ab5a4be498c5.webp"></span></div><div class="meta"><div class="name">Oura Ring 4 Ceramic</div><div class="dom">ouraring.com</div></div><span class="kebab">⋮</span></div>
         </div>
       </div></div>
       <div class="screen-slide"><div class="phone">
         <div class="statusbar"><span>11:05</span><span class="sig"><svg class="bars" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1" opacity=".3"/></svg><span class="batt-n">68</span><span class="batt"><i></i></span></span></div>
         <div class="scr-head"><span class="chev">‹</span><span class="dot" style="background:#78716C"></span><span class="ttl">Auto</span><span class="cnt">5</span></div>
         <div class="list">
-          <div class="card"><div class="thumb wide t-yt"><span class="emoji">🏎️</span><span class="photo"><img alt="" src="screens/img/2a4726367cb2.jpg"></span></div><div class="meta"><div class="name">10 BEST sports cars of 2025</div><div class="dom">youtube.com</div></div><span class="kebab">⋮</span></div>
-          <div class="card"><div class="thumb wide t-yt"><span class="emoji">🚙</span><span class="photo"><img alt="" src="screens/img/49d5b14ee86e.jpg"></span></div><div class="meta"><div class="name">Lexus NX 350h vs Audi Q5, BMW X3, GLC</div><div class="dom">youtube.com</div></div><span class="kebab">⋮</span></div>
-          <div class="card"><div class="thumb wide t-yt"><span class="emoji">🛻</span><span class="photo"><img alt="" src="screens/img/3d1813ba35d4.jpg"></span></div><div class="meta"><div class="name">New Ford Bronco review: better than a Land Rover?</div><div class="dom">youtube.com</div></div><span class="kebab">⋮</span></div>
-          <div class="card"><div class="thumb wide t-yt"><span class="emoji">⚡</span><span class="photo"><img alt="" src="screens/img/105a1b6ce6f5.jpg"></span></div><div class="meta"><div class="name">BMW polishes its electric SUV flagship! 2025 iX</div><div class="dom">youtube.com</div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb wide t-yt"><span class="emoji">🏎️</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/2a4726367cb2.webp"></span></div><div class="meta"><div class="name">10 BEST sports cars of 2025</div><div class="dom">youtube.com</div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb wide t-yt"><span class="emoji">🚙</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/49d5b14ee86e.webp"></span></div><div class="meta"><div class="name">Lexus NX 350h vs Audi Q5, BMW X3, GLC</div><div class="dom">youtube.com</div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb wide t-yt"><span class="emoji">🛻</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/3d1813ba35d4.webp"></span></div><div class="meta"><div class="name">New Ford Bronco review: better than a Land Rover?</div><div class="dom">youtube.com</div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb wide t-yt"><span class="emoji">⚡</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/105a1b6ce6f5.webp"></span></div><div class="meta"><div class="name">BMW polishes its electric SUV flagship! 2025 iX</div><div class="dom">youtube.com</div></div><span class="kebab">⋮</span></div>
         </div>
       </div></div>
       <div class="screen-slide"><div class="phone">
         <div class="statusbar"><span>11:05</span><span class="sig"><svg class="bars" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1" opacity=".3"/></svg><span class="batt-n">68</span><span class="batt"><i></i></span></span></div>
         <div class="scr-head"><span class="chev">‹</span><span class="dot" style="background:#EC4899"></span><span class="ttl">Shopping</span><span class="cnt">4</span></div>
         <div class="list">
-          <div class="card"><div class="thumb t-shoe"><span class="emoji">👜</span><span class="photo"><img alt="" src="screens/img/614fafa31128.webp"></span></div><div class="meta"><div class="name">Raffia basket tote</div><div class="dom">nordstrom.com</div></div><span class="kebab">⋮</span></div>
-          <div class="card"><div class="thumb t-shoe"><span class="emoji">👡</span><span class="photo"><img alt="" src="screens/img/b04b67749e6c.webp"></span></div><div class="meta"><div class="name">Raffia wedge sandals</div><div class="dom">ancient-greek-sandals.com</div></div><span class="kebab">⋮</span></div>
-          <div class="card"><div class="thumb t-shoe"><span class="emoji">💎</span><span class="photo"><img alt="" src="screens/img/2fcb0f17ce32.webp"></span></div><div class="meta"><div class="name">Marquise cut stud earrings</div><div class="dom">mejuri.com</div></div><span class="kebab">⋮</span></div>
-          <div class="card"><div class="thumb t-shoe"><span class="emoji">🌸</span><span class="photo"><img alt="" style="object-position:50% 24%" src="screens/img/260ba0f97aa5.webp"></span></div><div class="meta"><div class="name">Ray-Ban sunglasses</div><div class="dom">ray-ban.com</div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb t-shoe"><span class="emoji">👜</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/614fafa31128.webp"></span></div><div class="meta"><div class="name">Raffia basket tote</div><div class="dom">nordstrom.com</div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb t-shoe"><span class="emoji">👡</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/b04b67749e6c.webp"></span></div><div class="meta"><div class="name">Raffia wedge sandals</div><div class="dom">ancient-greek-sandals.com</div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb t-shoe"><span class="emoji">💎</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/2fcb0f17ce32.webp"></span></div><div class="meta"><div class="name">Marquise cut stud earrings</div><div class="dom">mejuri.com</div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb t-shoe"><span class="emoji">🌸</span><span class="photo"><img alt="" loading="lazy" decoding="async" style="object-position:50% 24%" src="screens/img/260ba0f97aa5.webp"></span></div><div class="meta"><div class="name">Ray-Ban sunglasses</div><div class="dom">ray-ban.com</div></div><span class="kebab">⋮</span></div>
         </div>
       </div></div>
     </div>
@@ -810,6 +819,7 @@
     <p class="suggest">Have an idea for Assorta? <a href="https://assorta.fider.io/" target="_blank" rel="noopener">Leave a suggestion and vote on what we build next →</a></p>
   </div>
 </section>
+</main>
 
 <footer>
   <div class="wrap">

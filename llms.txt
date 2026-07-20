@@ -1,0 +1,23 @@
+# Assorta
+
+> Assorta is one fast inbox for links, notes and ideas. Drop anything in — AI files it into the right group, so you find it in seconds. Android, iOS and web.
+
+You save from the system share sheet on Android and iOS, or paste straight into the app. AI reads what the item is and files it into one of 30+ ready-made groups — Travel, Cooking, Wish list, Movies, Health, Work and more — with no folders to create and no tags to manage. Get the group wrong and one tap changes it. Saved links keep their thumbnail and title, saving finishes in the background, and everything syncs across Android, iOS and the web. Light and dark themes; English, Ukrainian, Russian, Spanish, French and German.
+
+Assorta has not shipped yet. The apps are coming soon to the App Store, Google Play and the web, and the only way in today is the waitlist.
+
+## Pages
+
+- [Home](https://assorta.app/): What Assorta is, how it works, the feature list, screenshots of the app, and the waitlist call to action.
+- [Privacy Policy](https://assorta.app/privacy.html): What we collect, how AI classification handles saved content, third parties, storage and retention, your rights, and how to delete your data.
+
+## Product
+
+- [Join the waitlist](https://forms.gle/514Lhi45PJmxCVHy5): Google Form — we email the invite when the apps are ready.
+- [Feedback board](https://assorta.fider.io/): Public board for suggesting features and voting on what we build next.
+
+## Optional
+
+- [How it works](https://assorta.app/#how): The three steps — drop it in, AI files it, find it fast.
+- [Features](https://assorta.app/#features): Share-sheet saving, 30+ smart groups, link previews, background saves, cross-platform sync, theming and languages.
+- [Screens](https://assorta.app/#screens): Five annotated screenshots walking through a save, from the share sheet to the group.
