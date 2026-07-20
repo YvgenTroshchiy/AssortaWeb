@@ -1,0 +1,9 @@
+# Security contact for assorta.app
+# Format: RFC 9116 - https://www.rfc-editor.org/rfc/rfc9116
+
+Contact: mailto:contact@assorta.app
+Expires: 2027-07-01T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://assorta.app/.well-known/security.txt
+Canonical: https://assorta.app/security.txt
+Policy: https://assorta.app/privacy.html

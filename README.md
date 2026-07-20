@@ -37,6 +37,26 @@ or Lighthouse's Agentic Browsing audit fails it. Without the file that URL serve
 saw HTML with no H1 and no links. Keep its links and the pre-release wording in step
 with `index.html`.
 
+## security.txt
+
+`security.txt` is the RFC 9116 contact file telling security researchers where to
+report a vulnerability ([spec](https://www.rfc-editor.org/rfc/rfc9116)). It points
+at `contact@assorta.app`.
+
+It sits at the repo root rather than in `.well-known/`, where the spec puts it,
+because Cloudflare Pages does not deploy directories whose names begin with a dot.
+Left there it would have hit the same trap as the missing `llms.txt`: the URL
+answers with `index.html` at status 200, so the file looks present until you check
+the content type. `_redirects` maps `/.well-known/security.txt` onto the root copy,
+since scanners look under the canonical path first.
+
+`Expires` is a required field and is set to **2027-07-01**. Past that date the file
+reads as stale and should be reissued.
+
+Note that the address is in plain text here, unlike `privacy.html`, which assembles
+it in JS to keep it out of the page source. A security contact that a scraper cannot
+read is useless, so the anti-scraping trick is deliberately not applied.
+
 ## Preview
 
 Open `index.html` in a browser, or serve the folder:

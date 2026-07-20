@@ -1,0 +1,5 @@
+# Cloudflare Pages does not deploy directories whose names begin with a dot, so
+# security.txt lives at the root. Scanners look under /.well-known/ first, and
+# without this rule that path would fall through to the catch-all and answer
+# with index.html at status 200 - the same trap that hid the missing llms.txt.
+/.well-known/security.txt /security.txt 301
