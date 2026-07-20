@@ -14,8 +14,16 @@ survives JS being off), light overrides it under `:root[data-theme="light"]`.
 An inline script in `<head>` stamps `data-theme` before first paint: it follows
 `prefers-color-scheme` until the visitor uses the nav toggle, after which the
 choice is remembered in `localStorage` under `assorta-theme` (deliberately not
-the app's own `theme_mode` key). The phone mockups in the Screens carousel are
-product shots of the app's light UI and stay light in both themes.
+the app's own `theme_mode` key).
+
+The phone mockups in the Screens carousel follow the theme too, via the `--app-*`
+tokens. Those mirror the app's semantic colors: where the app has a token
+(`fgPrimary`, `bgCard`, `accentPrimary`, …) it is used in both themes; where it
+has none (OS status bar, the iOS share sheet, image placeholders) the light value
+reproduces what the mockups rendered before, so only the dark case is new. Tag
+hues are user data and identical in the app's two palettes, so they are never
+themed - including the low-luminance ones like Stone `#78716C` on the Auto group,
+which stays dim on dark exactly as it does in the app.
 
 `index.html` and `privacy.html` each carry their own copy of the tokens, the
 toggle and the script — keep the two in sync when editing either.

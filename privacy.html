@@ -31,6 +31,8 @@
     --line: #d2dae9;
     --indigo-bright: #4f46e5;    /* Indigo.v700 — the accent that still reads on a light background */
     --text: #0f172a;             /* Gray.v950 — fgPrimary */
+    /* Kept at the app's fgSecondary on purpose - see the note in index.html.
+       Matching the app beat clearing AA on this site's tinted panels. */
     --text-dim: #64748b;         /* Gray.v600 — fgSecondary */
     color-scheme: light;
   }
@@ -68,7 +70,7 @@
     color: var(--text-dim); cursor: pointer; transition: color .15s, border-color .15s;
   }
   .theme-btn:hover { color: var(--text); border-color: var(--indigo); }
-  .theme-btn:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; }
+  a:focus-visible, .theme-btn:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; }
   .theme-btn svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
   .theme-btn .i-moon { display: none; }
   :root[data-theme="light"] .theme-btn .i-moon { display: block; }
@@ -127,8 +129,12 @@
   var saved;
   try { saved = localStorage.getItem("assorta-theme"); } catch (e) {}
   var sysLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
-  document.documentElement.dataset.theme =
-    (saved === "light" || saved === "dark") ? saved : (sysLight ? "light" : "dark");
+  var t = (saved === "light" || saved === "dark") ? saved : (sysLight ? "light" : "dark");
+  document.documentElement.dataset.theme = t;
+  // Also here, not only in sync(): otherwise the browser toolbar keeps the other
+  // theme's color for the whole load. Must track --bg in each :root block.
+  var m = document.querySelector('meta[name="theme-color"]');
+  if (m) m.setAttribute("content", t === "light" ? "#f8fafc" : "#131129");
 })();
 </script>
 </head>

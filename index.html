@@ -26,6 +26,37 @@
        app, so the mockups match what the product actually looks like. */
     --app-grad-start: #0f172a;   /* Gray.v950 */
     --app-grad-end:   #1e1b4b;   /* Indigo.v950 */
+    /* Mockup palette. The phone mockups depict the app, so they follow the theme
+       too. Where the app has a semantic token it is used in BOTH themes; where it
+       has none (OS chrome, placeholders) the light value below reproduces today's
+       rendering exactly. Accent and on-accent are identical in the app's two
+       palettes and are deliberately never overridden. */
+    --app-fg: #f8fafc;                        /* fgPrimary   - Gray.v50 */
+    --app-fg-dim: #94a3b8;                    /* fgSecondary - Gray.v500 */
+    --app-fg-faint: rgba(148,163,184,.5);     /* no app token: recessive glyphs */
+    --app-link: #93a4ff;                      /* domain line, lifted to read on dark */
+    --app-accent: #6366f1;                    /* accentPrimary - shared */
+    --app-on-accent: #fff;                    /* fgOnAccent - shared */
+    --app-card: rgba(30,41,59,.85);           /* bgCard - Gray.v900a80 */
+    --app-card-ring: rgba(148,163,184,.2);    /* borderCard, drawn as a shadow so it costs no layout */
+    --app-card-shadow: rgba(0,0,0,.55);
+    --app-track: rgba(148,163,184,.2);        /* bgSegmentedControl */
+    --app-inset: rgba(148,163,184,.12);
+    --app-tile: rgba(148,163,184,.14);
+    --app-grab: rgba(148,163,184,.35);
+    --app-img: rgba(148,163,184,.16);
+    --app-accent-subtle: rgba(99,102,241,.22);
+    --app-accent-glow: rgba(99,102,241,.5);
+    --app-phone-shadow: rgba(0,0,0,.78);
+    --app-phone-ring: rgba(148,163,184,.2);
+    /* Share sheet is three stacked layers and they must stay tellable apart:
+       scrim darkest, the shared page above it, the sheet itself lightest. */
+    --app-scrim-a: #070b14; --app-scrim-b: #0d0a24;
+    --app-page-a:  #1b2236; --app-page-b:  #151b2c;
+    --app-sheet:   #242e42;
+    --app-ph-fill:   rgba(148,163,184,.10);
+    --app-ph-block:  rgba(148,163,184,.16);
+    --app-ph-strong: rgba(148,163,184,.28);
     --glow-1: 26%; --glow-2: 13%;
     --shadow-lg: rgba(0,0,0,.75);
     --shadow-phone: rgba(0,0,0,.7);
@@ -56,9 +87,37 @@
     --line: #d2dae9;             /* borderCard, lifted from Gray.v500a20 to stay visible on light */
     --indigo-bright: #4f46e5;    /* Indigo.v700 — the accent that still reads on a light background */
     --text: #0f172a;             /* Gray.v950 — fgPrimary */
+    /* Kept at the app's fgSecondary on purpose. It clears AA on the app's own
+       backgrounds (#f8fafc / #eef2ff) but lands at 3.3-4.4:1 on the tinted
+       panels this site invents (.cell, .step, section.alt). Matching the app
+       won that trade-off - do not "fix" this to a darker grey. */
     --text-dim: #64748b;         /* Gray.v600 — fgSecondary */
     --app-grad-start: #f8fafc;   /* Gray.v50 */
     --app-grad-end:   #eef2ff;   /* Indigo.v50 */
+    /* Mockup palette, light. Rows with an app token take it; the rest reproduce
+       today's literal so the light mockups render byte-identically to before. */
+    --app-fg: #0f172a;                        /* fgPrimary   - Gray.v950 */
+    --app-fg-dim: #64748b;                    /* fgSecondary - Gray.v600 */
+    --app-fg-faint: #b9bbce;
+    --app-link: #4f5bd5;
+    --app-card: #fff;
+    --app-card-ring: transparent;
+    --app-card-shadow: rgba(15,16,48,.5);
+    --app-track: #e6e8f5;
+    --app-inset: #f1f2f8;
+    --app-tile: #eef0f8;
+    --app-grab: #d9dbe9;
+    --app-img: #e7eaf7;
+    --app-accent-subtle: color-mix(in srgb, #6366f1 12%, #fff);
+    --app-accent-glow: rgba(79,70,229,.95);
+    --app-phone-shadow: rgba(15,16,48,.6);
+    --app-phone-ring: rgba(15,23,42,.06);
+    --app-scrim-a: #e9ecf4; --app-scrim-b: #dde2ee;
+    --app-page-a:  #ffffff; --app-page-b:  #f2f4fa;
+    --app-sheet:   #ffffff;
+    --app-ph-fill:   rgba(18,19,46,.07);
+    --app-ph-block:  rgba(18,19,46,.11);
+    --app-ph-strong: rgba(18,19,46,.20);
     --glow-1: 13%; --glow-2: 8%;
     --shadow-lg: rgba(15,23,42,.18);
     --shadow-phone: rgba(15,23,42,.22);
@@ -287,12 +346,7 @@
 
   /* ---- screens carousel ---- */
   .screens {
-    --indigo-700:#4F46E5; --indigo-600:#6366F1; --raspberry:#FB2576;
-    /* Screen background = the app's light gradient (Gray.v50 -> Indigo.v50).
-       Hardcoded rather than tokenised: these are product shots of the app's
-       light UI and stay light whichever theme the site is in. */
-    --screen-bg:#F8FAFC; --screen-bg-2:#EEF2FF; --ink:#12132E; --ink-soft:#4A4C6B;
-    --link:#4F5BD5; --paper:#F7F8FF; --thumb-radius:14px;
+    --thumb-radius:14px;
     padding: 88px 0;
     background: color-mix(in srgb, var(--panel) 32%, var(--bg));
     overflow: hidden;
@@ -307,7 +361,9 @@
   .screen-slide { scroll-snap-align: center; flex: 0 0 auto; width: 264px; display: flex; }
   .screens .phone {
     width: 100%;
-    box-shadow: 0 30px 60px -30px var(--shadow-phone), 0 0 0 1px var(--ring);
+    /* This replaces .phone's shorthand wholesale, and every .phone is inside
+       .screens - so the phone's real drop shadow and edge are set HERE. */
+    box-shadow: 0 30px 60px -30px var(--app-phone-shadow), 0 0 0 1px var(--app-phone-ring);
   }
   .screens .thumb .photo { display: block; }
   .screens .thumb .emoji { display: none; }
@@ -315,16 +371,15 @@
 
 /* ---- Phone ---- */
   .phone {
-    background: linear-gradient(180deg, var(--screen-bg), var(--screen-bg-2));
+    background: linear-gradient(180deg, var(--app-grad-start), var(--app-grad-end));
     border-radius: 26px; padding: 0; overflow: hidden;
-    box-shadow: 0 16px 40px -18px rgba(15,16,48,.6), 0 0 0 8px var(--bezel);
-    color: var(--ink); position: relative; margin: 0 auto; width: 100%;
+    color: var(--app-fg); position: relative; margin: 0 auto; width: 100%;
   }
   .phone .statusbar {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 12px 18px 6px; font-size: 12px; font-weight: 600; color: #23243f;
+    padding: 12px 18px 6px; font-size: 12px; font-weight: 600; color: var(--app-fg);
   }
-  .phone .statusbar .sig { display: flex; gap: 6px; align-items: center; color: #23243f; }
+  .phone .statusbar .sig { display: flex; gap: 6px; align-items: center; color: var(--app-fg); }
   .phone .statusbar .sig .bars { fill: currentColor; display: block; }
   .phone .statusbar .sig .batt-n { font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
   .phone .statusbar .sig .batt { position: relative; width: 22px; height: 11px; border: 1.4px solid currentColor; border-radius: 3px; padding: 1.5px; opacity: .9; }
@@ -333,15 +388,17 @@
   .scr-head {
     display: flex; align-items: center; gap: 9px; padding: 8px 16px 14px;
   }
-  .scr-head .chev { color: var(--indigo-600); font-size: 20px; font-weight: 700; }
+  .scr-head .chev { color: var(--app-accent); font-size: 20px; font-weight: 700; }
   .scr-head .dot { width: 11px; height: 11px; border-radius: 50%; }
   .scr-head .ttl { font-size: 20px; font-weight: 800; letter-spacing: -0.01em; }
-  .scr-head .cnt { font-size: 15px; color: #8A8CA6; font-weight: 600; }
+  .scr-head .cnt { font-size: 15px; color: var(--app-fg-dim); font-weight: 600; }
 
   .list { display: flex; flex-direction: column; gap: 11px; padding: 2px 12px 18px; }
   .card {
-    background: #fff; border-radius: 16px; padding: 11px; display: flex; gap: 11px; align-items: center;
-    box-shadow: 0 6px 16px -12px rgba(15,16,48,.5);
+    background: var(--app-card); border-radius: 16px; padding: 11px; display: flex; gap: 11px; align-items: center;
+    /* Ring as a second shadow layer, not a border: transparent on light, so the
+       light card keeps its borderless look and its box geometry is untouched. */
+    box-shadow: 0 6px 16px -12px var(--app-card-shadow), 0 0 0 1px var(--app-card-ring);
   }
   .card.nothumb { align-items: flex-start; }
   .thumb {
@@ -355,7 +412,7 @@
     background: #7CB342; color: #fff; font-size: 12px; display: flex; align-items: center; justify-content: center; z-index: 2;
   }
   .thumb .emoji { font-size: 26px; line-height: 1; }
-  .thumb .photo { display: none; position: absolute; inset: 0; background: #E7EAF7; }
+  .thumb .photo { display: none; position: absolute; inset: 0; background: var(--app-img); }
   .thumb .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .thumb .play {
     position: absolute; right: 5px; bottom: 5px; width: 22px; height: 22px; border-radius: 50%;
@@ -372,80 +429,86 @@
 
   /* ---- adding screen ---- */
   .phone .app-head { display: flex; align-items: center; gap: 8px; padding: 10px 16px 12px; }
-  .phone .app-head .app-ttl { font-size: 21px; font-weight: 800; letter-spacing: -0.01em; color: #12132E; }
-  .phone .app-head .gear { margin-left: auto; color: #5b5d80; display: grid; place-items: center; }
-  .phone .add-input { margin: 0 14px; display: flex; align-items: center; gap: 10px; background: #fff; border: 1.5px solid #6366F1; border-radius: 16px; padding: 12px; }
-  .phone .add-input .url { flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: #2b2c4a; word-break: break-all; }
-  .phone .add-input .go { flex: none; width: 36px; height: 36px; border-radius: 50%; background: #6366F1; display: grid; place-items: center; }
+  .phone .app-head .app-ttl { font-size: 21px; font-weight: 800; letter-spacing: -0.01em; color: var(--app-fg); }
+  .phone .app-head .gear { margin-left: auto; color: var(--app-fg-dim); display: grid; place-items: center; }
+  .phone .add-input { margin: 0 14px; display: flex; align-items: center; gap: 10px; background: var(--app-card); border: 1.5px solid var(--app-accent); border-radius: 16px; padding: 12px; }
+  .phone .add-input .url { flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: var(--app-fg); word-break: break-all; }
+  .phone .add-input .go { flex: none; width: 36px; height: 36px; border-radius: 50%; background: var(--app-accent); display: grid; place-items: center; }
   .phone .add-input .spinner { width: 17px; height: 17px; border: 2.2px solid rgba(255,255,255,.4); border-top-color: #fff; border-radius: 50%; animation: spin .8s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
-  .phone .add-pill { margin: 14px 16px 0; display: inline-flex; align-items: center; gap: 7px; width: max-content; padding: 7px 13px; border-radius: 999px; font-size: 13px; font-weight: 600; color: #6366F1; background: color-mix(in srgb, #6366F1 12%, #fff); border: 1px solid color-mix(in srgb, #6366F1 32%, transparent); }
-  .phone .add-status { margin: 14px 14px 0; background: #fff; border-radius: 16px; padding: 16px; box-shadow: 0 6px 16px -12px rgba(15,16,48,.5); }
-  .phone .add-status p { font-size: 14px; color: #2b2c4a; line-height: 1.4; margin-bottom: 13px; }
-  .phone .add-bar { height: 6px; border-radius: 999px; background: #E6E8F5; overflow: hidden; position: relative; }
-  .phone .add-bar::after { content: ""; position: absolute; top: 0; height: 100%; width: 42%; border-radius: 999px; background: #6366F1; animation: indet 1.4s ease-in-out infinite; }
+  .phone .add-pill { margin: 14px 16px 0; display: inline-flex; align-items: center; gap: 7px; width: max-content; padding: 7px 13px; border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--app-accent); background: var(--app-accent-subtle); border: 1px solid color-mix(in srgb, var(--app-accent) 32%, transparent); }
+  .phone .add-status { margin: 14px 14px 0; background: var(--app-card); border-radius: 16px; padding: 16px; box-shadow: 0 6px 16px -12px var(--app-card-shadow), 0 0 0 1px var(--app-card-ring); }
+  .phone .add-status p { font-size: 14px; color: var(--app-fg); line-height: 1.4; margin-bottom: 13px; }
+  .phone .add-bar { height: 6px; border-radius: 999px; background: var(--app-track); overflow: hidden; position: relative; }
+  .phone .add-bar::after { content: ""; position: absolute; top: 0; height: 100%; width: 42%; border-radius: 999px; background: var(--app-accent); animation: indet 1.4s ease-in-out infinite; }
   @keyframes indet { 0% { left: -42%; } 100% { left: 100%; } }
   .phone .add-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; padding: 14px 12px; }
-  .phone .add-tile { display: flex; align-items: center; gap: 7px; background: #fff; border-radius: 13px; padding: 11px 10px; font-weight: 700; font-size: 13px; color: #1c1d33; box-shadow: 0 6px 16px -12px rgba(15,16,48,.5); overflow: hidden; }
+  .phone .add-tile { display: flex; align-items: center; gap: 7px; background: var(--app-card); border-radius: 13px; padding: 11px 10px; font-weight: 700; font-size: 13px; color: var(--app-fg); box-shadow: 0 6px 16px -12px var(--app-card-shadow), 0 0 0 1px var(--app-card-ring); overflow: hidden; }
   .phone .add-tile .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
-  .phone .add-tile .cnt { margin-left: auto; padding-left: 4px; color: #9092b3; font-weight: 600; font-size: 12px; }
+  .phone .add-tile .cnt { margin-left: auto; padding-left: 4px; color: var(--app-fg-dim); font-weight: 600; font-size: 12px; }
   @media (prefers-reduced-motion: reduce) {
     .phone .add-input .spinner { animation: none; }
     .phone .add-bar::after { animation: none; left: 0; width: 45%; }
   }
   .card .meta { min-width: 0; flex: 1; }
-  .card .name { font-size: 13.5px; font-weight: 700; line-height: 1.22; color: #1c1d33; margin-bottom: 3px;
+  .card .name { font-size: 13.5px; font-weight: 700; line-height: 1.22; color: var(--app-fg); margin-bottom: 3px;
     display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-  .card .dom { font-size: 12.5px; color: var(--link); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .card .kebab { color: #B9BBce; font-size: 18px; line-height: 1; align-self: center; padding: 0 2px; }
+  .card .dom { font-size: 12.5px; color: var(--app-link); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .card .kebab { color: var(--app-fg-faint); font-size: 18px; line-height: 1; align-self: center; padding: 0 2px; }
   .card.nothumb .kebab { align-self: flex-start; margin-top: 2px; }
 
   /* ---- share-sheet screen ---- */
-  /* The backdrop is the shop page you shared from, dimmed the way iOS dims
-     content behind a share sheet. Kept light: a dark slab here read as a bug
-     next to the four light screens, and the page being shared is a white one. */
-  .phone.share-scr { background: linear-gradient(180deg,#e9ecf4,#dde2ee); display: flex; flex-direction: column; }
+  /* Three stacked layers: the scrim (the page you shared from, dimmed the way
+     the OS dims content under a sheet), the page slab, and the sheet on top.
+     Their luminance order has to survive both themes or the composition flattens. */
+  .phone.share-scr { background: linear-gradient(180deg,var(--app-scrim-a),var(--app-scrim-b)); display: flex; flex-direction: column; }
   .share-scr .page {
     height: 128px; margin: 4px 12px 0; border-radius: 12px; padding: 10px;
-    background: linear-gradient(135deg,#ffffff,#f2f4fa);
-    border: 1px solid rgba(18,19,46,.07);
+    background: linear-gradient(135deg,var(--app-page-a),var(--app-page-b));
+    border: 1px solid var(--app-ph-fill);
     display: flex; flex-direction: column; gap: 8px;
   }
   .share-scr .page .bar {
-    align-self: flex-start; font-size: 10px; font-weight: 600; color: rgba(18,19,46,.55);
-    background: rgba(18,19,46,.07); border-radius: 999px; padding: 4px 10px;
+    align-self: flex-start; font-size: 10px; font-weight: 600; color: var(--app-fg-dim);
+    background: var(--app-ph-fill); border-radius: 999px; padding: 4px 10px;
   }
   .share-scr .page .body { display: flex; gap: 9px; align-items: flex-start; }
-  .share-scr .page .shot { width: 58px; height: 58px; border-radius: 9px; background: rgba(18,19,46,.10); flex: none; }
+  .share-scr .page .shot { width: 58px; height: 58px; border-radius: 9px; background: var(--app-ph-block); flex: none; }
   .share-scr .page .lines { display: flex; flex-direction: column; gap: 6px; flex: 1; padding-top: 3px; }
-  .share-scr .page .ln { height: 7px; border-radius: 999px; background: rgba(18,19,46,.11); }
+  .share-scr .page .ln { height: 7px; border-radius: 999px; background: var(--app-ph-block); }
   .share-scr .page .ln.s { width: 55%; }
-  .share-scr .page .ln.p { width: 34%; height: 9px; background: rgba(18,19,46,.20); }
-  .share-scr .sheet { background: #fff; border-radius: 22px 22px 0 0; margin-top: auto; padding: 9px 14px 18px; }
-  .share-scr .grab { display: block; width: 36px; height: 4px; border-radius: 999px; background: #D9DBE9; margin: 0 auto; }
-  .share-scr .sheet-ttl { font-size: 16px; font-weight: 800; text-align: center; margin: 11px 0 13px; color: #12132E; }
+  .share-scr .page .ln.p { width: 34%; height: 9px; background: var(--app-ph-strong); }
+  .share-scr .sheet { background: var(--app-sheet); border-radius: 22px 22px 0 0; margin-top: auto; padding: 9px 14px 18px; }
+  .share-scr .grab { display: block; width: 36px; height: 4px; border-radius: 999px; background: var(--app-grab); margin: 0 auto; }
+  .share-scr .sheet-ttl { font-size: 16px; font-weight: 800; text-align: center; margin: 11px 0 13px; color: var(--app-fg); }
   .share-scr .sheet-url {
-    display: flex; align-items: center; gap: 10px; background: #F1F2F8; border-radius: 14px;
-    padding: 11px 12px; font-size: 12px; color: #5b5d80;
+    display: flex; align-items: center; gap: 10px; background: var(--app-inset); border-radius: 14px;
+    padding: 11px 12px; font-size: 12px; color: var(--app-fg-dim);
   }
   .share-scr .sheet-url span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .share-scr .sheet-url svg { flex: none; color: #9092b3; }
+  .share-scr .sheet-url svg { flex: none; color: var(--app-fg-dim); }
   .share-scr .apps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 13px 4px; margin-top: 15px; }
   .share-scr .app { display: flex; flex-direction: column; align-items: center; gap: 6px; }
   .share-scr .app .ico {
-    width: 44px; height: 44px; border-radius: 14px; background: #EEF0F8; color: #75779b;
+    width: 44px; height: 44px; border-radius: 14px; background: var(--app-tile); color: var(--app-fg-dim);
     display: grid; place-items: center; position: relative;
   }
-  .share-scr .app .lbl { font-size: 10.5px; font-weight: 600; color: #5b5d80; line-height: 1.2; text-align: center; }
+  .share-scr .app .lbl { font-size: 10.5px; font-weight: 600; color: var(--app-fg-dim); line-height: 1.2; text-align: center; }
   .share-scr .app.on .ico {
-    background: none; box-shadow: 0 10px 20px -10px rgba(79,70,229,.95);
+    background: none; box-shadow: 0 10px 20px -10px var(--app-accent-glow);
   }
-  .share-scr .app.on .ico svg { width: 44px; height: 44px; border-radius: 13px; display: block; }
+  /* The mark's own gradient ends at Indigo.v950, which is within a point of the
+     dark sheet - without this ring the icon's tile dissolves and it reads as a
+     floating glyph. The mark itself stays a fixed brand asset. */
+  .share-scr .app.on .ico svg { width: 44px; height: 44px; border-radius: 13px; display: block; box-shadow: 0 0 0 1px var(--app-card-ring); }
   .share-scr .app.on .ico::after {
     content: ""; position: absolute; inset: -5px; border-radius: 19px;
-    border: 2px solid color-mix(in srgb, #6366F1 45%, transparent);
+    border: 2px solid color-mix(in srgb, var(--app-accent) 45%, transparent);
   }
-  .share-scr .app.on .lbl { color: #4F46E5; font-weight: 800; }
+  /* --indigo-bright is the site's "accent that still reads on its background"
+     token: #4f46e5 on light (today's value exactly), #818cf8 on dark, where the
+     flat accent would sit at 3.2:1 behind 10.5px text. */
+  .share-scr .app.on .lbl { color: var(--indigo-bright); font-weight: 800; }
 
   /* thumbs */
   .t-shoe { background: linear-gradient(135deg,#F4F5F8,#E7E9F0); }
@@ -494,8 +557,12 @@
   var saved;
   try { saved = localStorage.getItem("assorta-theme"); } catch (e) {}
   var sysLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
-  document.documentElement.dataset.theme =
-    (saved === "light" || saved === "dark") ? saved : (sysLight ? "light" : "dark");
+  var t = (saved === "light" || saved === "dark") ? saved : (sysLight ? "light" : "dark");
+  document.documentElement.dataset.theme = t;
+  // Also here, not only in sync(): otherwise the browser toolbar keeps the other
+  // theme's color for the whole load. Must track --bg in each :root block.
+  var m = document.querySelector('meta[name="theme-color"]');
+  if (m) m.setAttribute("content", t === "light" ? "#f8fafc" : "#131129");
 })();
 </script>
 </head>
