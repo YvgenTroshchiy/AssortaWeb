@@ -5,16 +5,35 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Assorta is one fast inbox for links, notes and ideas. Drop anything in — AI files it into the right group, so you find it in seconds.">
 <title>Assorta — Save everything. Find it in seconds.</title>
+<meta name="theme-color" content="#131129">
 <style>
+  /* Palette mirrors the app's semantic tokens (AssortaKMP ui/theme/SemanticColor.kt).
+     Dark is the default — it also survives JS being off; light overrides it via
+     data-theme="light" on <html>, stamped before first paint by the inline script
+     at the end of <head>. Tag hues are shared by both app palettes, so they are
+     declared once and never overridden. */
   :root {
     --bg: #131129;
-    --panel: #1e1b4b;
+    --panel: #1e1b4b;            /* Indigo.v950 — bgAppGradientEnd */
     --panel-soft: #232052;
     --line: #34306b;
-    --indigo: #6366f1;
+    --indigo: #6366f1;           /* Indigo.v600 — accentPrimary, shared by both themes */
     --indigo-bright: #818cf8;
     --text: #eef0ff;
     --text-dim: #a3a6cc;
+    /* The app's own screen background, verbatim from SemanticColors
+       (bgAppGradientStart -> bgAppGradientEnd). Used by anything depicting the
+       app, so the mockups match what the product actually looks like. */
+    --app-grad-start: #0f172a;   /* Gray.v950 */
+    --app-grad-end:   #1e1b4b;   /* Indigo.v950 */
+    --glow-1: 26%; --glow-2: 13%;
+    --shadow-lg: rgba(0,0,0,.75);
+    --shadow-phone: rgba(0,0,0,.7);
+    --ring: rgba(255,255,255,.05);
+    --bezel: rgba(255,255,255,.06);
+    --toast-bg: color-mix(in srgb, var(--panel) 92%, #000);
+    --toast-fg: var(--text); --toast-border: var(--line); --toast-spark: var(--indigo-bright);
+    color-scheme: dark;
     --pink: #ec4899;
     --amber: #f59e0b;
     --cyan: #06b6d4;
@@ -30,6 +49,26 @@
     --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, ui-sans-serif, sans-serif;
     --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
+  :root[data-theme="light"] {
+    --bg: #f8fafc;               /* Gray.v50   — bgAppGradientStart */
+    --panel: #eef2ff;            /* Indigo.v50 — bgAppGradientEnd */
+    --panel-soft: #e3e9fb;
+    --line: #d2dae9;             /* borderCard, lifted from Gray.v500a20 to stay visible on light */
+    --indigo-bright: #4f46e5;    /* Indigo.v700 — the accent that still reads on a light background */
+    --text: #0f172a;             /* Gray.v950 — fgPrimary */
+    --text-dim: #64748b;         /* Gray.v600 — fgSecondary */
+    --app-grad-start: #f8fafc;   /* Gray.v50 */
+    --app-grad-end:   #eef2ff;   /* Indigo.v50 */
+    --glow-1: 13%; --glow-2: 8%;
+    --shadow-lg: rgba(15,23,42,.18);
+    --shadow-phone: rgba(15,23,42,.22);
+    --ring: rgba(15,23,42,.06);
+    --bezel: rgba(15,23,42,.05);
+    /* Inverted on light: a white pill on a near-white page reads as nothing */
+    --toast-bg: #1e1b4b; --toast-fg: #eef0ff;
+    --toast-border: rgba(255,255,255,.14); --toast-spark: #818cf8;
+    color-scheme: light;
+  }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
@@ -39,6 +78,7 @@
     font-size: 17px;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+    transition: background-color .25s ease, color .25s ease;
   }
   a { color: inherit; }
   .wrap { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
@@ -62,7 +102,18 @@
     transition: background .15s;
   }
   .btn:hover { background: var(--indigo-bright); }
-  .btn:focus-visible, a:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; }
+  .btn:focus-visible, a:focus-visible, .theme-btn:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; }
+  /* Theme toggle: shows the icon of the theme it switches TO */
+  .theme-btn {
+    display: grid; place-items: center; flex: none; width: 36px; height: 36px; padding: 0;
+    border: 1px solid var(--line); border-radius: 999px; background: transparent;
+    color: var(--text-dim); cursor: pointer; transition: color .15s, border-color .15s;
+  }
+  .theme-btn:hover { color: var(--text); border-color: var(--indigo); }
+  .theme-btn svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .theme-btn .i-moon { display: none; }
+  :root[data-theme="light"] .theme-btn .i-moon { display: block; }
+  :root[data-theme="light"] .theme-btn .i-sun { display: none; }
   .btn-lg { font-size: 16.5px; padding: 14px 28px; }
   .hero-cta { margin-bottom: 18px; }
   .cta-btn { margin-bottom: 26px; }
@@ -71,8 +122,8 @@
   .hero {
     padding: 84px 0 96px;
     background:
-      radial-gradient(900px 480px at 12% -10%, color-mix(in srgb, #4f46e5 26%, transparent), transparent 70%),
-      radial-gradient(700px 420px at 95% 8%, color-mix(in srgb, var(--purple) 13%, transparent), transparent 70%);
+      radial-gradient(900px 480px at 12% -10%, color-mix(in srgb, #4f46e5 var(--glow-1), transparent), transparent 70%),
+      radial-gradient(700px 420px at 95% 8%, color-mix(in srgb, var(--purple) var(--glow-2), transparent), transparent 70%);
   }
   .hero .wrap { display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; }
   .eyebrow {
@@ -100,9 +151,14 @@
 
   /* ---- demo card ---- */
   .demo {
-    background: linear-gradient(160deg, var(--panel) 0%, #191640 100%);
+    /* End stop at 200%, so the card shows only the TOP HALF of the app's ramp.
+       A CSS gradient always spans its own element, and this card is about half
+       a phone screen tall - running the full ramp over it reaches the lavender
+       end twice as fast as the app does, which reads as oversaturated. On a real
+       screen the bottom of the content area is only halfway down the ramp. */
+    background: linear-gradient(160deg, var(--app-grad-start) 0%, var(--app-grad-end) 200%);
     border: 1px solid var(--line); border-radius: 22px; padding: 22px;
-    box-shadow: 0 26px 70px -30px rgba(0,0,0,.75);
+    box-shadow: 0 26px 70px -30px var(--shadow-lg);
   }
   .demo-head { display: flex; align-items: center; margin: 2px 4px 16px; }
   .demo-head .title { font-family: var(--font-display); font-weight: 700; font-size: 21px; letter-spacing: -0.01em; }
@@ -232,7 +288,10 @@
   /* ---- screens carousel ---- */
   .screens {
     --indigo-700:#4F46E5; --indigo-600:#6366F1; --raspberry:#FB2576;
-    --screen-bg:#EEF0FB; --screen-bg-2:#E3E7FA; --ink:#12132E; --ink-soft:#4A4C6B;
+    /* Screen background = the app's light gradient (Gray.v50 -> Indigo.v50).
+       Hardcoded rather than tokenised: these are product shots of the app's
+       light UI and stay light whichever theme the site is in. */
+    --screen-bg:#F8FAFC; --screen-bg-2:#EEF2FF; --ink:#12132E; --ink-soft:#4A4C6B;
     --link:#4F5BD5; --paper:#F7F8FF; --thumb-radius:14px;
     padding: 88px 0;
     background: color-mix(in srgb, var(--panel) 32%, var(--bg));
@@ -248,7 +307,7 @@
   .screen-slide { scroll-snap-align: center; flex: 0 0 auto; width: 264px; display: flex; }
   .screens .phone {
     width: 100%;
-    box-shadow: 0 30px 60px -30px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.05);
+    box-shadow: 0 30px 60px -30px var(--shadow-phone), 0 0 0 1px var(--ring);
   }
   .screens .thumb .photo { display: block; }
   .screens .thumb .emoji { display: none; }
@@ -256,8 +315,9 @@
 
 /* ---- Phone ---- */
   .phone {
-    background: var(--screen-bg); border-radius: 26px; padding: 0; overflow: hidden;
-    box-shadow: 0 16px 40px -18px rgba(15,16,48,.6), 0 0 0 8px rgba(255,255,255,.06);
+    background: linear-gradient(180deg, var(--screen-bg), var(--screen-bg-2));
+    border-radius: 26px; padding: 0; overflow: hidden;
+    box-shadow: 0 16px 40px -18px rgba(15,16,48,.6), 0 0 0 8px var(--bezel);
     color: var(--ink); position: relative; margin: 0 auto; width: 100%;
   }
   .phone .statusbar {
@@ -341,23 +401,26 @@
   .card.nothumb .kebab { align-self: flex-start; margin-top: 2px; }
 
   /* ---- share-sheet screen ---- */
-  .phone.share-scr { background: linear-gradient(180deg,#1E2739,#10162a); display: flex; flex-direction: column; }
-  .share-scr .statusbar, .share-scr .statusbar .sig { color: #fff; }
+  /* The backdrop is the shop page you shared from, dimmed the way iOS dims
+     content behind a share sheet. Kept light: a dark slab here read as a bug
+     next to the four light screens, and the page being shared is a white one. */
+  .phone.share-scr { background: linear-gradient(180deg,#e9ecf4,#dde2ee); display: flex; flex-direction: column; }
   .share-scr .page {
     height: 128px; margin: 4px 12px 0; border-radius: 12px; padding: 10px;
-    background: linear-gradient(135deg,#2C3757,#161d31);
+    background: linear-gradient(135deg,#ffffff,#f2f4fa);
+    border: 1px solid rgba(18,19,46,.07);
     display: flex; flex-direction: column; gap: 8px;
   }
   .share-scr .page .bar {
-    align-self: flex-start; font-size: 10px; font-weight: 600; color: rgba(255,255,255,.6);
-    background: rgba(255,255,255,.1); border-radius: 999px; padding: 4px 10px;
+    align-self: flex-start; font-size: 10px; font-weight: 600; color: rgba(18,19,46,.55);
+    background: rgba(18,19,46,.07); border-radius: 999px; padding: 4px 10px;
   }
   .share-scr .page .body { display: flex; gap: 9px; align-items: flex-start; }
-  .share-scr .page .shot { width: 58px; height: 58px; border-radius: 9px; background: rgba(255,255,255,.14); flex: none; }
+  .share-scr .page .shot { width: 58px; height: 58px; border-radius: 9px; background: rgba(18,19,46,.10); flex: none; }
   .share-scr .page .lines { display: flex; flex-direction: column; gap: 6px; flex: 1; padding-top: 3px; }
-  .share-scr .page .ln { height: 7px; border-radius: 999px; background: rgba(255,255,255,.14); }
+  .share-scr .page .ln { height: 7px; border-radius: 999px; background: rgba(18,19,46,.11); }
   .share-scr .page .ln.s { width: 55%; }
-  .share-scr .page .ln.p { width: 34%; height: 9px; background: rgba(255,255,255,.24); }
+  .share-scr .page .ln.p { width: 34%; height: 9px; background: rgba(18,19,46,.20); }
   .share-scr .sheet { background: #fff; border-radius: 22px 22px 0 0; margin-top: auto; padding: 9px 14px 18px; }
   .share-scr .grab { display: block; width: 36px; height: 4px; border-radius: 999px; background: #D9DBE9; margin: 0 auto; }
   .share-scr .sheet-ttl { font-size: 16px; font-weight: 800; text-align: center; margin: 11px 0 13px; color: #12132E; }
@@ -411,18 +474,30 @@
     z-index: 50; pointer-events: none; opacity: 0;
     display: inline-flex; align-items: center; gap: 9px; max-width: calc(100vw - 32px);
     padding: 12px 20px; border-radius: 999px;
-    background: color-mix(in srgb, var(--panel) 92%, #000);
-    border: 1px solid var(--line); color: var(--text);
+    background: var(--toast-bg);
+    border: 1px solid var(--toast-border); color: var(--toast-fg);
     font-family: var(--font-display); font-weight: 600; font-size: 15px;
-    box-shadow: 0 20px 50px -20px rgba(0,0,0,.7);
+    box-shadow: 0 20px 50px -20px var(--shadow-lg);
     transition: opacity .22s ease, transform .22s ease;
   }
   .soon-toast.show { opacity: 1; transform: translate(-50%, 0); }
-  .soon-toast .spark { color: var(--indigo-bright); flex: none; }
+  .soon-toast .spark { color: var(--toast-spark); flex: none; }
   @media (prefers-reduced-motion: reduce) {
     .soon-toast { transform: translate(-50%, 0); transition: opacity .22s ease; }
   }
 </style>
+<script>
+// Stamp the theme before first paint so a light-mode visitor never sees a dark flash.
+// Own key, not the app's "theme_mode": that one stores SYSTEM/LIGHT/DARK and belongs
+// to the app, which may end up on this same origin.
+(function () {
+  var saved;
+  try { saved = localStorage.getItem("assorta-theme"); } catch (e) {}
+  var sysLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+  document.documentElement.dataset.theme =
+    (saved === "light" || saved === "dark") ? saved : (sysLight ? "light" : "dark");
+})();
+</script>
 </head>
 <body>
 
@@ -449,6 +524,10 @@
     <a class="link" href="#how">How it works</a>
     <a class="link" href="#features">Features</a>
     <a class="link" href="#screens">Screens</a>
+    <button class="theme-btn" id="theme-btn" type="button">
+      <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.1M12 19.3v2.1M4.35 4.35l1.5 1.5M18.15 18.15l1.5 1.5M2.6 12h2.1M19.3 12h2.1M4.35 19.65l1.5-1.5M18.15 5.85l1.5-1.5"/></svg>
+      <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.4A8.5 8.5 0 0 1 9.6 3.5a8.5 8.5 0 1 0 10.9 10.9z"/></svg>
+    </button>
     <a class="btn" href="https://forms.gle/514Lhi45PJmxCVHy5" target="_blank" rel="noopener">Join the waitlist</a>
   </div>
 </header>
@@ -786,6 +865,46 @@
       soon(el.getAttribute("data-soon"));
     });
   });
+})();
+
+// THEME TOGGLE
+// The theme is already applied by the inline script in <head>; this wires the button
+// and keeps the label and the mobile browser chrome in sync. Default follows the OS
+// until the visitor picks a side, after which their choice wins.
+(function () {
+  var btn = document.getElementById("theme-btn");
+  var meta = document.querySelector('meta[name="theme-color"]');
+  if (!btn) return;
+
+  function sync() {
+    var light = document.documentElement.dataset.theme === "light";
+    var label = light ? "Switch to dark theme" : "Switch to light theme";
+    btn.setAttribute("aria-label", label);
+    btn.setAttribute("title", label);
+    if (meta) meta.setAttribute("content", light ? "#f8fafc" : "#131129");
+  }
+
+  btn.addEventListener("click", function () {
+    var next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+    document.documentElement.dataset.theme = next;
+    try { localStorage.setItem("assorta-theme", next); } catch (e) {}
+    sync();
+  });
+
+  var mq = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)");
+  if (mq) {
+    var onSys = function (e) {
+      var saved;
+      try { saved = localStorage.getItem("assorta-theme"); } catch (err) {}
+      if (saved === "light" || saved === "dark") return;
+      document.documentElement.dataset.theme = e.matches ? "light" : "dark";
+      sync();
+    };
+    if (mq.addEventListener) mq.addEventListener("change", onSys);
+    else if (mq.addListener) mq.addListener(onSys);
+  }
+
+  sync();
 })();
 
 // Assemble the email at runtime so it never appears in the page source (anti-scraping).

@@ -6,20 +6,33 @@
 <meta name="description" content="Assorta privacy policy — what we collect, how AI classification works, and your choices.">
 <meta name="robots" content="index, follow">
 <title>Privacy Policy — Assorta</title>
+<meta name="theme-color" content="#131129">
 <style>
+  /* Palette and theme switching mirror index.html — keep the two in sync. */
   :root {
     --bg: #131129;
-    --panel: #1e1b4b;
+    --panel: #1e1b4b;            /* Indigo.v950 */
     --panel-soft: #232052;
     --line: #34306b;
-    --indigo: #6366f1;
+    --indigo: #6366f1;           /* Indigo.v600 — accentPrimary, shared by both themes */
     --indigo-bright: #818cf8;
     --text: #eef0ff;
     --text-dim: #a3a6cc;
     --pink: #ec4899;
+    color-scheme: dark;
     --font-display: "Avenir Next", Futura, "Century Gothic", ui-sans-serif, system-ui, sans-serif;
     --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, ui-sans-serif, sans-serif;
     --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  :root[data-theme="light"] {
+    --bg: #f8fafc;               /* Gray.v50   — bgAppGradientStart */
+    --panel: #eef2ff;            /* Indigo.v50 — bgAppGradientEnd */
+    --panel-soft: #e3e9fb;
+    --line: #d2dae9;
+    --indigo-bright: #4f46e5;    /* Indigo.v700 — the accent that still reads on a light background */
+    --text: #0f172a;             /* Gray.v950 — fgPrimary */
+    --text-dim: #64748b;         /* Gray.v600 — fgSecondary */
+    color-scheme: light;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -30,6 +43,7 @@
     font-size: 17px;
     line-height: 1.7;
     -webkit-font-smoothing: antialiased;
+    transition: background-color .25s ease, color .25s ease;
   }
   a { color: var(--indigo-bright); }
   a:hover { text-decoration: underline; }
@@ -47,6 +61,18 @@
   .nav .brand svg { display: block; border-radius: 7px; }
   .nav a.link { text-decoration: none; color: var(--text-dim); font-size: 15px; }
   .nav a.link:hover { color: var(--text); text-decoration: none; }
+  /* Theme toggle: shows the icon of the theme it switches TO */
+  .theme-btn {
+    display: grid; place-items: center; flex: none; width: 36px; height: 36px; padding: 0;
+    border: 1px solid var(--line); border-radius: 999px; background: transparent;
+    color: var(--text-dim); cursor: pointer; transition: color .15s, border-color .15s;
+  }
+  .theme-btn:hover { color: var(--text); border-color: var(--indigo); }
+  .theme-btn:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; }
+  .theme-btn svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .theme-btn .i-moon { display: none; }
+  :root[data-theme="light"] .theme-btn .i-moon { display: block; }
+  :root[data-theme="light"] .theme-btn .i-sun { display: none; }
 
   /* ---- doc ---- */
   .doc { padding: 64px 0 40px; }
@@ -93,6 +119,18 @@
     .nav a.link { display: none; }
   }
 </style>
+<script>
+// Stamp the theme before first paint so a light-mode visitor never sees a dark flash.
+// Own key, not the app's "theme_mode": that one stores SYSTEM/LIGHT/DARK and belongs
+// to the app, which may end up on this same origin.
+(function () {
+  var saved;
+  try { saved = localStorage.getItem("assorta-theme"); } catch (e) {}
+  var sysLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+  document.documentElement.dataset.theme =
+    (saved === "light" || saved === "dark") ? saved : (sysLight ? "light" : "dark");
+})();
+</script>
 </head>
 <body>
 
@@ -118,6 +156,10 @@
     </a>
     <a class="link" href="index.html">Home</a>
     <a class="link" href="index.html#get">Get the app</a>
+    <button class="theme-btn" id="theme-btn" type="button">
+      <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.1M12 19.3v2.1M4.35 4.35l1.5 1.5M18.15 18.15l1.5 1.5M2.6 12h2.1M19.3 12h2.1M4.35 19.65l1.5-1.5M18.15 5.85l1.5-1.5"/></svg>
+      <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.4A8.5 8.5 0 0 1 9.6 3.5a8.5 8.5 0 1 0 10.9 10.9z"/></svg>
+    </button>
   </div>
 </header>
 
@@ -272,6 +314,44 @@
 </footer>
 
 <script>
+// THEME TOGGLE — same behaviour and storage key as index.html, so the choice carries
+// across the two pages.
+(function () {
+  var btn = document.getElementById("theme-btn");
+  var meta = document.querySelector('meta[name="theme-color"]');
+  if (!btn) return;
+
+  function sync() {
+    var light = document.documentElement.dataset.theme === "light";
+    var label = light ? "Switch to dark theme" : "Switch to light theme";
+    btn.setAttribute("aria-label", label);
+    btn.setAttribute("title", label);
+    if (meta) meta.setAttribute("content", light ? "#f8fafc" : "#131129");
+  }
+
+  btn.addEventListener("click", function () {
+    var next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+    document.documentElement.dataset.theme = next;
+    try { localStorage.setItem("assorta-theme", next); } catch (e) {}
+    sync();
+  });
+
+  var mq = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)");
+  if (mq) {
+    var onSys = function (e) {
+      var saved;
+      try { saved = localStorage.getItem("assorta-theme"); } catch (err) {}
+      if (saved === "light" || saved === "dark") return;
+      document.documentElement.dataset.theme = e.matches ? "light" : "dark";
+      sync();
+    };
+    if (mq.addEventListener) mq.addEventListener("change", onSys);
+    else if (mq.addListener) mq.addListener(onSys);
+  }
+
+  sync();
+})();
+
 // Assemble the email at runtime so it never appears in the page source (anti-scraping).
 (function () {
   var user = "contact";                        // contact
