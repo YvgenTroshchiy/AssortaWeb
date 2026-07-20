@@ -628,6 +628,8 @@
     <span>·</span>
     <a href="https://assorta.fider.io/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">Feedback</a>
     <span>·</span>
+    <a id="email-link" href="#" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">Email us</a>
+    <span>·</span>
     <span>Android · iOS · Web</span>
   </div>
 </footer>
@@ -739,6 +741,17 @@
       soon(el.getAttribute("data-soon"));
     });
   });
+})();
+
+// Assemble the email at runtime so it never appears in the page source (anti-scraping).
+(function () {
+  var user = "contact";                        // contact
+  var domain = ["assorta", "app"].join(".");   // assorta.app
+  var addr = user + "@" + domain;
+  var link = document.getElementById("email-link");
+  if (link) {
+    link.href = "https://mail.google.com/mail/?view=cm&fs=1&to=" + encodeURIComponent(addr);
+  }
 })();
 </script>
 

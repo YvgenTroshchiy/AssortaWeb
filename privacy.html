@@ -257,7 +257,7 @@
 
     <h2 id="contact">12. Contact</h2>
     <p>If you have questions about this Privacy Policy or your data, contact us at
-      <a href="mailto:contact@assorta.app">contact@assorta.app</a>.</p>
+      <a id="email-link" href="#" target="_blank" rel="noopener"></a><noscript>contact [at] assorta [dot] app</noscript>.</p>
   </div>
 </main>
 
@@ -270,6 +270,20 @@
     <a href="privacy.html">Privacy</a>
   </div>
 </footer>
+
+<script>
+// Assemble the email at runtime so it never appears in the page source (anti-scraping).
+(function () {
+  var user = "contact";                        // contact
+  var domain = ["assorta", "app"].join(".");   // assorta.app
+  var addr = user + "@" + domain;
+  var link = document.getElementById("email-link");
+  if (link) {
+    link.textContent = addr;
+    link.href = "https://mail.google.com/mail/?view=cm&fs=1&to=" + encodeURIComponent(addr);
+  }
+})();
+</script>
 
 </body>
 </html>
