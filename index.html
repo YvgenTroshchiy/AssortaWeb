@@ -476,6 +476,28 @@
     .steps, .features { grid-template-columns: 1fr; }
     .nav a.link { display: none; }
     section { padding: 64px 0; }
+
+    /* On a phone the card is as wide as the screen, so the scale-up has nowhere to
+       read against - the filed group lands much harder breaking OUT past the card
+       edge. Odd cells are the left column and bleed left, even cells bleed right;
+       the padding cancels the negative margin, so only the tinted box travels and
+       the dot and label stay ranged with the rest of the grid.
+       The transition is restated here rather than on .cell itself, so that the
+       desktop rule keeps its own list untouched. */
+    .demo-grid .cell {
+      transition: border-color .3s, background .3s, box-shadow .3s,
+                  margin .3s, padding .3s;
+    }
+    .demo-grid .cell.hit {
+      --bleed: 29px;  /* 22px card padding + 1px border + 6px of overhang */
+      transform: none;
+    }
+    .demo-grid .cell.hit:nth-child(odd) {
+      margin-left: calc(var(--bleed) * -1); padding-left: calc(14px + var(--bleed));
+    }
+    .demo-grid .cell.hit:nth-child(even) {
+      margin-right: calc(var(--bleed) * -1); padding-right: calc(14px + var(--bleed));
+    }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
@@ -963,6 +985,10 @@
     <span>© 2026 Assorta</span>
     <span class="spacer"></span>
     <a href="privacy.html" style="color:inherit;text-decoration:none">Privacy</a>
+    <span>·</span>
+    <a href="terms.html" style="color:inherit;text-decoration:none">Terms</a>
+    <span>·</span>
+    <a href="delete-account.html" style="color:inherit;text-decoration:none">Delete account</a>
     <span>·</span>
     <a href="https://assorta.fider.io/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">Feedback</a>
     <span>·</span>

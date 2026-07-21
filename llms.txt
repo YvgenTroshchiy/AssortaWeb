@@ -10,6 +10,7 @@ Assorta has not shipped yet. The apps are coming soon to the App Store, Google P
 
 - [Home](https://assorta.app/): What Assorta is, how it works, the feature list, screenshots of the app, and the waitlist call to action.
 - [Privacy Policy](https://assorta.app/privacy.html): What we collect, how AI classification handles saved content, third parties, storage and retention, your rights, and how to delete your data.
+- [Delete your account](https://assorta.app/delete-account.html): How to delete an Assorta account from the app or by email, what data is deleted or kept, and why deleting the account does not cancel a paid subscription.
 
 ## Product
 
