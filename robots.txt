@@ -1,0 +1,9 @@
+# Crawl rules for assorta.app
+# Format: RFC 9309 - https://www.rfc-editor.org/rfc/rfc9309
+
+# The whole site is public marketing material - two pages and their
+# screenshots - so nothing is held back from any crawler.
+User-agent: *
+Allow: /
+
+Sitemap: https://assorta.app/sitemap.xml

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Announced by the Sitemap line in robots.txt. Only pages belong here:
+     llms.txt, security.txt and the carousel screenshots are not pages.
+     lastmod is deliberately omitted - a hand-maintained date goes stale and
+     search engines discount a sitemap whose timestamps they cannot trust. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://assorta.app/</loc>
+  </url>
+  <url>
+    <loc>https://assorta.app/privacy.html</loc>
+  </url>
+</urlset>

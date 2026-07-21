@@ -57,6 +57,18 @@ Note that the address is in plain text here, unlike `privacy.html`, which assemb
 it in JS to keep it out of the page source. A security contact that a scraper cannot
 read is useless, so the anti-scraping trick is deliberately not applied.
 
+## robots.txt and sitemap.xml
+
+`robots.txt` opens the whole site to crawlers and names the sitemap; `sitemap.xml`
+lists the two real pages. Nothing here is restrictive — they exist because their
+absence was, again, the catch-all trap: `/robots.txt` answered with `index.html`
+at status 200, so Lighthouse read 958 lines of HTML as crawl directives and failed
+the audit with "robots.txt is not valid".
+
+Add a `<url>` entry whenever a page is added, and keep the `Sitemap:` line and the
+`<loc>` values on the apex domain — they must be absolute and must match the host
+the file is served from.
+
 ## Preview
 
 Open `index.html` in a browser, or serve the folder:
