@@ -239,6 +239,7 @@
   }
   .demo-pill .spark { color: var(--indigo-bright); font-size: 12px; }
   .demo-input {
+    position: relative;
     display: flex; align-items: center; gap: 10px;
     background: var(--bg); border: 1px solid var(--line); border-radius: 14px;
     padding: 13px 16px; font-family: var(--font-mono); font-size: 13.5px; color: var(--text);
@@ -249,27 +250,148 @@
     animation: blink 1s step-end infinite;
   }
   @keyframes blink { 50% { opacity: 0; } }
+  /* Sits after the caret, so an empty field reads "|Paste a note…" exactly as the app does.
+     The empty value span is dropped outright, or the flex gap would indent the caret. */
+  #typed:empty { display: none; }
+  /* Against a value the caret hugs the last character, like a real field's does. The
+     container's 10px flex gap is right between the caret and the placeholder, but on
+     the pasted text it read as a trailing space nobody typed. */
+  #typed:not(:empty) + .caret { margin-left: -8px; }
+  .demo-input .ph { color: var(--text-dim); margin-left: -5px; }
   .demo-input .add {
+    position: relative;
     margin-left: auto; flex: none; width: 30px; height: 30px; border-radius: 999px;
     background: var(--accent-fill); color: #fff; display: grid; place-items: center;
     font-size: 18px; font-family: var(--font-body);
   }
-  .demo-saved {
-    display: flex; align-items: center; gap: 8px; min-height: 34px;
-    margin: 12px 2px 14px; font-size: 14px; color: var(--text-dim);
-    opacity: 0; transition: opacity .3s;
+  /* The glyph and the spinner share one grid cell, so the swap is a cross-fade in
+     place - the button never resizes or jumps while the sort runs. */
+  .demo-input .add > * { grid-area: 1 / 1; transition: opacity .15s; }
+  .demo-input .add .load {
+    width: 15px; height: 15px; border-radius: 50%;
+    border: 2.2px solid rgba(255,255,255,.4); border-top-color: #fff;
+    opacity: 0;
   }
-  .demo-saved.show { opacity: 1; }
-  .demo-saved .dot { width: 10px; height: 10px; border-radius: 999px; flex: none; }
-  .demo-saved b { color: var(--text); font-weight: 600; }
+  .demo-input .add.busy .plus { opacity: 0; }
+  /* Spun only while busy. Left on the hidden element it would turn under opacity 0
+     for the whole page life, and keep turning under reduced motion. */
+  .demo-input .add.busy .load { opacity: 1; animation: spin .8s linear infinite; }
+  /* The + takes the pasted value: a press that overshoots back, and a ring leaving
+     the button just as the sort lands. Both run off one class, so it has to stay on
+     for the longer of the two - .6s - or the ring would be cut mid-flight. */
+  .demo-input .add.tap { animation: add-press .5s ease-out; }
+  .demo-input .add.tap::after {
+    content: ""; position: absolute; inset: -4px; border-radius: 999px;
+    border: 2px solid var(--accent-fill);
+    animation: add-ring .6s ease-out forwards;
+  }
+  @keyframes add-press {
+    0%   { transform: scale(1); }
+    22%  { transform: scale(.86); }
+    55%  { transform: scale(1.07); }
+    100% { transform: scale(1); }
+  }
+  @keyframes add-ring {
+    from { opacity: .5; transform: scale(.85); }
+    to   { opacity: 0; transform: scale(1.8); }
+  }
+  /* The tap-and-hold clipboard bubble Android raises over the field, left-aligned on the
+     caret the way the OS puts it at the touch point. It crosses into the wordmark row
+     above for the second it is up, exactly as it does over the app's own header. */
+  .paste-pop {
+    position: absolute; left: 6px; bottom: calc(100% + 5px);
+    padding: 8px 18px; border-radius: 999px;
+    background: var(--panel-soft); border: 1px solid var(--line);
+    box-shadow: 0 8px 22px -10px var(--shadow-lg);
+    font-family: var(--font-body); font-size: 14.5px; font-weight: 600; color: var(--text);
+    opacity: 0; transform: translateY(5px) scale(.9); transform-origin: bottom left;
+    transition: opacity .16s ease, transform .16s cubic-bezier(.2,.8,.3,1);
+  }
+  .paste-pop.show { opacity: 1; transform: none; }
+  .paste-pop.tap {
+    transform: scale(.94);
+    background: color-mix(in srgb, var(--indigo) 26%, var(--panel-soft));
+    transition-duration: .09s;
+  }
+  /* Confirms the drop the way a real paste does - the whole value lands at once */
+  .demo-input.pasted { animation: paste-flash .5s ease-out; }
+  @keyframes paste-flash {
+    from { border-color: var(--indigo-bright); background: color-mix(in srgb, var(--indigo) 13%, var(--bg)); }
+    to   { border-color: var(--line); background: var(--bg); }
+  }
+  /* One slot holding two states that cross-fade: the app's "still reading it" card
+     while the sort runs, then the saved line. The slot itself collapses to nothing
+     between rounds, exactly as the app's AppAnimatedVisibility does - the group grid
+     sits right under the pill and gets pushed down while a sort is running.
+     0fr -> 1fr animates to the content's own height, so no magic number is needed;
+     browsers too old to interpolate fr units just snap, which is a fine fallback. */
+  .demo-status {
+    display: grid; grid-template-rows: 0fr; margin: 18px 2px 0;
+    transition: grid-template-rows .32s cubic-bezier(.2,.8,.3,1);
+  }
+  .demo-status.open { grid-template-rows: 1fr; }
+  /* The space under the block belongs INSIDE the collapsing area, or it holds the grid
+     down while nothing is showing - the same reason AppAnimatedVisibility's own doc puts
+     collapsing spacing on the content rather than the wrapper. It rides on the states
+     themselves rather than on .status-inner: with border-box a padded box cannot shrink
+     below its own padding, so 22px would survive the collapse. */
+  .status-inner { display: grid; min-height: 0; overflow: hidden; }
+  .status-inner > * { grid-area: 1 / 1; margin-bottom: 22px; }
+  .demo-think, .demo-saved { opacity: 0; }
+  .demo-think {
+    background: var(--bg); border: 1px solid var(--line);
+    border-radius: 14px; padding: 12px 14px;
+    transition: opacity .3s;
+  }
+  .demo-think.show { opacity: 1; }
+  .demo-think p { font-size: 13.5px; color: var(--text); margin-bottom: 11px; }
+  .think-bar {
+    position: relative; overflow: hidden; height: 6px; border-radius: 999px;
+    background: color-mix(in srgb, var(--line) 70%, transparent);
+  }
+  .think-bar::after {
+    content: ""; position: absolute; top: 0; left: -42%; height: 100%; width: 42%;
+    border-radius: 999px; background: var(--indigo);
+  }
+  /* Runs only while the card is up, for the same reason as the button spinner */
+  .demo-think.show .think-bar::after { animation: indet 1.4s ease-in-out infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes indet { 0% { left: -42%; } 100% { left: 100%; } }
+  /* Expand + fade, the app's AppAnimatedVisibility (expandVertically + fadeIn) in CSS.
+     clip-path rather than max-height: it unrolls to the block's own height, so a wrapped
+     chip row or a longer group name can never be cut off by a hardcoded target. */
+  .demo-saved {
+    clip-path: inset(0 0 100% 0);
+    transition: opacity .3s, clip-path .32s cubic-bezier(.2,.8,.3,1);
+  }
+  .demo-saved.show { opacity: 1; clip-path: inset(0 0 0 0); }
+  .saved-row {
+    display: flex; align-items: center; gap: 8px; min-height: 34px;
+    font-size: 14px; color: var(--text-dim);
+  }
+  /* The group it landed in is the answer, so it is the only colored thing in the block -
+     the dot that used to carry the hue is gone, the name carries it instead. */
+  .saved-row b { color: color-mix(in srgb, var(--sc, var(--indigo)) 55%, var(--text)); font-weight: 700; }
+  /* The ranked alternatives the app offers under the saved line - one tap re-files it */
+  .demo-alts {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 10px; font-size: 13.5px; color: var(--text-dim);
+  }
+  /* Bare bold labels, not pills: as filled and bordered chips the runner-ups carried more
+     contrast than the group the note actually landed in, which is the block's whole point.
+     The gap is wider than the app's 6dp because plain words need it to read as separate. */
+  .alt-chip { font-weight: 700; color: var(--text-dim); }
   .demo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  /* Plain cards carrying the tag hue in the dot alone, as the app's own group list
+     does. Eight tinted cards competed with the one card being filed into; against a
+     neutral row the hit tint is the only color on the grid and lands much harder. */
   .cell {
     display: flex; align-items: center; gap: 10px;
-    background: color-mix(in srgb, var(--cell-color, var(--indigo)) 13%, var(--panel-soft));
-    border: 1px solid color-mix(in srgb, var(--cell-color, var(--indigo)) 38%, transparent);
+    background: var(--bg);
+    border: 1px solid var(--line);
     border-radius: 14px;
     padding: 12px 14px; font-size: 14.5px; font-weight: 600;
-    transition: border-color .3s, background .3s, transform .3s;
+    transition: border-color .3s, background .3s, box-shadow .3s, transform .3s;
   }
   .cell .dot { width: 11px; height: 11px; border-radius: 999px; flex: none; }
   .cell .count {
@@ -278,7 +400,8 @@
   }
   .cell.hit {
     border-color: var(--cell-color, var(--indigo));
-    background: color-mix(in srgb, var(--cell-color, var(--indigo)) 26%, var(--panel-soft));
+    background: color-mix(in srgb, var(--cell-color, var(--indigo)) 18%, var(--bg));
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--cell-color, var(--indigo)) 20%, transparent);
     transform: scale(1.04);
   }
 
@@ -442,22 +565,20 @@
   .phone .add-input { margin: 0 14px; display: flex; align-items: center; gap: 10px; background: var(--app-card); border: 1.5px solid var(--app-accent); border-radius: 16px; padding: 12px; }
   .phone .add-input .url { flex: 1; min-width: 0; font-size: 12.5px; line-height: 1.35; color: var(--app-fg); word-break: break-all; }
   .phone .add-input .go { flex: none; width: 36px; height: 36px; border-radius: 50%; background: var(--app-accent-fill); display: grid; place-items: center; }
-  .phone .add-input .spinner { width: 17px; height: 17px; border: 2.2px solid rgba(255,255,255,.4); border-top-color: #fff; border-radius: 50%; animation: spin .8s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
+  /* Frozen on purpose. The carousel is a set of stills of the app, and the only two
+     moving things on it - a ring spinning and a bar sweeping - read as the PAGE
+     loading rather than the app thinking. Held mid-arc and mid-fill they still say
+     "working" in a still frame. The live version of both now runs in the hero demo. */
+  .phone .add-input .spinner { width: 17px; height: 17px; border: 2.2px solid rgba(255,255,255,.4); border-top-color: #fff; border-radius: 50%; transform: rotate(115deg); }
   .phone .add-pill { margin: 14px 16px 0; display: inline-flex; align-items: center; gap: 7px; width: max-content; padding: 7px 13px; border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--app-accent-fg); background: var(--app-accent-subtle); border: 1px solid color-mix(in srgb, var(--app-accent) 32%, transparent); }
   .phone .add-status { margin: 14px 14px 0; background: var(--app-card); border-radius: 16px; padding: 16px; box-shadow: 0 6px 16px -12px var(--app-card-shadow), 0 0 0 1px var(--app-card-ring); }
   .phone .add-status p { font-size: 14px; color: var(--app-fg); line-height: 1.4; margin-bottom: 13px; }
   .phone .add-bar { height: 6px; border-radius: 999px; background: var(--app-track); overflow: hidden; position: relative; }
-  .phone .add-bar::after { content: ""; position: absolute; top: 0; height: 100%; width: 42%; border-radius: 999px; background: var(--app-accent); animation: indet 1.4s ease-in-out infinite; }
-  @keyframes indet { 0% { left: -42%; } 100% { left: 100%; } }
+  .phone .add-bar::after { content: ""; position: absolute; top: 0; left: 0; height: 100%; width: 45%; border-radius: 999px; background: var(--app-accent); }
   .phone .add-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; padding: 14px 12px; }
   .phone .add-tile { display: flex; align-items: center; gap: 7px; background: var(--app-card); border-radius: 13px; padding: 11px 10px; font-weight: 700; font-size: 13px; color: var(--app-fg); box-shadow: 0 6px 16px -12px var(--app-card-shadow), 0 0 0 1px var(--app-card-ring); overflow: hidden; }
   .phone .add-tile .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
   .phone .add-tile .cnt { margin-left: auto; padding-left: 4px; color: var(--app-fg-dim); font-weight: 600; font-size: 12px; }
-  @media (prefers-reduced-motion: reduce) {
-    .phone .add-input .spinner { animation: none; }
-    .phone .add-bar::after { animation: none; left: 0; width: 45%; }
-  }
   .card .meta { min-width: 0; flex: 1; }
   .card .name { font-size: 13.5px; font-weight: 700; line-height: 1.22; color: var(--app-fg); margin-bottom: 3px;
     display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
@@ -621,16 +742,24 @@
         <a class="web-link" href="#get" data-soon="The web app">or try the web app →</a>
       </div>
     </div>
-    <div class="demo" aria-label="Demo: a saved note is filed into a group automatically">
+    <div class="demo" aria-label="Demo: a link is pasted in and filed into a group automatically">
       <div class="demo-head">
         <span class="title">Assorta</span>
         <span class="gear" aria-hidden="true">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
         </span>
       </div>
-      <div class="demo-input"><span id="typed"></span><span class="caret"></span><span class="add" aria-hidden="true">+</span></div>
-      <div class="demo-pill"><span class="spark" aria-hidden="true">✦</span>172 free AI sorts left</div>
-      <div class="demo-saved" id="saved"><span class="dot" id="saved-dot"></span><span>Saved to <b id="saved-group"></b> · Change group</span></div>
+      <div class="demo-input" id="demo-input"><span id="typed"></span><span class="caret"></span><span class="ph" id="demo-ph">Paste a note, link, or text</span><span class="add" aria-hidden="true"><span class="plus">+</span><span class="load"></span></span><span class="paste-pop" id="paste-pop" aria-hidden="true">Paste</span></div>
+      <div class="demo-pill"><span class="spark" aria-hidden="true">✦</span>15 free AI sorts left</div>
+      <div class="demo-status">
+        <div class="status-inner">
+          <div class="demo-think" id="think" aria-hidden="true"><p>Reading it and figuring out where it belongs…</p><div class="think-bar"></div></div>
+          <div class="demo-saved" id="saved">
+            <div class="saved-row"><span>Saved to <b id="saved-group"></b> · Change group</span></div>
+            <div class="demo-alts" id="alts"></div>
+          </div>
+        </div>
+      </div>
       <div class="demo-grid" id="grid"></div>
     </div>
   </div>
@@ -676,11 +805,11 @@
         <div class="app-head"><span class="app-ttl">Assorta</span><span class="gear"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span></div>
         <div class="add-input"><span class="url">https://www.asics.com/us/en-us/dynablast-5/p/ANA_1012B776-701.html</span><span class="go"><span class="spinner"></span></span></div>
         <div class="add-pill"><span aria-hidden="true">✦</span>15 free AI sorts left</div>
-        <div class="add-status"><p>Reading it and figuring out where it belongs… this can take a moment.</p><div class="add-bar"></div></div>
+        <div class="add-status"><p>Reading it and figuring out where it belongs…</p><div class="add-bar"></div></div>
         <div class="add-tiles">
           <div class="add-tile"><span class="dot" style="background:#22C55E"></span>Sport<span class="cnt">4</span></div>
           <div class="add-tile"><span class="dot" style="background:#78716C"></span>Auto<span class="cnt">5</span></div>
-          <div class="add-tile"><span class="dot" style="background:#EC4899"></span>Shopping<span class="cnt">4</span></div>
+          <div class="add-tile"><span class="dot" style="background:#F59E0B"></span>Shopping<span class="cnt">4</span></div>
           <div class="add-tile"><span class="dot" style="background:#A855F7"></span>Hobby<span class="cnt">4</span></div>
         </div>
       </div></div>
@@ -706,7 +835,7 @@
       </div></div>
       <div class="screen-slide"><div class="phone">
         <div class="statusbar"><span>11:05</span><span class="sig"><svg class="bars" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1" opacity=".3"/></svg><span class="batt-n">68</span><span class="batt"><i></i></span></span></div>
-        <div class="scr-head"><span class="chev">‹</span><span class="dot" style="background:#EC4899"></span><span class="ttl">Shopping</span><span class="cnt">4</span></div>
+        <div class="scr-head"><span class="chev">‹</span><span class="dot" style="background:#F59E0B"></span><span class="ttl">Shopping</span><span class="cnt">4</span></div>
         <div class="list">
           <div class="card"><div class="thumb t-shoe"><span class="emoji">👜</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/614fafa31128.webp"></span></div><div class="meta"><div class="name">Raffia basket tote</div><div class="dom">nordstrom.com</div></div><span class="kebab">⋮</span></div>
           <div class="card"><div class="thumb t-shoe"><span class="emoji">👡</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/b04b67749e6c.webp"></span></div><div class="meta"><div class="name">Raffia wedge sandals</div><div class="dom">ancient-greek-sandals.com</div></div><span class="kebab">⋮</span></div>
@@ -783,22 +912,22 @@
     <div class="cloud">
       <span class="chip" style="--c:#ec4899">Wish list</span>
       <span class="chip" style="--c:#f59e0b">Shopping</span>
-      <span class="chip" style="--c:#0ea5e9">Travel</span>
+      <span class="chip" style="--c:#0369a1">Travel</span>
       <span class="chip" style="--c:#eab308">Cooking</span>
       <span class="chip" style="--c:#ef4444">Health</span>
       <span class="chip" style="--c:#22c55e">Sport</span>
-      <span class="chip" style="--c:#a855f7">Movies</span>
-      <span class="chip" style="--c:#b45309">Books</span>
+      <span class="chip" style="--c:#7e22ce">Movies</span>
+      <span class="chip" style="--c:#8d6e63">Books</span>
       <span class="chip" style="--c:#8b5cf6">Music</span>
       <span class="chip" style="--c:#14b8a6">Inspiration</span>
-      <span class="chip" style="--c:#0d9488">Ideas</span>
+      <span class="chip" style="--c:#0f766e">Ideas</span>
       <span class="chip" style="--c:#6366f1">Work</span>
       <span class="chip" style="--c:#84cc16">Tasks</span>
       <span class="chip" style="--c:#06b6d4">Education</span>
-      <span class="chip" style="--c:#10b981">Finance</span>
-      <span class="chip" style="--c:#3b82f6">Tech</span>
+      <span class="chip" style="--c:#15803d">Finance</span>
+      <span class="chip" style="--c:#1d4ed8">Tech</span>
       <span class="chip" style="--c:#f97316">Family</span>
-      <span class="chip" style="--c:#ea580c">Home</span>
+      <span class="chip" style="--c:#c2410c">Home</span>
       <span class="chip" style="--c:#d946ef">Beauty</span>
       <span class="chip" style="--c:#f43f5e">Personal</span>
       <span class="chip more">…and a dozen more</span>
@@ -839,27 +968,36 @@
 (function () {
   var groups = [
     { name: "Cooking",   color: "#eab308", count: 12 },
-    { name: "Travel",    color: "#0ea5e9", count: 8 },
+    { name: "Travel",    color: "#0369a1", count: 8 },
     { name: "Wish list", color: "#ec4899", count: 15 },
     { name: "Sport",     color: "#22c55e", count: 5 },
-    { name: "Movies",    color: "#a855f7", count: 9 },
-    { name: "Ideas",     color: "#14b8a6", count: 21 },
-    { name: "Finance",   color: "#10b981", count: 4 },
-    { name: "Books",     color: "#b45309", count: 7 },
+    { name: "Movies",    color: "#7e22ce", count: 9 },
+    { name: "Ideas",     color: "#0f766e", count: 21 },
+    { name: "Finance",   color: "#15803d", count: 4 },
+    { name: "Books",     color: "#8d6e63", count: 7 },
   ];
+  /* alts are the runner-up groups the app lists under "Or:" - ranked guesses, one tap
+     away from re-filing the note. Kept plausible per link, not filler. */
   var items = [
-    { text: "youtube.com/best-carbonara-recipe", group: "Cooking" },
-    { text: "youtube.com/15-min-squat-workout", group: "Sport" },
-    { text: "zara.com/oversized-wool-coat", group: "Wish list" },
-    { text: "youtube.com/dune-part-two-trailer", group: "Movies" },
-    { text: "booking.com/lisbon-old-town-loft", group: "Travel" },
+    { text: "youtube.com/best-carbonara-recipe", group: "Cooking", alts: ["Ideas", "Wish list"] },
+    { text: "youtube.com/15-min-squat-workout", group: "Sport", alts: ["Ideas", "Movies"] },
+    { text: "zara.com/oversized-wool-coat", group: "Wish list", alts: ["Finance", "Ideas"] },
+    { text: "youtube.com/dune-part-two-trailer", group: "Movies", alts: ["Books", "Ideas"] },
+    { text: "booking.com/lisbon-old-town-loft", group: "Travel", alts: ["Wish list", "Finance"] },
   ];
 
   var grid = document.getElementById("grid");
   var typed = document.getElementById("typed");
+  var input = document.getElementById("demo-input");
+  var ph = document.getElementById("demo-ph");
+  var pop = document.getElementById("paste-pop");
+  var add = input.querySelector(".add");
+  var think = document.getElementById("think");
   var saved = document.getElementById("saved");
-  var savedDot = document.getElementById("saved-dot");
   var savedGroup = document.getElementById("saved-group");
+  var alts = document.getElementById("alts");
+  var status = document.querySelector(".demo-status");
+  var card = document.querySelector(".demo");
   var cells = {};
 
   groups.forEach(function (g) {
@@ -875,15 +1013,31 @@
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduceMotion) {
     typed.textContent = items[0].text;
+    ph.hidden = true;
     show(items[0]);
     return;
   }
 
   var idx = 0;
+  function buildAlts(item) {
+    alts.innerHTML = "";
+    if (!item.alts) return;
+    var label = document.createElement("span");
+    label.textContent = "Or:";
+    alts.appendChild(label);
+    item.alts.forEach(function (name) {
+      var chip = document.createElement("span");
+      chip.className = "alt-chip";
+      chip.textContent = name;
+      alts.appendChild(chip);
+    });
+  }
   function show(item) {
     var g = groups.filter(function (x) { return x.name === item.group; })[0];
-    savedDot.style.background = g.color;
+    saved.style.setProperty("--sc", g.color);
     savedGroup.textContent = item.group;
+    status.classList.add("open");
+    buildAlts(item);
     saved.classList.add("show");
     var c = cells[item.group];
     c.count += 1;
@@ -892,34 +1046,90 @@
   }
   function hide(item) {
     saved.classList.remove("show");
+    status.classList.remove("open");
     cells[item.group].el.classList.remove("hit");
   }
-  function typeNext() {
-    var item = items[idx];
-    var pos = 0;
-    typed.textContent = "";
-    var t = setInterval(function () {
-      typed.textContent = item.text.slice(0, ++pos);
-      if (pos >= item.text.length) {
-        clearInterval(t);
-        setTimeout(function () { show(item); }, 500);
-        setTimeout(function () {
-          hide(item);
-          typed.textContent = "";
-          idx = (idx + 1) % items.length;
-          if (idx === 0) {
-            groups.forEach(function (g) {
-              var cell = cells[g.name];
-              cell.count = cell.base;
-              cell.el.querySelector(".count").textContent = cell.base;
-            });
-          }
-          setTimeout(typeNext, 700);
-        }, 3200);
-      }
-    }, 45);
+  /* The card sits centered beside the hero copy, so every pixel it grows shifts the whole
+     section - it has to stay one size while the status block opens and closes underneath.
+     Pin it to its tallest state and the slack ends up under the grid, reading as card
+     padding instead of a hole mid-content. Measured, not hardcoded: the block wraps
+     differently at every width and the fonts belong to the visitor. */
+  function pinCardHeight() {
+    var wasOpen = status.classList.contains("open");
+    card.style.minHeight = "";
+    if (!wasOpen) {
+      buildAlts(items[0]);
+      status.style.transition = "none";
+      status.classList.add("open");
+    }
+    /* Both states share one grid cell, so an open slot is always as tall as the taller
+       of the two, whichever one happens to be visible. */
+    var tallest = card.getBoundingClientRect().height;
+    if (!wasOpen) {
+      status.classList.remove("open");
+      void status.offsetHeight;
+      status.style.transition = "";
+    }
+    card.style.minHeight = Math.ceil(tallest) + "px";
   }
-  setTimeout(typeNext, 800);
+  /* Nothing is ever typed here: the field waits empty, the clipboard bubble comes
+     up and the whole link lands in one go. Pasting is what the app asks of you,
+     so the demo should never show a character-by-character crawl. */
+  function pasteNext() {
+    var item = items[idx];
+    typed.textContent = "";
+    ph.hidden = false;
+    setTimeout(function () { pop.classList.add("show"); }, 850);
+    setTimeout(function () { pop.classList.add("tap"); }, 1750);
+    setTimeout(function () {
+      pop.classList.remove("show");
+      pop.classList.remove("tap");
+      ph.hidden = true;
+      typed.textContent = item.text;
+      input.classList.add("pasted");
+      setTimeout(function () { input.classList.remove("pasted"); }, 500);
+    }, 1900);
+    /* A beat after the value lands, or the press reads as part of the paste itself
+       and the eye never registers the button being hit. */
+    setTimeout(function () {
+      add.classList.add("tap");
+      setTimeout(function () { add.classList.remove("tap"); }, 620);
+    }, 2800);
+    /* The sort is the product, so the demo sits in it rather than cutting to the
+       result: the + becomes a spinner and the app's own "reading it" card runs for
+       1.5s - long enough to register as work, short enough not to stall the loop. */
+    setTimeout(function () {
+      add.classList.add("busy");
+      status.classList.add("open");
+      think.classList.add("show");
+    }, 2950);
+    setTimeout(function () {
+      add.classList.remove("busy");
+      think.classList.remove("show");
+      show(item);
+    }, 4450);
+    setTimeout(function () {
+      hide(item);
+      typed.textContent = "";
+      ph.hidden = false;   /* back with the value, or the field blinks blank between rounds */
+      idx = (idx + 1) % items.length;
+      if (idx === 0) {
+        groups.forEach(function (g) {
+          var cell = cells[g.name];
+          cell.count = cell.base;
+          cell.el.querySelector(".count").textContent = cell.base;
+        });
+      }
+      setTimeout(pasteNext, 700);
+    }, 7050);   /* the saved line holds ~2.6s, same as before the sort step was added */
+  }
+  pinCardHeight();
+  var resizeTimer;
+  window.addEventListener("resize", function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(pinCardHeight, 200);
+  });
+  setTimeout(pasteNext, 800);
 })();
 </script>
 
