@@ -166,7 +166,7 @@
     display: inline-block; text-decoration: none; font-family: var(--font-display);
     font-weight: 600; font-size: 15px; padding: 10px 20px; border-radius: 999px;
     background: var(--accent-fill); color: #fff; border: 1px solid transparent;
-    transition: background .15s;
+    white-space: nowrap; transition: background .15s;
   }
   .btn:hover { background: color-mix(in srgb, var(--accent-fill) 84%, #000); }
   .btn:focus-visible, a:focus-visible, .theme-btn:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; }
@@ -475,6 +475,8 @@
     .hero .wrap { grid-template-columns: 1fr; gap: 44px; }
     .steps, .features { grid-template-columns: 1fr; }
     .nav a.link { display: none; }
+    .nav { gap: 14px; }
+    .nav .btn { padding: 9px 15px; font-size: 14px; }
     section { padding: 64px 0; }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -970,7 +972,7 @@
     <span>·</span>
     <a href="https://assorta.fider.io/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">Feedback</a>
     <span>·</span>
-    <a id="email-link" href="#" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">Email us</a>
+    <a id="email-link" href="#" style="color:inherit;text-decoration:none">Email us</a>
     <span>·</span>
     <span>Android · iOS · Web</span>
   </div>
@@ -1213,7 +1215,7 @@
   var addr = user + "@" + domain;
   var link = document.getElementById("email-link");
   if (link) {
-    link.href = "https://mail.google.com/mail/?view=cm&fs=1&to=" + encodeURIComponent(addr);
+    link.href = "mailto:" + addr;
   }
 })();
 </script>
