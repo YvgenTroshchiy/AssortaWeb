@@ -1,0 +1,4 @@
+
+# Symlinks to the machine-local global agent rules (~/.claude)
+.ai/global-rules
+.ai/global-stacks
