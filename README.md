@@ -3,12 +3,13 @@
 Marketing landing page for [Assorta](../AssortaKMP) — a fast, AI-sorted
 inbox for notes and links (Android, iOS, Web).
 
-The page is a single self-contained `index.html`: no build step, no external
-assets, inline CSS/JS, brand colors and logo taken from `AssortaKMP/brand/`.
+Four self-contained pages — `index.html`, `privacy.html`, `terms.html`,
+`delete-account.html`: no build step, no external assets, inline CSS/JS, brand
+colors and logo taken from `AssortaKMP/brand/`.
 
 ## Theming
 
-Both pages support light and dark, matching the app. The palette mirrors
+All four pages support light and dark, matching the app. The palette mirrors
 `AssortaKMP/.../ui/theme/SemanticColor.kt` — dark is the CSS default (so it
 survives JS being off), light overrides it under `:root[data-theme="light"]`.
 An inline script in `<head>` stamps `data-theme` before first paint: it follows
@@ -25,8 +26,9 @@ hues are user data and identical in the app's two palettes, so they are never
 themed - including the low-luminance ones like Stone `#78716C` on the Auto group,
 which stays dim on dark exactly as it does in the app.
 
-`index.html` and `privacy.html` each carry their own copy of the tokens, the
-toggle and the script — keep the two in sync when editing either.
+Every page carries its own copy of the theme tokens, the toggle and the script
+(`index.html` has the full palette, the three text pages a 19-variable subset) —
+when editing the theming on one page, sweep all four.
 
 ## llms.txt
 

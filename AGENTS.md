@@ -21,6 +21,7 @@ directly** - they live outside this repository, in the user's home directory.
 - [`~/.claude/rules/communication.md`](.ai/global-rules/communication.md)
 - [`~/.claude/rules/git.md`](.ai/global-rules/git.md)
 - [`~/.claude/rules/planning.md`](.ai/global-rules/planning.md)
+- [`~/.claude/rules/testing.md`](.ai/global-rules/testing.md) - ask before creating persistent test data, or clean it up
 - [`~/.claude/rules/comments.md`](.ai/global-rules/comments.md)
 - [`~/.claude/rules/naming.md`](.ai/global-rules/naming.md)
 - [`~/.claude/rules/i18n.md`](.ai/global-rules/i18n.md)
@@ -32,9 +33,9 @@ Empty placeholder: no reusable web rules have been written yet.
 **This project only**
 
 There is no `.ai/rules/` folder yet. Existing project conventions are in [README.md](README.md) -
-the theming setup, and the rule that `index.html` and `privacy.html` each carry their own copy of the
-theme tokens, toggle and script, so both must be updated together. Read it before editing markup or
-styles.
+the theming setup, and the rule that every page (`index.html`, `privacy.html`, `terms.html`,
+`delete-account.html`) carries its own copy of the theme tokens, toggle and script, so a theming
+edit must sweep all four. Read it before editing markup or styles.
 
 ## Skills
 

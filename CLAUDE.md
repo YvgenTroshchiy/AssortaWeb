@@ -7,7 +7,7 @@ Marketing landing page for Assorta. Hand-written static site: `index.html`, `pri
 
 | Layer | Where | How it loads |
 | --- | --- | --- |
-| Global, always-on | [`~/.claude/rules/`](.ai/global-rules) | automatically in every project - communication, git, planning, comments, naming, i18n |
+| Global, always-on | [`~/.claude/rules/`](.ai/global-rules) | automatically in every project - communication, git, planning, testing, comments, naming, i18n |
 | Global, this stack | [`~/.claude/stacks/web.md`](.ai/global-stacks/web.md) | **empty placeholder** - no reusable web rules written yet, so nothing is imported here |
 | This project only | `.ai/rules/` | does not exist yet - create it when a rule is worth writing down |
 
@@ -15,8 +15,9 @@ The always-on rules are **not** copied into this repository on purpose: one shar
 [`~/.claude/rules/`](.ai/global-rules) is the whole point, and a second copy would drift out of sync within weeks.
 
 Project conventions that already exist are documented in [README.md](README.md) - the theming setup,
-and the rule that `index.html` and `privacy.html` each carry their own copy of the theme tokens,
-toggle and script, so both must be updated together. Read it before editing markup or styles.
+and the rule that every page (`index.html`, `privacy.html`, `terms.html`, `delete-account.html`)
+carries its own copy of the theme tokens, toggle and script, so a theming edit must sweep all four.
+Read it before editing markup or styles.
 
 When a rule shows up that a *second* web project would also want (markup and asset structure,
 SEO/`sitemap.xml`/`llms.txt` upkeep, deploy and redirect handling, accessibility baseline), put it in
