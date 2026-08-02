@@ -12,19 +12,14 @@ Marketing landing page for Assorta. Hand-written static site: `index.html`, `pri
 
 ## Where the rules live
 
-Claude Code loads the global rules through `CLAUDE.md`; **every other agent must read these files
+Claude Code loads the global rules through `CLAUDE.md`; **every other agent must read them
 directly** - they live outside this repository, in the user's home directory.
 
-**Global, applies to every project - [`~/.claude/rules/`](.ai/global-rules)**
+**Global, applies to every project - every `.md` in [`~/.claude/rules/`](.ai/global-rules)**
 
-- [`~/.claude/rules/instructions.md`](.ai/global-rules/instructions.md) - where a durable instruction gets written down
-- [`~/.claude/rules/communication.md`](.ai/global-rules/communication.md)
-- [`~/.claude/rules/git.md`](.ai/global-rules/git.md)
-- [`~/.claude/rules/planning.md`](.ai/global-rules/planning.md)
-- [`~/.claude/rules/testing.md`](.ai/global-rules/testing.md) - ask before creating persistent test data, or clean it up
-- [`~/.claude/rules/comments.md`](.ai/global-rules/comments.md)
-- [`~/.claude/rules/naming.md`](.ai/global-rules/naming.md)
-- [`~/.claude/rules/i18n.md`](.ai/global-rules/i18n.md)
+List that directory and read everything in it, rather than trusting a list of filenames written
+here: such a list goes stale the moment a rule is added, and the rule nobody copied into it is the
+rule nobody reads. The global entry point for agents outside a repository is `~/.claude/AGENTS.md`.
 
 **Global, this stack - [`~/.claude/stacks/web.md`](.ai/global-stacks/web.md)**
 

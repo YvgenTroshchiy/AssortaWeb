@@ -7,6 +7,13 @@ Four self-contained pages — `index.html`, `privacy.html`, `terms.html`,
 `delete-account.html`: no build step, no external assets, inline CSS/JS, brand
 colors and logo taken from `AssortaKMP/brand/`.
 
+The only files the pages load from the server are the favicons at the root —
+`favicon.svg` (what Chrome shows in the tab), `favicon-32.png` (fallback for
+browsers without SVG icon support) and `favicon-180.png` (iOS home screen).
+They are copies of the same files in `AssortaKMP/webApp/src/webMain/resources/`,
+generated from `AssortaKMP/brand/logo-icon-favicon.svg`; all four pages link
+them by absolute path, so a new page must carry the same three `<link>` tags.
+
 ## Theming
 
 All four pages support light and dark, matching the app. The palette mirrors
