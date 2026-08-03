@@ -4,7 +4,7 @@
 
 You save from the system share sheet on Android and iOS, or paste straight into the app. AI reads what the item is and files it into one of 30+ ready-made groups — Travel, Cooking, Wish list, Movies, Health, Work and more — with no folders to create and no tags to manage. Get the group wrong and one tap changes it. Saved links keep their thumbnail and title, saving finishes in the background, and everything syncs across Android, iOS and the web. Light and dark themes; English, Ukrainian, Russian, Spanish, French and German.
 
-Assorta has not shipped yet. The apps are coming soon to the App Store, Google Play and the web, and the only way in today is the waitlist.
+Assorta is out on Google Play for Android. The iOS and web versions are coming soon, and the waitlist is the way in for those.
 
 ## Pages
 
@@ -14,7 +14,8 @@ Assorta has not shipped yet. The apps are coming soon to the App Store, Google P
 
 ## Product
 
-- [Join the waitlist](https://forms.gle/514Lhi45PJmxCVHy5): Google Form — we email the invite when the apps are ready.
+- [Assorta on Google Play](https://play.google.com/store/apps/details?id=com.troshchiy.assorta): The Android app — live, free to install.
+- [Join the waitlist](https://forms.gle/514Lhi45PJmxCVHy5): Google Form — we email the invite when the iOS and web versions are ready.
 - [Feedback board](https://assorta.fider.io/): Public board for suggesting features and voting on what we build next.
 
 ## Optional
