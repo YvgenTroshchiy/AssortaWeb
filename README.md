@@ -11,8 +11,10 @@ The only files the pages load from the server are the favicons at the root —
 `favicon.svg` (what Chrome shows in the tab), `favicon-32.png` (fallback for
 browsers without SVG icon support) and `favicon-180.png` (iOS home screen).
 They are copies of the same files in `AssortaKMP/webApp/src/webMain/resources/`,
-generated from `AssortaKMP/brand/logo-icon-favicon.svg`; all four pages link
-them by absolute path, so a new page must carry the same three `<link>` tags.
+generated from `AssortaKMP/brand/logo-icon-favicon.svg`; a new page must carry
+the same three `<link>` tags. The paths are **relative** (`favicon.svg`, not
+`/favicon.svg`) so that the icon also shows when a page is opened straight from
+disk over `file://` — every page lives in the root, so nothing nests.
 
 ## Theming
 
