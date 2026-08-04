@@ -190,7 +190,9 @@
 
   /* ---- hero ---- */
   .hero {
-    padding: 84px 0 96px;
+    /* Bottom matches the section rhythm, top is larger on purpose - the hero is the
+       one block that opens against the nav and wants the air. */
+    padding: 84px 0 64px;
     background:
       radial-gradient(900px 480px at 12% -10%, color-mix(in srgb, #4f46e5 var(--glow-1), transparent), transparent 70%),
       radial-gradient(700px 420px at 95% 8%, color-mix(in srgb, var(--purple) var(--glow-2), transparent), transparent 70%);
@@ -417,7 +419,7 @@
   }
 
   /* ---- sections ---- */
-  section { padding: 88px 0; }
+  section { padding: 64px 0; }
   section.alt { background: color-mix(in srgb, var(--panel) 32%, var(--bg)); }
   .kicker {
     font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
@@ -474,13 +476,13 @@
   footer .spacer { margin-left: auto; }
 
   @media (max-width: 880px) {
-    .hero { padding: 56px 0 72px; }
+    .hero { padding: 56px 0 48px; }
     .hero .wrap { grid-template-columns: 1fr; gap: 44px; }
     .steps, .features { grid-template-columns: 1fr; }
     .nav a.link { display: none; }
     .nav { gap: 14px; }
     .nav .btn { padding: 9px 15px; font-size: 14px; }
-    section { padding: 64px 0; }
+    section { padding: 48px 0; }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
@@ -488,10 +490,55 @@
     .cell.hit { transform: none; }
   }
 
+  /* ---- demo video ---- */
+  .video .wrap { display: grid; grid-template-columns: minmax(0, 300px) 1fr; gap: 52px; align-items: center; }
+  .video .lede { margin-bottom: 28px; }
+  .video .yt-note { margin-top: 20px; font-size: 15px; color: var(--text-dim); }
+  .video .yt-note a { color: var(--indigo-bright); text-decoration: none; font-weight: 600; }
+  .video .yt-note a:hover { text-decoration: underline; }
+  /* Click-to-play facade: the <iframe> is built by script on click, never in the markup.
+     A live embed pulls ~600KB of YouTube JS and sets its cookies on every visitor,
+     including the ones who never press play - and this page carries no consent banner
+     to cover that. The box is the source video's own 544x1080, not 9:16: the Short is a
+     simulator recording and is taller than a phone, so a 9:16 frame would letterbox it. */
+  .yt {
+    position: relative; aspect-ratio: 544 / 1080; overflow: hidden;
+    border-radius: 26px; background: #000;
+    box-shadow: 0 30px 60px -30px var(--app-phone-shadow), 0 0 0 1px var(--app-phone-ring);
+  }
+  .yt > img, .yt > iframe { display: block; width: 100%; height: 100%; border: 0; object-fit: cover; }
+  .yt-btn {
+    position: absolute; inset: 0; display: grid; place-items: center;
+    padding: 0; border: 0; background: none; cursor: pointer;
+  }
+  .yt-btn .play {
+    width: 66px; height: 46px; border-radius: 14px; background: rgba(16,14,32,.72);
+    display: grid; place-items: center; transition: background .15s ease, transform .15s ease;
+  }
+  .yt-btn .play svg { display: block; width: 21px; height: 23px; fill: #fff; }
+  .yt-btn:hover .play, .yt-btn:focus-visible .play { background: var(--accent-fill); transform: scale(1.07); }
+  .yt-btn:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: -4px; }
+  /* Top right, not the usual bottom right: the video's webcam bubble sits in that
+     corner and the badge landed on top of the speaker's face. */
+  .yt-dur {
+    position: absolute; right: 10px; top: 10px; pointer-events: none;
+    padding: 3px 7px; border-radius: 7px; background: rgba(0,0,0,.7);
+    color: #fff; font-family: var(--font-mono); font-size: 12px; line-height: 1.2;
+  }
+  /* Its own breakpoint block, not the shared one above: that block is earlier in the
+     sheet, so at equal specificity these rules would win over it and the section would
+     never stack. Narrow screens read the pitch first, then the video. */
+  @media (max-width: 880px) {
+    .video .wrap { grid-template-columns: 1fr; gap: 34px; }
+    .video .video-copy { order: -1; }
+    .video .yt { width: 100%; max-width: 270px; margin: 0 auto; }
+  }
+
   /* ---- screens carousel ---- */
+  /* No padding of its own - it is a <section> and takes the shared rhythm, so the
+     breakpoint that tightens every other section tightens this one too. */
   .screens {
     --thumb-radius:14px;
-    padding: 88px 0;
     background: color-mix(in srgb, var(--panel) 32%, var(--bg));
     overflow: hidden;
   }
@@ -730,6 +777,7 @@
       </svg>
       Assorta
     </a>
+    <a class="link" href="#demo">Demo</a>
     <a class="link" href="#how">How it works</a>
     <a class="link" href="#features">Features</a>
     <a class="link" href="#screens">Screens</a>
@@ -783,6 +831,25 @@
     <p><span class="spark" aria-hidden="true">✦</span>Out now on Google Play. The App Store and the web are coming soon.<span class="dim"> We're putting on the finishing touches.</span></p>
   </div>
 </div>
+
+<section class="video" id="demo">
+  <div class="wrap">
+    <div class="yt">
+      <img src="screens/img/demo-poster.webp" alt="" width="600" height="1192" loading="lazy" decoding="async">
+      <button class="yt-btn" id="yt-btn" type="button" aria-label="Play the Assorta demo video, 1 minute 19 seconds">
+        <span class="play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"/></svg></span>
+      </button>
+      <span class="yt-dur" aria-hidden="true">1:19</span>
+    </div>
+    <div class="video-copy">
+      <p class="kicker">Demo</p>
+      <h2>Watch a link land in the right group</h2>
+      <p class="lede">Just over a minute through the app: a link goes in, AI reads it and files it, and it is sitting in the right group when you come looking. Nothing to name, nothing to tag, no folders to keep tidy.</p>
+      <a class="btn btn-lg" href="https://forms.gle/514Lhi45PJmxCVHy5" target="_blank" rel="noopener">Join the waitlist →</a>
+      <p class="yt-note">Prefer YouTube? <a href="https://www.youtube.com/shorts/PPgkt6AJgl8" target="_blank" rel="noopener">Watch it there ↗</a></p>
+    </div>
+  </div>
+</section>
 
 <section class="screens" id="screens">
   <div class="wrap">
@@ -1168,6 +1235,25 @@
       e.preventDefault();
       soon(el.getAttribute("data-soon"));
     });
+  });
+})();
+
+// DEMO VIDEO
+// The player is built on the click and not before: a markup <iframe> would load
+// YouTube's script and set its cookies for every visitor, watchers or not, and this
+// page has no consent banner to cover that. -nocookie holds the rest back until play.
+(function () {
+  var btn = document.getElementById("yt-btn");
+  if (!btn) return;
+  btn.addEventListener("click", function () {
+    var card = btn.parentNode;
+    var frame = document.createElement("iframe");
+    frame.src = "https://www.youtube-nocookie.com/embed/PPgkt6AJgl8?autoplay=1&rel=0&playsinline=1";
+    frame.title = "Assorta demo";
+    frame.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share";
+    frame.allowFullscreen = true;
+    card.innerHTML = "";
+    card.appendChild(frame);
   });
 })();
 
