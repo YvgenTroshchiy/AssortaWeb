@@ -2,7 +2,7 @@
 
 > Assorta is one fast inbox for links, notes and ideas. Drop anything in — AI files it into the right group, so you find it in seconds. Android, iOS and web.
 
-You save from the system share sheet on Android and iOS, or paste straight into the app. AI reads what the item is and files it into one of 30+ ready-made groups — Travel, Cooking, Wish list, Movies, Health, Work and more — with no folders to create and no tags to manage. Get the group wrong and one tap changes it. Saved links keep their thumbnail and title, saving finishes in the background, and everything syncs across Android, iOS and the web. Light and dark themes; English, Ukrainian, Russian, Spanish, French and German.
+You save from the system share sheet on Android and iOS, or paste straight into the app. AI reads what the item is and files it into one of 30+ ready-made groups — Travel, Cooking, Wish list, Movies, Health, Work and more — with no folders to create and no tags to manage. Get the group wrong and one tap changes it. Saved links keep their thumbnail and title, saving finishes in the background, and everything syncs across Android, iOS and the web. Light and dark themes; thirteen languages — English, Ukrainian, German, Spanish, French, Italian, Portuguese (Brazil), Polish, Turkish, Indonesian, Japanese, Korean and Arabic.
 
 Assorta is out on Google Play for Android. The iOS and web versions are coming soon, and the waitlist is the way in for those.
 
