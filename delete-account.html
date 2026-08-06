@@ -175,7 +175,7 @@
   <div class="wrap">
     <div class="eyebrow">Account</div>
     <h1>Delete your Assorta account</h1>
-    <p class="updated">Last updated: July 21, 2026</p>
+    <p class="updated">Last updated: August 6, 2026</p>
 
     <p>This page explains how to delete your <strong>Assorta</strong> account and the data that
       goes with it, and what happens to anything that is kept. It applies to the Assorta app on
@@ -183,8 +183,9 @@
 
     <div class="callout">
       In short: open <strong>Settings → Delete account</strong> in the app. Your account, your
-      saved notes on that device, and your purchase record are removed. Deleting the account does
-      <strong>not</strong> cancel a paid subscription — cancel that in Google Play or the App Store.
+      saved notes on that device, and the purchase record tied to that account are removed.
+      Deleting the account does <strong>not</strong> cancel a paid subscription — cancel that in
+      Google Play or the App Store.
     </div>
 
     <div class="toc">
@@ -227,7 +228,10 @@
       <li><strong>Your account</strong> — email address, name and account identifier, held by
         Google Firebase, together with your password if you signed up with one.</li>
       <li><strong>Your purchase record</strong> — subscription status and purchase identifier,
-        held by RevenueCat.</li>
+        held by RevenueCat. A subscription bought <em>without</em> an account is the exception: it
+        hangs on an anonymous installation identifier that no account owns, so the in-app deletion
+        cannot reach it. Sign in before you delete, and the record is attached to your account and
+        goes with it.</li>
       <li><strong>Your notes and links</strong> stored on the device you delete the account from,
         along with the settings tied to your account on it.</li>
     </ul>
