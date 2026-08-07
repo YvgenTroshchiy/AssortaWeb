@@ -183,7 +183,8 @@
 
     <div class="callout">
       In short: open <strong>Settings → Delete account</strong> in the app. Your account, your
-      saved notes on that device, and the purchase record tied to that account are removed.
+      saved notes on that device, and the purchase record tied to that account are removed; a
+      subscription bought without an account can stay behind, under an anonymous identifier.
       Deleting the account does <strong>not</strong> cancel a paid subscription — cancel that in
       Google Play or the App Store.
     </div>
@@ -213,7 +214,9 @@
         lost phone cannot erase your account.</li>
     </ul>
     <p class="dim">Guest users have no account to delete. If you never signed in, removing the app
-      removes everything you saved.</p>
+      removes everything you saved on that device — except a subscription bought without an
+      account, which stays with RevenueCat under an anonymous identifier (see
+      <a href="#kept">what is kept</a>).</p>
 
     <h2 id="by-email">2. Ask us to delete it</h2>
     <p>If you have already removed the app, cannot sign in, or would simply rather we did it,
@@ -230,8 +233,11 @@
       <li><strong>Your purchase record</strong> — subscription status and purchase identifier,
         held by RevenueCat. A subscription bought <em>without</em> an account is the exception: it
         hangs on an anonymous installation identifier that no account owns, so the in-app deletion
-        cannot reach it. Sign in before you delete, and the record is attached to your account and
-        goes with it.</li>
+        cannot reach it. Signing in before you delete asks RevenueCat to attach that purchase to
+        your account, but an account can take over an anonymous purchase only once, so this does
+        not always succeed. When it does not, the subscription stays under the anonymous
+        identifier, and <strong>Settings → Assorta Pro → Upgrade → Restore</strong> in the app is
+        what moves it to the account you are signed into.</li>
       <li><strong>Your notes and links</strong> stored on the device you delete the account from,
         along with the settings tied to your account on it.</li>
     </ul>
@@ -246,6 +252,13 @@
 
     <h2 id="kept">4. What is kept</h2>
     <ul>
+      <li><strong>A purchase made without an account</strong> — the subscription status and
+        purchase identifier of a subscription bought as a guest, held by RevenueCat under an
+        anonymous installation identifier. No account owns it, so there is nothing we can look up
+        on your behalf that points at it, and removing it would break your ability to restore a
+        subscription you are still paying for. It carries no name, email address or payment
+        details. To be rid of it, cancel the subscription in Google Play or the App Store — see
+        <a href="#subscription">Your subscription</a>.</li>
       <li><strong>Diagnostics and usage analytics</strong> — crash reports and app-usage events
         collected through Firebase Crashlytics and Firebase Analytics. These are not deleted by
         the in-app flow. They are held by Google under Firebase's own retention windows and are
