@@ -1,21 +1,21 @@
 # Assorta
 
-> Assorta is one fast inbox for links, notes and ideas. Drop anything in — AI files it into the right group, so you find it in seconds. Android, iOS and web.
+> Assorta is one fast inbox for links, notes and ideas. Drop anything in — AI files it into the right group, so you find it in seconds. Android and iOS.
 
 You save from the system share sheet on Android and iOS, or paste straight into the app. AI reads what the item is and files it into one of 30+ ready-made groups — Travel, Cooking, Wish list, Movies, Health, Work and more — with no folders to create and no tags to manage. Get the group wrong and one tap changes it. Saved links keep their thumbnail and title, and saving finishes in the background. Notes stay on the device you saved them on; syncing between devices is not available yet. Light and dark themes; thirteen languages — English, Ukrainian, German, Spanish, French, Italian, Portuguese (Brazil), Polish, Turkish, Indonesian, Japanese, Korean and Arabic.
 
-Assorta is out on Google Play for Android. The iOS and web versions are coming soon, and the waitlist is the way in for those.
+Assorta is out on Google Play for Android and on the App Store for iPhone and iPad. Both are free to install.
 
 ## Pages
 
-- [Home](https://assorta.app/): What Assorta is, a demo video, how it works, the feature list, screenshots of the app, and the waitlist call to action.
+- [Home](https://assorta.app/): What Assorta is, a demo video, how it works, the feature list, screenshots of the app, and the store links.
 - [Privacy Policy](https://assorta.app/privacy.html): What we collect, how AI classification handles saved content, third parties, storage and retention, your rights, and how to delete your data.
 - [Delete your account](https://assorta.app/delete-account.html): How to delete an Assorta account from the app or by email, what data is deleted or kept, and why deleting the account does not cancel a paid subscription.
 
 ## Product
 
 - [Assorta on Google Play](https://play.google.com/store/apps/details?id=com.troshchiy.assorta): The Android app — live, free to install.
-- [Join the waitlist](https://forms.gle/514Lhi45PJmxCVHy5): Google Form — we email the invite when the iOS and web versions are ready.
+- [Assorta on the App Store](https://apps.apple.com/app/id6791126062): The iOS app — live, free to install.
 - [Feedback board](https://assorta.fider.io/): Public board for suggesting features and voting on what we build next.
 
 ## Optional

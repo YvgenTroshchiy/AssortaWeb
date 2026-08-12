@@ -91,8 +91,7 @@ python3 -m http.server 8080
 ## Before going live
 
 - [ ] Replace the placeholder store badges (`.store-badge`) with the official
-      App Store / Google Play badge artwork and real store URLs.
-- [ ] Point "try the web app" at the deployed web app URL.
+      App Store / Google Play badge artwork. Both store URLs are real.
 - [ ] Add analytics (if wanted) and a favicon/OG image.
 - [ ] Hook up hosting (Firebase Hosting fits the existing project setup).
 
