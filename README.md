@@ -68,6 +68,23 @@ Note that the address is in plain text here, unlike `privacy.html`, which assemb
 it in JS to keep it out of the page source. A security contact that a scraper cannot
 read is useless, so the anti-scraping trick is deliberately not applied.
 
+## The operator address and Cloudflare email obfuscation
+
+`index.html`, `privacy.html` and `terms.html` name the operator (`Individual Entrepreneur
+Yevhen Troshchii, Odesa, Ukraine`) with `contact@assorta.app` in plain text. That address has
+to be readable without JavaScript: a Google Ads policy reviewer looks for contact information
+in the page source, and the account was suspended once under Unacceptable business practices
+with the site carrying no contact details a crawler could see.
+
+Cloudflare's Scrape Shield rewrites any plain address it finds into `[email protected]` plus a
+JS decoder, which reintroduces exactly that problem. The three operator blocks are therefore
+wrapped in `<!--email_off--> … <!--email_on-->`, the documented opt-out. Keep the markers on any
+new plain-text address, and do not "clean them up" as stray comments.
+
+The JS-assembled `email-link` used elsewhere on those pages stays as it is - it is an
+anti-scraping measure for the general contact link, and each occurrence has a `<noscript>`
+fallback spelling the address out.
+
 ## robots.txt and sitemap.xml
 
 `robots.txt` opens the whole site to crawlers and names the sitemap; `sitemap.xml`
