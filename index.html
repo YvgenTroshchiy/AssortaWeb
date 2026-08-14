@@ -467,6 +467,14 @@
   footer { border-top: 1px solid var(--line); padding: 34px 0; }
   footer .wrap { display: flex; align-items: center; gap: 14px; color: var(--text-dim); font-size: 14px; }
   footer .spacer { margin-left: auto; }
+  #about { padding-bottom: 76px; }
+  #about .lede { max-width: none; margin-bottom: 34px; }
+  #about .operator-intro { color: var(--text-dim); margin-bottom: 10px; }
+  #about .operator { font-style: normal; line-height: 1.7; }
+  #about .operator a { color: inherit; }
+  footer .wrap.fine { display: block; margin-top: 16px; font-size: 12.5px; line-height: 1.55; }
+  footer .wrap.fine p { margin: 0 0 6px; }
+  footer .wrap.fine p:last-child { margin-bottom: 0; }
 
   @media (max-width: 880px) {
     .hero { padding: 56px 0 48px; }
@@ -742,6 +750,7 @@
     <a class="link" href="#how">How it works</a>
     <a class="link" href="#features">Features</a>
     <a class="link" href="#screens">Screens</a>
+    <a class="link" href="#about">About</a>
     <button class="theme-btn" id="theme-btn" type="button">
       <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.1M12 19.3v2.1M4.35 4.35l1.5 1.5M18.15 18.15l1.5 1.5M2.6 12h2.1M19.3 12h2.1M4.35 19.65l1.5-1.5M18.15 5.85l1.5-1.5"/></svg>
       <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.4A8.5 8.5 0 0 1 9.6 3.5a8.5 8.5 0 1 0 10.9 10.9z"/></svg>
@@ -983,6 +992,22 @@
     <p class="suggest">Have an idea for Assorta? <a href="https://assorta.fider.io/" target="_blank" rel="noopener">Leave a suggestion and vote on what we build next →</a></p>
   </div>
 </section>
+
+<section id="about">
+  <div class="wrap">
+    <p class="kicker">About</p>
+    <h2>Who makes Assorta</h2>
+    <p class="lede">Assorta is a notes and links app for Android, iPhone and iPad, free to install
+      and free to use. Assorta&nbsp;Pro is an optional subscription that lifts the limit on AI
+      sorting, billed by Apple or Google.</p>
+    <p class="operator-intro">Assorta is developed and operated by:</p>
+    <address class="operator">
+      Individual Entrepreneur Yevhen Troshchii<br>
+      Odesa, Ukraine<br>
+      <a href="mailto:contact@assorta.app">contact@assorta.app</a>
+    </address>
+  </div>
+</section>
 </main>
 
 <footer>
@@ -997,9 +1022,17 @@
     <span>·</span>
     <a href="https://assorta.fider.io/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">Feedback</a>
     <span>·</span>
-    <a id="email-link" href="#" style="color:inherit;text-decoration:none">Email us</a>
+    <a id="email-link" href="#" style="color:inherit;text-decoration:none">Email us</a><noscript> (contact [at] assorta [dot] app)</noscript>
     <span>·</span>
     <span>Android · iOS</span>
+  </div>
+  <div class="wrap fine">
+    <p>Third-party brand names, logos, links and preview images on this page are examples of the
+      content you can save with Assorta - the kind of thing a person drops into the app - except
+      for the App&nbsp;Store and Google&nbsp;Play badges, which link to the stores the app is
+      published on. All of them remain the property of their owners. Assorta is an independent app:
+      it is not affiliated with, endorsed by or sponsored by any of the brands shown, none of them
+      are involved in it, and it never presents itself as any of them.</p>
   </div>
 </footer>
 
