@@ -1,7 +1,7 @@
 # AssortaWeb
 
 Marketing landing page for [Assorta](../AssortaKMP) — a fast, AI-sorted
-inbox for notes and links (Android, iOS, Web).
+inbox for notes and links (Android, iOS).
 
 Four self-contained pages — `index.html`, `privacy.html`, `terms.html`,
 `delete-account.html`: no build step, no external assets, inline CSS/JS, brand
