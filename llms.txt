@@ -20,7 +20,7 @@ Assorta is out on Google Play for Android and on the App Store for iPhone and iP
 
 ## Optional
 
-- [Demo](https://assorta.app/#demo): A 1:19 video of the app — a link goes in, AI files it into a group, it is there when you look for it. Also on YouTube: https://www.youtube.com/shorts/PPgkt6AJgl8
+- [Demo](https://assorta.app/#demo): A 0:38 video of the app — a link goes in, AI files it into a group, it is there when you look for it. Also on YouTube: https://www.youtube.com/shorts/3O2_t6-izoU
 - [How it works](https://assorta.app/#how): The three steps — drop it in, AI files it, find it fast.
 - [Features](https://assorta.app/#features): Share-sheet saving, 30+ smart groups, link previews, background saves, theming and languages.
 - [Screens](https://assorta.app/#screens): Five annotated screenshots walking through a save, from the share sheet to the group.

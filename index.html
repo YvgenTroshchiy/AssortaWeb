@@ -500,10 +500,10 @@
   /* Click-to-play facade: the <iframe> is built by script on click, never in the markup.
      A live embed pulls ~600KB of YouTube JS and sets its cookies on every visitor,
      including the ones who never press play - and this page carries no consent banner
-     to cover that. The box is the source video's own 544x1080, not 9:16: the Short is a
+     to cover that. The box is the source video's own 540x1080, not 9:16: the Short is a
      simulator recording and is taller than a phone, so a 9:16 frame would letterbox it. */
   .yt {
-    position: relative; aspect-ratio: 544 / 1080; overflow: hidden;
+    position: relative; aspect-ratio: 540 / 1080; overflow: hidden;
     border-radius: 26px; background: #000;
     box-shadow: 0 30px 60px -30px var(--app-phone-shadow), 0 0 0 1px var(--app-phone-ring);
   }
@@ -800,18 +800,18 @@
 <section class="video" id="demo">
   <div class="wrap">
     <div class="yt">
-      <img src="screens/img/demo-poster.webp" alt="" width="600" height="1192" loading="lazy" decoding="async">
-      <button class="yt-btn" id="yt-btn" type="button" aria-label="Play the Assorta demo video, 1 minute 19 seconds">
+      <img src="screens/img/demo-poster.webp" alt="" width="600" height="1200" loading="lazy" decoding="async">
+      <button class="yt-btn" id="yt-btn" type="button" aria-label="Play the Assorta demo video, 38 seconds">
         <span class="play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"/></svg></span>
       </button>
-      <span class="yt-dur" aria-hidden="true">1:19</span>
+      <span class="yt-dur" aria-hidden="true">0:38</span>
     </div>
     <div class="video-copy">
       <p class="kicker">Demo</p>
       <h2>Watch a link land in the right group</h2>
-      <p class="lede">Just over a minute through the app: a link goes in, AI reads it and files it, and it is sitting in the right group when you come looking. Nothing to name, nothing to tag, no folders to keep tidy.</p>
+      <p class="lede">Under forty seconds through the app: a link goes in, AI reads it and files it, and it is sitting in the right group when you come looking. Nothing to name, nothing to tag, no folders to keep tidy.</p>
       <a class="btn btn-lg" href="#get">Get Assorta →</a>
-      <p class="yt-note">Prefer YouTube? <a href="https://www.youtube.com/shorts/PPgkt6AJgl8" target="_blank" rel="noopener">Watch it there ↗</a></p>
+      <p class="yt-note">Prefer YouTube? <a href="https://www.youtube.com/shorts/3O2_t6-izoU" target="_blank" rel="noopener">Watch it there ↗</a></p>
     </div>
   </div>
 </section>
@@ -1220,7 +1220,7 @@
   btn.addEventListener("click", function () {
     var card = btn.parentNode;
     var frame = document.createElement("iframe");
-    frame.src = "https://www.youtube-nocookie.com/embed/PPgkt6AJgl8?autoplay=1&rel=0&playsinline=1";
+    frame.src = "https://www.youtube-nocookie.com/embed/3O2_t6-izoU?autoplay=1&rel=0&playsinline=1";
     frame.title = "Assorta demo";
     frame.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share";
     frame.allowFullscreen = true;
