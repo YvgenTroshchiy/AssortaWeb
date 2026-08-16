@@ -41,7 +41,6 @@
     --app-fg: #f8fafc;                        /* fgPrimary   - Gray.v50 */
     --app-fg-dim: #94a3b8;                    /* fgSecondary - Gray.v500 */
     --app-fg-faint: rgba(148,163,184,.5);     /* no app token: recessive glyphs */
-    --app-link: #93a4ff;                      /* domain line, lifted to read on dark */
     --app-accent: #6366f1;                    /* accentPrimary - shared */
     --app-accent-fill: #4f46e5;               /* bgAccent - Indigo.v700, shared */
     --app-accent-fg: #818cf8;                 /* fgAccent - Indigo.v500 */
@@ -107,7 +106,6 @@
     --app-fg: #0f172a;                        /* fgPrimary   - Gray.v950 */
     --app-fg-dim: #475569;                    /* fgSecondary - Gray.v700 */
     --app-fg-faint: #b9bbce;
-    --app-link: #4f5bd5;
     --app-card: #fff;
     --app-card-ring: transparent;
     --app-card-shadow: rgba(15,16,48,.5);
@@ -648,7 +646,24 @@
   .card .meta { min-width: 0; flex: 1; }
   .card .name { font-size: 13.5px; font-weight: 700; line-height: 1.22; color: var(--app-fg); margin-bottom: 3px;
     display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-  .card .dom { font-size: 12.5px; color: var(--app-link); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  /* The sparkle line stands where the host line would: in the app it replaces it on any link whose
+     page was actually read, so a card showing a domain here is a card from an app we don't ship.
+     `.done` is the state after the summary exists - its opening line, in the secondary color. */
+  .card .sum {
+    display: flex; align-items: center; justify-content: flex-end; gap: 5px;
+    font-size: 12.5px; font-weight: 600;
+    color: var(--app-accent-fg); white-space: nowrap; overflow: hidden;
+  }
+  .card .sum::before {
+    content: ""; flex: none; width: 13px; height: 13px; background: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2l1.8 6.2 6.2 1.8-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8zM18.5 15l.7 2.3 2.3.7-2.3.7-.7 2.3-.7-2.3-2.3-.7 2.3-.7z'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2l1.8 6.2 6.2 1.8-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8zM18.5 15l.7 2.3 2.3.7-2.3.7-.7 2.3-.7-2.3-2.3-.7 2.3-.7z'/%3E%3C/svg%3E") center / contain no-repeat;
+  }
+  .card .sum span { overflow: hidden; text-overflow: ellipsis; }
+  /* The offer is an action, so it sits at the end of the row, next to the overflow. A generated
+     summary is text, and text starts at the left like every other line in the card; right-aligning
+     it clips it mid-word and reads as a bug. */
+  .card .sum.done { justify-content: flex-start; color: var(--app-fg-dim); font-weight: 400; }
   .card .kebab { color: var(--app-fg-faint); font-size: 18px; line-height: 1; align-self: center; padding: 0 2px; }
   .card.nothumb .kebab { align-self: flex-start; margin-top: 2px; }
 
@@ -867,30 +882,30 @@
         <div class="statusbar"><span>11:05</span><span class="sig"><svg class="bars" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1" opacity=".3"/></svg><span class="batt-n">68</span><span class="batt"><i></i></span></span></div>
         <div class="scr-head"><span class="chev">‹</span><span class="dot" style="background:#22C55E"></span><span class="ttl">Sport</span><span class="cnt">4</span></div>
         <div class="list">
-          <div class="card"><div class="thumb t-shoe"><span class="emoji">👟</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/384a2c9fe9ab.webp"></span></div><div class="meta"><div class="name">Women's running shoes</div><div class="dom">asics.com</div></div><span class="kebab">⋮</span></div>
-          <div class="card"><div class="thumb t-yt"><span class="emoji">🏋️</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/b40eef114ecf.webp"></span></div><div class="meta"><div class="name">The Perfect Squat | Grow your glutes</div><div class="dom">youtube.com</div></div><span class="kebab">⋮</span></div>
-          <div class="card"><div class="thumb t-jacket"><span class="emoji">🥤</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/370263fb2979.webp"></span></div><div class="meta"><div class="name">Under Armour women's top</div><div class="dom">underarmour.com</div></div><span class="kebab">⋮</span></div>
-          <div class="card"><div class="thumb t-shoe"><span class="emoji">💍</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/ab5a4be498c5.webp"></span></div><div class="meta"><div class="name">Oura Ring 4 Ceramic</div><div class="dom">ouraring.com</div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb t-shoe"><span class="emoji">👟</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/384a2c9fe9ab.webp"></span></div><div class="meta"><div class="name">Women's running shoes</div><div class="sum"><span>AI Summary</span></div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb t-yt"><span class="emoji">🏋️</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/b40eef114ecf.webp"></span></div><div class="meta"><div class="name">The Perfect Squat | Grow your glutes</div><div class="sum done"><span>Depth, bar position and bracing, plus the three…</span></div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb t-jacket"><span class="emoji">🥤</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/370263fb2979.webp"></span></div><div class="meta"><div class="name">Under Armour women's top</div><div class="sum"><span>AI Summary</span></div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb t-shoe"><span class="emoji">💍</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/ab5a4be498c5.webp"></span></div><div class="meta"><div class="name">Oura Ring 4 Ceramic</div><div class="sum"><span>AI Summary</span></div></div><span class="kebab">⋮</span></div>
         </div>
       </div></div>
       <div class="screen-slide"><div class="phone">
         <div class="statusbar"><span>11:05</span><span class="sig"><svg class="bars" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1" opacity=".3"/></svg><span class="batt-n">68</span><span class="batt"><i></i></span></span></div>
         <div class="scr-head"><span class="chev">‹</span><span class="dot" style="background:#78716C"></span><span class="ttl">Auto</span><span class="cnt">5</span></div>
         <div class="list">
-          <div class="card"><div class="thumb wide t-yt"><span class="emoji">🏎️</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/2a4726367cb2.webp"></span></div><div class="meta"><div class="name">10 BEST sports cars of 2025</div><div class="dom">youtube.com</div></div><span class="kebab">⋮</span></div>
-          <div class="card"><div class="thumb wide t-yt"><span class="emoji">🚙</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/49d5b14ee86e.webp"></span></div><div class="meta"><div class="name">Lexus NX 350h vs Audi Q5, BMW X3, GLC</div><div class="dom">youtube.com</div></div><span class="kebab">⋮</span></div>
-          <div class="card"><div class="thumb wide t-yt"><span class="emoji">🛻</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/3d1813ba35d4.webp"></span></div><div class="meta"><div class="name">New Ford Bronco review: better than a Land Rover?</div><div class="dom">youtube.com</div></div><span class="kebab">⋮</span></div>
-          <div class="card"><div class="thumb wide t-yt"><span class="emoji">⚡</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/105a1b6ce6f5.webp"></span></div><div class="meta"><div class="name">BMW polishes its electric SUV flagship! 2025 iX</div><div class="dom">youtube.com</div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb wide t-yt"><span class="emoji">🏎️</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/2a4726367cb2.webp"></span></div><div class="meta"><div class="name">10 BEST sports cars of 2025</div><div class="sum"><span>AI Summary</span></div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb wide t-yt"><span class="emoji">🚙</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/49d5b14ee86e.webp"></span></div><div class="meta"><div class="name">Lexus NX 350h vs Audi Q5, BMW X3, GLC</div><div class="sum done"><span>Four compact premium SUVs, driven back to back…</span></div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb wide t-yt"><span class="emoji">🛻</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/3d1813ba35d4.webp"></span></div><div class="meta"><div class="name">New Ford Bronco review: better than a Land Rover?</div><div class="sum"><span>AI Summary</span></div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb wide t-yt"><span class="emoji">⚡</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/105a1b6ce6f5.webp"></span></div><div class="meta"><div class="name">BMW polishes its electric SUV flagship! 2025 iX</div><div class="sum"><span>AI Summary</span></div></div><span class="kebab">⋮</span></div>
         </div>
       </div></div>
       <div class="screen-slide"><div class="phone">
         <div class="statusbar"><span>11:05</span><span class="sig"><svg class="bars" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1" opacity=".3"/></svg><span class="batt-n">68</span><span class="batt"><i></i></span></span></div>
         <div class="scr-head"><span class="chev">‹</span><span class="dot" style="background:#F59E0B"></span><span class="ttl">Shopping</span><span class="cnt">4</span></div>
         <div class="list">
-          <div class="card"><div class="thumb t-shoe"><span class="emoji">👜</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/614fafa31128.webp"></span></div><div class="meta"><div class="name">Raffia basket tote</div><div class="dom">nordstrom.com</div></div><span class="kebab">⋮</span></div>
-          <div class="card"><div class="thumb t-shoe"><span class="emoji">👡</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/b04b67749e6c.webp"></span></div><div class="meta"><div class="name">Raffia wedge sandals</div><div class="dom">ancient-greek-sandals.com</div></div><span class="kebab">⋮</span></div>
-          <div class="card"><div class="thumb t-shoe"><span class="emoji">💎</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/2fcb0f17ce32.webp"></span></div><div class="meta"><div class="name">Marquise cut stud earrings</div><div class="dom">mejuri.com</div></div><span class="kebab">⋮</span></div>
-          <div class="card"><div class="thumb t-shoe"><span class="emoji">🌸</span><span class="photo"><img alt="" loading="lazy" decoding="async" style="object-position:50% 24%" src="screens/img/260ba0f97aa5.webp"></span></div><div class="meta"><div class="name">Ray-Ban sunglasses</div><div class="dom">ray-ban.com</div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb t-shoe"><span class="emoji">👜</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/614fafa31128.webp"></span></div><div class="meta"><div class="name">Raffia basket tote</div><div class="sum"><span>AI Summary</span></div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb t-shoe"><span class="emoji">👡</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/b04b67749e6c.webp"></span></div><div class="meta"><div class="name">Raffia wedge sandals</div><div class="sum"><span>AI Summary</span></div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb t-shoe"><span class="emoji">💎</span><span class="photo"><img alt="" loading="lazy" decoding="async" src="screens/img/2fcb0f17ce32.webp"></span></div><div class="meta"><div class="name">Marquise cut stud earrings</div><div class="sum"><span>AI Summary</span></div></div><span class="kebab">⋮</span></div>
+          <div class="card"><div class="thumb t-shoe"><span class="emoji">🌸</span><span class="photo"><img alt="" loading="lazy" decoding="async" style="object-position:50% 24%" src="screens/img/260ba0f97aa5.webp"></span></div><div class="meta"><div class="name">Ray-Ban sunglasses</div><div class="sum"><span>AI Summary</span></div></div><span class="kebab">⋮</span></div>
         </div>
       </div></div>
     </div>
