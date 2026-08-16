@@ -2,7 +2,7 @@
 
 > Assorta is one fast inbox for links, notes and ideas. Drop anything in — AI files it into the right group, so you find it in seconds. Android and iOS.
 
-You save from the system share sheet on Android and iOS, or paste straight into the app. AI reads what the item is and files it into one of 30+ ready-made groups — Travel, Cooking, Wish list, Movies, Health, Work and more — with no folders to create and no tags to manage. Get the group wrong and one tap changes it. Saved links keep their thumbnail and title, and saving finishes in the background. Assorta Pro adds AI Summary: tap it on a saved link and the page comes back as a few lines inside the row, kept with the note so the second look is instant and works offline. Notes stay on the device you saved them on; syncing between devices is not available yet. Light and dark themes; thirteen languages — English, Ukrainian, German, Spanish, French, Italian, Portuguese (Brazil), Polish, Turkish, Indonesian, Japanese, Korean and Arabic.
+You save from the system share sheet on Android and iOS, or paste straight into the app. AI reads what the item is and files it into one of 30+ ready-made groups — Travel, Cooking, Wish list, Movies, Health, Work and more — with no folders to create and no tags to manage. Get the group wrong and one tap changes it. The first 15 AI sorts are free; after that filing keeps working through a keyword fallback, and Assorta Pro lifts the limit. Search covers group names, a note's own text and a link's title. Saved links keep their thumbnail and title, and saving finishes in the background. Assorta Pro adds AI Summary: tap it on a saved link and the page comes back as a few lines inside the row, kept with the note so the second look is instant and works offline. Notes stay on the device you saved them on; syncing between devices is not available yet. Light and dark themes; thirteen languages — English, Ukrainian, German, Spanish, French, Italian, Portuguese (Brazil), Polish, Turkish, Indonesian, Japanese, Korean and Arabic.
 
 Assorta is out on Google Play for Android and on the App Store for iPhone and iPad. Both are free to install.
 
@@ -11,6 +11,7 @@ Assorta is out on Google Play for Android and on the App Store for iPhone and iP
 - [Home](https://assorta.app/): What Assorta is, a demo video, how it works, the feature list, screenshots of the app, and the store links.
 - [Privacy Policy](https://assorta.app/privacy.html): What we collect, how AI classification handles saved content, third parties, storage and retention, your rights, and how to delete your data.
 - [Delete your account](https://assorta.app/delete-account.html): How to delete an Assorta account from the app or by email, what data is deleted or kept, and why deleting the account does not cancel a paid subscription.
+- [Terms of Use](https://assorta.app/terms.html): The service and your account, Assorta Pro and billing, your content and AI classification, acceptable use, app-store terms, disclaimers and governing law.
 
 ## Product
 
@@ -22,5 +23,5 @@ Assorta is out on Google Play for Android and on the App Store for iPhone and iP
 
 - [Demo](https://assorta.app/#demo): A 0:38 video of the app — a link goes in, AI files it into a group, it is there when you look for it. Also on YouTube: https://www.youtube.com/shorts/3O2_t6-izoU
 - [How it works](https://assorta.app/#how): The four steps - drop it in, AI files it, find it fast, and tap AI Summary to read the page in a few lines.
-- [Features](https://assorta.app/#features): Share-sheet saving, 30+ smart groups, link previews, AI Summary, background saves, theming and languages.
+- [Features](https://assorta.app/#features): Share-sheet saving, 30+ smart groups, link previews, AI Summary, search, background saves, theming and languages.
 - [Screens](https://assorta.app/#screens): Five annotated screenshots walking through a save, from the share sheet to the group.
