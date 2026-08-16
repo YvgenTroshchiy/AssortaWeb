@@ -424,7 +424,7 @@
   }
   .lede { color: var(--text-dim); max-width: 38em; margin-bottom: 48px; }
 
-  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; counter-reset: step; }
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; counter-reset: step; }
   .step {
     background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 26px 24px;
   }
@@ -440,7 +440,7 @@
   }
   .step p { color: var(--text-dim); font-size: 15.5px; }
 
-  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .features { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
   .feature { border-top: 2px solid var(--f-color, var(--indigo)); padding: 20px 4px 0; }
   .feature h3 { font-family: var(--font-display); font-size: 18px; font-weight: 700; margin-bottom: 8px; }
   .feature p { color: var(--text-dim); font-size: 15.5px; }
@@ -476,6 +476,9 @@
   footer .wrap.fine p { margin: 0 0 6px; }
   footer .wrap.fine p:last-child { margin-bottom: 0; }
 
+  @media (max-width: 1040px) {
+    .steps, .features { grid-template-columns: repeat(2, 1fr); }
+  }
   @media (max-width: 880px) {
     .hero { padding: 56px 0 48px; }
     .hero .wrap { grid-template-columns: 1fr; gap: 44px; }
@@ -913,6 +916,12 @@
         <h3>Find it fast</h3>
         <p>One colorful dashboard with rich link previews. Open the group, and it's exactly where you'd expect it to be.</p>
       </div>
+      <div class="step">
+        <h3>Remember why</h3>
+        <p>Tap AI Summary on a saved link and the page comes back in a few lines, right there in the list.
+          Included with Assorta Pro. When a page gives it nothing to work with, Assorta says so instead of
+          inventing a summary.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -934,6 +943,11 @@
       <div class="feature" style="--f-color: var(--cyan)">
         <h3>Link previews</h3>
         <p>Saved links keep their thumbnail and title — a YouTube frame, a product shot, an article cover — so you recognize them at a glance.</p>
+      </div>
+      <div class="feature" style="--f-color: var(--indigo)">
+        <h3>AI Summary</h3>
+        <p>Tap AI Summary on a saved link and read the page in a few lines, without opening it. The summary
+          is kept with the note, so the second look is instant and works offline. Included with Assorta Pro.</p>
       </div>
       <div class="feature" style="--f-color: var(--emerald)">
         <h3>Saves in the background</h3>
