@@ -1,0 +1,222 @@
+{
+  "format": "json",
+  "root": "i18n",
+  "base_locale": "en",
+  "keep_tokens": [
+    "Assorta",
+    "Assorta Pro",
+    "Pro",
+    "Google",
+    "Google Play",
+    "App Store",
+    "Apple",
+    "AI",
+    "TV",
+    "Android",
+    "iOS",
+    "iPhone",
+    "iPad",
+    "YouTube",
+    "TikTok",
+    "Instagram",
+    "Firebase",
+    "Firebase Crashlytics",
+    "Firebase Analytics",
+    "RevenueCat",
+    "Delete my account"
+  ],
+  "cognates": {
+    "*": [
+      "Assorta",
+      "Assorta Pro",
+      "Pro",
+      "AI Summary"
+    ],
+    "cs": [
+      "Auto",
+      "Cloud",
+      "Demo",
+      "Demo",
+      "Finance",
+      "Mail",
+      "Sport"
+    ],
+    "da": [
+      "Browser",
+      "Demo",
+      "Demo",
+      "Feedback",
+      "Hobby",
+      "Inspiration",
+      "Mail",
+      "Sport",
+      "System"
+    ],
+    "de": [
+      "Auto",
+      "Beauty",
+      "Browser",
+      "Cloud",
+      "Inspiration",
+      "Mail",
+      "Sport",
+      "System"
+    ],
+    "el": [
+      "Cloud",
+      "Mail"
+    ],
+    "es": [
+      "Auto",
+      "Ideas",
+      "Personal"
+    ],
+    "fi": [
+      "Auto"
+    ],
+    "fr": [
+      "Auto",
+      "Cloud",
+      "Inspiration",
+      "Mail",
+      "Messages",
+      "Notes",
+      "Sport"
+    ],
+    "hu": [
+      "Mail",
+      "Sport"
+    ],
+    "id": [
+      "Browser",
+      "Cloud",
+      "Demo",
+      "Demo"
+    ],
+    "it": [
+      "Auto",
+      "Browser",
+      "Cloud",
+      "Demo",
+      "Home",
+      "Mail",
+      "Sport"
+    ],
+    "nb": [
+      "Demo",
+      "Demo",
+      "Hobby",
+      "Sport",
+      "System"
+    ],
+    "nl": [
+      "Auto",
+      "Beauty",
+      "Browser",
+      "Cloud",
+      "Mail",
+      "Sport",
+      "Tech"
+    ],
+    "pl": [
+      "Demo",
+      "Demo",
+      "Hobby",
+      "Sport"
+    ],
+    "ro": [
+      "7. Contact",
+      "Auto",
+      "Browser",
+      "Cloud",
+      "Demo",
+      "Demo",
+      "Feedback",
+      "Mail",
+      "Personal",
+      "Sport"
+    ],
+    "sk": [
+      "Auto",
+      "Cloud",
+      "Demo",
+      "Demo",
+      "Mail"
+    ],
+    "sv": [
+      "Demo",
+      "Demo",
+      "Feedback",
+      "Hobby",
+      "Inspiration",
+      "Mail",
+      "Sport"
+    ],
+    "vi": [
+      "Demo",
+      "Demo",
+      "Mail"
+    ]
+  },
+  "never_translate": [],
+  "ignore_keys": [],
+  "delta_locales": [],
+  "enum_groups": [
+    {
+      "name": "groups",
+      "keys": [
+        "group.wishList",
+        "group.shopping",
+        "group.travel",
+        "group.cooking",
+        "group.health",
+        "group.sport",
+        "group.movies",
+        "group.books",
+        "group.music",
+        "group.inspiration",
+        "group.ideas",
+        "group.work",
+        "group.tasks",
+        "group.education",
+        "group.finance",
+        "group.tech",
+        "group.family",
+        "group.home",
+        "group.beauty",
+        "group.personal",
+        "group.auto",
+        "group.hobby"
+      ]
+    },
+    {
+      "name": "share_targets",
+      "keys": [
+        "share.messages",
+        "share.mail",
+        "share.notes",
+        "share.copyLink",
+        "share.browser",
+        "share.cloud",
+        "share.more"
+      ]
+    },
+    {
+      "name": "nav",
+      "keys": [
+        "nav.demo",
+        "nav.how",
+        "nav.features",
+        "nav.screens",
+        "nav.about"
+      ]
+    },
+    {
+      "name": "theme_labels",
+      "keys": [
+        "js.theme.toDark",
+        "js.theme.toLight"
+      ]
+    }
+  ]
+}

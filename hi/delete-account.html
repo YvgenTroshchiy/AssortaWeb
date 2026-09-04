@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="अपना Assorta अकाउंट और डेटा कैसे मिटाएँ - ऐप में क्या करना है, ईमेल से मिटवाना, और क्या मिटता है व क्या रखा जाता है।">
+<meta name="robots" content="index, follow">
+<title>अपना अकाउंट मिटाएँ - Assorta</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../favicon-180.png">
+<link rel="canonical" href="https://assorta.app/hi/delete-account.html">
+<link rel="alternate" hreflang="id" href="https://assorta.app/id/delete-account.html">
+<link rel="alternate" hreflang="cs" href="https://assorta.app/cs/delete-account.html">
+<link rel="alternate" hreflang="da" href="https://assorta.app/da/delete-account.html">
+<link rel="alternate" hreflang="de" href="https://assorta.app/de/delete-account.html">
+<link rel="alternate" hreflang="en" href="https://assorta.app/delete-account.html">
+<link rel="alternate" hreflang="es" href="https://assorta.app/es/delete-account.html">
+<link rel="alternate" hreflang="fr" href="https://assorta.app/fr/delete-account.html">
+<link rel="alternate" hreflang="it" href="https://assorta.app/it/delete-account.html">
+<link rel="alternate" hreflang="hu" href="https://assorta.app/hu/delete-account.html">
+<link rel="alternate" hreflang="nl" href="https://assorta.app/nl/delete-account.html">
+<link rel="alternate" hreflang="nb" href="https://assorta.app/nb/delete-account.html">
+<link rel="alternate" hreflang="pl" href="https://assorta.app/pl/delete-account.html">
+<link rel="alternate" hreflang="pt-BR" href="https://assorta.app/pt-br/delete-account.html">
+<link rel="alternate" hreflang="pt-PT" href="https://assorta.app/pt-pt/delete-account.html">
+<link rel="alternate" hreflang="ro" href="https://assorta.app/ro/delete-account.html">
+<link rel="alternate" hreflang="sk" href="https://assorta.app/sk/delete-account.html">
+<link rel="alternate" hreflang="fi" href="https://assorta.app/fi/delete-account.html">
+<link rel="alternate" hreflang="sv" href="https://assorta.app/sv/delete-account.html">
+<link rel="alternate" hreflang="vi" href="https://assorta.app/vi/delete-account.html">
+<link rel="alternate" hreflang="tr" href="https://assorta.app/tr/delete-account.html">
+<link rel="alternate" hreflang="el" href="https://assorta.app/el/delete-account.html">
+<link rel="alternate" hreflang="ru" href="https://assorta.app/ru/delete-account.html">
+<link rel="alternate" hreflang="uk" href="https://assorta.app/uk/delete-account.html">
+<link rel="alternate" hreflang="he" href="https://assorta.app/he/delete-account.html">
+<link rel="alternate" hreflang="ar" href="https://assorta.app/ar/delete-account.html">
+<link rel="alternate" hreflang="hi" href="https://assorta.app/hi/delete-account.html">
+<link rel="alternate" hreflang="th" href="https://assorta.app/th/delete-account.html">
+<link rel="alternate" hreflang="ko" href="https://assorta.app/ko/delete-account.html">
+<link rel="alternate" hreflang="ja" href="https://assorta.app/ja/delete-account.html">
+<link rel="alternate" hreflang="zh-CN" href="https://assorta.app/zh-cn/delete-account.html">
+<link rel="alternate" hreflang="zh-TW" href="https://assorta.app/zh-tw/delete-account.html">
+<link rel="alternate" hreflang="x-default" href="https://assorta.app/delete-account.html">
+<meta name="theme-color" content="#131129">
+<style>
+  /* Palette and theme switching mirror index.html — keep the three in sync. */
+  :root {
+    --bg: #131129;
+    --panel: #1e1b4b;            /* Indigo.v950 */
+    --panel-soft: #232052;
+    --line: #34306b;
+    --indigo: #6366f1;           /* Indigo.v600 — accentPrimary, shared by both themes */
+    --indigo-bright: #818cf8;
+    --text: #eef0ff;
+    --text-dim: #a3a6cc;
+    --pink: #ec4899;
+    color-scheme: dark;
+    --font-display: "Avenir Next", Futura, "Century Gothic", ui-sans-serif, system-ui, sans-serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, ui-sans-serif, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  :root[data-theme="light"] {
+    --bg: #f8fafc;               /* Gray.v50   — bgAppGradientStart */
+    --panel: #eef2ff;            /* Indigo.v50 — bgAppGradientEnd */
+    --panel-soft: #e3e9fb;
+    --line: #d2dae9;
+    --indigo-bright: #4f46e5;    /* Indigo.v700 — the accent that still reads on a light background */
+    --text: #0f172a;             /* Gray.v950 — fgPrimary */
+    /* The app's fgSecondary - see the note in index.html for why it moved to v700. */
+    --text-dim: #475569;         /* Gray.v700 — fgSecondary */
+    color-scheme: light;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color .25s ease, color .25s ease;
+  }
+  a { color: var(--indigo-bright); }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---- nav ---- */
+  header {
+    position: sticky; top: 0; z-index: 10;
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid color-mix(in srgb, var(--line) 60%, transparent);
+  }
+  .nav { display: flex; align-items: center; gap: 28px; height: 64px; max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+  .nav .brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 700; font-size: 19px; text-decoration: none; color: var(--text); margin-inline-end: auto; }
+  .nav .brand svg { display: block; border-radius: 7px; }
+  .nav a.link { text-decoration: none; color: var(--text-dim); font-size: 15px; }
+  .nav a.link:hover { color: var(--text); text-decoration: none; }
+  /* Theme toggle: shows the icon of the theme it switches TO */
+  .theme-btn {
+    display: grid; place-items: center; flex: none; width: 36px; height: 36px; padding: 0;
+    border: 1px solid var(--line); border-radius: 999px; background: transparent;
+    color: var(--text-dim); cursor: pointer; transition: color .15s, border-color .15s;
+  }
+  .theme-btn:hover { color: var(--text); border-color: var(--indigo); }
+  a:focus-visible, .theme-btn:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; }
+  .theme-btn svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .theme-btn .i-moon { display: none; }
+  :root[data-theme="light"] .theme-btn .i-moon { display: block; }
+  :root[data-theme="light"] .theme-btn .i-sun { display: none; }
+
+  /* ---- language picker ---- */
+  /* <details> and not a scripted popover: the list has to open with JS off, and every
+     entry is a real link - that is how a crawler discovers the other locales at all. */
+  .lang { position: relative; flex: none; }
+  .lang-btn {
+    display: flex; align-items: center; gap: 7px; height: 36px; padding: 0 13px;
+    border: 1px solid var(--line); border-radius: 999px; background: transparent;
+    color: var(--text-dim); font-size: 14px; white-space: nowrap; cursor: pointer;
+    list-style: none; transition: color .15s, border-color .15s;
+  }
+  .lang-btn::-webkit-details-marker { display: none; }
+  .lang-btn:hover, .lang[open] > .lang-btn { color: var(--text); border-color: var(--indigo); }
+  .lang-btn:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; }
+  .lang-btn svg { flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .lang-globe { width: 16px; height: 16px; }
+  .lang-chev { width: 13px; height: 13px; transition: transform .15s; }
+  .lang[open] .lang-chev { transform: rotate(180deg); }
+  .lang-menu {
+    position: absolute; top: calc(100% + 10px); inset-inline-end: 0; z-index: 40;
+    /* Three columns, because 32 rows in two of them do not fit on a laptop and the whole
+       point of the menu is that you find your language without scrolling for it. Columns
+       are max-content, not a guessed width: "Português (Portugal)" is half again as wide
+       as "Polski", and a fixed column clips the long ones. */
+    display: grid; grid-template-columns: repeat(3, max-content); gap: 2px;
+    padding: 8px; border: 1px solid var(--line); border-radius: 16px;
+    background: var(--panel); box-shadow: 0 24px 60px rgba(0, 0, 0, .45);
+    max-height: min(78vh, 660px); overflow-y: auto; overscroll-behavior: contain;
+  }
+  .lang-menu a {
+    display: flex; align-items: center; gap: 9px;
+    padding: 8px 12px; border-radius: 10px; font-size: 14.5px;
+    color: var(--text-dim); text-decoration: none; white-space: nowrap;
+  }
+  /* One column for the flags, so the names line up whatever the emoji width is. The globe
+     on the system row is what holds that column open on the one row with no country. */
+  .lang-menu .flag { flex: none; width: 1.4em; text-align: center; font-size: 15px; line-height: 1; }
+  /* "System" is not one of the languages, it is the question the others answer, so it sits
+     across the top on its own rather than competing for a cell. */
+  .lang-menu .lang-auto {
+    grid-column: 1 / -1; margin-bottom: 5px; padding-bottom: 11px;
+    border-bottom: 1px solid var(--line); border-radius: 10px 10px 0 0;
+  }
+  .lang-menu a:hover { background: var(--panel-soft); color: var(--text); }
+  .lang-menu a.on { color: var(--indigo-bright); background: color-mix(in srgb, var(--indigo) 16%, transparent); }
+  /* On a phone three columns cannot fit, and one would be a 32-row scroll. Two, sized to
+     the viewport rather than to the longest name, and the names wrap instead of clipping -
+     a second line costs less here than a menu wider than the screen. The button drops its
+     label: the page itself already says which language you are reading. */
+  @media (max-width: 700px) {
+    .lang-btn { padding: 0 10px; gap: 4px; }
+    .lang-btn .lang-now { display: none; }
+    /* Anchored to the viewport, not to the button: on a phone the picker sits mid-row
+       between the theme toggle and the store pills, so a menu hung off its right edge
+       runs off the left of the screen. */
+    .lang-menu {
+      position: fixed; top: 70px; inset-inline: 12px; width: auto;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      max-height: calc(100dvh - 86px);
+    }
+    .lang-menu a { white-space: normal; padding: 8px 10px; }
+  }
+
+  /* ---- doc ---- */
+  .doc { padding: 64px 0 40px; }
+  .eyebrow {
+    font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--indigo-bright); margin-bottom: 16px;
+  }
+  h1 {
+    font-family: var(--font-display); font-weight: 700; font-size: clamp(32px, 5vw, 44px);
+    line-height: 1.1; letter-spacing: -0.015em; margin-bottom: 12px;
+  }
+  .updated { color: var(--text-dim); font-size: 15px; margin-bottom: 40px; }
+  .doc h2 {
+    font-family: var(--font-display); font-weight: 700; font-size: 24px;
+    letter-spacing: -0.01em; margin: 44px 0 12px; scroll-margin-top: 80px;
+  }
+  .doc h3 { font-family: var(--font-display); font-weight: 700; font-size: 18px; margin: 24px 0 8px; }
+  .doc p { color: var(--text); margin-bottom: 14px; }
+  .doc p.dim { color: var(--text-dim); }
+  .doc ul { margin: 0 0 16px 22px; }
+  .doc li { margin-bottom: 8px; }
+  .doc strong { font-weight: 700; }
+  .callout {
+    background: color-mix(in srgb, var(--indigo) 12%, var(--panel));
+    border: 1px solid color-mix(in srgb, var(--indigo) 34%, transparent);
+    border-radius: 14px; padding: 16px 18px; margin: 24px 0; font-size: 15.5px; color: var(--text-dim);
+  }
+  .toc {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 16px;
+    padding: 20px 24px; margin-bottom: 40px;
+  }
+  .toc strong { display: block; font-family: var(--font-display); margin-bottom: 10px; }
+  .toc ol { margin-inline-start: 18px; color: var(--text-dim); columns: 2; column-gap: 32px; }
+  .toc a { text-decoration: none; }
+
+  footer { border-top: 1px solid var(--line); padding: 34px 0; margin-top: 48px; }
+  footer .wrap { display: flex; align-items: center; gap: 14px; color: var(--text-dim); font-size: 14px; max-width: 1060px; }
+  footer .spacer { margin-inline-start: auto; }
+  footer a { color: var(--text-dim); text-decoration: none; }
+  footer a:hover { color: var(--text); }
+
+  @media (max-width: 620px) {
+    .toc ol { columns: 1; }
+    .nav a.link { display: none; }
+  }
+</style>
+<script>
+// Stamp the theme before first paint so a light-mode visitor never sees a dark flash.
+// Own key, not the app's "theme_mode": that one stores SYSTEM/LIGHT/DARK and belongs
+// to the app, which may end up on this same origin.
+(function () {
+  var saved;
+  try { saved = localStorage.getItem("assorta-theme"); } catch (e) {}
+  var sysLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+  var t = (saved === "light" || saved === "dark") ? saved : (sysLight ? "light" : "dark");
+  document.documentElement.dataset.theme = t;
+  // Also here, not only in sync(): otherwise the browser toolbar keeps the other
+  // theme's color for the whole load. Must track --bg in each :root block.
+  var m = document.querySelector('meta[name="theme-color"]');
+  if (m) m.setAttribute("content", t === "light" ? "#f8fafc" : "#131129");
+})();
+</script>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a class="brand" href="index.html">
+      <svg width="28" height="28" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Assorta logo">
+        <defs>
+          <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#4F46E5"/><stop offset="1" stop-color="#1E1B4B"/>
+          </linearGradient>
+        </defs>
+        <rect width="512" height="512" rx="114" fill="url(#lg)"/>
+        <g transform="translate(256,256) scale(1.25) translate(-256,-262)">
+          <path d="M256 140 L360 384" fill="none" stroke="#FFFFFF" stroke-width="46" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="201" y="181" width="50" height="50" rx="14" transform="rotate(-18 226 206)" fill="#FFFFFF"/>
+          <rect x="173" y="247" width="50" height="50" rx="14" transform="rotate(12 198 272)" fill="#FFFFFF"/>
+          <rect x="143" y="311" width="54" height="54" rx="15" transform="rotate(-14 170 338)" fill="#FFFFFF"/>
+          <rect x="196" y="300" width="150" height="40" rx="20" fill="#FB2576"/>
+        </g>
+      </svg>
+      Assorta
+    </a>
+    <a class="link" href="index.html">होम</a>
+    <a class="link" href="index.html#get">ऐप पाएँ</a>
+    <button class="theme-btn" id="theme-btn" type="button">
+      <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.1M12 19.3v2.1M4.35 4.35l1.5 1.5M18.15 18.15l1.5 1.5M2.6 12h2.1M19.3 12h2.1M4.35 19.65l1.5-1.5M18.15 5.85l1.5-1.5"/></svg>
+      <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.4A8.5 8.5 0 0 1 9.6 3.5a8.5 8.5 0 1 0 10.9 10.9z"/></svg>
+    </button>
+    <details class="lang"><summary class="lang-btn"><svg class="lang-globe" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/></svg><span class="lang-now">हिन्दी</span><svg class="lang-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary><div class="lang-menu"><a class="lang-auto" href="/delete-account.html"><span class="flag" aria-hidden="true">🌐</span>सिस्टम</a><a hreflang="id" lang="id" href="/id/delete-account.html"><span class="flag" aria-hidden="true">🇮🇩</span>Bahasa Indonesia</a><a hreflang="cs" lang="cs" href="/cs/delete-account.html"><span class="flag" aria-hidden="true">🇨🇿</span>Čeština</a><a hreflang="da" lang="da" href="/da/delete-account.html"><span class="flag" aria-hidden="true">🇩🇰</span>Dansk</a><a hreflang="de" lang="de" href="/de/delete-account.html"><span class="flag" aria-hidden="true">🇩🇪</span>Deutsch</a><a hreflang="en" lang="en" href="/delete-account.html"><span class="flag" aria-hidden="true">🇺🇸</span>English</a><a hreflang="es" lang="es" href="/es/delete-account.html"><span class="flag" aria-hidden="true">🇪🇸</span>Español</a><a hreflang="fr" lang="fr" href="/fr/delete-account.html"><span class="flag" aria-hidden="true">🇫🇷</span>Français</a><a hreflang="it" lang="it" href="/it/delete-account.html"><span class="flag" aria-hidden="true">🇮🇹</span>Italiano</a><a hreflang="hu" lang="hu" href="/hu/delete-account.html"><span class="flag" aria-hidden="true">🇭🇺</span>Magyar</a><a hreflang="nl" lang="nl" href="/nl/delete-account.html"><span class="flag" aria-hidden="true">🇳🇱</span>Nederlands</a><a hreflang="nb" lang="nb" href="/nb/delete-account.html"><span class="flag" aria-hidden="true">🇳🇴</span>Norsk bokmål</a><a hreflang="pl" lang="pl" href="/pl/delete-account.html"><span class="flag" aria-hidden="true">🇵🇱</span>Polski</a><a hreflang="pt-BR" lang="pt-BR" href="/pt-br/delete-account.html"><span class="flag" aria-hidden="true">🇧🇷</span>Português (Brasil)</a><a hreflang="pt-PT" lang="pt-PT" href="/pt-pt/delete-account.html"><span class="flag" aria-hidden="true">🇵🇹</span>Português (Portugal)</a><a hreflang="ro" lang="ro" href="/ro/delete-account.html"><span class="flag" aria-hidden="true">🇷🇴</span>Română</a><a hreflang="sk" lang="sk" href="/sk/delete-account.html"><span class="flag" aria-hidden="true">🇸🇰</span>Slovenčina</a><a hreflang="fi" lang="fi" href="/fi/delete-account.html"><span class="flag" aria-hidden="true">🇫🇮</span>Suomi</a><a hreflang="sv" lang="sv" href="/sv/delete-account.html"><span class="flag" aria-hidden="true">🇸🇪</span>Svenska</a><a hreflang="vi" lang="vi" href="/vi/delete-account.html"><span class="flag" aria-hidden="true">🇻🇳</span>Tiếng Việt</a><a hreflang="tr" lang="tr" href="/tr/delete-account.html"><span class="flag" aria-hidden="true">🇹🇷</span>Türkçe</a><a hreflang="el" lang="el" href="/el/delete-account.html"><span class="flag" aria-hidden="true">🇬🇷</span>Ελληνικά</a><a hreflang="ru" lang="ru" href="/ru/delete-account.html"><span class="flag" aria-hidden="true">🇷🇺</span>Русский</a><a hreflang="uk" lang="uk" href="/uk/delete-account.html"><span class="flag" aria-hidden="true">🇺🇦</span>Українська</a><a hreflang="he" lang="he" href="/he/delete-account.html"><span class="flag" aria-hidden="true">🇮🇱</span>עברית</a><a hreflang="ar" lang="ar" href="/ar/delete-account.html"><span class="flag" aria-hidden="true">🇸🇦</span>العربية</a><a hreflang="hi" lang="hi" class="on" aria-current="page" href="/hi/delete-account.html"><span class="flag" aria-hidden="true">🇮🇳</span>हिन्दी</a><a hreflang="th" lang="th" href="/th/delete-account.html"><span class="flag" aria-hidden="true">🇹🇭</span>ไทย</a><a hreflang="ko" lang="ko" href="/ko/delete-account.html"><span class="flag" aria-hidden="true">🇰🇷</span>한국어</a><a hreflang="ja" lang="ja" href="/ja/delete-account.html"><span class="flag" aria-hidden="true">🇯🇵</span>日本語</a><a hreflang="zh-CN" lang="zh-CN" href="/zh-cn/delete-account.html"><span class="flag" aria-hidden="true">🇨🇳</span>简体中文</a><a hreflang="zh-TW" lang="zh-TW" href="/zh-tw/delete-account.html"><span class="flag" aria-hidden="true">🇹🇼</span>繁體中文</a></div></details>
+  </div>
+</header>
+
+<main class="doc">
+  <div class="wrap">
+    <div class="eyebrow">अकाउंट</div>
+    <h1>अपना Assorta अकाउंट मिटाएँ</h1>
+    <p class="updated">आख़िरी अपडेट: 14 अगस्त 2026</p>
+
+    <p>यह पेज बताता है कि अपना <strong>Assorta</strong> अकाउंट और उसके साथ जुड़ा डेटा कैसे
+      मिटाया जाता है, और जो कुछ रखा जाता है उसका क्या होता है। यह Android और iOS पर Assorta ऐप
+      पर लागू होता है।</p>
+
+    <div class="callout">
+      संक्षेप में: ऐप में <strong>सेटिंग्स → अकाउंट मिटाएँ</strong> खोलें। आपका अकाउंट, उस
+      डिवाइस पर सेव आपके नोट, और उस अकाउंट से जुड़ा खरीद का रिकॉर्ड हट जाते हैं; बिना अकाउंट के
+      खरीदा सब्सक्रिप्शन एक अनाम पहचानकर्ता के नीचे पीछे रह सकता है। अकाउंट मिटाने से पेड
+      सब्सक्रिप्शन रद्द <strong>नहीं</strong> होता - उसे Google Play या App Store में रद्द करें।
+    </div>
+
+    <div class="toc">
+      <strong>विषय-सूची</strong>
+      <ol>
+        <li><a href="#in-app">ऐप में ही मिटाएँ</a></li>
+        <li><a href="#by-email">हमसे मिटाने को कहें</a></li>
+        <li><a href="#deleted">क्या मिटता है</a></li>
+        <li><a href="#kept">क्या रखा जाता है</a></li>
+        <li><a href="#subscription">आपका सब्सक्रिप्शन</a></li>
+        <li><a href="#partial">सिर्फ़ कुछ डेटा मिटाना</a></li>
+        <li><a href="#contact">संपर्क</a></li>
+      </ol>
+    </div>
+
+    <h2 id="in-app">1. ऐप में ही मिटाएँ</h2>
+    <p>यह सबसे तेज़ रास्ता है और तुरंत लागू होता है।</p>
+    <ul>
+      <li><strong>Assorta</strong> खोलें और साइन इन करें, अगर पहले से साइन इन नहीं हैं।</li>
+      <li><strong>सेटिंग्स</strong> में जाएँ - मुख्य स्क्रीन के ऊपर गियर वाला आइकन।</li>
+      <li>सबसे नीचे <strong>अकाउंट मिटाएँ</strong> तक स्क्रॉल करें और उस पर टैप करें।</li>
+      <li>पुष्टि वाला डायलॉग पढ़ें और <strong>मिटाएँ</strong> दबाएँ।</li>
+      <li>अगर आपने काफ़ी समय पहले साइन इन किया था, तो आगे बढ़ने से पहले ऐप आपका पासवर्ड माँगता
+        है (या Google से दोबारा साइन इन करने को कहता है)। यह सुरक्षा जाँच है, ताकि खोए हुए फ़ोन
+        पर खुला रह गया कोई सेशन आपका अकाउंट न मिटा सके।</li>
+    </ul>
+    <p class="dim">मेहमान उपयोगकर्ताओं का कोई अकाउंट नहीं होता, इसलिए मिटाने को कुछ है ही नहीं। अगर आपने
+      कभी साइन इन नहीं किया, तो ऐप हटाते ही उस डिवाइस पर सेव किया सब कुछ चला जाता है - सिवाय
+      बिना अकाउंट के खरीदे सब्सक्रिप्शन के, जो एक अनाम पहचानकर्ता के नीचे RevenueCat के पास रहता
+      है (देखें <a href="#kept">क्या रखा जाता है</a>)।</p>
+
+    <h2 id="by-email">2. हमसे मिटाने को कहें</h2>
+    <p>अगर आप ऐप पहले ही हटा चुके हैं, साइन इन नहीं कर पा रहे, या बस चाहते हैं कि यह काम हम
+      करें, तो अपने अकाउंट वाले पते से हमें <a id="email-link" href="#" target="_blank" rel="noopener"></a><noscript>contact
+      [at] assorta [dot] app</noscript> पर <strong>Delete my account</strong> विषय के साथ ईमेल
+      करें।</p>
+    <p>हम भेजने वाले पते से ही अकाउंट पहचानते हैं, इसलिए कृपया उसी पते से लिखें। काम पूरा होने
+      पर हम ईमेल से पुष्टि करते हैं, आम तौर पर अनुरोध के 30 दिन के भीतर।</p>
+
+    <h2 id="deleted">3. क्या मिटता है</h2>
+    <ul>
+      <li><strong>आपका अकाउंट</strong> - ईमेल पता, नाम और अकाउंट पहचानकर्ता, जो Google Firebase
+        के पास हैं, और अगर आपने पासवर्ड से साइन अप किया था तो वह पासवर्ड भी।</li>
+      <li><strong>आपकी खरीद का रिकॉर्ड</strong> - सब्सक्रिप्शन की स्थिति और खरीद पहचानकर्ता, जो
+        RevenueCat के पास हैं। बिना अकाउंट के <em>खरीदा गया</em> सब्सक्रिप्शन अपवाद है: वह एक
+        अनाम इंस्टॉलेशन पहचानकर्ता पर टिका होता है जिसका कोई अकाउंट मालिक नहीं है, इसलिए ऐप में
+        की गई डिलीट उस तक पहुँच ही नहीं पाती। मिटाने से पहले साइन इन करने पर RevenueCat से कहा
+        जाता है कि वह खरीद आपके अकाउंट से जोड़ दे, पर कोई अकाउंट किसी अनाम खरीद को सिर्फ़ एक बार
+        ही अपने नाम कर सकता है, इसलिए यह हमेशा कामयाब नहीं होता। जब नहीं होता, तो सब्सक्रिप्शन
+        उसी अनाम पहचानकर्ता के नीचे रह जाता है, और उसे उस अकाउंट पर लाने का रास्ता है ऐप में
+        <strong>सेटिंग्स → Assorta Pro → अपग्रेड करें → रीस्टोर</strong>, जिसमें आप अभी साइन इन
+        हैं।</li>
+      <li>जिस डिवाइस से आप अकाउंट मिटाते हैं, उस पर सेव <strong>आपके नोट और लिंक</strong>, और उस
+        डिवाइस पर आपके अकाउंट से जुड़ी सेटिंग्स।</li>
+    </ul>
+    <p>मिटाना तुरंत और हमेशा के लिए होता है। न कोई मोहलत मिलती है, न हमारे पास बाद में अकाउंट
+      लौटाने का कोई तरीका है, इसलिए शुरू करने से पहले जो रखना है उसे निर्यात कर लें।</p>
+
+    <div class="callout">
+      Assorta आपके नोट हमारे सर्वर पर नहीं, हर डिवाइस पर ही रखता है। अकाउंट मिटाने से वे उसी
+      डिवाइस से हटते हैं जिस पर आप यह करते हैं। अगर आपने Assorta किसी दूसरे फ़ोन या टैबलेट पर भी
+      इस्तेमाल किया है, तो वहाँ के नोट भी मिटाएँ, या उस डिवाइस से ऐप हटा दें।
+    </div>
+
+    <h2 id="kept">4. क्या रखा जाता है</h2>
+    <ul>
+      <li><strong>बिना अकाउंट के की गई खरीद</strong> - मेहमान के तौर पर खरीदे सब्सक्रिप्शन की
+        स्थिति और खरीद पहचानकर्ता, जो RevenueCat के पास एक अनाम इंस्टॉलेशन पहचानकर्ता के नीचे
+        हैं। उसका कोई अकाउंट मालिक नहीं है, इसलिए आपकी ओर से हम ऐसा कुछ नहीं ढूँढ़ सकते जो उस तक
+        पहुँचाए, और उसे हटाने से आप उस सब्सक्रिप्शन को रीस्टोर ही नहीं कर पाएँगे जिसका पैसा आप
+        अब भी दे रहे हैं। उसमें न नाम है, न ईमेल पता, न भुगतान की जानकारी। उससे छुटकारा पाने के
+        लिए सब्सक्रिप्शन Google Play या App Store में रद्द करें - देखें
+        <a href="#subscription">आपका सब्सक्रिप्शन</a>।</li>
+      <li><strong>डायग्नोस्टिक्स और इस्तेमाल का एनालिटिक्स</strong> - Firebase Crashlytics और
+        Firebase Analytics से जुटाई गई क्रैश रिपोर्ट और ऐप के इस्तेमाल की घटनाएँ। ऐप वाला तरीका
+        इन्हें नहीं मिटाता। ये Google के पास Firebase की अपनी अवधियों के हिसाब से रहती हैं और
+        आपके सेव किए नोट से जुड़ी नहीं होतीं। अगर आप इन्हें भी हटवाना चाहते हैं, तो हमें ईमेल
+        करें।</li>
+      <li><strong>वे रिकॉर्ड जो हमें रखने ही पड़ते हैं</strong> - जैसे लेन-देन के वे रिकॉर्ड जो
+        कर या लेखा कानून के तहत रखना ज़रूरी है। Apple और Google हर खरीद का अपना रिकॉर्ड रखते
+        हैं; उन्हें हम नहीं मिटा सकते।</li>
+      <li><strong>अनाम या समेकित डेटा</strong>, जिसे अब आपसे जोड़ा नहीं जा सकता।</li>
+    </ul>
+
+    <h2 id="subscription">5. आपका सब्सक्रिप्शन</h2>
+    <p><strong>अकाउंट मिटाने से पेड सब्सक्रिप्शन रद्द नहीं होता।</strong> Assorta Pro की बिलिंग
+      हम नहीं, Google Play या App Store करता है, और उसे सिर्फ़ आप ही रद्द कर सकते हैं। अगर आपने
+      बिना रद्द किए अकाउंट मिटा दिया, तो स्टोर पैसे काटता रहेगा।</p>
+    <ul>
+      <li><strong>Android</strong> - Google Play ऐप → प्रोफ़ाइल फ़ोटो → पेमेंट और सदस्यताएं →
+        सदस्यताएं → Assorta → सदस्यता रद्द करें।</li>
+      <li><strong>iOS</strong> - सेटिंग्ज़ ऐप → आपका नाम → सब्स्क्रिप्शन → Assorta →
+        सब्स्क्रिप्शन रद्द करें।</li>
+    </ul>
+    <p>पहले सब्सक्रिप्शन रद्द करें, फिर अकाउंट मिटाएँ।</p>
+
+    <h2 id="partial">6. सिर्फ़ कुछ डेटा मिटाना</h2>
+    <p>जो आपने सेव किया है उसे मिटाने के लिए अकाउंट मिटाना ज़रूरी नहीं। कोई भी नोट अकेले हटाया
+      जा सकता है: ग्रुप खोलें, नोट पर एक्शन वाला बटन दबाएँ और <strong>मिटाएँ</strong> चुनें।
+      हर नोट के साथ ऐसा करने पर आपका सारा कंटेंट साफ़ हो जाता है और अकाउंट बना रहता है।</p>
+    <p>जो आप खुद नहीं हटा सकते - जैसे डायग्नोस्टिक्स - उसके लिए हमें ईमेल करें और बताएँ कि आपका
+      मतलब किस डेटा से है।</p>
+
+    <h2 id="contact">7. संपर्क</h2>
+    <p>अपना अकाउंट या डेटा मिटाने के बारे में सवाल:
+      <a id="email-link-2" href="#" target="_blank" rel="noopener"></a><noscript>contact [at]
+      assorta [dot] app</noscript>। हमारी <a href="../privacy.html">प्राइवेसी नीति</a> बताती है कि
+      हम क्या जुटाते हैं और क्यों।</p>
+    <address style="font-style:normal;line-height:1.7">Individual Entrepreneur Yevhen Troshchii<br>
+      Odesa, Ukraine<br>
+      <!--email_off--><a href="mailto:contact@assorta.app">contact@assorta.app</a><!--email_on--></address>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Assorta</span>
+    <span class="spacer"></span>
+    <a href="index.html">होम</a>
+    <span>·</span>
+    <a href="../privacy.html">प्राइवेसी</a>
+    <span>·</span>
+    <a href="../terms.html">शर्तें</a>
+    <span>·</span>
+    <a href="delete-account.html">अकाउंट मिटाएँ</a>
+  </div>
+</footer>
+
+<script>
+// THEME TOGGLE — same behaviour and storage key as index.html, so the choice carries
+// across the pages.
+(function () {
+  var btn = document.getElementById("theme-btn");
+  var meta = document.querySelector('meta[name="theme-color"]');
+  if (!btn) return;
+
+  function sync() {
+    var light = document.documentElement.dataset.theme === "light";
+    var label = light ? "Switch to dark theme" : "Switch to light theme";
+    btn.setAttribute("aria-label", label);
+    btn.setAttribute("title", label);
+    if (meta) meta.setAttribute("content", light ? "#f8fafc" : "#131129");
+  }
+
+  btn.addEventListener("click", function () {
+    var next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+    document.documentElement.dataset.theme = next;
+    try { localStorage.setItem("assorta-theme", next); } catch (e) {}
+    sync();
+  });
+
+  var mq = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)");
+  if (mq) {
+    var onSys = function (e) {
+      var saved;
+      try { saved = localStorage.getItem("assorta-theme"); } catch (err) {}
+      if (saved === "light" || saved === "dark") return;
+      document.documentElement.dataset.theme = e.matches ? "light" : "dark";
+      sync();
+    };
+    if (mq.addEventListener) mq.addEventListener("change", onSys);
+    else if (mq.addListener) mq.addListener(onSys);
+  }
+
+  sync();
+})();
+
+// Assemble the email at runtime so it never appears in the page source (anti-scraping).
+(function () {
+  var user = "contact";                        // contact
+  var domain = ["assorta", "app"].join(".");   // assorta.app
+  var addr = user + "@" + domain;
+  ["email-link", "email-link-2"].forEach(function (id) {
+    var link = document.getElementById(id);
+    if (!link) return;
+    link.textContent = addr;
+    link.href = "https://mail.google.com/mail/?view=cm&fs=1&to=" + encodeURIComponent(addr);
+  });
+})();
+
+// LANGUAGE PICKER
+// <details> already opens and closes on its own; this only adds what it has no notion
+// of - dismissing the menu on a click elsewhere or on Escape.
+(function () {
+  var lang = document.querySelector(".lang");
+  if (!lang) return;
+
+  // The system row resolves the browser's own preference against the locales this site
+  // actually has. Without JavaScript it stays a plain link to the English page, which is
+  // what the root serves anyway - so the row is never a dead end.
+  var auto = lang.querySelector(".lang-auto");
+  if (auto) {
+    // Codes a browser may still report for a language the site files under a newer tag.
+    var alias = { no: "nb", iw: "he", in: "id", tl: "id" };
+    var href = {};
+    var order = [];
+    Array.prototype.forEach.call(lang.querySelectorAll("a[hreflang]"), function (a) {
+      var tag = a.getAttribute("hreflang").toLowerCase();
+      href[tag] = a.getAttribute("href");
+      order.push(tag);
+    });
+    var wanted = navigator.languages || [navigator.language || ""];
+    for (var i = 0; i < wanted.length; i++) {
+      var tag = String(wanted[i]).toLowerCase();
+      var base = alias[tag.split("-")[0]] || tag.split("-")[0];
+      // Exact tag, then the bare language, then the first regional variant we do have -
+      // a browser asking for "pt" gets Brazilian rather than nothing.
+      var hit = href[tag] || href[base];
+      if (!hit) {
+        for (var j = 0; j < order.length; j++) {
+          if (order[j].indexOf(base + "-") === 0) { hit = href[order[j]]; break; }
+        }
+      }
+      if (hit) { auto.href = hit; break; }
+    }
+  }
+
+  document.addEventListener("click", function (e) {
+    if (lang.open && !lang.contains(e.target)) lang.open = false;
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && lang.open) {
+      lang.open = false;
+      lang.querySelector(".lang-btn").focus();
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,7 +1,12 @@
 # AssortaWeb - Project Guidelines
 
-Marketing landing page for Assorta. Hand-written static site: `index.html`, `privacy.html`,
-`terms.html`, `delete-account.html` - no build step, no framework, inline CSS/JS.
+Marketing landing page for Assorta. Hand-written static site - no framework, inline CSS/JS, and
+nothing to install to work on it.
+
+**The four pages at the repo root are generated. Edit `src/`.** `build.py` renders them plus one
+directory per language, from `src/*.html` and `i18n/<locale>.json`; the output is committed, so
+Cloudflare Pages still deploys plain static files with no build command. Run `python3 build.py`
+after any edit and `python3 build.py --check` to prove the committed output is current.
 
 ## Where the rules live
 
@@ -14,10 +19,15 @@ Marketing landing page for Assorta. Hand-written static site: `index.html`, `pri
 The always-on rules are **not** copied into this repository on purpose: one shared copy in
 [`~/.claude/rules/`](.ai/global-rules) is the whole point, and a second copy would drift out of sync within weeks.
 
-Project conventions that already exist are documented in [README.md](README.md) - the theming setup,
-and the rule that every page (`index.html`, `privacy.html`, `terms.html`, `delete-account.html`)
-carries its own copy of the theme tokens, toggle and script, so a theming edit must sweep all four.
+Project conventions that already exist are documented in [README.md](README.md) - the build and the
+language layout, the theming setup, and the rule that every page (`src/index.html`,
+`src/privacy.html`, `src/terms.html`, `src/delete-account.html`) carries its own copy of the theme
+tokens, the toggle, the picker and their scripts, so an edit to any of those must sweep all four.
 Read it before editing markup or styles.
+
+Localization has its own plan and its decisions in [docs/i18n/plan.md](docs/i18n/plan.md), and its
+translator config in `.ai/l10n/` (`glossary.md`, `detectors.json`) - the `/localize` skill reads
+both.
 
 When a rule shows up that a *second* web project would also want (markup and asset structure,
 SEO/`sitemap.xml`/`llms.txt` upkeep, deploy and redirect handling, accessibility baseline), put it in

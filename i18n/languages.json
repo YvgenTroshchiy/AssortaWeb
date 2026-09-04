@@ -1,0 +1,191 @@
+{
+  "generated_from": "shared/src/commonMain/kotlin/com/troshchiy/assorta/locale/AppLanguage.kt",
+  "languages": [
+    {
+      "tag": "id",
+      "name": "Bahasa Indonesia",
+      "flag": "🇮🇩",
+      "rtl": false
+    },
+    {
+      "tag": "cs",
+      "name": "Čeština",
+      "flag": "🇨🇿",
+      "rtl": false
+    },
+    {
+      "tag": "da",
+      "name": "Dansk",
+      "flag": "🇩🇰",
+      "rtl": false
+    },
+    {
+      "tag": "de",
+      "name": "Deutsch",
+      "flag": "🇩🇪",
+      "rtl": false
+    },
+    {
+      "tag": "en",
+      "name": "English",
+      "flag": "🇺🇸",
+      "rtl": false
+    },
+    {
+      "tag": "es",
+      "name": "Español",
+      "flag": "🇪🇸",
+      "rtl": false
+    },
+    {
+      "tag": "fr",
+      "name": "Français",
+      "flag": "🇫🇷",
+      "rtl": false
+    },
+    {
+      "tag": "it",
+      "name": "Italiano",
+      "flag": "🇮🇹",
+      "rtl": false
+    },
+    {
+      "tag": "hu",
+      "name": "Magyar",
+      "flag": "🇭🇺",
+      "rtl": false
+    },
+    {
+      "tag": "nl",
+      "name": "Nederlands",
+      "flag": "🇳🇱",
+      "rtl": false
+    },
+    {
+      "tag": "nb",
+      "name": "Norsk bokmål",
+      "flag": "🇳🇴",
+      "rtl": false
+    },
+    {
+      "tag": "pl",
+      "name": "Polski",
+      "flag": "🇵🇱",
+      "rtl": false
+    },
+    {
+      "tag": "pt-BR",
+      "name": "Português (Brasil)",
+      "flag": "🇧🇷",
+      "rtl": false
+    },
+    {
+      "tag": "pt-PT",
+      "name": "Português (Portugal)",
+      "flag": "🇵🇹",
+      "rtl": false
+    },
+    {
+      "tag": "ro",
+      "name": "Română",
+      "flag": "🇷🇴",
+      "rtl": false
+    },
+    {
+      "tag": "sk",
+      "name": "Slovenčina",
+      "flag": "🇸🇰",
+      "rtl": false
+    },
+    {
+      "tag": "fi",
+      "name": "Suomi",
+      "flag": "🇫🇮",
+      "rtl": false
+    },
+    {
+      "tag": "sv",
+      "name": "Svenska",
+      "flag": "🇸🇪",
+      "rtl": false
+    },
+    {
+      "tag": "vi",
+      "name": "Tiếng Việt",
+      "flag": "🇻🇳",
+      "rtl": false
+    },
+    {
+      "tag": "tr",
+      "name": "Türkçe",
+      "flag": "🇹🇷",
+      "rtl": false
+    },
+    {
+      "tag": "el",
+      "name": "Ελληνικά",
+      "flag": "🇬🇷",
+      "rtl": false
+    },
+    {
+      "tag": "ru",
+      "name": "Русский",
+      "flag": "🇷🇺",
+      "rtl": false
+    },
+    {
+      "tag": "uk",
+      "name": "Українська",
+      "flag": "🇺🇦",
+      "rtl": false
+    },
+    {
+      "tag": "he",
+      "name": "עברית",
+      "flag": "🇮🇱",
+      "rtl": true
+    },
+    {
+      "tag": "ar",
+      "name": "العربية",
+      "flag": "🇸🇦",
+      "rtl": true
+    },
+    {
+      "tag": "hi",
+      "name": "हिन्दी",
+      "flag": "🇮🇳",
+      "rtl": false
+    },
+    {
+      "tag": "th",
+      "name": "ไทย",
+      "flag": "🇹🇭",
+      "rtl": false
+    },
+    {
+      "tag": "ko",
+      "name": "한국어",
+      "flag": "🇰🇷",
+      "rtl": false
+    },
+    {
+      "tag": "ja",
+      "name": "日本語",
+      "flag": "🇯🇵",
+      "rtl": false
+    },
+    {
+      "tag": "zh-CN",
+      "name": "简体中文",
+      "flag": "🇨🇳",
+      "rtl": false
+    },
+    {
+      "tag": "zh-TW",
+      "name": "繁體中文",
+      "flag": "🇹🇼",
+      "rtl": false
+    }
+  ]
+}
