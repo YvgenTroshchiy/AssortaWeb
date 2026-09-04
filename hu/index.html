@@ -526,18 +526,37 @@
   section { padding: 64px 0; }
   section.alt { background: color-mix(in srgb, var(--panel) 32%, var(--bg)); }
   /* ---- FAQ ---- */
-  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall. */
-  .faq { max-width: 760px; }
-  .faq .qa { padding: 17px 0; border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
-  .faq > .qa:first-of-type { border-top: 0; padding-top: 4px; }
-  .faq h3 { font-family: var(--font-display); font-size: 17.5px; margin-bottom: 7px; }
-  .faq p { color: var(--text-dim); line-height: 1.65; }
+  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall.
+     Each entry is its own card, so the section reads as a menu of questions rather than a
+     page of prose, and the answer is one tap away instead of already in the way. */
+  .faq { max-width: 760px; display: grid; gap: 10px; }
+  .faq .qa {
+    border: 1px solid var(--line); border-radius: 14px;
+    background: color-mix(in srgb, var(--panel) 55%, transparent);
+    transition: border-color .15s;
+  }
+  .faq .qa:hover { border-color: var(--indigo); }
+  .faq .qa > summary {
+    display: flex; align-items: center; gap: 16px; padding: 17px 22px;
+    cursor: pointer; list-style: none;
+  }
+  .faq .qa > summary::-webkit-details-marker { display: none; }
+  .faq .qa > summary:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; border-radius: 14px; }
+  .faq .qa h3 { flex: 1; font-family: var(--font-display); font-size: 17px; font-weight: 700; }
+  /* One glyph for both states: a plus turned 45 degrees is a close mark, so the control
+     never has to swap characters and never reflows by a pixel between them. */
+  .faq .qa > summary::after {
+    content: "+"; flex: none; width: 18px; text-align: center;
+    font-size: 23px; line-height: 1; font-weight: 300; color: var(--indigo-bright);
+    transition: transform .18s;
+  }
+  .faq .qa[open] > summary::after { transform: rotate(45deg); }
+  .faq .qa > p { padding: 0 22px 19px; color: var(--text-dim); line-height: 1.65; }
   .faq a { color: var(--indigo-bright); }
   /* <details> and not a script: the thirteen collapsed answers stay in the page source, so a
      crawler and an answer engine read all twenty however much a human unfolded. */
-  .faq-more { border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
   .faq-more > summary {
-    display: inline-flex; align-items: center; gap: 7px; margin-top: 18px;
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 6px;
     padding: 9px 18px; border: 1px solid var(--line); border-radius: 999px;
     color: var(--text-dim); font-size: 14.5px; cursor: pointer; list-style: none;
     transition: color .15s, border-color .15s;
@@ -553,7 +572,7 @@
   .faq-more > summary .more-open { display: none; }
   .faq-more[open] > summary .more-closed { display: none; }
   .faq-more[open] > summary .more-open { display: inline; }
-  .faq-rest { margin-top: 4px; }
+  .faq-rest { display: grid; gap: 10px; margin-top: 10px; }
   .kicker {
     font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
     text-transform: uppercase; color: var(--indigo-bright); margin-bottom: 14px;
@@ -1170,89 +1189,89 @@
     <p class="kicker">GYIK</p>
     <h2>Kérdések, amelyeket telepítés előtt szoktak feltenni</h2>
     <div class="faq">
-      <div class="qa">
-        <h3>Mi az Assorta?</h3>
+      <details class="qa">
+        <summary><h3>Mi az Assorta?</h3></summary>
         <p>Az Assorta egy bejövő doboz linkeknek, jegyzeteknek és ötleteknek Androidon és iOS-en. Az AI elolvassa, amit elmentesz, és besorolja a 30+ csoport egyikébe, így később mappák és címkék nélkül is megtalálod.</p>
-      </div>
-      <div class="qa">
-        <h3>Hogyan dönti el az Assorta, melyik csoportba kerüljön valami?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Hogyan dönti el az Assorta, melyik csoportba kerüljön valami?</h3></summary>
         <p>Az Assorta elolvassa a szöveget vagy a link mögötti oldalt, és kiválasztja a hozzá illő csoportot - Utazás, Főzés, Kívánságlista, Sport és a többi. A döntést abban a pillanatban látod, ahogy megszületik.</p>
-      </div>
-      <div class="qa">
-        <h3>Mit menthetek az Assortába?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Mit menthetek az Assortába?</h3></summary>
         <p>Bármelyik appból megosztott linkeket, és szöveget, amit te illesztesz be. A mentett link megtartja a bélyegképét és a címét, így megnyitás nélkül is felismered a listában.</p>
-      </div>
-      <div class="qa">
-        <h3>Ingyenes az Assorta?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Ingyenes az Assorta?</h3></summary>
         <p>Az Assorta telepítése ingyenes, és a használata is. Az első 15 AI-rendezés ingyenes; utána a besorolás tovább működik, az AI-rendezés korlátját pedig az Assorta Pro veszi le.</p>
-      </div>
-      <div class="qa">
-        <h3>Mi az AI-összefoglaló?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Mi az AI-összefoglaló?</h3></summary>
         <p>Koppints egy mentett linknél az AI-összefoglalóra, és az Assorta néhány sorban visszahozza az oldalt, ott a listában. Az összefoglaló a jegyzettel együtt marad, így a második ránézés azonnali, és offline is működik. Ha egy oldalból nincs mit kihozni, az Assorta ezt megmondja, ahelyett hogy kitalálna egy összefoglalót.</p>
-      </div>
-      <div class="qa">
-        <h3>Menthetek más appokból?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Menthetek más appokból?</h3></summary>
         <p>Igen. Az Assorta ott ül a rendszer megosztási menüjében Androidon és iOS-en, így egy YouTube-, TikTok-, Instagram- vagy böngészőlink két koppintás.</p>
-      </div>
-      <div class="qa">
-        <h3>Szinkronizál az Assorta az eszközök között?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Szinkronizál az Assorta az eszközök között?</h3></summary>
         <p>Még nem. A jegyzetek azon az eszközön maradnak, amelyiken elmentetted őket; a szinkronizálás az Assorta Pro tervei között szerepel.</p>
-      </div>
+      </details>
       <details class="faq-more">
         <summary><span class="more-closed">További kérdések</span><span class="more-open">Kevesebb</span></summary>
         <div class="faq-rest">
-          <div class="qa">
-            <h3>Mi van, ha az AI rossz csoportot választ?</h3>
+          <details class="qa">
+            <summary><h3>Mi van, ha az AI rossz csoportot választ?</h3></summary>
             <p>Egy koppintással megváltoztatod, rögtön a visszaigazolásból - a következő legvalószínűbb csoportok ott vannak mellette.</p>
-          </div>
-          <div class="qa">
-            <h3>Mi történik, ha elfogynak az ingyenes AI-rendezések?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Mi történik, ha elfogynak az ingyenes AI-rendezések?</h3></summary>
             <p>A besorolás tovább működik. Az Assorta automatikus rendezésre vált, amely az eszközön fut körülbelül 3 000 válogatott kifejezés alapján, és sosem fogy el; az AI-rendezés korlátját az Assorta Pro veszi le.</p>
-          </div>
-          <div class="qa">
-            <h3>Mit ad hozzá az Assorta Pro?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Mit ad hozzá az Assorta Pro?</h3></summary>
             <p>Az Assorta Pro leveszi az AI-rendezés korlátját, és hozzáadja az AI-összefoglalót. Opcionális, és az Apple vagy a Google számlázza.</p>
-          </div>
-          <div class="qa">
-            <h3>Kereshetek abban, amit elmentettem?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Kereshetek abban, amit elmentettem?</h3></summary>
             <p>Igen. Egyetlen mező keres a csoportnevek, a jegyzet saját szövege és a link címe között, és kapcsolat nélkül is működik, mert a jegyzeteid az eszközön vannak.</p>
-          </div>
-          <div class="qa">
-            <h3>Hol tárolódnak a jegyzeteim?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Hol tárolódnak a jegyzeteim?</h3></summary>
             <p>Az eszközödön. Az Assorta nem tartja a jegyzeteidet a mi szervereinken.</p>
-          </div>
-          <div class="qa">
-            <h3>Kell fiók?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Kell fiók?</h3></summary>
             <p>Nem. A bejelentkezés opcionális; azzal marad meg az Assorta Pro a többi eszközödön is.</p>
-          </div>
-          <div class="qa">
-            <h3>Működik az Assorta internet nélkül?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Működik az Assorta internet nélkül?</h3></summary>
             <p>A jegyzeteid, a csoportjaid és minden korábban kért összefoglaló az eszközön van, így a böngészés és a keresés offline is működik. Az AI-rendezéshez és az AI-összefoglalóhoz kell kapcsolat; az automatikus rendezéshez nem.</p>
-          </div>
-          <div class="qa">
-            <h3>Áthelyezhetek később egy jegyzetet másik csoportba?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Áthelyezhetek később egy jegyzetet másik csoportba?</h3></summary>
             <p>Igen. Nyisd meg a jegyzet műveleteit, és válaszd az Áthelyezés lehetőséget.</p>
-          </div>
-          <div class="qa">
-            <h3>Exportálhatom a jegyzeteimet?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Exportálhatom a jegyzeteimet?</h3></summary>
             <p>Még nem. Az exportálás és a biztonsági mentés az Assorta Pro tervei között szerepel.</p>
-          </div>
-          <div class="qa">
-            <h3>Milyen eszközökön fut az Assorta?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Milyen eszközökön fut az Assorta?</h3></summary>
             <p>Android-telefonokon és -táblagépeken, iPhone-on és iPaden.</p>
-          </div>
-          <div class="qa">
-            <h3>Hány nyelven beszél az Assorta?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Hány nyelven beszél az Assorta?</h3></summary>
             <p>31 nyelven, az angoltól és az ukrántól a japánig, koreaiig és arabig. Az Assorta az eszközöd nyelvét követi, és a Beállításokban módosíthatod.</p>
-          </div>
-          <div class="qa">
-            <h3>Miben más az Assorta, mint a könyvjelzők vagy egy jegyzetalkalmazás?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Miben más az Assorta, mint a könyvjelzők vagy egy jegyzetalkalmazás?</h3></summary>
             <p>Egy könyvjelzőmappához neked kell kiválasztanod a mappát, egy jegyzetappban pedig neked kell elnevezned a jegyzetet. Az Assorta elolvassa, amit elmentettél, és magától elteszi - amit megspórolsz, az a rendezgetés.</p>
-          </div>
-          <div class="qa">
-            <h3>Hogyan törlöm a fiókomat és az adataimat?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Hogyan törlöm a fiókomat és az adataimat?</h3></summary>
             <p>Nyisd meg a Beállításokat, és koppints a Fiók törlése pontra az appban, vagy írj nekünk, és mi elvégezzük. A <a href="delete-account.html">fióktörlési oldal</a> leírja, mi törlődik és mi marad meg.</p>
-          </div>
+          </details>
         </div>
       </details>
     </div>

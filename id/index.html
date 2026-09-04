@@ -526,18 +526,37 @@
   section { padding: 64px 0; }
   section.alt { background: color-mix(in srgb, var(--panel) 32%, var(--bg)); }
   /* ---- FAQ ---- */
-  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall. */
-  .faq { max-width: 760px; }
-  .faq .qa { padding: 17px 0; border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
-  .faq > .qa:first-of-type { border-top: 0; padding-top: 4px; }
-  .faq h3 { font-family: var(--font-display); font-size: 17.5px; margin-bottom: 7px; }
-  .faq p { color: var(--text-dim); line-height: 1.65; }
+  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall.
+     Each entry is its own card, so the section reads as a menu of questions rather than a
+     page of prose, and the answer is one tap away instead of already in the way. */
+  .faq { max-width: 760px; display: grid; gap: 10px; }
+  .faq .qa {
+    border: 1px solid var(--line); border-radius: 14px;
+    background: color-mix(in srgb, var(--panel) 55%, transparent);
+    transition: border-color .15s;
+  }
+  .faq .qa:hover { border-color: var(--indigo); }
+  .faq .qa > summary {
+    display: flex; align-items: center; gap: 16px; padding: 17px 22px;
+    cursor: pointer; list-style: none;
+  }
+  .faq .qa > summary::-webkit-details-marker { display: none; }
+  .faq .qa > summary:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; border-radius: 14px; }
+  .faq .qa h3 { flex: 1; font-family: var(--font-display); font-size: 17px; font-weight: 700; }
+  /* One glyph for both states: a plus turned 45 degrees is a close mark, so the control
+     never has to swap characters and never reflows by a pixel between them. */
+  .faq .qa > summary::after {
+    content: "+"; flex: none; width: 18px; text-align: center;
+    font-size: 23px; line-height: 1; font-weight: 300; color: var(--indigo-bright);
+    transition: transform .18s;
+  }
+  .faq .qa[open] > summary::after { transform: rotate(45deg); }
+  .faq .qa > p { padding: 0 22px 19px; color: var(--text-dim); line-height: 1.65; }
   .faq a { color: var(--indigo-bright); }
   /* <details> and not a script: the thirteen collapsed answers stay in the page source, so a
      crawler and an answer engine read all twenty however much a human unfolded. */
-  .faq-more { border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
   .faq-more > summary {
-    display: inline-flex; align-items: center; gap: 7px; margin-top: 18px;
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 6px;
     padding: 9px 18px; border: 1px solid var(--line); border-radius: 999px;
     color: var(--text-dim); font-size: 14.5px; cursor: pointer; list-style: none;
     transition: color .15s, border-color .15s;
@@ -553,7 +572,7 @@
   .faq-more > summary .more-open { display: none; }
   .faq-more[open] > summary .more-closed { display: none; }
   .faq-more[open] > summary .more-open { display: inline; }
-  .faq-rest { margin-top: 4px; }
+  .faq-rest { display: grid; gap: 10px; margin-top: 10px; }
   .kicker {
     font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
     text-transform: uppercase; color: var(--indigo-bright); margin-bottom: 14px;
@@ -1170,89 +1189,89 @@
     <p class="kicker">FAQ</p>
     <h2>Pertanyaan yang muncul sebelum orang memasang</h2>
     <div class="faq">
-      <div class="qa">
-        <h3>Apa itu Assorta?</h3>
+      <details class="qa">
+        <summary><h3>Apa itu Assorta?</h3></summary>
         <p>Assorta adalah satu kotak masuk untuk tautan, catatan, dan ide di Android dan iOS. AI membaca apa yang Anda simpan dan menyortirnya ke salah satu dari 30+ grup, jadi Anda menemukannya lagi tanpa folder atau tag.</p>
-      </div>
-      <div class="qa">
-        <h3>Bagaimana Assorta menentukan grup untuk sebuah simpanan?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Bagaimana Assorta menentukan grup untuk sebuah simpanan?</h3></summary>
         <p>Assorta membaca teksnya, atau halaman di balik sebuah tautan, lalu memilih grup yang cocok - Perjalanan, Memasak, Daftar keinginan, Olahraga, dan seterusnya. Anda melihat pilihannya begitu pilihan itu dibuat.</p>
-      </div>
-      <div class="qa">
-        <h3>Apa saja yang bisa saya simpan di Assorta?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Apa saja yang bisa saya simpan di Assorta?</h3></summary>
         <p>Tautan yang dibagikan dari aplikasi mana pun, dan teks yang Anda tempel sendiri. Tautan tersimpan mempertahankan gambar kecil dan judulnya, jadi Anda mengenalinya di daftar tanpa membukanya.</p>
-      </div>
-      <div class="qa">
-        <h3>Apakah Assorta gratis?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Apakah Assorta gratis?</h3></summary>
         <p>Assorta gratis dipasang dan gratis dipakai. 15 penyortiran AI pertama gratis; setelah itu penyortiran tetap berjalan, dan batas penyortiran AI adalah yang dihapus oleh Assorta Pro.</p>
-      </div>
-      <div class="qa">
-        <h3>Apa itu Ringkasan AI?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Apa itu Ringkasan AI?</h3></summary>
         <p>Ketuk Ringkasan AI pada tautan tersimpan dan Assorta mengembalikan halamannya dalam beberapa baris, langsung di daftar. Ringkasan tersimpan bersama catatan, jadi membukanya lagi seketika dan bisa offline. Jika sebuah halaman tidak memberi bahan apa pun, Assorta mengatakannya alih-alih mengarang ringkasan.</p>
-      </div>
-      <div class="qa">
-        <h3>Bisakah saya menyimpan dari aplikasi lain?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Bisakah saya menyimpan dari aplikasi lain?</h3></summary>
         <p>Bisa. Assorta ada di menu berbagi sistem pada Android dan iOS, jadi tautan dari YouTube, TikTok, Instagram, atau browser cukup dua ketukan.</p>
-      </div>
-      <div class="qa">
-        <h3>Apakah Assorta menyinkronkan antarperangkat?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Apakah Assorta menyinkronkan antarperangkat?</h3></summary>
         <p>Belum. Catatan tetap di perangkat tempat Anda menyimpannya; sinkronisasi ada di peta jalan Assorta Pro.</p>
-      </div>
+      </details>
       <details class="faq-more">
         <summary><span class="more-closed">Tampilkan pertanyaan lain</span><span class="more-open">Tampilkan lebih sedikit</span></summary>
         <div class="faq-rest">
-          <div class="qa">
-            <h3>Bagaimana jika AI memilih grup yang salah?</h3>
+          <details class="qa">
+            <summary><h3>Bagaimana jika AI memilih grup yang salah?</h3></summary>
             <p>Ganti dengan satu ketukan, langsung dari konfirmasinya - grup kandidat berikutnya ada tepat di sebelahnya.</p>
-          </div>
-          <div class="qa">
-            <h3>Apa yang terjadi saat penyortiran AI gratis habis?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Apa yang terjadi saat penyortiran AI gratis habis?</h3></summary>
             <p>Penyortiran tetap berjalan. Assorta beralih ke penyortiran otomatis, yang berjalan di perangkat dengan sekitar 3.000 istilah pilihan dan tidak pernah habis; Assorta Pro adalah yang menghapus batas penyortiran AI.</p>
-          </div>
-          <div class="qa">
-            <h3>Apa yang ditambahkan Assorta Pro?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Apa yang ditambahkan Assorta Pro?</h3></summary>
             <p>Assorta Pro menghapus batas penyortiran AI dan menambahkan Ringkasan AI. Langganan ini opsional dan ditagih oleh Apple atau Google.</p>
-          </div>
-          <div class="qa">
-            <h3>Bisakah saya mencari yang sudah saya simpan?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Bisakah saya mencari yang sudah saya simpan?</h3></summary>
             <p>Bisa. Satu kolom mencari nama grup, isi catatan, dan judul tautan, dan itu bekerja tanpa koneksi karena catatan Anda ada di perangkat.</p>
-          </div>
-          <div class="qa">
-            <h3>Di mana catatan saya disimpan?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Di mana catatan saya disimpan?</h3></summary>
             <p>Di perangkat Anda. Assorta tidak menyimpan catatan Anda di server kami.</p>
-          </div>
-          <div class="qa">
-            <h3>Apakah saya perlu akun?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Apakah saya perlu akun?</h3></summary>
             <p>Tidak. Masuk bersifat opsional; itu menjaga Assorta Pro tetap ada di perangkat Anda yang lain.</p>
-          </div>
-          <div class="qa">
-            <h3>Apakah Assorta bekerja tanpa koneksi?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Apakah Assorta bekerja tanpa koneksi?</h3></summary>
             <p>Catatan, grup, dan setiap ringkasan yang sudah Anda minta ada di perangkat, jadi menelusuri dan mencari bisa offline. Penyortiran AI dan Ringkasan AI perlu koneksi; penyortiran otomatis tidak.</p>
-          </div>
-          <div class="qa">
-            <h3>Bisakah saya memindahkan catatan ke grup lain nanti?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Bisakah saya memindahkan catatan ke grup lain nanti?</h3></summary>
             <p>Bisa. Buka menu tindakan catatan dan pilih Pindahkan.</p>
-          </div>
-          <div class="qa">
-            <h3>Bisakah saya mengekspor catatan saya?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Bisakah saya mengekspor catatan saya?</h3></summary>
             <p>Belum. Ekspor dan pencadangan ada di peta jalan Assorta Pro.</p>
-          </div>
-          <div class="qa">
-            <h3>Di perangkat apa saja Assorta berjalan?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Di perangkat apa saja Assorta berjalan?</h3></summary>
             <p>Ponsel dan tablet Android, iPhone, dan iPad.</p>
-          </div>
-          <div class="qa">
-            <h3>Assorta bicara dalam bahasa apa saja?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Assorta bicara dalam bahasa apa saja?</h3></summary>
             <p>31 bahasa, dari Inggris dan Ukraina sampai Jepang, Korea, dan Arab. Assorta mengikuti bahasa perangkat Anda, dan Anda bisa menggantinya di Pengaturan.</p>
-          </div>
-          <div class="qa">
-            <h3>Apa bedanya Assorta dengan bookmark atau aplikasi catatan?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Apa bedanya Assorta dengan bookmark atau aplikasi catatan?</h3></summary>
             <p>Folder bookmark mengharuskan Anda memilih foldernya, dan aplikasi catatan mengharuskan Anda memberi nama catatannya. Assorta membaca apa yang Anda simpan dan menaruhnya sendiri - pekerjaan yang Anda lewati adalah penyortirannya.</p>
-          </div>
-          <div class="qa">
-            <h3>Bagaimana cara menghapus akun dan data saya?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Bagaimana cara menghapus akun dan data saya?</h3></summary>
             <p>Buka Pengaturan lalu ketuk Hapus akun di aplikasi, atau kirim email ke kami dan kami yang melakukannya. <a href="delete-account.html">Halaman penghapusan akun</a> menjelaskan apa yang dihapus dan apa yang disimpan.</p>
-          </div>
+          </details>
         </div>
       </details>
     </div>

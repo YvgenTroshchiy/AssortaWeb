@@ -526,18 +526,37 @@
   section { padding: 64px 0; }
   section.alt { background: color-mix(in srgb, var(--panel) 32%, var(--bg)); }
   /* ---- FAQ ---- */
-  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall. */
-  .faq { max-width: 760px; }
-  .faq .qa { padding: 17px 0; border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
-  .faq > .qa:first-of-type { border-top: 0; padding-top: 4px; }
-  .faq h3 { font-family: var(--font-display); font-size: 17.5px; margin-bottom: 7px; }
-  .faq p { color: var(--text-dim); line-height: 1.65; }
+  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall.
+     Each entry is its own card, so the section reads as a menu of questions rather than a
+     page of prose, and the answer is one tap away instead of already in the way. */
+  .faq { max-width: 760px; display: grid; gap: 10px; }
+  .faq .qa {
+    border: 1px solid var(--line); border-radius: 14px;
+    background: color-mix(in srgb, var(--panel) 55%, transparent);
+    transition: border-color .15s;
+  }
+  .faq .qa:hover { border-color: var(--indigo); }
+  .faq .qa > summary {
+    display: flex; align-items: center; gap: 16px; padding: 17px 22px;
+    cursor: pointer; list-style: none;
+  }
+  .faq .qa > summary::-webkit-details-marker { display: none; }
+  .faq .qa > summary:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; border-radius: 14px; }
+  .faq .qa h3 { flex: 1; font-family: var(--font-display); font-size: 17px; font-weight: 700; }
+  /* One glyph for both states: a plus turned 45 degrees is a close mark, so the control
+     never has to swap characters and never reflows by a pixel between them. */
+  .faq .qa > summary::after {
+    content: "+"; flex: none; width: 18px; text-align: center;
+    font-size: 23px; line-height: 1; font-weight: 300; color: var(--indigo-bright);
+    transition: transform .18s;
+  }
+  .faq .qa[open] > summary::after { transform: rotate(45deg); }
+  .faq .qa > p { padding: 0 22px 19px; color: var(--text-dim); line-height: 1.65; }
   .faq a { color: var(--indigo-bright); }
   /* <details> and not a script: the thirteen collapsed answers stay in the page source, so a
      crawler and an answer engine read all twenty however much a human unfolded. */
-  .faq-more { border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
   .faq-more > summary {
-    display: inline-flex; align-items: center; gap: 7px; margin-top: 18px;
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 6px;
     padding: 9px 18px; border: 1px solid var(--line); border-radius: 999px;
     color: var(--text-dim); font-size: 14.5px; cursor: pointer; list-style: none;
     transition: color .15s, border-color .15s;
@@ -553,7 +572,7 @@
   .faq-more > summary .more-open { display: none; }
   .faq-more[open] > summary .more-closed { display: none; }
   .faq-more[open] > summary .more-open { display: inline; }
-  .faq-rest { margin-top: 4px; }
+  .faq-rest { display: grid; gap: 10px; margin-top: 10px; }
   .kicker {
     font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
     text-transform: uppercase; color: var(--indigo-bright); margin-bottom: 14px;
@@ -1167,89 +1186,89 @@
     <p class="kicker">שאלות נפוצות</p>
     <h2>שאלות ששואלים לפני שמתקינים</h2>
     <div class="faq">
-      <div class="qa">
-        <h3>מה זה Assorta?</h3>
+      <details class="qa">
+        <summary><h3>מה זה Assorta?</h3></summary>
         <p>Assorta היא תיבה אחת לקישורים, לפתקים ולרעיונות ב-Android וב-iOS. ה-AI קורא מה שאתם שומרים ומסדר אותו לאחת מ-30+ קבוצות, כך שתמצאו אותו אחר כך בלי תיקיות ובלי תגיות.</p>
-      </div>
-      <div class="qa">
-        <h3>איך Assorta מחליטה לאיזו קבוצה משהו שייך?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>איך Assorta מחליטה לאיזו קבוצה משהו שייך?</h3></summary>
         <p>Assorta קוראת את הטקסט, או את הדף שמאחורי הקישור, ובוחרת את הקבוצה שמתאימה - טיולים, בישול, רשימת משאלות, ספורט והשאר. אתם רואים את הבחירה ברגע שהיא נעשית.</p>
-      </div>
-      <div class="qa">
-        <h3>מה אפשר לשמור ב-Assorta?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>מה אפשר לשמור ב-Assorta?</h3></summary>
         <p>קישורים ששיתפתם מכל אפליקציה, וטקסט שאתם מדביקים בעצמכם. קישור שמור שומר על התמונה הממוזערת והכותרת שלו, כך שתזהו אותו ברשימה בלי לפתוח אותו.</p>
-      </div>
-      <div class="qa">
-        <h3>האם Assorta בחינם?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>האם Assorta בחינם?</h3></summary>
         <p>Assorta חינם להתקנה וחינם לשימוש. 15 מיוני ה-AI הראשונים בחינם; אחר כך הסידור ממשיך לעבוד, ומגבלת מיון ה-AI היא מה ש-Assorta Pro מסירה.</p>
-      </div>
-      <div class="qa">
-        <h3>מה זה סיכום AI?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>מה זה סיכום AI?</h3></summary>
         <p>הקישו על סיכום AI בקישור שמור ו-Assorta מחזירה את הדף בכמה שורות, שם ברשימה. הסיכום נשמר עם הפתק, ולכן המבט השני מיידי ועובד גם לא מקוון. כשאין בדף ממה לעבוד, Assorta אומרת את זה במקום להמציא סיכום.</p>
-      </div>
-      <div class="qa">
-        <h3>אפשר לשמור מאפליקציות אחרות?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>אפשר לשמור מאפליקציות אחרות?</h3></summary>
         <p>כן. Assorta יושבת בתפריט השיתוף של המערכת ב-Android וב-iOS, אז קישור מ-YouTube, מ-TikTok, מ-Instagram או מדפדפן הוא שתי הקשות.</p>
-      </div>
-      <div class="qa">
-        <h3>האם Assorta מסנכרנת בין מכשירים?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>האם Assorta מסנכרנת בין מכשירים?</h3></summary>
         <p>עדיין לא. הפתקים נשארים במכשיר ששמרתם בו; סנכרון נמצא בתוכניות של Assorta Pro.</p>
-      </div>
+      </details>
       <details class="faq-more">
         <summary><span class="more-closed">הצגת עוד שאלות</span><span class="more-open">הצגת פחות</span></summary>
         <div class="faq-rest">
-          <div class="qa">
-            <h3>ומה אם ה-AI בוחר קבוצה לא נכונה?</h3>
+          <details class="qa">
+            <summary><h3>ומה אם ה-AI בוחר קבוצה לא נכונה?</h3></summary>
             <p>מחליפים בהקשה אחת, ישר מאישור השמירה - הקבוצות הבאות בתור יושבות ממש לידה.</p>
-          </div>
-          <div class="qa">
-            <h3>מה קורה כשמיוני ה-AI בחינם נגמרים?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>מה קורה כשמיוני ה-AI בחינם נגמרים?</h3></summary>
             <p>הסידור ממשיך לעבוד. Assorta עוברת למיון אוטומטי, שרץ על המכשיר לפי כ-3,000 מונחים נבחרים ולעולם לא נגמר; Assorta Pro היא מה שמסיר את מגבלת מיון ה-AI.</p>
-          </div>
-          <div class="qa">
-            <h3>מה Assorta Pro מוסיפה?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>מה Assorta Pro מוסיפה?</h3></summary>
             <p>Assorta Pro מסירה את מגבלת מיון ה-AI ומוסיפה סיכום AI. היא אופציונלית, ומחויבת על ידי Apple או Google.</p>
-          </div>
-          <div class="qa">
-            <h3>אפשר לחפש במה ששמרתי?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>אפשר לחפש במה ששמרתי?</h3></summary>
             <p>כן. שדה אחד מחפש בשמות הקבוצות, בטקסט של הפתק עצמו ובכותרת הקישור, והוא עובד בלי חיבור כי הפתקים שלכם על המכשיר.</p>
-          </div>
-          <div class="qa">
-            <h3>איפה הפתקים שלי נשמרים?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>איפה הפתקים שלי נשמרים?</h3></summary>
             <p>על המכשיר שלכם. Assorta לא מחזיקה את הפתקים שלכם בשרתים שלנו.</p>
-          </div>
-          <div class="qa">
-            <h3>צריך חשבון?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>צריך חשבון?</h3></summary>
             <p>לא. ההתחברות אופציונלית; היא שומרת על Assorta Pro במכשירים האחרים שלכם.</p>
-          </div>
-          <div class="qa">
-            <h3>האם Assorta עובדת בלי חיבור?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>האם Assorta עובדת בלי חיבור?</h3></summary>
             <p>הפתקים שלכם, הקבוצות וכל סיכום שכבר ביקשתם נמצאים על המכשיר, ולכן עיון וחיפוש עובדים גם לא מקוון. מיון AI וסיכום AI צריכים חיבור; מיון אוטומטי לא.</p>
-          </div>
-          <div class="qa">
-            <h3>אפשר להעביר פתק לקבוצה אחרת אחר כך?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>אפשר להעביר פתק לקבוצה אחרת אחר כך?</h3></summary>
             <p>כן. פתחו את הפעולות של הפתק ובחרו העברה.</p>
-          </div>
-          <div class="qa">
-            <h3>אפשר לייצא את הפתקים שלי?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>אפשר לייצא את הפתקים שלי?</h3></summary>
             <p>עדיין לא. ייצוא וגיבוי נמצאים בתוכניות של Assorta Pro.</p>
-          </div>
-          <div class="qa">
-            <h3>על אילו מכשירים Assorta רצה?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>על אילו מכשירים Assorta רצה?</h3></summary>
             <p>טלפונים וטאבלטים של Android, iPhone ו-iPad.</p>
-          </div>
-          <div class="qa">
-            <h3>באילו שפות Assorta מדברת?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>באילו שפות Assorta מדברת?</h3></summary>
             <p>31, מאנגלית ומאוקראינית ועד יפנית, קוריאנית וערבית. Assorta הולכת לפי שפת המכשיר שלכם, ואפשר לשנות אותה בהגדרות.</p>
-          </div>
-          <div class="qa">
-            <h3>במה Assorta שונה מסימניות או מאפליקציית פתקים?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>במה Assorta שונה מסימניות או מאפליקציית פתקים?</h3></summary>
             <p>תיקיית סימניות דורשת מכם לבחור את התיקייה, ואפליקציית פתקים דורשת מכם לתת לפתק שם. Assorta קוראת מה ששמרתם ומסדרת אותו בעצמה - העבודה שאתם חוסכים היא המיון.</p>
-          </div>
-          <div class="qa">
-            <h3>איך למחוק את החשבון ואת הנתונים שלי?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>איך למחוק את החשבון ואת הנתונים שלי?</h3></summary>
             <p>פתחו הגדרות והקישו על מחיקת חשבון באפליקציה, או כתבו לנו ואנחנו נעשה את זה. <a href="delete-account.html">דף מחיקת החשבון</a> מפרט מה נמחק ומה נשאר.</p>
-          </div>
+          </details>
         </div>
       </details>
     </div>

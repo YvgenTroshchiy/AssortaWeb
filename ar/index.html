@@ -526,18 +526,37 @@
   section { padding: 64px 0; }
   section.alt { background: color-mix(in srgb, var(--panel) 32%, var(--bg)); }
   /* ---- FAQ ---- */
-  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall. */
-  .faq { max-width: 760px; }
-  .faq .qa { padding: 17px 0; border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
-  .faq > .qa:first-of-type { border-top: 0; padding-top: 4px; }
-  .faq h3 { font-family: var(--font-display); font-size: 17.5px; margin-bottom: 7px; }
-  .faq p { color: var(--text-dim); line-height: 1.65; }
+  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall.
+     Each entry is its own card, so the section reads as a menu of questions rather than a
+     page of prose, and the answer is one tap away instead of already in the way. */
+  .faq { max-width: 760px; display: grid; gap: 10px; }
+  .faq .qa {
+    border: 1px solid var(--line); border-radius: 14px;
+    background: color-mix(in srgb, var(--panel) 55%, transparent);
+    transition: border-color .15s;
+  }
+  .faq .qa:hover { border-color: var(--indigo); }
+  .faq .qa > summary {
+    display: flex; align-items: center; gap: 16px; padding: 17px 22px;
+    cursor: pointer; list-style: none;
+  }
+  .faq .qa > summary::-webkit-details-marker { display: none; }
+  .faq .qa > summary:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; border-radius: 14px; }
+  .faq .qa h3 { flex: 1; font-family: var(--font-display); font-size: 17px; font-weight: 700; }
+  /* One glyph for both states: a plus turned 45 degrees is a close mark, so the control
+     never has to swap characters and never reflows by a pixel between them. */
+  .faq .qa > summary::after {
+    content: "+"; flex: none; width: 18px; text-align: center;
+    font-size: 23px; line-height: 1; font-weight: 300; color: var(--indigo-bright);
+    transition: transform .18s;
+  }
+  .faq .qa[open] > summary::after { transform: rotate(45deg); }
+  .faq .qa > p { padding: 0 22px 19px; color: var(--text-dim); line-height: 1.65; }
   .faq a { color: var(--indigo-bright); }
   /* <details> and not a script: the thirteen collapsed answers stay in the page source, so a
      crawler and an answer engine read all twenty however much a human unfolded. */
-  .faq-more { border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
   .faq-more > summary {
-    display: inline-flex; align-items: center; gap: 7px; margin-top: 18px;
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 6px;
     padding: 9px 18px; border: 1px solid var(--line); border-radius: 999px;
     color: var(--text-dim); font-size: 14.5px; cursor: pointer; list-style: none;
     transition: color .15s, border-color .15s;
@@ -553,7 +572,7 @@
   .faq-more > summary .more-open { display: none; }
   .faq-more[open] > summary .more-closed { display: none; }
   .faq-more[open] > summary .more-open { display: inline; }
-  .faq-rest { margin-top: 4px; }
+  .faq-rest { display: grid; gap: 10px; margin-top: 10px; }
   .kicker {
     font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
     text-transform: uppercase; color: var(--indigo-bright); margin-bottom: 14px;
@@ -1167,89 +1186,89 @@
     <p class="kicker">الأسئلة الشائعة</p>
     <h2>أسئلة يطرحها الناس قبل التثبيت</h2>
     <div class="faq">
-      <div class="qa">
-        <h3>ما هو Assorta؟</h3>
+      <details class="qa">
+        <summary><h3>ما هو Assorta؟</h3></summary>
         <p>Assorta صندوق وارد واحد للروابط والملاحظات والأفكار على Android وiOS. يقرأ الذكاء الاصطناعي ما تحفظه ويصنّفه في واحدة من أكثر من 30 مجموعة، لتجده لاحقًا بلا مجلدات ولا وسوم.</p>
-      </div>
-      <div class="qa">
-        <h3>كيف يقرر Assorta المجموعة التي يضع فيها العنصر؟</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>كيف يقرر Assorta المجموعة التي يضع فيها العنصر؟</h3></summary>
         <p>يقرأ Assorta النص، أو الصفحة التي خلف الرابط، ويختار المجموعة المناسبة - السفر، الطبخ، قائمة الأمنيات، الرياضة وغيرها. وترى الاختيار لحظة حدوثه.</p>
-      </div>
-      <div class="qa">
-        <h3>ماذا يمكنني أن أحفظ في Assorta؟</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>ماذا يمكنني أن أحفظ في Assorta؟</h3></summary>
         <p>روابط تُشارَك من أي تطبيق، ونصوصًا تلصقها بنفسك. ويحتفظ الرابط المحفوظ بصورته المصغّرة وعنوانه، لتتعرف عليه في القائمة دون فتحه.</p>
-      </div>
-      <div class="qa">
-        <h3>هل Assorta مجاني؟</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>هل Assorta مجاني؟</h3></summary>
         <p>Assorta مجاني في التثبيت ومجاني في الاستخدام. أول 15 عملية تصنيف بالذكاء الاصطناعي مجانية؛ وبعدها يستمر التصنيف، وحدّ التصنيف بالذكاء الاصطناعي هو ما يرفعه Assorta Pro.</p>
-      </div>
-      <div class="qa">
-        <h3>ما هو الملخّص بالذكاء الاصطناعي؟</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>ما هو الملخّص بالذكاء الاصطناعي؟</h3></summary>
         <p>اضغط ملخّص بالذكاء الاصطناعي على رابط محفوظ، فيعيد Assorta الصفحة في بضعة أسطر، هناك في القائمة. ويُحفظ الملخّص مع الملاحظة، فتكون النظرة الثانية فورية وتعمل دون اتصال. وحين لا تعطي الصفحة ما يكفي للعمل عليه، يقول Assorta ذلك بدل أن يختلق ملخّصًا.</p>
-      </div>
-      <div class="qa">
-        <h3>هل يمكنني الحفظ من تطبيقات أخرى؟</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>هل يمكنني الحفظ من تطبيقات أخرى؟</h3></summary>
         <p>نعم. يوجد Assorta في قائمة المشاركة على Android وiOS، فحفظ رابط من YouTube أو TikTok أو Instagram أو المتصفح يكلّف ضغطتين.</p>
-      </div>
-      <div class="qa">
-        <h3>هل يزامن Assorta بين الأجهزة؟</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>هل يزامن Assorta بين الأجهزة؟</h3></summary>
         <p>ليس بعد. تبقى الملاحظات على الجهاز الذي حفظتها عليه؛ والمزامنة مدرجة في خطة Assorta Pro.</p>
-      </div>
+      </details>
       <details class="faq-more">
         <summary><span class="more-closed">عرض المزيد من الأسئلة</span><span class="more-open">عرض أقل</span></summary>
         <div class="faq-rest">
-          <div class="qa">
-            <h3>ماذا لو اختار الذكاء الاصطناعي المجموعة الخطأ؟</h3>
+          <details class="qa">
+            <summary><h3>ماذا لو اختار الذكاء الاصطناعي المجموعة الخطأ؟</h3></summary>
             <p>غيّرها بضغطة واحدة، من نافذة التأكيد مباشرة - فالمجموعات التالية في الترتيب تجلس بجوارها.</p>
-          </div>
-          <div class="qa">
-            <h3>ماذا يحدث حين تنفد عمليات التصنيف المجانية بالذكاء الاصطناعي؟</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>ماذا يحدث حين تنفد عمليات التصنيف المجانية بالذكاء الاصطناعي؟</h3></summary>
             <p>يستمر التصنيف. يعود Assorta إلى التصنيف التلقائي، الذي يعمل على الجهاز اعتمادًا على نحو 3000 مصطلح مختار ولا ينفد أبدًا؛ وAssorta Pro هو ما يزيل حد التصنيف بالذكاء الاصطناعي.</p>
-          </div>
-          <div class="qa">
-            <h3>ماذا يضيف Assorta Pro؟</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>ماذا يضيف Assorta Pro؟</h3></summary>
             <p>يرفع Assorta Pro حد التصنيف بالذكاء الاصطناعي ويضيف الملخّص بالذكاء الاصطناعي. وهو اختياري، وتتولى Apple أو Google فوترته.</p>
-          </div>
-          <div class="qa">
-            <h3>هل يمكنني البحث فيما حفظته؟</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>هل يمكنني البحث فيما حفظته؟</h3></summary>
             <p>نعم. حقل واحد يبحث في أسماء المجموعات ونص الملاحظة نفسه وعنوان الرابط، ويعمل دون اتصال لأن ملاحظاتك على الجهاز.</p>
-          </div>
-          <div class="qa">
-            <h3>أين تُحفظ ملاحظاتي؟</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>أين تُحفظ ملاحظاتي؟</h3></summary>
             <p>على جهازك. لا يحتفظ Assorta بملاحظاتك على خوادمنا.</p>
-          </div>
-          <div class="qa">
-            <h3>هل أحتاج إلى حساب؟</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>هل أحتاج إلى حساب؟</h3></summary>
             <p>لا. تسجيل الدخول اختياري؛ وهو يبقي Assorta Pro على أجهزتك الأخرى.</p>
-          </div>
-          <div class="qa">
-            <h3>هل يعمل Assorta دون اتصال؟</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>هل يعمل Assorta دون اتصال؟</h3></summary>
             <p>ملاحظاتك ومجموعاتك وأي ملخّص طلبته من قبل موجودة على الجهاز، فالتصفح والبحث يعملان دون اتصال. أما التصنيف بالذكاء الاصطناعي والملخّص بالذكاء الاصطناعي فيحتاجان إلى اتصال؛ والتصنيف التلقائي لا يحتاج إليه.</p>
-          </div>
-          <div class="qa">
-            <h3>هل يمكنني نقل ملاحظة إلى مجموعة أخرى لاحقًا؟</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>هل يمكنني نقل ملاحظة إلى مجموعة أخرى لاحقًا؟</h3></summary>
             <p>نعم. افتح إجراءات الملاحظة واختر نقل.</p>
-          </div>
-          <div class="qa">
-            <h3>هل يمكنني تصدير ملاحظاتي؟</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>هل يمكنني تصدير ملاحظاتي؟</h3></summary>
             <p>ليس بعد. التصدير والنسخ الاحتياطي مدرجان في خطة Assorta Pro.</p>
-          </div>
-          <div class="qa">
-            <h3>على أي أجهزة يعمل Assorta؟</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>على أي أجهزة يعمل Assorta؟</h3></summary>
             <p>هواتف Android وأجهزتها اللوحية، وiPhone وiPad.</p>
-          </div>
-          <div class="qa">
-            <h3>بأي لغات يتحدث Assorta؟</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>بأي لغات يتحدث Assorta؟</h3></summary>
             <p>31 لغة، من الإنجليزية والأوكرانية إلى اليابانية والكورية والعربية. يتبع Assorta لغة جهازك، ويمكنك تغييرها من الإعدادات.</p>
-          </div>
-          <div class="qa">
-            <h3>بم يختلف Assorta عن المفضلة أو عن تطبيق ملاحظات؟</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>بم يختلف Assorta عن المفضلة أو عن تطبيق ملاحظات؟</h3></summary>
             <p>مجلد المفضلة يطلب منك اختيار المجلد، وتطبيق الملاحظات يطلب منك تسمية الملاحظة. أما Assorta فيقرأ ما حفظته ويضعه في مكانه بنفسه - والعمل الذي توفّره على نفسك هو التصنيف.</p>
-          </div>
-          <div class="qa">
-            <h3>كيف أحذف حسابي وبياناتي؟</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>كيف أحذف حسابي وبياناتي؟</h3></summary>
             <p>افتح الإعدادات واضغط حذف الحساب داخل التطبيق، أو راسلنا فنتولى ذلك عنك. وتشرح <a href="delete-account.html">صفحة حذف الحساب</a> ما الذي يُحذف وما الذي يبقى.</p>
-          </div>
+          </details>
         </div>
       </details>
     </div>

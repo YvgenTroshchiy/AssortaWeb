@@ -494,18 +494,37 @@
   section { padding: 64px 0; }
   section.alt { background: color-mix(in srgb, var(--panel) 32%, var(--bg)); }
   /* ---- FAQ ---- */
-  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall. */
-  .faq { max-width: 760px; }
-  .faq .qa { padding: 17px 0; border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
-  .faq > .qa:first-of-type { border-top: 0; padding-top: 4px; }
-  .faq h3 { font-family: var(--font-display); font-size: 17.5px; margin-bottom: 7px; }
-  .faq p { color: var(--text-dim); line-height: 1.65; }
+  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall.
+     Each entry is its own card, so the section reads as a menu of questions rather than a
+     page of prose, and the answer is one tap away instead of already in the way. */
+  .faq { max-width: 760px; display: grid; gap: 10px; }
+  .faq .qa {
+    border: 1px solid var(--line); border-radius: 14px;
+    background: color-mix(in srgb, var(--panel) 55%, transparent);
+    transition: border-color .15s;
+  }
+  .faq .qa:hover { border-color: var(--indigo); }
+  .faq .qa > summary {
+    display: flex; align-items: center; gap: 16px; padding: 17px 22px;
+    cursor: pointer; list-style: none;
+  }
+  .faq .qa > summary::-webkit-details-marker { display: none; }
+  .faq .qa > summary:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; border-radius: 14px; }
+  .faq .qa h3 { flex: 1; font-family: var(--font-display); font-size: 17px; font-weight: 700; }
+  /* One glyph for both states: a plus turned 45 degrees is a close mark, so the control
+     never has to swap characters and never reflows by a pixel between them. */
+  .faq .qa > summary::after {
+    content: "+"; flex: none; width: 18px; text-align: center;
+    font-size: 23px; line-height: 1; font-weight: 300; color: var(--indigo-bright);
+    transition: transform .18s;
+  }
+  .faq .qa[open] > summary::after { transform: rotate(45deg); }
+  .faq .qa > p { padding: 0 22px 19px; color: var(--text-dim); line-height: 1.65; }
   .faq a { color: var(--indigo-bright); }
   /* <details> and not a script: the thirteen collapsed answers stay in the page source, so a
      crawler and an answer engine read all twenty however much a human unfolded. */
-  .faq-more { border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
   .faq-more > summary {
-    display: inline-flex; align-items: center; gap: 7px; margin-top: 18px;
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 6px;
     padding: 9px 18px; border: 1px solid var(--line); border-radius: 999px;
     color: var(--text-dim); font-size: 14.5px; cursor: pointer; list-style: none;
     transition: color .15s, border-color .15s;
@@ -521,7 +540,7 @@
   .faq-more > summary .more-open { display: none; }
   .faq-more[open] > summary .more-closed { display: none; }
   .faq-more[open] > summary .more-open { display: inline; }
-  .faq-rest { margin-top: 4px; }
+  .faq-rest { display: grid; gap: 10px; margin-top: 10px; }
   .kicker {
     font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
     text-transform: uppercase; color: var(--indigo-bright); margin-bottom: 14px;
@@ -1144,89 +1163,89 @@
     <p class="kicker" data-i18n="faq.kicker">FAQ</p>
     <h2 data-i18n="faq.h2">Questions people ask before they install</h2>
     <div class="faq">
-      <div class="qa">
-        <h3 data-i18n="faq.what.q">What is Assorta?</h3>
+      <details class="qa">
+        <summary><h3 data-i18n="faq.what.q">What is Assorta?</h3></summary>
         <p data-i18n="faq.what.a">Assorta is one inbox for links, notes and ideas on Android and iOS. AI reads what you save and files it into one of 30+ groups, so you find it later without folders or tags.</p>
-      </div>
-      <div class="qa">
-        <h3 data-i18n="faq.grouping.q">How does Assorta decide which group something goes in?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3 data-i18n="faq.grouping.q">How does Assorta decide which group something goes in?</h3></summary>
         <p data-i18n="faq.grouping.a">Assorta reads the text, or the page behind a link, and picks the group that fits - Travel, Cooking, Wish list, Sport and the rest. You see the choice the moment it is made.</p>
-      </div>
-      <div class="qa">
-        <h3 data-i18n="faq.saveWhat.q">What can I save in Assorta?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3 data-i18n="faq.saveWhat.q">What can I save in Assorta?</h3></summary>
         <p data-i18n="faq.saveWhat.a">Links shared from any app, and text you paste in yourself. A saved link keeps its thumbnail and title, so you recognize it in the list without opening it.</p>
-      </div>
-      <div class="qa">
-        <h3 data-i18n="faq.free.q">Is Assorta free?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3 data-i18n="faq.free.q">Is Assorta free?</h3></summary>
         <p data-i18n="faq.free.a">Assorta is free to install and free to use. The first 15 AI sorts are free; after that filing keeps working, and the AI sorting limit is what Assorta Pro lifts.</p>
-      </div>
-      <div class="qa">
-        <h3 data-i18n="faq.summary.q">What is AI Summary?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3 data-i18n="faq.summary.q">What is AI Summary?</h3></summary>
         <p data-i18n="faq.summary.a">Tap AI Summary on a saved link and Assorta brings the page back in a few lines, in the list. The summary is kept with the note, so the second look is instant and works offline. When a page gives it nothing to work with, Assorta says so instead of inventing a summary.</p>
-      </div>
-      <div class="qa">
-        <h3 data-i18n="faq.shareSheet.q">Can I save from other apps?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3 data-i18n="faq.shareSheet.q">Can I save from other apps?</h3></summary>
         <p data-i18n="faq.shareSheet.a">Yes. Assorta sits in the system share sheet on Android and iOS, so a link from YouTube, TikTok, Instagram or a browser is two taps.</p>
-      </div>
-      <div class="qa">
-        <h3 data-i18n="faq.sync.q">Does Assorta sync between devices?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3 data-i18n="faq.sync.q">Does Assorta sync between devices?</h3></summary>
         <p data-i18n="faq.sync.a">Not yet. Notes stay on the device you saved them on; sync is on the Assorta Pro roadmap.</p>
-      </div>
+      </details>
       <details class="faq-more">
         <summary><span class="more-closed" data-i18n="faq.more">Show more questions</span><span class="more-open" data-i18n="faq.less">Show fewer</span></summary>
         <div class="faq-rest">
-          <div class="qa">
-            <h3 data-i18n="faq.wrongGroup.q">What if the AI picks the wrong group?</h3>
+          <details class="qa">
+            <summary><h3 data-i18n="faq.wrongGroup.q">What if the AI picks the wrong group?</h3></summary>
             <p data-i18n="faq.wrongGroup.a">Change it with one tap, straight from the confirmation - the runner-up groups sit right next to it.</p>
-          </div>
-          <div class="qa">
-            <h3 data-i18n="faq.sortsRunOut.q">What happens when the free AI sorts run out?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3 data-i18n="faq.sortsRunOut.q">What happens when the free AI sorts run out?</h3></summary>
             <p data-i18n="faq.sortsRunOut.a">Filing keeps working. Assorta falls back to smart sorting, which runs on the device against about 3,000 curated terms and never runs out; Assorta Pro is what removes the AI sorting limit.</p>
-          </div>
-          <div class="qa">
-            <h3 data-i18n="faq.pro.q">What does Assorta Pro add?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3 data-i18n="faq.pro.q">What does Assorta Pro add?</h3></summary>
             <p data-i18n="faq.pro.a">Assorta Pro lifts the AI sorting limit and adds AI Summary. It is optional, and it is billed by Apple or Google.</p>
-          </div>
-          <div class="qa">
-            <h3 data-i18n="faq.search.q">Can I search what I saved?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3 data-i18n="faq.search.q">Can I search what I saved?</h3></summary>
             <p data-i18n="faq.search.a">Yes. One field searches group names, a note’s own text and a link’s title, and it works without a connection because your notes are on the device.</p>
-          </div>
-          <div class="qa">
-            <h3 data-i18n="faq.storage.q">Where are my notes stored?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3 data-i18n="faq.storage.q">Where are my notes stored?</h3></summary>
             <p data-i18n="faq.storage.a">On your device. Assorta does not keep your notes on our servers.</p>
-          </div>
-          <div class="qa">
-            <h3 data-i18n="faq.account.q">Do I need an account?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3 data-i18n="faq.account.q">Do I need an account?</h3></summary>
             <p data-i18n="faq.account.a">No. Signing in is optional; it keeps Assorta Pro on your other devices.</p>
-          </div>
-          <div class="qa">
-            <h3 data-i18n="faq.offline.q">Does Assorta work without a connection?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3 data-i18n="faq.offline.q">Does Assorta work without a connection?</h3></summary>
             <p data-i18n="faq.offline.a">Your notes, your groups and any summary you already asked for are on the device, so browsing and searching work offline. AI sorting and AI Summary need a connection; smart sorting does not.</p>
-          </div>
-          <div class="qa">
-            <h3 data-i18n="faq.move.q">Can I move a note to another group later?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3 data-i18n="faq.move.q">Can I move a note to another group later?</h3></summary>
             <p data-i18n="faq.move.a">Yes. Open the note’s actions and pick Move.</p>
-          </div>
-          <div class="qa">
-            <h3 data-i18n="faq.export.q">Can I export my notes?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3 data-i18n="faq.export.q">Can I export my notes?</h3></summary>
             <p data-i18n="faq.export.a">Not yet. Export and backup are on the Assorta Pro roadmap.</p>
-          </div>
-          <div class="qa">
-            <h3 data-i18n="faq.devices.q">Which devices does Assorta run on?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3 data-i18n="faq.devices.q">Which devices does Assorta run on?</h3></summary>
             <p data-i18n="faq.devices.a">Android phones and tablets, iPhone and iPad.</p>
-          </div>
-          <div class="qa">
-            <h3 data-i18n="faq.languages.q">What languages does Assorta speak?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3 data-i18n="faq.languages.q">What languages does Assorta speak?</h3></summary>
             <p data-i18n="faq.languages.a">31, from English and Ukrainian to Japanese, Korean and Arabic. Assorta follows your device’s language, and you can change it in Settings.</p>
-          </div>
-          <div class="qa">
-            <h3 data-i18n="faq.vsBookmarks.q">How is Assorta different from bookmarks or a notes app?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3 data-i18n="faq.vsBookmarks.q">How is Assorta different from bookmarks or a notes app?</h3></summary>
             <p data-i18n="faq.vsBookmarks.a">A bookmark folder needs you to choose the folder, and a notes app needs you to name the note. Assorta reads what you saved and puts it away itself - the work you skip is the sorting.</p>
-          </div>
-          <div class="qa">
-            <h3 data-i18n="faq.delete.q">How do I delete my account and my data?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3 data-i18n="faq.delete.q">How do I delete my account and my data?</h3></summary>
             <p data-i18n="faq.delete.a">Open Settings and tap Delete account in the app, or email us and we will do it. The <a href="delete-account.html">delete-account page</a> covers what is removed and what is kept.</p>
-          </div>
+          </details>
         </div>
       </details>
     </div>

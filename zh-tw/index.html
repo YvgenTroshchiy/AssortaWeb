@@ -526,18 +526,37 @@
   section { padding: 64px 0; }
   section.alt { background: color-mix(in srgb, var(--panel) 32%, var(--bg)); }
   /* ---- FAQ ---- */
-  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall. */
-  .faq { max-width: 760px; }
-  .faq .qa { padding: 17px 0; border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
-  .faq > .qa:first-of-type { border-top: 0; padding-top: 4px; }
-  .faq h3 { font-family: var(--font-display); font-size: 17.5px; margin-bottom: 7px; }
-  .faq p { color: var(--text-dim); line-height: 1.65; }
+  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall.
+     Each entry is its own card, so the section reads as a menu of questions rather than a
+     page of prose, and the answer is one tap away instead of already in the way. */
+  .faq { max-width: 760px; display: grid; gap: 10px; }
+  .faq .qa {
+    border: 1px solid var(--line); border-radius: 14px;
+    background: color-mix(in srgb, var(--panel) 55%, transparent);
+    transition: border-color .15s;
+  }
+  .faq .qa:hover { border-color: var(--indigo); }
+  .faq .qa > summary {
+    display: flex; align-items: center; gap: 16px; padding: 17px 22px;
+    cursor: pointer; list-style: none;
+  }
+  .faq .qa > summary::-webkit-details-marker { display: none; }
+  .faq .qa > summary:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; border-radius: 14px; }
+  .faq .qa h3 { flex: 1; font-family: var(--font-display); font-size: 17px; font-weight: 700; }
+  /* One glyph for both states: a plus turned 45 degrees is a close mark, so the control
+     never has to swap characters and never reflows by a pixel between them. */
+  .faq .qa > summary::after {
+    content: "+"; flex: none; width: 18px; text-align: center;
+    font-size: 23px; line-height: 1; font-weight: 300; color: var(--indigo-bright);
+    transition: transform .18s;
+  }
+  .faq .qa[open] > summary::after { transform: rotate(45deg); }
+  .faq .qa > p { padding: 0 22px 19px; color: var(--text-dim); line-height: 1.65; }
   .faq a { color: var(--indigo-bright); }
   /* <details> and not a script: the thirteen collapsed answers stay in the page source, so a
      crawler and an answer engine read all twenty however much a human unfolded. */
-  .faq-more { border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
   .faq-more > summary {
-    display: inline-flex; align-items: center; gap: 7px; margin-top: 18px;
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 6px;
     padding: 9px 18px; border: 1px solid var(--line); border-radius: 999px;
     color: var(--text-dim); font-size: 14.5px; cursor: pointer; list-style: none;
     transition: color .15s, border-color .15s;
@@ -553,7 +572,7 @@
   .faq-more > summary .more-open { display: none; }
   .faq-more[open] > summary .more-closed { display: none; }
   .faq-more[open] > summary .more-open { display: inline; }
-  .faq-rest { margin-top: 4px; }
+  .faq-rest { display: grid; gap: 10px; margin-top: 10px; }
   .kicker {
     font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
     text-transform: uppercase; color: var(--indigo-bright); margin-bottom: 14px;
@@ -1166,89 +1185,89 @@
     <p class="kicker">常見問題</p>
     <h2>裝之前，大家都會問的問題</h2>
     <div class="faq">
-      <div class="qa">
-        <h3>Assorta 是什麼？</h3>
+      <details class="qa">
+        <summary><h3>Assorta 是什麼？</h3></summary>
         <p>Assorta 是 Android 和 iOS 上裝下連結、筆記與點子的一個收件匣。AI 會讀懂你儲存的內容，把它歸進 30 多個群組之一，之後不用資料夾也不用標籤就找得到。</p>
-      </div>
-      <div class="qa">
-        <h3>Assorta 怎麼決定一則內容該進哪個群組？</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Assorta 怎麼決定一則內容該進哪個群組？</h3></summary>
         <p>Assorta 會讀文字，或連結背後的頁面，然後挑出合適的群組 - 旅遊、烹飪、願望清單、運動等等。判斷做出的那一刻你就看得到。</p>
-      </div>
-      <div class="qa">
-        <h3>Assorta 能儲存什麼？</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Assorta 能儲存什麼？</h3></summary>
         <p>從任何 App 分享來的連結，以及你自己貼上的文字。儲存的連結會帶上縮圖和標題，不用開啟就能在清單裡認出它。</p>
-      </div>
-      <div class="qa">
-        <h3>Assorta 免費嗎？</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Assorta 免費嗎？</h3></summary>
         <p>Assorta 免費安裝，免費使用。前 15 次 AI 分類免費；之後歸整照常運作，而 Assorta Pro 拿掉的正是 AI 分類的上限。</p>
-      </div>
-      <div class="qa">
-        <h3>AI 摘要是什麼？</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>AI 摘要是什麼？</h3></summary>
         <p>在儲存的連結上點一下 AI 摘要，Assorta 就把那一頁用幾行文字帶回清單裡。摘要與筆記一起儲存，所以再看一次是立即的，離線也看得到。若某個頁面實在沒什麼可讀，Assorta 會直說，而不是編一段摘要。</p>
-      </div>
-      <div class="qa">
-        <h3>能從別的 App 裡儲存嗎？</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>能從別的 App 裡儲存嗎？</h3></summary>
         <p>可以。Assorta 就在 Android 和 iOS 的系統分享選單裡，來自 YouTube、TikTok、Instagram 或瀏覽器的連結，點兩下就存好。</p>
-      </div>
-      <div class="qa">
-        <h3>Assorta 會在裝置之間同步嗎？</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Assorta 會在裝置之間同步嗎？</h3></summary>
         <p>還沒有。筆記留在你儲存它的那台裝置上；同步在 Assorta Pro 的規劃裡。</p>
-      </div>
+      </details>
       <details class="faq-more">
         <summary><span class="more-closed">顯示更多問題</span><span class="more-open">收起</span></summary>
         <div class="faq-rest">
-          <div class="qa">
-            <h3>如果 AI 選錯了群組怎麼辦？</h3>
+          <details class="qa">
+            <summary><h3>如果 AI 選錯了群組怎麼辦？</h3></summary>
             <p>點一下就能改，就在確認那一步 - 備選群組就排在旁邊。</p>
-          </div>
-          <div class="qa">
-            <h3>免費的 AI 分類用完之後會怎樣？</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>免費的 AI 分類用完之後會怎樣？</h3></summary>
             <p>歸整照常運作。Assorta 會改用自動分類，它在裝置上用大約 3,000 個精選詞彙判斷，永遠不會用完；而拿掉 AI 分類上限的是 Assorta Pro。</p>
-          </div>
-          <div class="qa">
-            <h3>Assorta Pro 多了什麼？</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Assorta Pro 多了什麼？</h3></summary>
             <p>Assorta Pro 拿掉 AI 分類的上限，並加入 AI 摘要。它是選用的，由 Apple 或 Google 收費。</p>
-          </div>
-          <div class="qa">
-            <h3>能搜尋我儲存過的內容嗎？</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>能搜尋我儲存過的內容嗎？</h3></summary>
             <p>可以。一個輸入框同時搜群組名稱、筆記內文和連結標題，而且不用連線也能用，因為你的筆記就在裝置上。</p>
-          </div>
-          <div class="qa">
-            <h3>我的筆記存在哪裡？</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>我的筆記存在哪裡？</h3></summary>
             <p>在你的裝置上。Assorta 不會把你的筆記放在我們的伺服器上。</p>
-          </div>
-          <div class="qa">
-            <h3>我需要帳號嗎？</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>我需要帳號嗎？</h3></summary>
             <p>不用。登入是選用的；它的作用是讓 Assorta Pro 在你的其他裝置上也在。</p>
-          </div>
-          <div class="qa">
-            <h3>沒有網路時 Assorta 能用嗎？</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>沒有網路時 Assorta 能用嗎？</h3></summary>
             <p>你的筆記、你的群組，以及你已經產生過的摘要都在裝置上，所以瀏覽和搜尋離線也能用。AI 分類和 AI 摘要需要連線；自動分類不用。</p>
-          </div>
-          <div class="qa">
-            <h3>之後還能把筆記搬到別的群組嗎？</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>之後還能把筆記搬到別的群組嗎？</h3></summary>
             <p>可以。打開筆記的操作選單，選擇「搬移」。</p>
-          </div>
-          <div class="qa">
-            <h3>能匯出我的筆記嗎？</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>能匯出我的筆記嗎？</h3></summary>
             <p>還沒有。匯出和備份在 Assorta Pro 的規劃裡。</p>
-          </div>
-          <div class="qa">
-            <h3>Assorta 能在哪些裝置上執行？</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Assorta 能在哪些裝置上執行？</h3></summary>
             <p>Android 手機和平板、iPhone 和 iPad。</p>
-          </div>
-          <div class="qa">
-            <h3>Assorta 支援哪些語言？</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Assorta 支援哪些語言？</h3></summary>
             <p>31 種，從英文、烏克蘭文到日文、韓文和阿拉伯文。Assorta 跟隨你裝置的語言，你也可以在「設定」裡更改。</p>
-          </div>
-          <div class="qa">
-            <h3>Assorta 和書籤或筆記 App 有什麼不同？</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Assorta 和書籤或筆記 App 有什麼不同？</h3></summary>
             <p>書籤資料夾要你自己挑資料夾，筆記 App 要你自己給筆記取名字。Assorta 會讀懂你儲存的內容，自己把它收好 - 你省下的那份工，正是分類。</p>
-          </div>
-          <div class="qa">
-            <h3>怎麼刪除我的帳號和資料？</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>怎麼刪除我的帳號和資料？</h3></summary>
             <p>在 App 裡打開「設定」並點一下「刪除帳號」，或寫信給我們，由我們來做。<a href="delete-account.html">刪除帳號頁面</a>說明了哪些會被刪除、哪些會保留。</p>
-          </div>
+          </details>
         </div>
       </details>
     </div>

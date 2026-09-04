@@ -526,18 +526,37 @@
   section { padding: 64px 0; }
   section.alt { background: color-mix(in srgb, var(--panel) 32%, var(--bg)); }
   /* ---- FAQ ---- */
-  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall. */
-  .faq { max-width: 760px; }
-  .faq .qa { padding: 17px 0; border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
-  .faq > .qa:first-of-type { border-top: 0; padding-top: 4px; }
-  .faq h3 { font-family: var(--font-display); font-size: 17.5px; margin-bottom: 7px; }
-  .faq p { color: var(--text-dim); line-height: 1.65; }
+  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall.
+     Each entry is its own card, so the section reads as a menu of questions rather than a
+     page of prose, and the answer is one tap away instead of already in the way. */
+  .faq { max-width: 760px; display: grid; gap: 10px; }
+  .faq .qa {
+    border: 1px solid var(--line); border-radius: 14px;
+    background: color-mix(in srgb, var(--panel) 55%, transparent);
+    transition: border-color .15s;
+  }
+  .faq .qa:hover { border-color: var(--indigo); }
+  .faq .qa > summary {
+    display: flex; align-items: center; gap: 16px; padding: 17px 22px;
+    cursor: pointer; list-style: none;
+  }
+  .faq .qa > summary::-webkit-details-marker { display: none; }
+  .faq .qa > summary:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; border-radius: 14px; }
+  .faq .qa h3 { flex: 1; font-family: var(--font-display); font-size: 17px; font-weight: 700; }
+  /* One glyph for both states: a plus turned 45 degrees is a close mark, so the control
+     never has to swap characters and never reflows by a pixel between them. */
+  .faq .qa > summary::after {
+    content: "+"; flex: none; width: 18px; text-align: center;
+    font-size: 23px; line-height: 1; font-weight: 300; color: var(--indigo-bright);
+    transition: transform .18s;
+  }
+  .faq .qa[open] > summary::after { transform: rotate(45deg); }
+  .faq .qa > p { padding: 0 22px 19px; color: var(--text-dim); line-height: 1.65; }
   .faq a { color: var(--indigo-bright); }
   /* <details> and not a script: the thirteen collapsed answers stay in the page source, so a
      crawler and an answer engine read all twenty however much a human unfolded. */
-  .faq-more { border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
   .faq-more > summary {
-    display: inline-flex; align-items: center; gap: 7px; margin-top: 18px;
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 6px;
     padding: 9px 18px; border: 1px solid var(--line); border-radius: 999px;
     color: var(--text-dim); font-size: 14.5px; cursor: pointer; list-style: none;
     transition: color .15s, border-color .15s;
@@ -553,7 +572,7 @@
   .faq-more > summary .more-open { display: none; }
   .faq-more[open] > summary .more-closed { display: none; }
   .faq-more[open] > summary .more-open { display: inline; }
-  .faq-rest { margin-top: 4px; }
+  .faq-rest { display: grid; gap: 10px; margin-top: 10px; }
   .kicker {
     font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
     text-transform: uppercase; color: var(--indigo-bright); margin-bottom: 14px;
@@ -1170,89 +1189,89 @@
     <p class="kicker">자주 묻는 질문</p>
     <h2>설치하기 전에 많이 묻는 것들</h2>
     <div class="faq">
-      <div class="qa">
-        <h3>Assorta는 무엇인가요?</h3>
+      <details class="qa">
+        <summary><h3>Assorta는 무엇인가요?</h3></summary>
         <p>Assorta는 Android와 iOS에서 링크와 노트, 아이디어를 담는 하나의 보관함입니다. AI가 저장한 것을 읽고 30개 이상의 그룹 중 하나에 넣어 주므로, 폴더나 태그 없이도 나중에 찾을 수 있습니다.</p>
-      </div>
-      <div class="qa">
-        <h3>Assorta는 무엇을 어느 그룹에 넣을지 어떻게 정하나요?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Assorta는 무엇을 어느 그룹에 넣을지 어떻게 정하나요?</h3></summary>
         <p>Assorta는 텍스트를, 링크라면 그 뒤의 페이지를 읽고 알맞은 그룹을 고릅니다 - 여행, 요리, 위시리스트, 스포츠 등. 고르는 그 순간에 결과가 보입니다.</p>
-      </div>
-      <div class="qa">
-        <h3>Assorta에는 무엇을 저장할 수 있나요?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Assorta에는 무엇을 저장할 수 있나요?</h3></summary>
         <p>어떤 앱에서든 공유한 링크와, 직접 붙여넣은 텍스트입니다. 저장한 링크는 썸네일과 제목을 그대로 지니므로 열어 보지 않아도 목록에서 알아봅니다.</p>
-      </div>
-      <div class="qa">
-        <h3>Assorta는 무료인가요?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Assorta는 무료인가요?</h3></summary>
         <p>Assorta는 설치도 사용도 무료입니다. 처음 15회의 AI 분류는 무료이고, 그 뒤에도 분류는 계속됩니다. AI 분류 한도를 없애 주는 것이 Assorta Pro입니다.</p>
-      </div>
-      <div class="qa">
-        <h3>AI 요약은 무엇인가요?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>AI 요약은 무엇인가요?</h3></summary>
         <p>저장한 링크에서 AI 요약을 누르면 Assorta가 페이지 내용을 몇 줄로 목록 안에 돌려줍니다. 요약은 노트와 함께 저장되어 다시 볼 때는 즉시, 오프라인에서도 열립니다. 페이지에서 읽을 것이 없으면 Assorta는 요약을 지어내지 않고 그렇다고 알려 줍니다.</p>
-      </div>
-      <div class="qa">
-        <h3>다른 앱에서 저장할 수 있나요?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>다른 앱에서 저장할 수 있나요?</h3></summary>
         <p>네. Assorta는 Android와 iOS의 시스템 공유 시트 안에 있어서 YouTube, TikTok, Instagram이나 브라우저의 링크는 두 번만 탭하면 됩니다.</p>
-      </div>
-      <div class="qa">
-        <h3>Assorta는 기기 간에 동기화되나요?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Assorta는 기기 간에 동기화되나요?</h3></summary>
         <p>아직 아닙니다. 노트는 저장한 기기에 남고, 동기화는 Assorta Pro 로드맵에 있습니다.</p>
-      </div>
+      </details>
       <details class="faq-more">
         <summary><span class="more-closed">질문 더 보기</span><span class="more-open">질문 접기</span></summary>
         <div class="faq-rest">
-          <div class="qa">
-            <h3>AI가 엉뚱한 그룹을 고르면 어떻게 하나요?</h3>
+          <details class="qa">
+            <summary><h3>AI가 엉뚱한 그룹을 고르면 어떻게 하나요?</h3></summary>
             <p>확인 화면에서 바로 한 번만 탭해 바꾸세요 - 다음 순위 그룹들이 바로 옆에 놓여 있습니다.</p>
-          </div>
-          <div class="qa">
-            <h3>무료 AI 분류를 다 쓰면 어떻게 되나요?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>무료 AI 분류를 다 쓰면 어떻게 되나요?</h3></summary>
             <p>분류는 계속됩니다. Assorta는 자동 분류로 넘어가는데, 자동 분류는 약 3,000개의 엄선된 용어를 기준으로 기기에서 돌아가며 소진되지 않습니다. AI 분류 한도를 없애 주는 것은 Assorta Pro입니다.</p>
-          </div>
-          <div class="qa">
-            <h3>Assorta Pro는 무엇을 더해 주나요?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Assorta Pro는 무엇을 더해 주나요?</h3></summary>
             <p>Assorta Pro는 AI 분류 한도를 없애고 AI 요약을 더합니다. 선택 사항이며, 결제는 Apple 또는 Google이 합니다.</p>
-          </div>
-          <div class="qa">
-            <h3>저장한 것을 검색할 수 있나요?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>저장한 것을 검색할 수 있나요?</h3></summary>
             <p>네. 검색창 하나로 그룹 이름과 노트 본문, 링크 제목을 찾으며, 노트가 기기 안에 있으므로 연결 없이도 됩니다.</p>
-          </div>
-          <div class="qa">
-            <h3>제 노트는 어디에 저장되나요?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>제 노트는 어디에 저장되나요?</h3></summary>
             <p>사용하는 기기 안에 저장됩니다. Assorta는 노트를 저희 서버에 보관하지 않습니다.</p>
-          </div>
-          <div class="qa">
-            <h3>계정이 있어야 하나요?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>계정이 있어야 하나요?</h3></summary>
             <p>아니요. 로그인은 선택 사항이며, 다른 기기에서도 Assorta Pro를 유지해 줍니다.</p>
-          </div>
-          <div class="qa">
-            <h3>Assorta는 연결 없이도 되나요?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Assorta는 연결 없이도 되나요?</h3></summary>
             <p>노트와 그룹, 이미 받아 둔 요약은 기기 안에 있어서 둘러보기와 검색은 오프라인에서도 됩니다. AI 분류와 AI 요약은 연결이 필요하고, 자동 분류는 필요하지 않습니다.</p>
-          </div>
-          <div class="qa">
-            <h3>나중에 노트를 다른 그룹으로 옮길 수 있나요?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>나중에 노트를 다른 그룹으로 옮길 수 있나요?</h3></summary>
             <p>네. 노트의 작업 버튼을 열고 이동을 선택하세요.</p>
-          </div>
-          <div class="qa">
-            <h3>노트를 내보낼 수 있나요?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>노트를 내보낼 수 있나요?</h3></summary>
             <p>아직 아닙니다. 내보내기와 백업은 Assorta Pro 로드맵에 있습니다.</p>
-          </div>
-          <div class="qa">
-            <h3>Assorta는 어떤 기기에서 되나요?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Assorta는 어떤 기기에서 되나요?</h3></summary>
             <p>Android 휴대전화와 태블릿, iPhone과 iPad입니다.</p>
-          </div>
-          <div class="qa">
-            <h3>Assorta는 어떤 언어를 지원하나요?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Assorta는 어떤 언어를 지원하나요?</h3></summary>
             <p>31개 언어입니다. 영어와 우크라이나어부터 일본어, 한국어, 아랍어까지. Assorta는 기기 언어를 따르며, 설정에서 바꿀 수 있습니다.</p>
-          </div>
-          <div class="qa">
-            <h3>Assorta는 북마크나 메모 앱과 무엇이 다른가요?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Assorta는 북마크나 메모 앱과 무엇이 다른가요?</h3></summary>
             <p>북마크 폴더는 폴더를 직접 골라야 하고, 메모 앱은 노트에 이름을 붙여야 합니다. Assorta는 저장한 것을 읽고 스스로 제자리에 넣습니다 - 건너뛰는 수고가 바로 분류입니다.</p>
-          </div>
-          <div class="qa">
-            <h3>계정과 데이터는 어떻게 삭제하나요?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>계정과 데이터는 어떻게 삭제하나요?</h3></summary>
             <p>앱에서 설정을 열고 계정 삭제를 탭하거나, 이메일로 알려 주시면 저희가 처리합니다. 무엇이 삭제되고 무엇이 남는지는 <a href="delete-account.html">계정 삭제 페이지</a>에 정리되어 있습니다.</p>
-          </div>
+          </details>
         </div>
       </details>
     </div>

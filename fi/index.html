@@ -526,18 +526,37 @@
   section { padding: 64px 0; }
   section.alt { background: color-mix(in srgb, var(--panel) 32%, var(--bg)); }
   /* ---- FAQ ---- */
-  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall. */
-  .faq { max-width: 760px; }
-  .faq .qa { padding: 17px 0; border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
-  .faq > .qa:first-of-type { border-top: 0; padding-top: 4px; }
-  .faq h3 { font-family: var(--font-display); font-size: 17.5px; margin-bottom: 7px; }
-  .faq p { color: var(--text-dim); line-height: 1.65; }
+  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall.
+     Each entry is its own card, so the section reads as a menu of questions rather than a
+     page of prose, and the answer is one tap away instead of already in the way. */
+  .faq { max-width: 760px; display: grid; gap: 10px; }
+  .faq .qa {
+    border: 1px solid var(--line); border-radius: 14px;
+    background: color-mix(in srgb, var(--panel) 55%, transparent);
+    transition: border-color .15s;
+  }
+  .faq .qa:hover { border-color: var(--indigo); }
+  .faq .qa > summary {
+    display: flex; align-items: center; gap: 16px; padding: 17px 22px;
+    cursor: pointer; list-style: none;
+  }
+  .faq .qa > summary::-webkit-details-marker { display: none; }
+  .faq .qa > summary:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; border-radius: 14px; }
+  .faq .qa h3 { flex: 1; font-family: var(--font-display); font-size: 17px; font-weight: 700; }
+  /* One glyph for both states: a plus turned 45 degrees is a close mark, so the control
+     never has to swap characters and never reflows by a pixel between them. */
+  .faq .qa > summary::after {
+    content: "+"; flex: none; width: 18px; text-align: center;
+    font-size: 23px; line-height: 1; font-weight: 300; color: var(--indigo-bright);
+    transition: transform .18s;
+  }
+  .faq .qa[open] > summary::after { transform: rotate(45deg); }
+  .faq .qa > p { padding: 0 22px 19px; color: var(--text-dim); line-height: 1.65; }
   .faq a { color: var(--indigo-bright); }
   /* <details> and not a script: the thirteen collapsed answers stay in the page source, so a
      crawler and an answer engine read all twenty however much a human unfolded. */
-  .faq-more { border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
   .faq-more > summary {
-    display: inline-flex; align-items: center; gap: 7px; margin-top: 18px;
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 6px;
     padding: 9px 18px; border: 1px solid var(--line); border-radius: 999px;
     color: var(--text-dim); font-size: 14.5px; cursor: pointer; list-style: none;
     transition: color .15s, border-color .15s;
@@ -553,7 +572,7 @@
   .faq-more > summary .more-open { display: none; }
   .faq-more[open] > summary .more-closed { display: none; }
   .faq-more[open] > summary .more-open { display: inline; }
-  .faq-rest { margin-top: 4px; }
+  .faq-rest { display: grid; gap: 10px; margin-top: 10px; }
   .kicker {
     font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
     text-transform: uppercase; color: var(--indigo-bright); margin-bottom: 14px;
@@ -1170,89 +1189,89 @@
     <p class="kicker">UKK</p>
     <h2>Kysymyksiä, joita ihmiset kysyvät ennen asennusta</h2>
     <div class="faq">
-      <div class="qa">
-        <h3>Mikä Assorta on?</h3>
+      <details class="qa">
+        <summary><h3>Mikä Assorta on?</h3></summary>
         <p>Assorta on yksi saapuneet-kansio linkeille, muistiinpanoille ja ideoille Androidilla ja iOS:ssä. AI lukee tallentamasi ja vie sen yhteen yli 30 ryhmästä, joten löydät sen myöhemmin ilman kansioita tai tageja.</p>
-      </div>
-      <div class="qa">
-        <h3>Miten Assorta päättää, mihin ryhmään jokin kuuluu?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Miten Assorta päättää, mihin ryhmään jokin kuuluu?</h3></summary>
         <p>Assorta lukee tekstin tai linkin takana olevan sivun ja valitsee sopivan ryhmän - Matkailu, Ruoanlaitto, Toivelista, Urheilu ja muut. Näet valinnan samalla hetkellä kun se tehdään.</p>
-      </div>
-      <div class="qa">
-        <h3>Mitä voin tallentaa Assortaan?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Mitä voin tallentaa Assortaan?</h3></summary>
         <p>Mistä tahansa sovelluksesta jaetut linkit ja itse liittämäsi tekstin. Tallennettu linkki säilyttää pikkukuvansa ja otsikkonsa, joten tunnistat sen listassa avaamatta sitä.</p>
-      </div>
-      <div class="qa">
-        <h3>Onko Assorta ilmainen?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Onko Assorta ilmainen?</h3></summary>
         <p>Assorta on ilmainen asentaa ja ilmainen käyttää. Ensimmäiset 15 AI-lajittelua ovat ilmaisia; sen jälkeen lajittelu jatkuu, ja Assorta Pro poistaa AI-lajittelun rajan.</p>
-      </div>
-      <div class="qa">
-        <h3>Mikä AI-tiivistelmä on?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Mikä AI-tiivistelmä on?</h3></summary>
         <p>Napauta tallennetun linkin AI-tiivistelmää, niin Assorta tuo sivun takaisin muutamana rivinä suoraan listaan. Tiivistelmä tallentuu muistiinpanon mukana, joten toinen katsaus on välitön ja toimii offline. Jos sivulla ei ole mitään mistä ammentaa, Assorta sanoo sen sen sijaan että keksisi tiivistelmän.</p>
-      </div>
-      <div class="qa">
-        <h3>Voinko tallentaa muista sovelluksista?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Voinko tallentaa muista sovelluksista?</h3></summary>
         <p>Kyllä. Assorta on järjestelmän jakovalikossa Androidilla ja iOS:ssä, joten linkki YouTubesta, TikTokista, Instagramista tai selaimesta on kahden napautuksen päässä.</p>
-      </div>
-      <div class="qa">
-        <h3>Synkronoiko Assorta laitteiden välillä?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Synkronoiko Assorta laitteiden välillä?</h3></summary>
         <p>Ei vielä. Muistiinpanot pysyvät sillä laitteella, jolle ne tallensit; synkronointi on Assorta Pron tiekartalla.</p>
-      </div>
+      </details>
       <details class="faq-more">
         <summary><span class="more-closed">Näytä lisää kysymyksiä</span><span class="more-open">Näytä vähemmän</span></summary>
         <div class="faq-rest">
-          <div class="qa">
-            <h3>Entä jos AI valitsee väärän ryhmän?</h3>
+          <details class="qa">
+            <summary><h3>Entä jos AI valitsee väärän ryhmän?</h3></summary>
             <p>Vaihda se yhdellä napautuksella suoraan vahvistuksesta - seuraavaksi parhaat ryhmät ovat heti vieressä.</p>
-          </div>
-          <div class="qa">
-            <h3>Mitä tapahtuu, kun ilmaiset AI-lajittelut loppuvat?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Mitä tapahtuu, kun ilmaiset AI-lajittelut loppuvat?</h3></summary>
             <p>Lajittelu jatkuu. Assorta siirtyy automaattiseen lajitteluun, joka toimii laitteella noin 3 000 valitun termin varassa eikä lopu koskaan; Assorta Pro on se, joka poistaa AI-lajittelun rajan.</p>
-          </div>
-          <div class="qa">
-            <h3>Mitä Assorta Pro tuo lisää?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Mitä Assorta Pro tuo lisää?</h3></summary>
             <p>Assorta Pro poistaa AI-lajittelun rajan ja lisää AI-tiivistelmän. Se on vapaaehtoinen, ja laskutuksen hoitaa Apple tai Google.</p>
-          </div>
-          <div class="qa">
-            <h3>Voinko hakea tallentamiani asioita?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Voinko hakea tallentamiani asioita?</h3></summary>
             <p>Kyllä. Yksi kenttä hakee ryhmien nimistä, muistiinpanon omasta tekstistä ja linkin otsikosta, ja se toimii ilman yhteyttä, koska muistiinpanosi ovat laitteella.</p>
-          </div>
-          <div class="qa">
-            <h3>Mihin muistiinpanoni tallennetaan?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Mihin muistiinpanoni tallennetaan?</h3></summary>
             <p>Laitteellesi. Assorta ei säilytä muistiinpanojasi palvelimillamme.</p>
-          </div>
-          <div class="qa">
-            <h3>Tarvitsenko tilin?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Tarvitsenko tilin?</h3></summary>
             <p>Et. Sisäänkirjautuminen on vapaaehtoista; se pitää Assorta Pron muilla laitteillasi.</p>
-          </div>
-          <div class="qa">
-            <h3>Toimiiko Assorta ilman yhteyttä?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Toimiiko Assorta ilman yhteyttä?</h3></summary>
             <p>Muistiinpanosi, ryhmäsi ja jo pyytämäsi tiivistelmät ovat laitteella, joten selaaminen ja haku toimivat offline. AI-lajittelu ja AI-tiivistelmä tarvitsevat yhteyden; automaattinen lajittelu ei tarvitse.</p>
-          </div>
-          <div class="qa">
-            <h3>Voinko siirtää muistiinpanon toiseen ryhmään myöhemmin?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Voinko siirtää muistiinpanon toiseen ryhmään myöhemmin?</h3></summary>
             <p>Kyllä. Avaa muistiinpanon toiminnot ja valitse Siirrä.</p>
-          </div>
-          <div class="qa">
-            <h3>Voinko viedä muistiinpanoni?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Voinko viedä muistiinpanoni?</h3></summary>
             <p>Ei vielä. Vienti ja varmuuskopiot ovat Assorta Pron tiekartalla.</p>
-          </div>
-          <div class="qa">
-            <h3>Millä laitteilla Assorta toimii?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Millä laitteilla Assorta toimii?</h3></summary>
             <p>Android-puhelimilla ja -tableteilla, iPhonella ja iPadilla.</p>
-          </div>
-          <div class="qa">
-            <h3>Mitä kieliä Assorta puhuu?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Mitä kieliä Assorta puhuu?</h3></summary>
             <p>31, englannista ja ukrainasta japaniin, koreaan ja arabiaan. Assorta seuraa laitteesi kieltä, ja voit vaihtaa sen Asetuksissa.</p>
-          </div>
-          <div class="qa">
-            <h3>Miten Assorta eroaa kirjanmerkeistä tai muistiinpanosovelluksesta?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Miten Assorta eroaa kirjanmerkeistä tai muistiinpanosovelluksesta?</h3></summary>
             <p>Kirjanmerkkikansio vaatii sinua valitsemaan kansion, ja muistiinpanosovellus vaatii sinua nimeämään muistiinpanon. Assorta lukee tallentamasi ja vie sen paikalleen itse - työ, jonka säästät, on lajittelu.</p>
-          </div>
-          <div class="qa">
-            <h3>Miten poistan tilini ja tietoni?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Miten poistan tilini ja tietoni?</h3></summary>
             <p>Avaa Asetukset ja napauta sovelluksessa Poista tili, tai lähetä meille sähköpostia, niin teemme sen. <a href="delete-account.html">Tilin poistamisen sivu</a> kertoo, mitä poistetaan ja mitä säilytetään.</p>
-          </div>
+          </details>
         </div>
       </details>
     </div>

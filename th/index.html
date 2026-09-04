@@ -526,18 +526,37 @@
   section { padding: 64px 0; }
   section.alt { background: color-mix(in srgb, var(--panel) 32%, var(--bg)); }
   /* ---- FAQ ---- */
-  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall. */
-  .faq { max-width: 760px; }
-  .faq .qa { padding: 17px 0; border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
-  .faq > .qa:first-of-type { border-top: 0; padding-top: 4px; }
-  .faq h3 { font-family: var(--font-display); font-size: 17.5px; margin-bottom: 7px; }
-  .faq p { color: var(--text-dim); line-height: 1.65; }
+  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall.
+     Each entry is its own card, so the section reads as a menu of questions rather than a
+     page of prose, and the answer is one tap away instead of already in the way. */
+  .faq { max-width: 760px; display: grid; gap: 10px; }
+  .faq .qa {
+    border: 1px solid var(--line); border-radius: 14px;
+    background: color-mix(in srgb, var(--panel) 55%, transparent);
+    transition: border-color .15s;
+  }
+  .faq .qa:hover { border-color: var(--indigo); }
+  .faq .qa > summary {
+    display: flex; align-items: center; gap: 16px; padding: 17px 22px;
+    cursor: pointer; list-style: none;
+  }
+  .faq .qa > summary::-webkit-details-marker { display: none; }
+  .faq .qa > summary:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; border-radius: 14px; }
+  .faq .qa h3 { flex: 1; font-family: var(--font-display); font-size: 17px; font-weight: 700; }
+  /* One glyph for both states: a plus turned 45 degrees is a close mark, so the control
+     never has to swap characters and never reflows by a pixel between them. */
+  .faq .qa > summary::after {
+    content: "+"; flex: none; width: 18px; text-align: center;
+    font-size: 23px; line-height: 1; font-weight: 300; color: var(--indigo-bright);
+    transition: transform .18s;
+  }
+  .faq .qa[open] > summary::after { transform: rotate(45deg); }
+  .faq .qa > p { padding: 0 22px 19px; color: var(--text-dim); line-height: 1.65; }
   .faq a { color: var(--indigo-bright); }
   /* <details> and not a script: the thirteen collapsed answers stay in the page source, so a
      crawler and an answer engine read all twenty however much a human unfolded. */
-  .faq-more { border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
   .faq-more > summary {
-    display: inline-flex; align-items: center; gap: 7px; margin-top: 18px;
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 6px;
     padding: 9px 18px; border: 1px solid var(--line); border-radius: 999px;
     color: var(--text-dim); font-size: 14.5px; cursor: pointer; list-style: none;
     transition: color .15s, border-color .15s;
@@ -553,7 +572,7 @@
   .faq-more > summary .more-open { display: none; }
   .faq-more[open] > summary .more-closed { display: none; }
   .faq-more[open] > summary .more-open { display: inline; }
-  .faq-rest { margin-top: 4px; }
+  .faq-rest { display: grid; gap: 10px; margin-top: 10px; }
   .kicker {
     font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
     text-transform: uppercase; color: var(--indigo-bright); margin-bottom: 14px;
@@ -1170,89 +1189,89 @@
     <p class="kicker">FAQ</p>
     <h2>คำถามที่คนถามก่อนติดตั้ง</h2>
     <div class="faq">
-      <div class="qa">
-        <h3>Assorta คืออะไร</h3>
+      <details class="qa">
+        <summary><h3>Assorta คืออะไร</h3></summary>
         <p>Assorta คือกล่องขาเข้าเดียวสำหรับลิงก์ โน้ต และไอเดีย บน Android และ iOS โดย AI จะอ่านสิ่งที่คุณบันทึกแล้วจัดลงหนึ่งใน 30+ กลุ่ม คุณจึงหามันเจอทีหลังได้โดยไม่ต้องมีโฟลเดอร์หรือแท็ก</p>
-      </div>
-      <div class="qa">
-        <h3>Assorta ตัดสินอย่างไรว่าอะไรควรอยู่กลุ่มไหน</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Assorta ตัดสินอย่างไรว่าอะไรควรอยู่กลุ่มไหน</h3></summary>
         <p>Assorta อ่านข้อความ หรือหน้าเว็บที่อยู่หลังลิงก์ แล้วเลือกกลุ่มที่เหมาะ - ท่องเที่ยว ทำอาหาร สิ่งที่อยากได้ กีฬา และอื่น ๆ คุณเห็นตัวเลือกนั้นทันทีที่มันถูกเลือก</p>
-      </div>
-      <div class="qa">
-        <h3>บันทึกอะไรใน Assorta ได้บ้าง</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>บันทึกอะไรใน Assorta ได้บ้าง</h3></summary>
         <p>ลิงก์ที่แชร์มาจากแอปไหนก็ได้ และข้อความที่คุณวางเข้ามาเอง ลิงก์ที่บันทึกไว้ยังมีภาพย่อและชื่อเรื่องติดมาด้วย คุณจึงจำมันได้ในรายการโดยไม่ต้องเปิด</p>
-      </div>
-      <div class="qa">
-        <h3>Assorta ฟรีไหม</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Assorta ฟรีไหม</h3></summary>
         <p>Assorta ติดตั้งฟรีและใช้ฟรี จัดเรียงด้วย AI 15 ครั้งแรกฟรี หลังจากนั้นการจัดเก็บก็ยังทำงานต่อ และลิมิตการจัดเรียงด้วย AI คือสิ่งที่ Assorta Pro ปลดให้</p>
-      </div>
-      <div class="qa">
-        <h3>สรุปด้วย AI คืออะไร</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>สรุปด้วย AI คืออะไร</h3></summary>
         <p>แตะสรุปด้วย AI บนลิงก์ที่บันทึกไว้ แล้ว Assorta จะดึงหน้านั้นกลับมาในไม่กี่บรรทัด ตรงนั้นในรายการเลย สรุปถูกเก็บไว้กับโน้ต การดูอีกครั้งจึงทันทีและใช้ได้แบบออฟไลน์ เมื่อหน้าเว็บไม่มีอะไรให้ทำงานด้วย Assorta จะบอกตรง ๆ แทนที่จะแต่งสรุปขึ้นมา</p>
-      </div>
-      <div class="qa">
-        <h3>บันทึกจากแอปอื่นได้ไหม</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>บันทึกจากแอปอื่นได้ไหม</h3></summary>
         <p>ได้ Assorta อยู่ในเมนูแชร์ของระบบทั้งบน Android และ iOS ลิงก์จาก YouTube, TikTok, Instagram หรือเบราว์เซอร์จึงใช้แค่สองแตะ</p>
-      </div>
-      <div class="qa">
-        <h3>Assorta ซิงก์ระหว่างเครื่องไหม</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Assorta ซิงก์ระหว่างเครื่องไหม</h3></summary>
         <p>ยังไม่ซิงก์ โน้ตอยู่บนเครื่องที่คุณบันทึกไว้ ส่วนการซิงก์อยู่ในแผนของ Assorta Pro</p>
-      </div>
+      </details>
       <details class="faq-more">
         <summary><span class="more-closed">ดูคำถามเพิ่ม</span><span class="more-open">ดูน้อยลง</span></summary>
         <div class="faq-rest">
-          <div class="qa">
-            <h3>ถ้า AI เลือกกลุ่มผิดล่ะ</h3>
+          <details class="qa">
+            <summary><h3>ถ้า AI เลือกกลุ่มผิดล่ะ</h3></summary>
             <p>เปลี่ยนได้ด้วยแตะเดียว จากกล่องยืนยันนั่นเลย - กลุ่มรองที่ใกล้เคียงอยู่ถัดไปตรงนั้น</p>
-          </div>
-          <div class="qa">
-            <h3>เกิดอะไรขึ้นเมื่อการจัดเรียงด้วย AI แบบฟรีหมด</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>เกิดอะไรขึ้นเมื่อการจัดเรียงด้วย AI แบบฟรีหมด</h3></summary>
             <p>การจัดเก็บยังทำงานต่อ Assorta จะกลับไปใช้การจัดเรียงอัตโนมัติ ซึ่งทำงานบนเครื่องโดยใช้คำที่คัดมาราว 3,000 คำ และไม่มีวันหมด ส่วนตัวที่ปลดลิมิตการจัดเรียงด้วย AI คือ Assorta Pro</p>
-          </div>
-          <div class="qa">
-            <h3>Assorta Pro เพิ่มอะไรบ้าง</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Assorta Pro เพิ่มอะไรบ้าง</h3></summary>
             <p>Assorta Pro ปลดลิมิตการจัดเรียงด้วย AI และเพิ่มสรุปด้วย AI เป็นทางเลือก ไม่บังคับ และเรียกเก็บเงินผ่าน Apple หรือ Google</p>
-          </div>
-          <div class="qa">
-            <h3>ค้นหาสิ่งที่บันทึกไว้ได้ไหม</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>ค้นหาสิ่งที่บันทึกไว้ได้ไหม</h3></summary>
             <p>ได้ ช่องเดียวค้นทั้งชื่อกลุ่ม ข้อความในโน้ต และชื่อเรื่องของลิงก์ และใช้ได้โดยไม่ต้องต่ออินเทอร์เน็ต เพราะโน้ตของคุณอยู่บนเครื่อง</p>
-          </div>
-          <div class="qa">
-            <h3>โน้ตของฉันถูกเก็บไว้ที่ไหน</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>โน้ตของฉันถูกเก็บไว้ที่ไหน</h3></summary>
             <p>บนเครื่องของคุณ Assorta ไม่ได้เก็บโน้ตของคุณไว้บนเซิร์ฟเวอร์ของเรา</p>
-          </div>
-          <div class="qa">
-            <h3>ต้องมีบัญชีไหม</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>ต้องมีบัญชีไหม</h3></summary>
             <p>ไม่ต้อง การลงชื่อเข้าใช้เป็นทางเลือก มันช่วยให้ Assorta Pro ติดไปกับเครื่องอื่นของคุณ</p>
-          </div>
-          <div class="qa">
-            <h3>Assorta ใช้งานได้ไหมเมื่อไม่มีการเชื่อมต่อ</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Assorta ใช้งานได้ไหมเมื่อไม่มีการเชื่อมต่อ</h3></summary>
             <p>โน้ต กลุ่ม และสรุปที่คุณขอไปแล้วอยู่บนเครื่อง การเปิดดูและการค้นหาจึงทำได้แบบออฟไลน์ ส่วนการจัดเรียงด้วย AI และสรุปด้วย AI ต้องมีการเชื่อมต่อ การจัดเรียงอัตโนมัติไม่ต้อง</p>
-          </div>
-          <div class="qa">
-            <h3>ย้ายโน้ตไปกลุ่มอื่นทีหลังได้ไหม</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>ย้ายโน้ตไปกลุ่มอื่นทีหลังได้ไหม</h3></summary>
             <p>ได้ เปิดเมนูการกระทำของโน้ตแล้วเลือกย้าย</p>
-          </div>
-          <div class="qa">
-            <h3>ส่งออกโน้ตได้ไหม</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>ส่งออกโน้ตได้ไหม</h3></summary>
             <p>ยังไม่ได้ การส่งออกและการสำรองข้อมูลอยู่ในแผนของ Assorta Pro</p>
-          </div>
-          <div class="qa">
-            <h3>Assorta ใช้ได้บนอุปกรณ์ไหนบ้าง</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Assorta ใช้ได้บนอุปกรณ์ไหนบ้าง</h3></summary>
             <p>โทรศัพท์และแท็บเล็ต Android รวมถึง iPhone และ iPad</p>
-          </div>
-          <div class="qa">
-            <h3>Assorta รองรับภาษาอะไรบ้าง</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Assorta รองรับภาษาอะไรบ้าง</h3></summary>
             <p>31 ภาษา ตั้งแต่อังกฤษและยูเครนไปจนถึงญี่ปุ่น เกาหลี และอาหรับ Assorta ใช้ภาษาตามเครื่องของคุณ และคุณเปลี่ยนได้ในการตั้งค่า</p>
-          </div>
-          <div class="qa">
-            <h3>Assorta ต่างจากบุ๊กมาร์กหรือแอปโน้ตอย่างไร</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Assorta ต่างจากบุ๊กมาร์กหรือแอปโน้ตอย่างไร</h3></summary>
             <p>โฟลเดอร์บุ๊กมาร์กต้องให้คุณเลือกโฟลเดอร์ และแอปโน้ตต้องให้คุณตั้งชื่อโน้ต ส่วน Assorta อ่านสิ่งที่คุณบันทึกแล้วเก็บเข้าที่ให้เอง - งานที่คุณไม่ต้องทำคือการจัดเรียง</p>
-          </div>
-          <div class="qa">
-            <h3>ลบบัญชีและข้อมูลของฉันอย่างไร</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>ลบบัญชีและข้อมูลของฉันอย่างไร</h3></summary>
             <p>เปิดการตั้งค่าในแอปแล้วแตะลบบัญชี หรืออีเมลหาเราแล้วเราจะจัดการให้ <a href="delete-account.html">หน้าลบบัญชี</a> อธิบายว่าอะไรถูกลบและอะไรถูกเก็บไว้</p>
-          </div>
+          </details>
         </div>
       </details>
     </div>

@@ -526,18 +526,37 @@
   section { padding: 64px 0; }
   section.alt { background: color-mix(in srgb, var(--panel) 32%, var(--bg)); }
   /* ---- FAQ ---- */
-  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall. */
-  .faq { max-width: 760px; }
-  .faq .qa { padding: 17px 0; border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
-  .faq > .qa:first-of-type { border-top: 0; padding-top: 4px; }
-  .faq h3 { font-family: var(--font-display); font-size: 17.5px; margin-bottom: 7px; }
-  .faq p { color: var(--text-dim); line-height: 1.65; }
+  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall.
+     Each entry is its own card, so the section reads as a menu of questions rather than a
+     page of prose, and the answer is one tap away instead of already in the way. */
+  .faq { max-width: 760px; display: grid; gap: 10px; }
+  .faq .qa {
+    border: 1px solid var(--line); border-radius: 14px;
+    background: color-mix(in srgb, var(--panel) 55%, transparent);
+    transition: border-color .15s;
+  }
+  .faq .qa:hover { border-color: var(--indigo); }
+  .faq .qa > summary {
+    display: flex; align-items: center; gap: 16px; padding: 17px 22px;
+    cursor: pointer; list-style: none;
+  }
+  .faq .qa > summary::-webkit-details-marker { display: none; }
+  .faq .qa > summary:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; border-radius: 14px; }
+  .faq .qa h3 { flex: 1; font-family: var(--font-display); font-size: 17px; font-weight: 700; }
+  /* One glyph for both states: a plus turned 45 degrees is a close mark, so the control
+     never has to swap characters and never reflows by a pixel between them. */
+  .faq .qa > summary::after {
+    content: "+"; flex: none; width: 18px; text-align: center;
+    font-size: 23px; line-height: 1; font-weight: 300; color: var(--indigo-bright);
+    transition: transform .18s;
+  }
+  .faq .qa[open] > summary::after { transform: rotate(45deg); }
+  .faq .qa > p { padding: 0 22px 19px; color: var(--text-dim); line-height: 1.65; }
   .faq a { color: var(--indigo-bright); }
   /* <details> and not a script: the thirteen collapsed answers stay in the page source, so a
      crawler and an answer engine read all twenty however much a human unfolded. */
-  .faq-more { border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
   .faq-more > summary {
-    display: inline-flex; align-items: center; gap: 7px; margin-top: 18px;
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 6px;
     padding: 9px 18px; border: 1px solid var(--line); border-radius: 999px;
     color: var(--text-dim); font-size: 14.5px; cursor: pointer; list-style: none;
     transition: color .15s, border-color .15s;
@@ -553,7 +572,7 @@
   .faq-more > summary .more-open { display: none; }
   .faq-more[open] > summary .more-closed { display: none; }
   .faq-more[open] > summary .more-open { display: inline; }
-  .faq-rest { margin-top: 4px; }
+  .faq-rest { display: grid; gap: 10px; margin-top: 10px; }
   .kicker {
     font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
     text-transform: uppercase; color: var(--indigo-bright); margin-bottom: 14px;
@@ -1166,89 +1185,89 @@
     <p class="kicker">FAQ</p>
     <h2>Vragen die mensen stellen voordat ze installeren</h2>
     <div class="faq">
-      <div class="qa">
-        <h3>Wat is Assorta?</h3>
+      <details class="qa">
+        <summary><h3>Wat is Assorta?</h3></summary>
         <p>Assorta is één inbox voor links, notities en ideeën op Android en iOS. AI leest wat je opslaat en bergt het op in een van de 30+ groepen, zodat je het later terugvindt zonder mappen of tags.</p>
-      </div>
-      <div class="qa">
-        <h3>Hoe bepaalt Assorta in welke groep iets komt?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Hoe bepaalt Assorta in welke groep iets komt?</h3></summary>
         <p>Assorta leest de tekst, of de pagina achter een link, en kiest de groep die past - Reizen, Koken, Verlanglijst, Sport en de rest. Je ziet de keuze op het moment dat hij gemaakt wordt.</p>
-      </div>
-      <div class="qa">
-        <h3>Wat kan ik in Assorta bewaren?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Wat kan ik in Assorta bewaren?</h3></summary>
         <p>Links die je vanuit elke app deelt, en tekst die je er zelf in plakt. Een opgeslagen link behoudt zijn thumbnail en titel, zodat je hem in de lijst herkent zonder hem te openen.</p>
-      </div>
-      <div class="qa">
-        <h3>Is Assorta gratis?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Is Assorta gratis?</h3></summary>
         <p>Assorta is gratis te installeren en gratis te gebruiken. De eerste 15 AI-sorteringen zijn gratis; daarna blijft het opbergen werken, en de limiet op AI-sorteren is wat Assorta Pro weghaalt.</p>
-      </div>
-      <div class="qa">
-        <h3>Wat is AI-samenvatting?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Wat is AI-samenvatting?</h3></summary>
         <p>Tik op AI-samenvatting bij een opgeslagen link en Assorta brengt de pagina in een paar regels terug, meteen in de lijst. De samenvatting wordt bij de notitie bewaard, dus de tweede blik gaat meteen en werkt offline. Levert een pagina niets op, dan zegt Assorta dat in plaats van een samenvatting te verzinnen.</p>
-      </div>
-      <div class="qa">
-        <h3>Kan ik vanuit andere apps opslaan?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Kan ik vanuit andere apps opslaan?</h3></summary>
         <p>Ja. Assorta staat in het deelmenu van Android en iOS, dus een link uit YouTube, TikTok, Instagram of een browser is twee tikken.</p>
-      </div>
-      <div class="qa">
-        <h3>Synchroniseert Assorta tussen apparaten?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Synchroniseert Assorta tussen apparaten?</h3></summary>
         <p>Nog niet. Notities blijven op het apparaat waarop je ze hebt opgeslagen; synchroniseren staat op de roadmap van Assorta Pro.</p>
-      </div>
+      </details>
       <details class="faq-more">
         <summary><span class="more-closed">Meer vragen tonen</span><span class="more-open">Minder tonen</span></summary>
         <div class="faq-rest">
-          <div class="qa">
-            <h3>Wat als de AI de verkeerde groep kiest?</h3>
+          <details class="qa">
+            <summary><h3>Wat als de AI de verkeerde groep kiest?</h3></summary>
             <p>Wijzig hem met één tik, meteen vanuit de bevestiging - de groepen die net afvielen staan er direct naast.</p>
-          </div>
-          <div class="qa">
-            <h3>Wat gebeurt er als de gratis AI-sorteringen op zijn?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Wat gebeurt er als de gratis AI-sorteringen op zijn?</h3></summary>
             <p>Het opbergen blijft werken. Assorta valt terug op automatisch sorteren, dat op het apparaat draait met zo’n 3.000 geselecteerde termen en nooit opraakt; Assorta Pro is wat de limiet op AI-sorteren weghaalt.</p>
-          </div>
-          <div class="qa">
-            <h3>Wat voegt Assorta Pro toe?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Wat voegt Assorta Pro toe?</h3></summary>
             <p>Assorta Pro haalt de limiet op AI-sorteren weg en voegt AI-samenvatting toe. Het is optioneel en wordt gefactureerd door Apple of Google.</p>
-          </div>
-          <div class="qa">
-            <h3>Kan ik zoeken in wat ik heb bewaard?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Kan ik zoeken in wat ik heb bewaard?</h3></summary>
             <p>Ja. Eén veld doorzoekt groepsnamen, de tekst van een notitie en de titel van een link, en het werkt zonder verbinding omdat je notities op het apparaat staan.</p>
-          </div>
-          <div class="qa">
-            <h3>Waar worden mijn notities bewaard?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Waar worden mijn notities bewaard?</h3></summary>
             <p>Op je apparaat. Assorta bewaart je notities niet op onze servers.</p>
-          </div>
-          <div class="qa">
-            <h3>Heb ik een account nodig?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Heb ik een account nodig?</h3></summary>
             <p>Nee. Inloggen is optioneel; het houdt Assorta Pro beschikbaar op je andere apparaten.</p>
-          </div>
-          <div class="qa">
-            <h3>Werkt Assorta zonder verbinding?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Werkt Assorta zonder verbinding?</h3></summary>
             <p>Je notities, je groepen en elke samenvatting die je al hebt opgevraagd staan op het apparaat, dus bladeren en zoeken werken offline. AI-sorteren en AI-samenvatting hebben een verbinding nodig; automatisch sorteren niet.</p>
-          </div>
-          <div class="qa">
-            <h3>Kan ik een notitie later naar een andere groep verplaatsen?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Kan ik een notitie later naar een andere groep verplaatsen?</h3></summary>
             <p>Ja. Open de acties van de notitie en kies Verplaatsen.</p>
-          </div>
-          <div class="qa">
-            <h3>Kan ik mijn notities exporteren?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Kan ik mijn notities exporteren?</h3></summary>
             <p>Nog niet. Exporteren en back-ups staan op de roadmap van Assorta Pro.</p>
-          </div>
-          <div class="qa">
-            <h3>Op welke apparaten draait Assorta?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Op welke apparaten draait Assorta?</h3></summary>
             <p>Android-telefoons en -tablets, iPhone en iPad.</p>
-          </div>
-          <div class="qa">
-            <h3>Welke talen spreekt Assorta?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Welke talen spreekt Assorta?</h3></summary>
             <p>31, van Engels en Oekraïens tot Japans, Koreaans en Arabisch. Assorta volgt de taal van je apparaat, en je kunt hem wijzigen in Instellingen.</p>
-          </div>
-          <div class="qa">
-            <h3>Wat doet Assorta anders dan favorieten of een notitie-app?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Wat doet Assorta anders dan favorieten of een notitie-app?</h3></summary>
             <p>Een map met favorieten vraagt jou om de map te kiezen, en een notitie-app vraagt jou om de notitie een naam te geven. Assorta leest wat je hebt opgeslagen en bergt het zelf op - het werk dat je overslaat, is het sorteren.</p>
-          </div>
-          <div class="qa">
-            <h3>Hoe verwijder ik mijn account en mijn gegevens?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Hoe verwijder ik mijn account en mijn gegevens?</h3></summary>
             <p>Open Instellingen en tik in de app op Account verwijderen, of mail ons en wij doen het. De <a href="delete-account.html">pagina over accountverwijdering</a> legt uit wat er wordt verwijderd en wat blijft.</p>
-          </div>
+          </details>
         </div>
       </details>
     </div>

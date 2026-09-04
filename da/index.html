@@ -526,18 +526,37 @@
   section { padding: 64px 0; }
   section.alt { background: color-mix(in srgb, var(--panel) 32%, var(--bg)); }
   /* ---- FAQ ---- */
-  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall. */
-  .faq { max-width: 760px; }
-  .faq .qa { padding: 17px 0; border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
-  .faq > .qa:first-of-type { border-top: 0; padding-top: 4px; }
-  .faq h3 { font-family: var(--font-display); font-size: 17.5px; margin-bottom: 7px; }
-  .faq p { color: var(--text-dim); line-height: 1.65; }
+  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall.
+     Each entry is its own card, so the section reads as a menu of questions rather than a
+     page of prose, and the answer is one tap away instead of already in the way. */
+  .faq { max-width: 760px; display: grid; gap: 10px; }
+  .faq .qa {
+    border: 1px solid var(--line); border-radius: 14px;
+    background: color-mix(in srgb, var(--panel) 55%, transparent);
+    transition: border-color .15s;
+  }
+  .faq .qa:hover { border-color: var(--indigo); }
+  .faq .qa > summary {
+    display: flex; align-items: center; gap: 16px; padding: 17px 22px;
+    cursor: pointer; list-style: none;
+  }
+  .faq .qa > summary::-webkit-details-marker { display: none; }
+  .faq .qa > summary:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; border-radius: 14px; }
+  .faq .qa h3 { flex: 1; font-family: var(--font-display); font-size: 17px; font-weight: 700; }
+  /* One glyph for both states: a plus turned 45 degrees is a close mark, so the control
+     never has to swap characters and never reflows by a pixel between them. */
+  .faq .qa > summary::after {
+    content: "+"; flex: none; width: 18px; text-align: center;
+    font-size: 23px; line-height: 1; font-weight: 300; color: var(--indigo-bright);
+    transition: transform .18s;
+  }
+  .faq .qa[open] > summary::after { transform: rotate(45deg); }
+  .faq .qa > p { padding: 0 22px 19px; color: var(--text-dim); line-height: 1.65; }
   .faq a { color: var(--indigo-bright); }
   /* <details> and not a script: the thirteen collapsed answers stay in the page source, so a
      crawler and an answer engine read all twenty however much a human unfolded. */
-  .faq-more { border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
   .faq-more > summary {
-    display: inline-flex; align-items: center; gap: 7px; margin-top: 18px;
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 6px;
     padding: 9px 18px; border: 1px solid var(--line); border-radius: 999px;
     color: var(--text-dim); font-size: 14.5px; cursor: pointer; list-style: none;
     transition: color .15s, border-color .15s;
@@ -553,7 +572,7 @@
   .faq-more > summary .more-open { display: none; }
   .faq-more[open] > summary .more-closed { display: none; }
   .faq-more[open] > summary .more-open { display: inline; }
-  .faq-rest { margin-top: 4px; }
+  .faq-rest { display: grid; gap: 10px; margin-top: 10px; }
   .kicker {
     font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
     text-transform: uppercase; color: var(--indigo-bright); margin-bottom: 14px;
@@ -1166,89 +1185,89 @@
     <p class="kicker">FAQ</p>
     <h2>Spørgsmål folk stiller, før de installerer</h2>
     <div class="faq">
-      <div class="qa">
-        <h3>Hvad er Assorta?</h3>
+      <details class="qa">
+        <summary><h3>Hvad er Assorta?</h3></summary>
         <p>Assorta er én indbakke til links, noter og idéer på Android og iOS. AI læser det, du gemmer, og lægger det i en af 30+ grupper, så du finder det igen uden mapper eller tags.</p>
-      </div>
-      <div class="qa">
-        <h3>Hvordan afgør Assorta, hvilken gruppe noget skal i?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Hvordan afgør Assorta, hvilken gruppe noget skal i?</h3></summary>
         <p>Assorta læser teksten, eller siden bag et link, og vælger den gruppe, der passer - Rejser, Madlavning, Ønskeliste, Sport og resten. Du ser valget i samme øjeblik, det bliver truffet.</p>
-      </div>
-      <div class="qa">
-        <h3>Hvad kan jeg gemme i Assorta?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Hvad kan jeg gemme i Assorta?</h3></summary>
         <p>Links delt fra en hvilken som helst app, og tekst, du selv indsætter. Et gemt link beholder sin miniature og titel, så du genkender det i listen uden at åbne det.</p>
-      </div>
-      <div class="qa">
-        <h3>Er Assorta gratis?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Er Assorta gratis?</h3></summary>
         <p>Assorta er gratis at installere og gratis at bruge. De første 15 AI-sorteringer er gratis; derefter kører sorteringen videre, og det er grænsen for AI-sortering, Assorta Pro fjerner.</p>
-      </div>
-      <div class="qa">
-        <h3>Hvad er AI-resumé?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Hvad er AI-resumé?</h3></summary>
         <p>Tryk på AI-resumé på et gemt link, og Assorta henter siden tilbage på et par linjer, lige der i listen. Resuméet gemmes sammen med noten, så andet kig er øjeblikkeligt og virker offline. Giver en side ikke noget at arbejde med, siger Assorta det i stedet for at finde på et resumé.</p>
-      </div>
-      <div class="qa">
-        <h3>Kan jeg gemme fra andre apps?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Kan jeg gemme fra andre apps?</h3></summary>
         <p>Ja. Assorta ligger i systemets delemenu på Android og iOS, så et link fra YouTube, TikTok, Instagram eller en browser er to tryk.</p>
-      </div>
-      <div class="qa">
-        <h3>Synkroniserer Assorta mellem enheder?</h3>
+      </details>
+      <details class="qa">
+        <summary><h3>Synkroniserer Assorta mellem enheder?</h3></summary>
         <p>Ikke endnu. Noterne bliver på den enhed, du gemte dem på; synkronisering står på køreplanen for Assorta Pro.</p>
-      </div>
+      </details>
       <details class="faq-more">
         <summary><span class="more-closed">Vis flere spørgsmål</span><span class="more-open">Vis færre</span></summary>
         <div class="faq-rest">
-          <div class="qa">
-            <h3>Hvad hvis AI vælger den forkerte gruppe?</h3>
+          <details class="qa">
+            <summary><h3>Hvad hvis AI vælger den forkerte gruppe?</h3></summary>
             <p>Skift den med ét tryk, direkte fra bekræftelsen - grupperne på andenpladsen ligger lige ved siden af.</p>
-          </div>
-          <div class="qa">
-            <h3>Hvad sker der, når de gratis AI-sorteringer slipper op?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Hvad sker der, når de gratis AI-sorteringer slipper op?</h3></summary>
             <p>Sorteringen kører videre. Assorta falder tilbage på automatisk sortering, som kører på enheden ud fra omkring 3.000 udvalgte termer og aldrig slipper op; Assorta Pro er det, der fjerner grænsen for AI-sortering.</p>
-          </div>
-          <div class="qa">
-            <h3>Hvad tilføjer Assorta Pro?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Hvad tilføjer Assorta Pro?</h3></summary>
             <p>Assorta Pro fjerner grænsen for AI-sortering og tilføjer AI-resumé. Det er valgfrit, og det opkræves af Apple eller Google.</p>
-          </div>
-          <div class="qa">
-            <h3>Kan jeg søge i det, jeg har gemt?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Kan jeg søge i det, jeg har gemt?</h3></summary>
             <p>Ja. Ét felt søger i gruppenavne, notens egen tekst og linkets titel, og det virker uden forbindelse, fordi dine noter ligger på enheden.</p>
-          </div>
-          <div class="qa">
-            <h3>Hvor bliver mine noter gemt?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Hvor bliver mine noter gemt?</h3></summary>
             <p>På din enhed. Assorta gemmer ikke dine noter på vores servere.</p>
-          </div>
-          <div class="qa">
-            <h3>Skal jeg have en konto?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Skal jeg have en konto?</h3></summary>
             <p>Nej. Det er valgfrit at logge ind; det holder Assorta Pro på dine andre enheder.</p>
-          </div>
-          <div class="qa">
-            <h3>Virker Assorta uden forbindelse?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Virker Assorta uden forbindelse?</h3></summary>
             <p>Dine noter, dine grupper og de resuméer, du allerede har bedt om, ligger på enheden, så du kan bladre og søge offline. AI-sortering og AI-resumé kræver en forbindelse; automatisk sortering gør ikke.</p>
-          </div>
-          <div class="qa">
-            <h3>Kan jeg flytte en note til en anden gruppe senere?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Kan jeg flytte en note til en anden gruppe senere?</h3></summary>
             <p>Ja. Åbn notens handlinger, og vælg Flyt.</p>
-          </div>
-          <div class="qa">
-            <h3>Kan jeg eksportere mine noter?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Kan jeg eksportere mine noter?</h3></summary>
             <p>Ikke endnu. Eksport og backup står på køreplanen for Assorta Pro.</p>
-          </div>
-          <div class="qa">
-            <h3>Hvilke enheder kører Assorta på?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Hvilke enheder kører Assorta på?</h3></summary>
             <p>Android-telefoner og -tablets, iPhone og iPad.</p>
-          </div>
-          <div class="qa">
-            <h3>Hvilke sprog taler Assorta?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Hvilke sprog taler Assorta?</h3></summary>
             <p>31, fra engelsk og ukrainsk til japansk, koreansk og arabisk. Assorta følger din enheds sprog, og du kan ændre det i Indstillinger.</p>
-          </div>
-          <div class="qa">
-            <h3>Hvordan adskiller Assorta sig fra bogmærker eller en app til noter?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Hvordan adskiller Assorta sig fra bogmærker eller en app til noter?</h3></summary>
             <p>En bogmærkemappe kræver, at du vælger mappen, og en app til noter kræver, at du navngiver noten. Assorta læser det, du gemmer, og lægger det på plads selv - det arbejde, du springer over, er sorteringen.</p>
-          </div>
-          <div class="qa">
-            <h3>Hvordan sletter jeg min konto og mine data?</h3>
+          </details>
+          <details class="qa">
+            <summary><h3>Hvordan sletter jeg min konto og mine data?</h3></summary>
             <p>Åbn Indstillinger, og tryk på Slet konto i appen, eller skriv til os, så gør vi det. <a href="delete-account.html">Siden om sletning af konto</a> beskriver, hvad der fjernes, og hvad der bliver gemt.</p>
-          </div>
+          </details>
         </div>
       </details>
     </div>
