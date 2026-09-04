@@ -44,21 +44,21 @@
 <meta name="theme-color" content="#131129">
 <style>
   /* Palette mirrors the app's semantic tokens (AssortaKMP ui/theme/SemanticColor.kt).
-     Dark is the default — it also survives JS being off; light overrides it via
+     Dark is the default - it also survives JS being off; light overrides it via
      data-theme="light" on <html>, stamped before first paint by the inline script
      at the end of <head>. Tag hues are shared by both app palettes, so they are
      declared once and never overridden. */
   :root {
     --bg: #131129;
-    --panel: #1e1b4b;            /* Indigo.v950 — bgAppGradientEnd */
+    --panel: #1e1b4b;            /* Indigo.v950 - bgAppGradientEnd */
     --panel-soft: #232052;
     --line: #34306b;
-    --indigo: #6366f1;           /* Indigo.v600 — accentPrimary, shared by both themes */
+    --indigo: #6366f1;           /* Indigo.v600 - accentPrimary, shared by both themes */
     --indigo-bright: #818cf8;
     /* accentPrimary is the brand hue but is too light to carry text: white on it is 4.46:1
        and it reads 3.1-3.8:1 as a glyph on its own tint. This mirrors the app's bgAccent -
        the fill that sits under white text. Borders, glows and tints keep --indigo. */
-    --accent-fill: #4f46e5;      /* Indigo.v700 — bgAccent */
+    --accent-fill: #4f46e5;      /* Indigo.v700 - bgAccent */
     --text: #eef0ff;
     --text-dim: #a3a6cc;
     /* The app's own screen background, verbatim from SemanticColors
@@ -121,17 +121,17 @@
     --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
   :root[data-theme="light"] {
-    --bg: #f8fafc;               /* Gray.v50   — bgAppGradientStart */
-    --panel: #eef2ff;            /* Indigo.v50 — bgAppGradientEnd */
+    --bg: #f8fafc;               /* Gray.v50   - bgAppGradientStart */
+    --panel: #eef2ff;            /* Indigo.v50 - bgAppGradientEnd */
     --panel-soft: #e3e9fb;
     --line: #d2dae9;             /* borderCard, lifted from Gray.v500a20 to stay visible on light */
-    --indigo-bright: #4f46e5;    /* Indigo.v700 — the accent that still reads on a light background */
-    --text: #0f172a;             /* Gray.v950 — fgPrimary */
+    --indigo-bright: #4f46e5;    /* Indigo.v700 - the accent that still reads on a light background */
+    --text: #0f172a;             /* Gray.v950 - fgPrimary */
     /* Still the app's fgSecondary, which moved to Gray.v700 for the same reason:
        the old Gray.v600 (#64748b) landed at 3.4-4.4:1 on the tinted panels this
        site invents (.cell, .step, section.alt) and on the app's own gradient end.
        v700 clears AA everywhere, worst case 5.4:1 on the .cell tints. */
-    --text-dim: #475569;         /* Gray.v700 — fgSecondary */
+    --text-dim: #475569;         /* Gray.v700 - fgSecondary */
     --app-grad-start: #f8fafc;   /* Gray.v50 */
     --app-grad-end:   #eef2ff;   /* Indigo.v50 */
     /* Mockup palette, light. Rows with an app token take it; the rest reproduce
@@ -525,6 +525,35 @@
   /* ---- sections ---- */
   section { padding: 64px 0; }
   section.alt { background: color-mix(in srgb, var(--panel) 32%, var(--bg)); }
+  /* ---- FAQ ---- */
+  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall. */
+  .faq { max-width: 760px; }
+  .faq .qa { padding: 17px 0; border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+  .faq > .qa:first-of-type { border-top: 0; padding-top: 4px; }
+  .faq h3 { font-family: var(--font-display); font-size: 17.5px; margin-bottom: 7px; }
+  .faq p { color: var(--text-dim); line-height: 1.65; }
+  .faq a { color: var(--indigo-bright); }
+  /* <details> and not a script: the thirteen collapsed answers stay in the page source, so a
+     crawler and an answer engine read all twenty however much a human unfolded. */
+  .faq-more { border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+  .faq-more > summary {
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 18px;
+    padding: 9px 18px; border: 1px solid var(--line); border-radius: 999px;
+    color: var(--text-dim); font-size: 14.5px; cursor: pointer; list-style: none;
+    transition: color .15s, border-color .15s;
+  }
+  .faq-more > summary::-webkit-details-marker { display: none; }
+  .faq-more > summary:hover { color: var(--text); border-color: var(--indigo); }
+  .faq-more > summary:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; }
+  .faq-more > summary::after {
+    content: ""; width: 7px; height: 7px; border-right: 1.6px solid currentColor;
+    border-bottom: 1.6px solid currentColor; transform: translateY(-2px) rotate(45deg);
+  }
+  .faq-more[open] > summary::after { transform: translateY(1px) rotate(225deg); }
+  .faq-more > summary .more-open { display: none; }
+  .faq-more[open] > summary .more-closed { display: none; }
+  .faq-more[open] > summary .more-open { display: inline; }
+  .faq-rest { margin-top: 4px; }
   .kicker {
     font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
     text-transform: uppercase; color: var(--indigo-bright); margin-bottom: 14px;
@@ -1075,35 +1104,31 @@
       </div>
       <div class="feature" style="--f-color: var(--amber)">
         <h3>30 以上のスマートなグループ</h3>
-        <p>保存した瞬間に AI がグループを選びます。違うと思ったら、確認画面からワンタップで変えられます。</p>
+        <p>保存した瞬間に、Assorta は 30 以上の用意されたグループのどれかに入れます - 旅行、料理、ほしいものリスト、スポーツ。違うと思ったら、確認画面からそのままワンタップで変えられます。</p>
       </div>
       <div class="feature" style="--f-color: var(--cyan)">
         <h3>リンクプレビュー</h3>
-        <p>保存したリンクはサムネイルとタイトルを保ちます - YouTube のワンシーン、商品の写真、記事の表紙 - だからひと目でわかります。</p>
+        <p>Assorta は保存したリンクのサムネイルとタイトルを保ちます - YouTube のワンシーン、商品の写真、記事の表紙 - だからひと目でわかります。</p>
       </div>
       <div class="feature" style="--f-color: var(--indigo)">
         <h3>AI 要約</h3>
-        <p>保存したリンクで AI 要約をタップすれば、開かずに数行でページを読めます。要約はメモと
-          一緒に保存されるので、次に見るときは一瞬で、オフラインでも読めます。Assorta Pro に含まれます。</p>
+        <p>保存したリンクで AI 要約をタップすれば、Assorta が開かずに数行でページを返します。要約はメモと一緒に保存されるので、次に見るときは一瞬で、オフラインでも読めます。Assorta Pro に含まれます。</p>
       </div>
       <div class="feature" style="--f-color: var(--teal)">
         <h3>必要なときの検索</h3>
-        <p>グループ名、メモ本文、リンクのタイトルをまとめて 1 つの入力欄で検索 - 探した場所に
-          なかった 1 件のために。</p>
+        <p>Assorta は 1 つの入力欄からグループ名、メモ本文、リンクのタイトルを検索します - 最初に探した場所になかった 1 件のために。</p>
       </div>
       <div class="feature" style="--f-color: var(--emerald)">
         <h3>バックグラウンドで保存</h3>
-        <p>保存の途中でアプリを切り替えても、項目はそのままグループに届きます。アプリの間で消えてしまうものはありません。</p>
+        <p>Assorta は保存をバックグラウンドで最後まで進めるので、途中でアプリを切り替えても項目はグループに届きます。アプリの間で消えてしまうものはありません。</p>
       </div>
       <div class="feature" style="--f-color: var(--purple)">
-        <h3>どの端末でも</h3>
-        <p>Android と iOS - 使うすべての画面でひとつのアプリ。メモは保存した端末に残り、
-          端末間の同期はまだありません。</p>
+        <h3>Android と iOS</h3>
+        <p>Assorta は Android のスマートフォンとタブレット、iPhone、iPad で動きます。メモは保存した端末に残り、端末間の同期はまだありません。</p>
       </div>
       <div class="feature" style="--f-color: var(--sky)">
-        <h3>見た目はお好みで</h3>
-        <p>ライトテーマとダークテーマ。英語やウクライナ語から日本語、韓国語、アラビア語まで
-          13 言語に対応。</p>
+        <h3>なくならない仕分け</h3>
+        <p>無料の仕分けが残っている間は AI が仕分け、使い切ったあとは自動仕分けに切り替わります。自動仕分けは約 3,000 語の厳選した語句をもとに端末上で動きます。どちらでもメモはグループに入ります - 回数がなくなっても仕分けは止まりません。</p>
       </div>
     </div>
   </div>
@@ -1136,6 +1161,100 @@
       <span class="chip" style="--c:#d946ef">美容</span>
       <span class="chip" style="--c:#f43f5e">個人</span>
       <span class="chip more">…ほか十数個</span>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="faq">
+  <div class="wrap">
+    <p class="kicker">よくある質問</p>
+    <h2>インストールする前に、よく聞かれること</h2>
+    <div class="faq">
+      <div class="qa">
+        <h3>Assorta とは？</h3>
+        <p>Assorta は Android と iOS 向けの、リンク・メモ・アイデアをまとめて入れるインボックスです。保存したものを AI が読み取り、30 以上のグループのどれかに入れるので、フォルダもタグもなしであとから見つかります。</p>
+      </div>
+      <div class="qa">
+        <h3>Assorta はどのグループに入れるかをどうやって決めますか？</h3>
+        <p>Assorta はテキストを、リンクならその先のページを読み取り、合うグループを選びます - 旅行、料理、ほしいものリスト、スポーツなど。選ばれたその瞬間に、結果が表示されます。</p>
+      </div>
+      <div class="qa">
+        <h3>Assorta には何を保存できますか？</h3>
+        <p>どのアプリからでも共有できるリンクと、自分で貼り付けたテキストです。保存したリンクはサムネイルとタイトルを保つので、開かなくてもリストの中で見分けられます。</p>
+      </div>
+      <div class="qa">
+        <h3>Assorta は無料ですか？</h3>
+        <p>Assorta はインストールも利用も無料です。最初の 15 回の AI 仕分けは無料で、そのあとも仕分けは動き続けます。AI 仕分けの上限をなくすのが Assorta Pro です。</p>
+      </div>
+      <div class="qa">
+        <h3>AI 要約とは？</h3>
+        <p>保存したリンクで AI 要約をタップすると、Assorta がページの内容を数行にしてリストの中に返します。要約はメモと一緒に保存されるので、次に見るときは一瞬で、オフラインでも読めます。ページから読み取れるものがないときは、作り話の要約を出さず、そう伝えます。</p>
+      </div>
+      <div class="qa">
+        <h3>ほかのアプリから保存できますか？</h3>
+        <p>はい。Assorta は Android と iOS の共有シートに入っているので、YouTube、TikTok、Instagram、ブラウザからのリンクも 2 タップです。</p>
+      </div>
+      <div class="qa">
+        <h3>Assorta は端末間で同期しますか？</h3>
+        <p>まだできません。メモは保存した端末に残ります。同期は Assorta Pro のロードマップにあります。</p>
+      </div>
+      <details class="faq-more">
+        <summary><span class="more-closed">質問をもっと見る</span><span class="more-open">表示を減らす</span></summary>
+        <div class="faq-rest">
+          <div class="qa">
+            <h3>AI が違うグループを選んだときは？</h3>
+            <p>確認画面からそのままワンタップで変えられます - 次点のグループがすぐ隣に並んでいます。</p>
+          </div>
+          <div class="qa">
+            <h3>無料の AI 仕分けを使い切ったらどうなりますか？</h3>
+            <p>仕分けはそのまま続きます。Assorta は自動仕分けに切り替わり、約 3,000 語の厳選した語句をもとに端末上で動くので、回数がなくなることはありません。AI 仕分けの上限をなくすのが Assorta Pro です。</p>
+          </div>
+          <div class="qa">
+            <h3>Assorta Pro では何が加わりますか？</h3>
+            <p>Assorta Pro は AI 仕分けの上限をなくし、AI 要約を加えます。任意のもので、課金は Apple または Google が行います。</p>
+          </div>
+          <div class="qa">
+            <h3>保存したものを検索できますか？</h3>
+            <p>はい。1 つの入力欄でグループ名、メモ本文、リンクのタイトルを検索できます。メモは端末の中にあるので、接続がなくても動きます。</p>
+          </div>
+          <div class="qa">
+            <h3>メモはどこに保存されますか？</h3>
+            <p>お使いの端末の中です。Assorta はメモを当社のサーバーに保存しません。</p>
+          </div>
+          <div class="qa">
+            <h3>アカウントは必要ですか？</h3>
+            <p>いいえ。ログインは任意で、ほかの端末でも Assorta Pro を使えるようにするためのものです。</p>
+          </div>
+          <div class="qa">
+            <h3>Assorta は接続なしでも動きますか？</h3>
+            <p>メモもグループも、すでに作った要約も端末の中にあるので、閲覧と検索はオフラインでも動きます。AI 仕分けと AI 要約は接続が必要で、自動仕分けは必要ありません。</p>
+          </div>
+          <div class="qa">
+            <h3>あとからメモをほかのグループへ移せますか？</h3>
+            <p>はい。メモの操作ボタンをタップして 移動 を選んでください。</p>
+          </div>
+          <div class="qa">
+            <h3>メモを書き出せますか？</h3>
+            <p>まだできません。書き出しとバックアップは Assorta Pro のロードマップにあります。</p>
+          </div>
+          <div class="qa">
+            <h3>Assorta はどの端末で使えますか？</h3>
+            <p>Android のスマートフォンとタブレット、iPhone、iPad です。</p>
+          </div>
+          <div class="qa">
+            <h3>Assorta は何語に対応していますか？</h3>
+            <p>31 言語です。英語やウクライナ語から、日本語、韓国語、アラビア語まで。Assorta は端末の言語に従い、設定 から変更できます。</p>
+          </div>
+          <div class="qa">
+            <h3>Assorta はブックマークやメモアプリと何が違いますか？</h3>
+            <p>ブックマークはフォルダを自分で選ぶ必要があり、メモアプリはメモに名前を付ける必要があります。Assorta は保存したものを読み取って自分でしまいます - 省けるのは仕分けの手間です。</p>
+          </div>
+          <div class="qa">
+            <h3>アカウントとデータを削除するには？</h3>
+            <p>アプリで 設定 を開き、アカウントを削除 をタップしてください。メールでご依頼いただければ、こちらで対応します。削除されるものと残るものは<a href="delete-account.html">アカウント削除のページ</a>に記載しています。</p>
+          </div>
+        </div>
+      </details>
     </div>
   </div>
 </section>
@@ -1195,6 +1314,8 @@
       関係はなく、いずれも本アプリに関与しておらず、それらを装うこともありません。</p>
   </div>
 </footer>
+
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"FAQPage","@id":"https://assorta.app/ja/#faq","inLanguage":"ja","mainEntity":[{"@type":"Question","name":"Assorta とは？","acceptedAnswer":{"@type":"Answer","text":"Assorta は Android と iOS 向けの、リンク・メモ・アイデアをまとめて入れるインボックスです。保存したものを AI が読み取り、30 以上のグループのどれかに入れるので、フォルダもタグもなしであとから見つかります。"}},{"@type":"Question","name":"Assorta はどのグループに入れるかをどうやって決めますか？","acceptedAnswer":{"@type":"Answer","text":"Assorta はテキストを、リンクならその先のページを読み取り、合うグループを選びます - 旅行、料理、ほしいものリスト、スポーツなど。選ばれたその瞬間に、結果が表示されます。"}},{"@type":"Question","name":"Assorta には何を保存できますか？","acceptedAnswer":{"@type":"Answer","text":"どのアプリからでも共有できるリンクと、自分で貼り付けたテキストです。保存したリンクはサムネイルとタイトルを保つので、開かなくてもリストの中で見分けられます。"}},{"@type":"Question","name":"Assorta は無料ですか？","acceptedAnswer":{"@type":"Answer","text":"Assorta はインストールも利用も無料です。最初の 15 回の AI 仕分けは無料で、そのあとも仕分けは動き続けます。AI 仕分けの上限をなくすのが Assorta Pro です。"}},{"@type":"Question","name":"AI 要約とは？","acceptedAnswer":{"@type":"Answer","text":"保存したリンクで AI 要約をタップすると、Assorta がページの内容を数行にしてリストの中に返します。要約はメモと一緒に保存されるので、次に見るときは一瞬で、オフラインでも読めます。ページから読み取れるものがないときは、作り話の要約を出さず、そう伝えます。"}},{"@type":"Question","name":"ほかのアプリから保存できますか？","acceptedAnswer":{"@type":"Answer","text":"はい。Assorta は Android と iOS の共有シートに入っているので、YouTube、TikTok、Instagram、ブラウザからのリンクも 2 タップです。"}},{"@type":"Question","name":"Assorta は端末間で同期しますか？","acceptedAnswer":{"@type":"Answer","text":"まだできません。メモは保存した端末に残ります。同期は Assorta Pro のロードマップにあります。"}},{"@type":"Question","name":"AI が違うグループを選んだときは？","acceptedAnswer":{"@type":"Answer","text":"確認画面からそのままワンタップで変えられます - 次点のグループがすぐ隣に並んでいます。"}},{"@type":"Question","name":"無料の AI 仕分けを使い切ったらどうなりますか？","acceptedAnswer":{"@type":"Answer","text":"仕分けはそのまま続きます。Assorta は自動仕分けに切り替わり、約 3,000 語の厳選した語句をもとに端末上で動くので、回数がなくなることはありません。AI 仕分けの上限をなくすのが Assorta Pro です。"}},{"@type":"Question","name":"Assorta Pro では何が加わりますか？","acceptedAnswer":{"@type":"Answer","text":"Assorta Pro は AI 仕分けの上限をなくし、AI 要約を加えます。任意のもので、課金は Apple または Google が行います。"}},{"@type":"Question","name":"保存したものを検索できますか？","acceptedAnswer":{"@type":"Answer","text":"はい。1 つの入力欄でグループ名、メモ本文、リンクのタイトルを検索できます。メモは端末の中にあるので、接続がなくても動きます。"}},{"@type":"Question","name":"メモはどこに保存されますか？","acceptedAnswer":{"@type":"Answer","text":"お使いの端末の中です。Assorta はメモを当社のサーバーに保存しません。"}},{"@type":"Question","name":"アカウントは必要ですか？","acceptedAnswer":{"@type":"Answer","text":"いいえ。ログインは任意で、ほかの端末でも Assorta Pro を使えるようにするためのものです。"}},{"@type":"Question","name":"Assorta は接続なしでも動きますか？","acceptedAnswer":{"@type":"Answer","text":"メモもグループも、すでに作った要約も端末の中にあるので、閲覧と検索はオフラインでも動きます。AI 仕分けと AI 要約は接続が必要で、自動仕分けは必要ありません。"}},{"@type":"Question","name":"あとからメモをほかのグループへ移せますか？","acceptedAnswer":{"@type":"Answer","text":"はい。メモの操作ボタンをタップして 移動 を選んでください。"}},{"@type":"Question","name":"メモを書き出せますか？","acceptedAnswer":{"@type":"Answer","text":"まだできません。書き出しとバックアップは Assorta Pro のロードマップにあります。"}},{"@type":"Question","name":"Assorta はどの端末で使えますか？","acceptedAnswer":{"@type":"Answer","text":"Android のスマートフォンとタブレット、iPhone、iPad です。"}},{"@type":"Question","name":"Assorta は何語に対応していますか？","acceptedAnswer":{"@type":"Answer","text":"31 言語です。英語やウクライナ語から、日本語、韓国語、アラビア語まで。Assorta は端末の言語に従い、設定 から変更できます。"}},{"@type":"Question","name":"Assorta はブックマークやメモアプリと何が違いますか？","acceptedAnswer":{"@type":"Answer","text":"ブックマークはフォルダを自分で選ぶ必要があり、メモアプリはメモに名前を付ける必要があります。Assorta は保存したものを読み取って自分でしまいます - 省けるのは仕分けの手間です。"}},{"@type":"Question","name":"アカウントとデータを削除するには？","acceptedAnswer":{"@type":"Answer","text":"アプリで 設定 を開き、アカウントを削除 をタップしてください。メールでご依頼いただければ、こちらで対応します。削除されるものと残るものはアカウント削除のページに記載しています。"}}]},{"@type":"SoftwareApplication","name":"Assorta","applicationCategory":"ProductivityApplication","operatingSystem":"Android, iOS","inLanguage":"ja","url":"https://assorta.app/ja/","description":"Assorta はリンク、メモ、アイデアのための速いインボックス。何でも放り込めば AI が正しいグループに入れるので、数秒で見つかります。","featureList":["共有シートから保存","30 以上のスマートなグループ","リンクプレビュー","AI 要約","必要なときの検索","バックグラウンドで保存","Android と iOS","なくならない仕分け"],"downloadUrl":["https://apps.apple.com/app/id6791126062","https://play.google.com/store/apps/details?id=com.troshchiy.assorta"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@id":"https://assorta.app/#operator"}},{"@type":"Organization","@id":"https://assorta.app/#operator","name":"Individual Entrepreneur Yevhen Troshchii","url":"https://assorta.app/","email":"contact@assorta.app","address":{"@type":"PostalAddress","addressLocality":"Odesa","addressCountry":"UA"}}]}</script>
 
 <script>window.__I18N__={"group.auto": "自動車", "group.beauty": "美容", "group.books": "本", "group.cooking": "料理", "group.education": "学習", "group.family": "家族", "group.finance": "お金", "group.health": "健康", "group.hobby": "趣味", "group.home": "住まい", "group.ideas": "アイデア", "group.inspiration": "インスピレーション", "group.movies": "映画・テレビ", "group.music": "音楽", "group.personal": "個人", "group.shopping": "買い物リスト", "group.sport": "スポーツ", "group.tasks": "タスク", "group.tech": "テクノロジー", "group.travel": "旅行", "group.wishList": "ほしいものリスト", "group.work": "仕事", "js.or": "または：", "js.theme.toDark": "ダークテーマに切り替え", "js.theme.toLight": "ライトテーマに切り替え", "js.video.title": "Assorta のデモ"};</script>
 

@@ -1,27 +1,47 @@
 # Assorta
 
-> Assorta is one fast inbox for links, notes and ideas. Drop anything in — AI files it into the right group, so you find it in seconds. Android and iOS.
+> Assorta is one fast inbox for links, notes and ideas. Drop anything in - AI files it into the right group, so you find it in seconds. Android and iOS.
 
-You save from the system share sheet on Android and iOS, or paste straight into the app. AI reads what the item is and files it into one of 30+ ready-made groups — Travel, Cooking, Wish list, Movies, Health, Work and more — with no folders to create and no tags to manage. Get the group wrong and one tap changes it. The first 15 AI sorts are free; after that filing keeps working through a keyword fallback, and Assorta Pro lifts the limit. Search covers group names, a note's own text and a link's title. Saved links keep their thumbnail and title, and saving finishes in the background. Assorta Pro adds AI Summary: tap it on a saved link and the page comes back as a few lines inside the row, kept with the note so the second look is instant and works offline. Notes stay on the device you saved them on; syncing between devices is not available yet. Light and dark themes; thirteen languages — English, Ukrainian, German, Spanish, French, Italian, Portuguese (Brazil), Polish, Turkish, Indonesian, Japanese, Korean and Arabic.
+You save from the system share sheet on Android and iOS, or paste straight into the app. AI reads what the item is and files it into one of 30+ ready-made groups - Travel, Cooking, Wish list, Movies, Health, Work and more - with no folders to create and no tags to manage. Get the group wrong and one tap changes it. The first 15 AI sorts are free; after that filing keeps working through smart sorting, which runs on the device against about 3,000 curated terms, and Assorta Pro lifts the AI limit. Search covers group names, a note's own text and a link's title. Saved links keep their thumbnail and title, and saving finishes in the background. Assorta Pro adds AI Summary: tap it on a saved link and the page comes back as a few lines inside the row, kept with the note so the second look is instant and works offline. Notes stay on the device you saved them on; syncing between devices is not available yet. Light and dark themes, and 31 languages.
 
 Assorta is out on Google Play for Android and on the App Store for iPhone and iPad. Both are free to install.
 
+## Questions and answers
+
+- **What is Assorta?** One inbox for links, notes and ideas on Android and iOS. AI reads what you save and files it into one of 30+ groups, so you find it later without folders or tags.
+- **How does Assorta decide which group something goes in?** It reads the text, or the page behind a link, and picks the group that fits. You see the choice the moment it is made, and one tap changes it.
+- **What can I save?** Links shared from any app, and text you paste in yourself. A saved link keeps its thumbnail and title.
+- **Is Assorta free?** Free to install and free to use. The first 15 AI sorts are free; after that filing keeps working, and the AI sorting limit is what Assorta Pro lifts.
+- **What happens when the free AI sorts run out?** Filing keeps working. Assorta falls back to smart sorting, which runs on the device and never runs out.
+- **What does Assorta Pro add?** It lifts the AI sorting limit and adds AI Summary. It is optional, billed by Apple or Google.
+- **What is AI Summary?** Tap it on a saved link and the page comes back in a few lines, in the list. The summary is kept with the note, so the second look is instant and works offline. When a page gives it nothing to work with, Assorta says so instead of inventing a summary.
+- **Does Assorta sync between devices?** Not yet. Notes stay on the device you saved them on; sync is on the Assorta Pro roadmap.
+- **Can I export my notes?** Not yet. Export and backup are on the Assorta Pro roadmap.
+- **Where are my notes stored?** On the device. Assorta does not keep notes on our servers.
+- **Do I need an account?** No. Signing in is optional; it keeps Assorta Pro on your other devices.
+- **Does Assorta work without a connection?** Notes, groups and any summary already fetched are on the device, so browsing and searching work offline. AI sorting and AI Summary need a connection; smart sorting does not.
+- **Which devices does Assorta run on?** Android phones and tablets, iPhone and iPad.
+- **What languages does Assorta speak?** 31, from English and Ukrainian to Japanese, Korean and Arabic. It follows the device's language and can be changed in Settings.
+- **How is Assorta different from bookmarks or a notes app?** A bookmark folder needs you to choose the folder and a notes app needs you to name the note. Assorta reads what you saved and puts it away itself.
+- **How do I delete my account and my data?** Settings, then Delete account in the app, or ask by email. The delete-account page below covers what is removed and what is kept.
+
 ## Pages
 
-- [Home](https://assorta.app/): What Assorta is, a demo video, how it works, the feature list, screenshots of the app, and the store links.
+- [Home](https://assorta.app/): What Assorta is, a demo video, how it works, the feature list, screenshots of the app, the FAQ, and the store links. Also in 30 other languages at https://assorta.app/<locale>/ - for example https://assorta.app/de/ or https://assorta.app/ja/.
+- [FAQ](https://assorta.app/#faq): Twenty questions and answers about what Assorta does, what it costs, what it stores and what it does not do yet.
 - [Privacy Policy](https://assorta.app/privacy.html): What we collect, how AI classification handles saved content, third parties, storage and retention, your rights, and how to delete your data.
 - [Delete your account](https://assorta.app/delete-account.html): How to delete an Assorta account from the app or by email, what data is deleted or kept, and why deleting the account does not cancel a paid subscription.
 - [Terms of Use](https://assorta.app/terms.html): The service and your account, Assorta Pro and billing, your content and AI classification, acceptable use, app-store terms, disclaimers and governing law.
 
 ## Product
 
-- [Assorta on Google Play](https://play.google.com/store/apps/details?id=com.troshchiy.assorta): The Android app — live, free to install.
-- [Assorta on the App Store](https://apps.apple.com/app/id6791126062): The iOS app — live, free to install.
+- [Assorta on Google Play](https://play.google.com/store/apps/details?id=com.troshchiy.assorta): The Android app - live, free to install.
+- [Assorta on the App Store](https://apps.apple.com/app/id6791126062): The iOS app - live, free to install.
 - [Feedback board](https://assorta.fider.io/): Public board for suggesting features and voting on what we build next.
 
 ## Optional
 
-- [Demo](https://assorta.app/#demo): A 0:38 video of the app — a link goes in, AI files it into a group, it is there when you look for it. Also on YouTube: https://www.youtube.com/shorts/3O2_t6-izoU
+- [Demo](https://assorta.app/#demo): A 0:38 video of the app - a link goes in, AI files it into a group, it is there when you look for it. Also on YouTube: https://www.youtube.com/shorts/3O2_t6-izoU
 - [How it works](https://assorta.app/#how): The four steps - drop it in, AI files it, find it fast, and tap AI Summary to read the page in a few lines.
-- [Features](https://assorta.app/#features): Share-sheet saving, 30+ smart groups, link previews, AI Summary, search, background saves, theming and languages.
+- [Features](https://assorta.app/#features): Share-sheet saving, 30+ smart groups, link previews, AI Summary, search, background saves, Android and iOS, and sorting that keeps working once the AI quota is gone.
 - [Screens](https://assorta.app/#screens): Five annotated screenshots walking through a save, from the share sheet to the group.

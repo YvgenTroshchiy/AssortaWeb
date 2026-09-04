@@ -93,10 +93,30 @@ and *Movies* where the app says *Movies & TV*. The site adopts the app's wording
       is a logical property now, so the page mirrors whole - the phone mockups included, which is
       right, because the app mirrors in those languages too. The play triangle keeps its physical
       nudge: it points the way the video runs, not the way the text does.
-- [ ] **S7 - FAQ section.** Answers to what the app does, with `FAQPage` structured data, plus
-      `SoftwareApplication` and `Organization` - for search and for AI answer engines. Questions
-      drafted in [faq-draft.md](faq-draft.md); they need a yes before the translation round,
-      because they add about 25 keys to every locale.
+- [x] **S7 - FAQ and structured data.** Twenty questions, seven open and thirteen behind a
+      `<details>` whose contents stay in the page source, so a crawler reads all twenty however
+      much a human unfolded. `FAQPage`, `SoftwareApplication` (with a `featureList` read back out
+      of the feature cards) and `Organization` are generated per locale from the very keys the
+      page shows, so the machine-readable copy cannot drift from the visible one. The questions
+      are in [faq-draft.md](faq-draft.md).
+- [x] **S8 - feature cards re-angled.** Each card now opens with a fact that names Assorta,
+      because an answer engine quotes a sentence and not a card. The themes-and-languages card
+      is gone - nobody installs a notes app for its theme - and in its place is the answer to
+      the first objection anyone has, what happens when the free AI sorts run out. The languages
+      moved to the FAQ, where somebody actually asks.
+
+## Verified before shipping a claim
+
+- **Screenshot import is debug-only** (`EnterInformationScreen.kt`, `if (isDebugBuild &&
+  picker.isSupported)`). It has OCR, dedup and its own screen, and it very nearly went on the
+  site as a feature card and two FAQ answers. It is not on the site, and must not go on until
+  the gate comes off.
+- **Search covers a note's text, its title and OCR text** (`SearchViewModel.kt`), and it filters
+  data already in memory - confirmed on a simulator, and it is why `faq.search.a` can promise
+  search offline.
+- **`text`, `title` and `summary` are columns of the local database** (`InformationEntity.kt`),
+  which is what `faq.offline.a` rests on. Not verified on a disconnected device: a simulator
+  shares the host's network.
 
 ## Found on the way, not fixed
 

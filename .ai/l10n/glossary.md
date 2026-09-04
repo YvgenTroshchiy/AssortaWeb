@@ -21,7 +21,7 @@ thing is the defect users actually notice. The senses that bite hardest on this 
 - **share sheet** - the OS share menu. Use the word iOS and Android use in that locale.
 - **Auto** - cars and vehicles, never "automatic".
 
-The 21 `group.*` keys are **not translated by hand**: `tools/sync-groups.py` copies them out of the
+The `group.*` keys are **not translated by hand**: `tools/sync-from-app.py` copies them out of the
 app's `information_tag_*` strings. Leave whatever is already in the file. The exception is
 `group.hobby`, which the app has no group for - translate that one.
 
@@ -71,7 +71,7 @@ translate only the words between the tags.
 
 ## Enum groups - members must stay distinct
 
-- The 22 `group.*` names, rendered side by side in the chip cloud. Already handled by the sync,
+- The `group.*` names, rendered side by side in the chip cloud. Already handled by the sync,
   except `group.hobby`, which must not collapse onto `group.inspiration` or `group.personal`.
 - Share-sheet targets: Messages / Mail / Notes / Copy link / Browser / Cloud / More.
 - Nav: Demo / How it works / Features / Screens / About - five links on one line, so keep each
@@ -95,5 +95,6 @@ headline it promised should be the headline it delivers.
 `~/.claude/rules/i18n.md` owns these: `’` for every apostrophe, never `'`, `\'`, `ʼ` or `´`; the
 locale's own quotation marks; and a spaced hyphen (` - `) between clauses, never an em dash.
 
-**The English source violates the dash rule** - it was written before this pass and is full of `—`.
-Do not copy that into a translation; it is a pre-existing bug in the base copy, flagged separately.
+The base copy was swept for both in the same pass, so English is clean now: if a `—` or an ASCII
+`'` turns up in `i18n/en.json`, it came in with a later edit and belongs fixed there rather than
+reproduced in thirty translations.

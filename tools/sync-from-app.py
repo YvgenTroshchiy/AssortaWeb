@@ -13,7 +13,9 @@ native name, its flag, whether it is RTL and the order the app lists it in - dec
 were argued once there (a flag names a country and a country is not a language; the order is
 Latin names alphabetically with diacritics folded, then the other scripts in Unicode block
 order). The site reads that table out into `i18n/languages.json` rather than keeping a second
-copy that drifts. `lang.system` - the "follow the device" row - comes from the app's
+copy that drifts. It lives in `src/` and not in `i18n/`, which holds translation files only:
+the detector suite globs that directory and would read a stray index as a locale named
+"languages". `lang.system` - the "follow the device" row - comes from the app's
 `settings_language_system`, already translated everywhere.
 
     python3 tools/sync-from-app.py [--languages] [path-to-AssortaKMP]
@@ -111,12 +113,12 @@ def main(argv):
         sys.exit("no app resources at %s" % base)
 
     languages = read_languages(app)
-    with io.open(os.path.join(ROOT, "i18n", "languages.json"), "w", encoding="utf-8") as f:
+    with io.open(os.path.join(ROOT, "src", "languages.json"), "w", encoding="utf-8") as f:
         json.dump({"generated_from": APP_LANGUAGE, "languages": languages},
                   f, ensure_ascii=False, indent=2)
         f.write(u"\n")
     if "--languages" in argv:
-        print("%d languages into i18n/languages.json" % len(languages))
+        print("%d languages into src/languages.json" % len(languages))
         return 0
 
     for locale, folder in sorted(FOLDERS.items()):
@@ -142,7 +144,7 @@ def main(argv):
             json.dump(existing, f, ensure_ascii=False, indent=2, sort_keys=True)
             f.write(u"\n")
 
-    print("%d languages into i18n/languages.json" % len(languages))
+    print("%d languages into src/languages.json" % len(languages))
     print("%d locales, %d group names + lang.system each (%s still translated by hand)"
           % (len(FOLDERS), len(GROUPS), ", ".join(UNMAPPED)))
     return 0

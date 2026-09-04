@@ -44,21 +44,21 @@
 <meta name="theme-color" content="#131129">
 <style>
   /* Palette mirrors the app's semantic tokens (AssortaKMP ui/theme/SemanticColor.kt).
-     Dark is the default — it also survives JS being off; light overrides it via
+     Dark is the default - it also survives JS being off; light overrides it via
      data-theme="light" on <html>, stamped before first paint by the inline script
      at the end of <head>. Tag hues are shared by both app palettes, so they are
      declared once and never overridden. */
   :root {
     --bg: #131129;
-    --panel: #1e1b4b;            /* Indigo.v950 — bgAppGradientEnd */
+    --panel: #1e1b4b;            /* Indigo.v950 - bgAppGradientEnd */
     --panel-soft: #232052;
     --line: #34306b;
-    --indigo: #6366f1;           /* Indigo.v600 — accentPrimary, shared by both themes */
+    --indigo: #6366f1;           /* Indigo.v600 - accentPrimary, shared by both themes */
     --indigo-bright: #818cf8;
     /* accentPrimary is the brand hue but is too light to carry text: white on it is 4.46:1
        and it reads 3.1-3.8:1 as a glyph on its own tint. This mirrors the app's bgAccent -
        the fill that sits under white text. Borders, glows and tints keep --indigo. */
-    --accent-fill: #4f46e5;      /* Indigo.v700 — bgAccent */
+    --accent-fill: #4f46e5;      /* Indigo.v700 - bgAccent */
     --text: #eef0ff;
     --text-dim: #a3a6cc;
     /* The app's own screen background, verbatim from SemanticColors
@@ -121,17 +121,17 @@
     --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
   :root[data-theme="light"] {
-    --bg: #f8fafc;               /* Gray.v50   — bgAppGradientStart */
-    --panel: #eef2ff;            /* Indigo.v50 — bgAppGradientEnd */
+    --bg: #f8fafc;               /* Gray.v50   - bgAppGradientStart */
+    --panel: #eef2ff;            /* Indigo.v50 - bgAppGradientEnd */
     --panel-soft: #e3e9fb;
     --line: #d2dae9;             /* borderCard, lifted from Gray.v500a20 to stay visible on light */
-    --indigo-bright: #4f46e5;    /* Indigo.v700 — the accent that still reads on a light background */
-    --text: #0f172a;             /* Gray.v950 — fgPrimary */
+    --indigo-bright: #4f46e5;    /* Indigo.v700 - the accent that still reads on a light background */
+    --text: #0f172a;             /* Gray.v950 - fgPrimary */
     /* Still the app's fgSecondary, which moved to Gray.v700 for the same reason:
        the old Gray.v600 (#64748b) landed at 3.4-4.4:1 on the tinted panels this
        site invents (.cell, .step, section.alt) and on the app's own gradient end.
        v700 clears AA everywhere, worst case 5.4:1 on the .cell tints. */
-    --text-dim: #475569;         /* Gray.v700 — fgSecondary */
+    --text-dim: #475569;         /* Gray.v700 - fgSecondary */
     --app-grad-start: #f8fafc;   /* Gray.v50 */
     --app-grad-end:   #eef2ff;   /* Indigo.v50 */
     /* Mockup palette, light. Rows with an app token take it; the rest reproduce
@@ -525,6 +525,35 @@
   /* ---- sections ---- */
   section { padding: 64px 0; }
   section.alt { background: color-mix(in srgb, var(--panel) 32%, var(--bg)); }
+  /* ---- FAQ ---- */
+  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall. */
+  .faq { max-width: 760px; }
+  .faq .qa { padding: 17px 0; border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+  .faq > .qa:first-of-type { border-top: 0; padding-top: 4px; }
+  .faq h3 { font-family: var(--font-display); font-size: 17.5px; margin-bottom: 7px; }
+  .faq p { color: var(--text-dim); line-height: 1.65; }
+  .faq a { color: var(--indigo-bright); }
+  /* <details> and not a script: the thirteen collapsed answers stay in the page source, so a
+     crawler and an answer engine read all twenty however much a human unfolded. */
+  .faq-more { border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+  .faq-more > summary {
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 18px;
+    padding: 9px 18px; border: 1px solid var(--line); border-radius: 999px;
+    color: var(--text-dim); font-size: 14.5px; cursor: pointer; list-style: none;
+    transition: color .15s, border-color .15s;
+  }
+  .faq-more > summary::-webkit-details-marker { display: none; }
+  .faq-more > summary:hover { color: var(--text); border-color: var(--indigo); }
+  .faq-more > summary:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; }
+  .faq-more > summary::after {
+    content: ""; width: 7px; height: 7px; border-right: 1.6px solid currentColor;
+    border-bottom: 1.6px solid currentColor; transform: translateY(-2px) rotate(45deg);
+  }
+  .faq-more[open] > summary::after { transform: translateY(1px) rotate(225deg); }
+  .faq-more > summary .more-open { display: none; }
+  .faq-more[open] > summary .more-closed { display: none; }
+  .faq-more[open] > summary .more-open { display: inline; }
+  .faq-rest { margin-top: 4px; }
   .kicker {
     font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
     text-transform: uppercase; color: var(--indigo-bright); margin-bottom: 14px;
@@ -1072,31 +1101,31 @@
       </div>
       <div class="feature" style="--f-color: var(--amber)">
         <h3>أكثر من 30 مجموعة ذكية</h3>
-        <p>يختار الذكاء الاصطناعي المجموعة لحظة الحفظ. لا توافق؟ غيّرها بضغطة واحدة - من نافذة التأكيد مباشرة.</p>
+        <p>يضع Assorta كل ما تحفظه في واحدة من أكثر من 30 مجموعة جاهزة لحظة إضافته - السفر، الطبخ، قائمة الأمنيات، الرياضة. لا توافق؟ غيّرها بضغطة واحدة، من نافذة التأكيد مباشرة.</p>
       </div>
       <div class="feature" style="--f-color: var(--cyan)">
         <h3>معاينات الروابط</h3>
-        <p>تحتفظ الروابط المحفوظة بصورتها المصغّرة وعنوانها - لقطة من YouTube، أو صورة منتج، أو غلاف مقال - لتتعرف عليها بنظرة واحدة.</p>
+        <p>يحتفظ Assorta بصورة الرابط المحفوظ المصغّرة وعنوانه - لقطة من YouTube، أو صورة منتج، أو غلاف مقال - لتتعرف عليه بنظرة واحدة.</p>
       </div>
       <div class="feature" style="--f-color: var(--indigo)">
         <h3>ملخّص بالذكاء الاصطناعي</h3>
-        <p>اضغط ملخّص بالذكاء الاصطناعي على رابط محفوظ واقرأ الصفحة في بضعة أسطر دون فتحها. ويُحفظ الملخّص مع الملاحظة، فتكون النظرة الثانية فورية وتعمل دون اتصال. مشمول في Assorta Pro.</p>
+        <p>اضغط ملخّص بالذكاء الاصطناعي على رابط محفوظ، فيعيد Assorta الصفحة في بضعة أسطر دون فتحها. ويُحفظ الملخّص مع الملاحظة، فتكون النظرة الثانية فورية وتعمل دون اتصال. مشمول في Assorta Pro.</p>
       </div>
       <div class="feature" style="--f-color: var(--teal)">
         <h3>بحث حين تحتاجه</h3>
-        <p>حقل واحد يبحث في أسماء المجموعات ونص الملاحظة نفسه وعنوان الرابط - من أجل ذلك العنصر الوحيد الذي لم يحطّ حيث بحثت عنه أولًا.</p>
+        <p>يبحث Assorta في أسماء المجموعات ونص الملاحظة نفسه وعنوان الرابط من حقل واحد - من أجل ذلك العنصر الذي لم يحطّ حيث بحثت عنه أولًا.</p>
       </div>
       <div class="feature" style="--f-color: var(--emerald)">
         <h3>يكمل الحفظ في الخلفية</h3>
-        <p>بدّل التطبيق في منتصف الحفظ - سيحطّ العنصر في مجموعته بأمان رغم ذلك. لا شيء يضيع بين التطبيقات.</p>
+        <p>يكمل Assorta الحفظ في الخلفية، فحتى لو بدّلت التطبيق في المنتصف يحطّ العنصر في مجموعته. لا شيء يضيع بين التطبيقات.</p>
       </div>
       <div class="feature" style="--f-color: var(--purple)">
-        <h3>أينما كنت</h3>
-        <p>Android وiOS - تطبيق واحد على كل شاشة تستخدمها. تبقى الملاحظات على الجهاز الذي حفظتها عليه، والمزامنة بين الأجهزة لم تصل بعد.</p>
+        <h3>Android وiOS</h3>
+        <p>يعمل Assorta على هواتف Android وأجهزتها اللوحية، وعلى iPhone وiPad. تبقى الملاحظات على الجهاز الذي حفظتها عليه، والمزامنة بين الأجهزة لم تصل بعد.</p>
       </div>
       <div class="feature" style="--f-color: var(--sky)">
-        <h3>بمظهر يناسبك</h3>
-        <p>سمة فاتحة وأخرى داكنة. وثلاث عشرة لغة، من الإنجليزية والأوكرانية إلى اليابانية والكورية والعربية.</p>
+        <h3>تصنيف لا ينفد</h3>
+        <p>يصنّف Assorta بالذكاء الاصطناعي ما دامت عملياتك المجانية متاحة، ثم يعود إلى التصنيف التلقائي الذي يعمل على الجهاز اعتمادًا على نحو 3000 مصطلح مختار. وفي الحالتين تحطّ الملاحظة في مجموعة - فالتصنيف لا يتوقف حين تتوقف الحصة.</p>
       </div>
     </div>
   </div>
@@ -1129,6 +1158,100 @@
       <span class="chip" style="--c:#d946ef">الجمال</span>
       <span class="chip" style="--c:#f43f5e">شخصي</span>
       <span class="chip more">…وعشر مجموعات أخرى</span>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="faq">
+  <div class="wrap">
+    <p class="kicker">الأسئلة الشائعة</p>
+    <h2>أسئلة يطرحها الناس قبل التثبيت</h2>
+    <div class="faq">
+      <div class="qa">
+        <h3>ما هو Assorta؟</h3>
+        <p>Assorta صندوق وارد واحد للروابط والملاحظات والأفكار على Android وiOS. يقرأ الذكاء الاصطناعي ما تحفظه ويصنّفه في واحدة من أكثر من 30 مجموعة، لتجده لاحقًا بلا مجلدات ولا وسوم.</p>
+      </div>
+      <div class="qa">
+        <h3>كيف يقرر Assorta المجموعة التي يضع فيها العنصر؟</h3>
+        <p>يقرأ Assorta النص، أو الصفحة التي خلف الرابط، ويختار المجموعة المناسبة - السفر، الطبخ، قائمة الأمنيات، الرياضة وغيرها. وترى الاختيار لحظة حدوثه.</p>
+      </div>
+      <div class="qa">
+        <h3>ماذا يمكنني أن أحفظ في Assorta؟</h3>
+        <p>روابط تُشارَك من أي تطبيق، ونصوصًا تلصقها بنفسك. ويحتفظ الرابط المحفوظ بصورته المصغّرة وعنوانه، لتتعرف عليه في القائمة دون فتحه.</p>
+      </div>
+      <div class="qa">
+        <h3>هل Assorta مجاني؟</h3>
+        <p>Assorta مجاني في التثبيت ومجاني في الاستخدام. أول 15 عملية تصنيف بالذكاء الاصطناعي مجانية؛ وبعدها يستمر التصنيف، وحدّ التصنيف بالذكاء الاصطناعي هو ما يرفعه Assorta Pro.</p>
+      </div>
+      <div class="qa">
+        <h3>ما هو الملخّص بالذكاء الاصطناعي؟</h3>
+        <p>اضغط ملخّص بالذكاء الاصطناعي على رابط محفوظ، فيعيد Assorta الصفحة في بضعة أسطر، هناك في القائمة. ويُحفظ الملخّص مع الملاحظة، فتكون النظرة الثانية فورية وتعمل دون اتصال. وحين لا تعطي الصفحة ما يكفي للعمل عليه، يقول Assorta ذلك بدل أن يختلق ملخّصًا.</p>
+      </div>
+      <div class="qa">
+        <h3>هل يمكنني الحفظ من تطبيقات أخرى؟</h3>
+        <p>نعم. يوجد Assorta في قائمة المشاركة على Android وiOS، فحفظ رابط من YouTube أو TikTok أو Instagram أو المتصفح يكلّف ضغطتين.</p>
+      </div>
+      <div class="qa">
+        <h3>هل يزامن Assorta بين الأجهزة؟</h3>
+        <p>ليس بعد. تبقى الملاحظات على الجهاز الذي حفظتها عليه؛ والمزامنة مدرجة في خطة Assorta Pro.</p>
+      </div>
+      <details class="faq-more">
+        <summary><span class="more-closed">عرض المزيد من الأسئلة</span><span class="more-open">عرض أقل</span></summary>
+        <div class="faq-rest">
+          <div class="qa">
+            <h3>ماذا لو اختار الذكاء الاصطناعي المجموعة الخطأ؟</h3>
+            <p>غيّرها بضغطة واحدة، من نافذة التأكيد مباشرة - فالمجموعات التالية في الترتيب تجلس بجوارها.</p>
+          </div>
+          <div class="qa">
+            <h3>ماذا يحدث حين تنفد عمليات التصنيف المجانية بالذكاء الاصطناعي؟</h3>
+            <p>يستمر التصنيف. يعود Assorta إلى التصنيف التلقائي، الذي يعمل على الجهاز اعتمادًا على نحو 3000 مصطلح مختار ولا ينفد أبدًا؛ وAssorta Pro هو ما يزيل حد التصنيف بالذكاء الاصطناعي.</p>
+          </div>
+          <div class="qa">
+            <h3>ماذا يضيف Assorta Pro؟</h3>
+            <p>يرفع Assorta Pro حد التصنيف بالذكاء الاصطناعي ويضيف الملخّص بالذكاء الاصطناعي. وهو اختياري، وتتولى Apple أو Google فوترته.</p>
+          </div>
+          <div class="qa">
+            <h3>هل يمكنني البحث فيما حفظته؟</h3>
+            <p>نعم. حقل واحد يبحث في أسماء المجموعات ونص الملاحظة نفسه وعنوان الرابط، ويعمل دون اتصال لأن ملاحظاتك على الجهاز.</p>
+          </div>
+          <div class="qa">
+            <h3>أين تُحفظ ملاحظاتي؟</h3>
+            <p>على جهازك. لا يحتفظ Assorta بملاحظاتك على خوادمنا.</p>
+          </div>
+          <div class="qa">
+            <h3>هل أحتاج إلى حساب؟</h3>
+            <p>لا. تسجيل الدخول اختياري؛ وهو يبقي Assorta Pro على أجهزتك الأخرى.</p>
+          </div>
+          <div class="qa">
+            <h3>هل يعمل Assorta دون اتصال؟</h3>
+            <p>ملاحظاتك ومجموعاتك وأي ملخّص طلبته من قبل موجودة على الجهاز، فالتصفح والبحث يعملان دون اتصال. أما التصنيف بالذكاء الاصطناعي والملخّص بالذكاء الاصطناعي فيحتاجان إلى اتصال؛ والتصنيف التلقائي لا يحتاج إليه.</p>
+          </div>
+          <div class="qa">
+            <h3>هل يمكنني نقل ملاحظة إلى مجموعة أخرى لاحقًا؟</h3>
+            <p>نعم. افتح إجراءات الملاحظة واختر نقل.</p>
+          </div>
+          <div class="qa">
+            <h3>هل يمكنني تصدير ملاحظاتي؟</h3>
+            <p>ليس بعد. التصدير والنسخ الاحتياطي مدرجان في خطة Assorta Pro.</p>
+          </div>
+          <div class="qa">
+            <h3>على أي أجهزة يعمل Assorta؟</h3>
+            <p>هواتف Android وأجهزتها اللوحية، وiPhone وiPad.</p>
+          </div>
+          <div class="qa">
+            <h3>بأي لغات يتحدث Assorta؟</h3>
+            <p>31 لغة، من الإنجليزية والأوكرانية إلى اليابانية والكورية والعربية. يتبع Assorta لغة جهازك، ويمكنك تغييرها من الإعدادات.</p>
+          </div>
+          <div class="qa">
+            <h3>بم يختلف Assorta عن المفضلة أو عن تطبيق ملاحظات؟</h3>
+            <p>مجلد المفضلة يطلب منك اختيار المجلد، وتطبيق الملاحظات يطلب منك تسمية الملاحظة. أما Assorta فيقرأ ما حفظته ويضعه في مكانه بنفسه - والعمل الذي توفّره على نفسك هو التصنيف.</p>
+          </div>
+          <div class="qa">
+            <h3>كيف أحذف حسابي وبياناتي؟</h3>
+            <p>افتح الإعدادات واضغط حذف الحساب داخل التطبيق، أو راسلنا فنتولى ذلك عنك. وتشرح <a href="delete-account.html">صفحة حذف الحساب</a> ما الذي يُحذف وما الذي يبقى.</p>
+          </div>
+        </div>
+      </details>
     </div>
   </div>
 </section>
@@ -1181,6 +1304,8 @@
     <p>أسماء العلامات التجارية والشعارات والروابط وصور المعاينة الخاصة بأطراف أخرى في هذه الصفحة هي أمثلة على المحتوى الذي يمكنك حفظه في Assorta - من نوع ما يلقيه المرء داخل التطبيق - باستثناء شارتَي App&nbsp;Store وGoogle&nbsp;Play، اللتين تقودان إلى المتجرين اللذين نُشر عليهما التطبيق. وتبقى كلها ملكًا لأصحابها. Assorta تطبيق مستقل: ليس تابعًا لأي من العلامات المعروضة ولا معتمدًا منها ولا برعايتها، ولا شأن لأي منها به، وهو لا يقدّم نفسه أبدًا على أنه أي منها.</p>
   </div>
 </footer>
+
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"FAQPage","@id":"https://assorta.app/ar/#faq","inLanguage":"ar","mainEntity":[{"@type":"Question","name":"ما هو Assorta؟","acceptedAnswer":{"@type":"Answer","text":"Assorta صندوق وارد واحد للروابط والملاحظات والأفكار على Android وiOS. يقرأ الذكاء الاصطناعي ما تحفظه ويصنّفه في واحدة من أكثر من 30 مجموعة، لتجده لاحقًا بلا مجلدات ولا وسوم."}},{"@type":"Question","name":"كيف يقرر Assorta المجموعة التي يضع فيها العنصر؟","acceptedAnswer":{"@type":"Answer","text":"يقرأ Assorta النص، أو الصفحة التي خلف الرابط، ويختار المجموعة المناسبة - السفر، الطبخ، قائمة الأمنيات، الرياضة وغيرها. وترى الاختيار لحظة حدوثه."}},{"@type":"Question","name":"ماذا يمكنني أن أحفظ في Assorta؟","acceptedAnswer":{"@type":"Answer","text":"روابط تُشارَك من أي تطبيق، ونصوصًا تلصقها بنفسك. ويحتفظ الرابط المحفوظ بصورته المصغّرة وعنوانه، لتتعرف عليه في القائمة دون فتحه."}},{"@type":"Question","name":"هل Assorta مجاني؟","acceptedAnswer":{"@type":"Answer","text":"Assorta مجاني في التثبيت ومجاني في الاستخدام. أول 15 عملية تصنيف بالذكاء الاصطناعي مجانية؛ وبعدها يستمر التصنيف، وحدّ التصنيف بالذكاء الاصطناعي هو ما يرفعه Assorta Pro."}},{"@type":"Question","name":"ما هو الملخّص بالذكاء الاصطناعي؟","acceptedAnswer":{"@type":"Answer","text":"اضغط ملخّص بالذكاء الاصطناعي على رابط محفوظ، فيعيد Assorta الصفحة في بضعة أسطر، هناك في القائمة. ويُحفظ الملخّص مع الملاحظة، فتكون النظرة الثانية فورية وتعمل دون اتصال. وحين لا تعطي الصفحة ما يكفي للعمل عليه، يقول Assorta ذلك بدل أن يختلق ملخّصًا."}},{"@type":"Question","name":"هل يمكنني الحفظ من تطبيقات أخرى؟","acceptedAnswer":{"@type":"Answer","text":"نعم. يوجد Assorta في قائمة المشاركة على Android وiOS، فحفظ رابط من YouTube أو TikTok أو Instagram أو المتصفح يكلّف ضغطتين."}},{"@type":"Question","name":"هل يزامن Assorta بين الأجهزة؟","acceptedAnswer":{"@type":"Answer","text":"ليس بعد. تبقى الملاحظات على الجهاز الذي حفظتها عليه؛ والمزامنة مدرجة في خطة Assorta Pro."}},{"@type":"Question","name":"ماذا لو اختار الذكاء الاصطناعي المجموعة الخطأ؟","acceptedAnswer":{"@type":"Answer","text":"غيّرها بضغطة واحدة، من نافذة التأكيد مباشرة - فالمجموعات التالية في الترتيب تجلس بجوارها."}},{"@type":"Question","name":"ماذا يحدث حين تنفد عمليات التصنيف المجانية بالذكاء الاصطناعي؟","acceptedAnswer":{"@type":"Answer","text":"يستمر التصنيف. يعود Assorta إلى التصنيف التلقائي، الذي يعمل على الجهاز اعتمادًا على نحو 3000 مصطلح مختار ولا ينفد أبدًا؛ وAssorta Pro هو ما يزيل حد التصنيف بالذكاء الاصطناعي."}},{"@type":"Question","name":"ماذا يضيف Assorta Pro؟","acceptedAnswer":{"@type":"Answer","text":"يرفع Assorta Pro حد التصنيف بالذكاء الاصطناعي ويضيف الملخّص بالذكاء الاصطناعي. وهو اختياري، وتتولى Apple أو Google فوترته."}},{"@type":"Question","name":"هل يمكنني البحث فيما حفظته؟","acceptedAnswer":{"@type":"Answer","text":"نعم. حقل واحد يبحث في أسماء المجموعات ونص الملاحظة نفسه وعنوان الرابط، ويعمل دون اتصال لأن ملاحظاتك على الجهاز."}},{"@type":"Question","name":"أين تُحفظ ملاحظاتي؟","acceptedAnswer":{"@type":"Answer","text":"على جهازك. لا يحتفظ Assorta بملاحظاتك على خوادمنا."}},{"@type":"Question","name":"هل أحتاج إلى حساب؟","acceptedAnswer":{"@type":"Answer","text":"لا. تسجيل الدخول اختياري؛ وهو يبقي Assorta Pro على أجهزتك الأخرى."}},{"@type":"Question","name":"هل يعمل Assorta دون اتصال؟","acceptedAnswer":{"@type":"Answer","text":"ملاحظاتك ومجموعاتك وأي ملخّص طلبته من قبل موجودة على الجهاز، فالتصفح والبحث يعملان دون اتصال. أما التصنيف بالذكاء الاصطناعي والملخّص بالذكاء الاصطناعي فيحتاجان إلى اتصال؛ والتصنيف التلقائي لا يحتاج إليه."}},{"@type":"Question","name":"هل يمكنني نقل ملاحظة إلى مجموعة أخرى لاحقًا؟","acceptedAnswer":{"@type":"Answer","text":"نعم. افتح إجراءات الملاحظة واختر نقل."}},{"@type":"Question","name":"هل يمكنني تصدير ملاحظاتي؟","acceptedAnswer":{"@type":"Answer","text":"ليس بعد. التصدير والنسخ الاحتياطي مدرجان في خطة Assorta Pro."}},{"@type":"Question","name":"على أي أجهزة يعمل Assorta؟","acceptedAnswer":{"@type":"Answer","text":"هواتف Android وأجهزتها اللوحية، وiPhone وiPad."}},{"@type":"Question","name":"بأي لغات يتحدث Assorta؟","acceptedAnswer":{"@type":"Answer","text":"31 لغة، من الإنجليزية والأوكرانية إلى اليابانية والكورية والعربية. يتبع Assorta لغة جهازك، ويمكنك تغييرها من الإعدادات."}},{"@type":"Question","name":"بم يختلف Assorta عن المفضلة أو عن تطبيق ملاحظات؟","acceptedAnswer":{"@type":"Answer","text":"مجلد المفضلة يطلب منك اختيار المجلد، وتطبيق الملاحظات يطلب منك تسمية الملاحظة. أما Assorta فيقرأ ما حفظته ويضعه في مكانه بنفسه - والعمل الذي توفّره على نفسك هو التصنيف."}},{"@type":"Question","name":"كيف أحذف حسابي وبياناتي؟","acceptedAnswer":{"@type":"Answer","text":"افتح الإعدادات واضغط حذف الحساب داخل التطبيق، أو راسلنا فنتولى ذلك عنك. وتشرح صفحة حذف الحساب ما الذي يُحذف وما الذي يبقى."}}]},{"@type":"SoftwareApplication","name":"Assorta","applicationCategory":"ProductivityApplication","operatingSystem":"Android, iOS","inLanguage":"ar","url":"https://assorta.app/ar/","description":"Assorta صندوق وارد واحد وسريع للروابط والملاحظات والأفكار. ألقِ فيه أي شيء - فيضعه الذكاء الاصطناعي في المجموعة الصحيحة، لتجده خلال ثوانٍ.","featureList":["حفظ من قائمة المشاركة","أكثر من 30 مجموعة ذكية","معاينات الروابط","ملخّص بالذكاء الاصطناعي","بحث حين تحتاجه","يكمل الحفظ في الخلفية","Android وiOS","تصنيف لا ينفد"],"downloadUrl":["https://apps.apple.com/app/id6791126062","https://play.google.com/store/apps/details?id=com.troshchiy.assorta"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@id":"https://assorta.app/#operator"}},{"@type":"Organization","@id":"https://assorta.app/#operator","name":"Individual Entrepreneur Yevhen Troshchii","url":"https://assorta.app/","email":"contact@assorta.app","address":{"@type":"PostalAddress","addressLocality":"Odesa","addressCountry":"UA"}}]}</script>
 
 <script>window.__I18N__={"group.auto": "السيارات", "group.beauty": "الجمال", "group.books": "الكتب", "group.cooking": "الطبخ", "group.education": "التعليم", "group.family": "العائلة", "group.finance": "المالية", "group.health": "الصحة", "group.hobby": "الهوايات", "group.home": "المنزل", "group.ideas": "الأفكار", "group.inspiration": "الإلهام", "group.movies": "الأفلام والتلفزيون", "group.music": "الموسيقى", "group.personal": "شخصي", "group.shopping": "قائمة التسوق", "group.sport": "الرياضة", "group.tasks": "المهام", "group.tech": "التقنية", "group.travel": "السفر", "group.wishList": "قائمة الأمنيات", "group.work": "العمل", "js.or": "أو:", "js.theme.toDark": "التبديل إلى السمة الداكنة", "js.theme.toLight": "التبديل إلى السمة الفاتحة", "js.video.title": "عرض Assorta التوضيحي"};</script>
 

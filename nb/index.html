@@ -44,21 +44,21 @@
 <meta name="theme-color" content="#131129">
 <style>
   /* Palette mirrors the app's semantic tokens (AssortaKMP ui/theme/SemanticColor.kt).
-     Dark is the default — it also survives JS being off; light overrides it via
+     Dark is the default - it also survives JS being off; light overrides it via
      data-theme="light" on <html>, stamped before first paint by the inline script
      at the end of <head>. Tag hues are shared by both app palettes, so they are
      declared once and never overridden. */
   :root {
     --bg: #131129;
-    --panel: #1e1b4b;            /* Indigo.v950 — bgAppGradientEnd */
+    --panel: #1e1b4b;            /* Indigo.v950 - bgAppGradientEnd */
     --panel-soft: #232052;
     --line: #34306b;
-    --indigo: #6366f1;           /* Indigo.v600 — accentPrimary, shared by both themes */
+    --indigo: #6366f1;           /* Indigo.v600 - accentPrimary, shared by both themes */
     --indigo-bright: #818cf8;
     /* accentPrimary is the brand hue but is too light to carry text: white on it is 4.46:1
        and it reads 3.1-3.8:1 as a glyph on its own tint. This mirrors the app's bgAccent -
        the fill that sits under white text. Borders, glows and tints keep --indigo. */
-    --accent-fill: #4f46e5;      /* Indigo.v700 — bgAccent */
+    --accent-fill: #4f46e5;      /* Indigo.v700 - bgAccent */
     --text: #eef0ff;
     --text-dim: #a3a6cc;
     /* The app's own screen background, verbatim from SemanticColors
@@ -121,17 +121,17 @@
     --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
   :root[data-theme="light"] {
-    --bg: #f8fafc;               /* Gray.v50   — bgAppGradientStart */
-    --panel: #eef2ff;            /* Indigo.v50 — bgAppGradientEnd */
+    --bg: #f8fafc;               /* Gray.v50   - bgAppGradientStart */
+    --panel: #eef2ff;            /* Indigo.v50 - bgAppGradientEnd */
     --panel-soft: #e3e9fb;
     --line: #d2dae9;             /* borderCard, lifted from Gray.v500a20 to stay visible on light */
-    --indigo-bright: #4f46e5;    /* Indigo.v700 — the accent that still reads on a light background */
-    --text: #0f172a;             /* Gray.v950 — fgPrimary */
+    --indigo-bright: #4f46e5;    /* Indigo.v700 - the accent that still reads on a light background */
+    --text: #0f172a;             /* Gray.v950 - fgPrimary */
     /* Still the app's fgSecondary, which moved to Gray.v700 for the same reason:
        the old Gray.v600 (#64748b) landed at 3.4-4.4:1 on the tinted panels this
        site invents (.cell, .step, section.alt) and on the app's own gradient end.
        v700 clears AA everywhere, worst case 5.4:1 on the .cell tints. */
-    --text-dim: #475569;         /* Gray.v700 — fgSecondary */
+    --text-dim: #475569;         /* Gray.v700 - fgSecondary */
     --app-grad-start: #f8fafc;   /* Gray.v50 */
     --app-grad-end:   #eef2ff;   /* Indigo.v50 */
     /* Mockup palette, light. Rows with an app token take it; the rest reproduce
@@ -525,6 +525,35 @@
   /* ---- sections ---- */
   section { padding: 64px 0; }
   section.alt { background: color-mix(in srgb, var(--panel) 32%, var(--bg)); }
+  /* ---- FAQ ---- */
+  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall. */
+  .faq { max-width: 760px; }
+  .faq .qa { padding: 17px 0; border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+  .faq > .qa:first-of-type { border-top: 0; padding-top: 4px; }
+  .faq h3 { font-family: var(--font-display); font-size: 17.5px; margin-bottom: 7px; }
+  .faq p { color: var(--text-dim); line-height: 1.65; }
+  .faq a { color: var(--indigo-bright); }
+  /* <details> and not a script: the thirteen collapsed answers stay in the page source, so a
+     crawler and an answer engine read all twenty however much a human unfolded. */
+  .faq-more { border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+  .faq-more > summary {
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 18px;
+    padding: 9px 18px; border: 1px solid var(--line); border-radius: 999px;
+    color: var(--text-dim); font-size: 14.5px; cursor: pointer; list-style: none;
+    transition: color .15s, border-color .15s;
+  }
+  .faq-more > summary::-webkit-details-marker { display: none; }
+  .faq-more > summary:hover { color: var(--text); border-color: var(--indigo); }
+  .faq-more > summary:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; }
+  .faq-more > summary::after {
+    content: ""; width: 7px; height: 7px; border-right: 1.6px solid currentColor;
+    border-bottom: 1.6px solid currentColor; transform: translateY(-2px) rotate(45deg);
+  }
+  .faq-more[open] > summary::after { transform: translateY(1px) rotate(225deg); }
+  .faq-more > summary .more-open { display: none; }
+  .faq-more[open] > summary .more-closed { display: none; }
+  .faq-more[open] > summary .more-open { display: inline; }
+  .faq-rest { margin-top: 4px; }
   .kicker {
     font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
     text-transform: uppercase; color: var(--indigo-bright); margin-bottom: 14px;
@@ -1071,31 +1100,31 @@
       </div>
       <div class="feature" style="--f-color: var(--amber)">
         <h3>30+ smarte grupper</h3>
-        <p>AI velger gruppen i samme øyeblikk som du lagrer. Uenig? Bytt den med ett trykk - rett fra bekreftelsen.</p>
+        <p>Assorta legger hver lagring i en av 30+ innebygde grupper i samme øyeblikk som du legger den inn - Reise, Matlaging, Ønskeliste, Sport. Uenig? Bytt den med ett trykk, rett fra bekreftelsen.</p>
       </div>
       <div class="feature" style="--f-color: var(--cyan)">
         <h3>Lenkeforhåndsvisninger</h3>
-        <p>Lagrede lenker beholder miniatyren og tittelen sin - et YouTube-bilde, et produktbilde, et artikkelomslag - så du kjenner dem igjen med et blikk.</p>
+        <p>Assorta beholder miniatyren og tittelen til en lagret lenke - et YouTube-bilde, et produktbilde, et artikkelomslag - så du kjenner den igjen med et blikk.</p>
       </div>
       <div class="feature" style="--f-color: var(--indigo)">
         <h3>AI-sammendrag</h3>
-        <p>Trykk på AI-sammendrag på en lagret lenke og les siden på noen få linjer, uten å åpne den. Sammendraget lagres sammen med notatet, så andre gangen går det umiddelbart og virker offline. Inkludert i Assorta Pro.</p>
+        <p>Trykk på AI-sammendrag på en lagret lenke, så henter Assorta siden tilbake på noen få linjer, uten at du åpner den. Sammendraget lagres sammen med notatet, så andre gangen går det umiddelbart og virker offline. Inkludert i Assorta Pro.</p>
       </div>
       <div class="feature" style="--f-color: var(--teal)">
         <h3>Søk når du trenger det</h3>
-        <p>Ett felt over gruppenavn, notatets egen tekst og lenkens tittel - for det ene lagrede som ikke havnet der du lette først.</p>
+        <p>Assorta søker i gruppenavn, notatets egen tekst og lenkens tittel fra ett felt - for det lagrede som ikke havnet der du lette først.</p>
       </div>
       <div class="feature" style="--f-color: var(--emerald)">
         <h3>Lagrer i bakgrunnen</h3>
-        <p>Bytt app midt i lagringen - elementet havner likevel trygt i gruppen sin. Ingenting går tapt mellom apper.</p>
+        <p>Assorta gjør en lagring ferdig i bakgrunnen, så elementet havner likevel i gruppen sin når du bytter app underveis. Ingenting går tapt mellom apper.</p>
       </div>
       <div class="feature" style="--f-color: var(--purple)">
-        <h3>Overalt der du er</h3>
-        <p>Android og iOS - én app på hver skjerm du bruker. Notatene blir liggende på enheten du lagret dem på; synkronisering mellom enheter finnes ikke ennå.</p>
+        <h3>Android og iOS</h3>
+        <p>Assorta kjører på Android-telefoner og -nettbrett, iPhone og iPad. Notatene blir liggende på enheten du lagret dem på; synkronisering mellom enheter finnes ikke ennå.</p>
       </div>
       <div class="feature" style="--f-color: var(--sky)">
-        <h3>Din å se på</h3>
-        <p>Lyst og mørkt tema. Tretten språk, fra engelsk og ukrainsk til japansk, koreansk og arabisk.</p>
+        <h3>Sortering som aldri tar slutt</h3>
+        <p>Assorta sorterer med AI så lenge de gratis sorteringene varer, og faller så tilbake på automatisk sortering, som kjører på enheten mot rundt 3 000 utvalgte termer. Uansett havner notatet i en gruppe - sorteringen stopper ikke når kvoten gjør det.</p>
       </div>
     </div>
   </div>
@@ -1128,6 +1157,100 @@
       <span class="chip" style="--c:#d946ef">Skjønnhet</span>
       <span class="chip" style="--c:#f43f5e">Personlig</span>
       <span class="chip more">…og et dusin til</span>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="faq">
+  <div class="wrap">
+    <p class="kicker">FAQ</p>
+    <h2>Spørsmål folk stiller før de installerer</h2>
+    <div class="faq">
+      <div class="qa">
+        <h3>Hva er Assorta?</h3>
+        <p>Assorta er én innboks for lenker, notater og idéer på Android og iOS. AI leser det du lagrer og legger det i en av 30+ grupper, så du finner det igjen uten mapper eller tagger.</p>
+      </div>
+      <div class="qa">
+        <h3>Hvordan avgjør Assorta hvilken gruppe noe havner i?</h3>
+        <p>Assorta leser teksten, eller siden bak en lenke, og velger gruppen som passer - Reise, Matlaging, Ønskeliste, Sport og resten. Du ser valget i samme øyeblikk som det tas.</p>
+      </div>
+      <div class="qa">
+        <h3>Hva kan jeg lagre i Assorta?</h3>
+        <p>Lenker delt fra en hvilken som helst app, og tekst du limer inn selv. En lagret lenke beholder miniatyren og tittelen sin, så du kjenner den igjen i listen uten å åpne den.</p>
+      </div>
+      <div class="qa">
+        <h3>Er Assorta gratis?</h3>
+        <p>Assorta er gratis å installere og gratis å bruke. De første 15 AI-sorteringene er gratis; etter det fortsetter sorteringen, og det er grensen for AI-sortering Assorta Pro fjerner.</p>
+      </div>
+      <div class="qa">
+        <h3>Hva er AI-sammendrag?</h3>
+        <p>Trykk på AI-sammendrag på en lagret lenke, så henter Assorta siden tilbake på noen få linjer, rett i listen. Sammendraget lagres sammen med notatet, så andre gangen går det umiddelbart og virker offline. Gir siden ingenting å jobbe med, sier Assorta det i stedet for å finne på et sammendrag.</p>
+      </div>
+      <div class="qa">
+        <h3>Kan jeg lagre fra andre apper?</h3>
+        <p>Ja. Assorta ligger i systemets delemeny på Android og iOS, så en lenke fra YouTube, TikTok, Instagram eller en nettleser er to trykk.</p>
+      </div>
+      <div class="qa">
+        <h3>Synkroniserer Assorta mellom enheter?</h3>
+        <p>Ikke ennå. Notatene blir liggende på enheten du lagret dem på; synkronisering står på veikartet for Assorta Pro.</p>
+      </div>
+      <details class="faq-more">
+        <summary><span class="more-closed">Vis flere spørsmål</span><span class="more-open">Vis færre</span></summary>
+        <div class="faq-rest">
+          <div class="qa">
+            <h3>Hva om AI velger feil gruppe?</h3>
+            <p>Bytt den med ett trykk, rett fra bekreftelsen - gruppene på andreplass ligger like ved.</p>
+          </div>
+          <div class="qa">
+            <h3>Hva skjer når de gratis AI-sorteringene tar slutt?</h3>
+            <p>Sorteringen fortsetter. Assorta faller tilbake på automatisk sortering, som kjører på enheten mot rundt 3 000 utvalgte termer og aldri tar slutt; Assorta Pro er det som fjerner grensen for AI-sortering.</p>
+          </div>
+          <div class="qa">
+            <h3>Hva gir Assorta Pro?</h3>
+            <p>Assorta Pro fjerner grensen for AI-sortering og legger til AI-sammendrag. Det er valgfritt, og det faktureres av Apple eller Google.</p>
+          </div>
+          <div class="qa">
+            <h3>Kan jeg søke i det jeg har lagret?</h3>
+            <p>Ja. Ett felt søker i gruppenavn, notatets egen tekst og lenkens tittel, og det virker uten forbindelse fordi notatene dine ligger på enheten.</p>
+          </div>
+          <div class="qa">
+            <h3>Hvor lagres notatene mine?</h3>
+            <p>På enheten din. Assorta lagrer ikke notatene dine på våre servere.</p>
+          </div>
+          <div class="qa">
+            <h3>Trenger jeg en konto?</h3>
+            <p>Nei. Det er valgfritt å logge inn; det beholder Assorta Pro på de andre enhetene dine.</p>
+          </div>
+          <div class="qa">
+            <h3>Virker Assorta uten forbindelse?</h3>
+            <p>Notatene dine, gruppene dine og sammendragene du allerede har bedt om ligger på enheten, så du kan bla og søke offline. AI-sortering og AI-sammendrag trenger forbindelse; automatisk sortering gjør det ikke.</p>
+          </div>
+          <div class="qa">
+            <h3>Kan jeg flytte et notat til en annen gruppe senere?</h3>
+            <p>Ja. Åpne notatets handlinger og velg Flytt.</p>
+          </div>
+          <div class="qa">
+            <h3>Kan jeg eksportere notatene mine?</h3>
+            <p>Ikke ennå. Eksport og sikkerhetskopi står på veikartet for Assorta Pro.</p>
+          </div>
+          <div class="qa">
+            <h3>Hvilke enheter kjører Assorta på?</h3>
+            <p>Android-telefoner og -nettbrett, iPhone og iPad.</p>
+          </div>
+          <div class="qa">
+            <h3>Hvilke språk snakker Assorta?</h3>
+            <p>31, fra engelsk og ukrainsk til japansk, koreansk og arabisk. Assorta følger språket på enheten din, og du kan endre det i Innstillinger.</p>
+          </div>
+          <div class="qa">
+            <h3>Hvordan skiller Assorta seg fra bokmerker eller en notatapp?</h3>
+            <p>En bokmerkemappe krever at du velger mappen, og en notatapp krever at du gir notatet et navn. Assorta leser det du lagrer og legger det bort selv - arbeidet du slipper, er sorteringen.</p>
+          </div>
+          <div class="qa">
+            <h3>Hvordan sletter jeg kontoen min og dataene mine?</h3>
+            <p>Åpne Innstillinger og trykk Slett konto i appen, eller send oss en e-post, så gjør vi det. <a href="delete-account.html">Siden om sletting av konto</a> beskriver hva som fjernes og hva som beholdes.</p>
+          </div>
+        </div>
+      </details>
     </div>
   </div>
 </section>
@@ -1180,6 +1303,8 @@
     <p>Tredjeparters merkenavn, logoer, lenker og forhåndsvisninger på denne siden er eksempler på innholdet du kan lagre med Assorta - den typen ting en person slipper inn i appen - bortsett fra App&nbsp;Store- og Google&nbsp;Play-merkene, som lenker til butikkene appen er publisert i. Alt forblir eiernes eiendom. Assorta er en uavhengig app: den er verken tilknyttet, godkjent av eller sponset av noen av merkene som vises, ingen av dem er involvert i den, og den utgir seg aldri for å være noen av dem.</p>
   </div>
 </footer>
+
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"FAQPage","@id":"https://assorta.app/nb/#faq","inLanguage":"nb","mainEntity":[{"@type":"Question","name":"Hva er Assorta?","acceptedAnswer":{"@type":"Answer","text":"Assorta er én innboks for lenker, notater og idéer på Android og iOS. AI leser det du lagrer og legger det i en av 30+ grupper, så du finner det igjen uten mapper eller tagger."}},{"@type":"Question","name":"Hvordan avgjør Assorta hvilken gruppe noe havner i?","acceptedAnswer":{"@type":"Answer","text":"Assorta leser teksten, eller siden bak en lenke, og velger gruppen som passer - Reise, Matlaging, Ønskeliste, Sport og resten. Du ser valget i samme øyeblikk som det tas."}},{"@type":"Question","name":"Hva kan jeg lagre i Assorta?","acceptedAnswer":{"@type":"Answer","text":"Lenker delt fra en hvilken som helst app, og tekst du limer inn selv. En lagret lenke beholder miniatyren og tittelen sin, så du kjenner den igjen i listen uten å åpne den."}},{"@type":"Question","name":"Er Assorta gratis?","acceptedAnswer":{"@type":"Answer","text":"Assorta er gratis å installere og gratis å bruke. De første 15 AI-sorteringene er gratis; etter det fortsetter sorteringen, og det er grensen for AI-sortering Assorta Pro fjerner."}},{"@type":"Question","name":"Hva er AI-sammendrag?","acceptedAnswer":{"@type":"Answer","text":"Trykk på AI-sammendrag på en lagret lenke, så henter Assorta siden tilbake på noen få linjer, rett i listen. Sammendraget lagres sammen med notatet, så andre gangen går det umiddelbart og virker offline. Gir siden ingenting å jobbe med, sier Assorta det i stedet for å finne på et sammendrag."}},{"@type":"Question","name":"Kan jeg lagre fra andre apper?","acceptedAnswer":{"@type":"Answer","text":"Ja. Assorta ligger i systemets delemeny på Android og iOS, så en lenke fra YouTube, TikTok, Instagram eller en nettleser er to trykk."}},{"@type":"Question","name":"Synkroniserer Assorta mellom enheter?","acceptedAnswer":{"@type":"Answer","text":"Ikke ennå. Notatene blir liggende på enheten du lagret dem på; synkronisering står på veikartet for Assorta Pro."}},{"@type":"Question","name":"Hva om AI velger feil gruppe?","acceptedAnswer":{"@type":"Answer","text":"Bytt den med ett trykk, rett fra bekreftelsen - gruppene på andreplass ligger like ved."}},{"@type":"Question","name":"Hva skjer når de gratis AI-sorteringene tar slutt?","acceptedAnswer":{"@type":"Answer","text":"Sorteringen fortsetter. Assorta faller tilbake på automatisk sortering, som kjører på enheten mot rundt 3 000 utvalgte termer og aldri tar slutt; Assorta Pro er det som fjerner grensen for AI-sortering."}},{"@type":"Question","name":"Hva gir Assorta Pro?","acceptedAnswer":{"@type":"Answer","text":"Assorta Pro fjerner grensen for AI-sortering og legger til AI-sammendrag. Det er valgfritt, og det faktureres av Apple eller Google."}},{"@type":"Question","name":"Kan jeg søke i det jeg har lagret?","acceptedAnswer":{"@type":"Answer","text":"Ja. Ett felt søker i gruppenavn, notatets egen tekst og lenkens tittel, og det virker uten forbindelse fordi notatene dine ligger på enheten."}},{"@type":"Question","name":"Hvor lagres notatene mine?","acceptedAnswer":{"@type":"Answer","text":"På enheten din. Assorta lagrer ikke notatene dine på våre servere."}},{"@type":"Question","name":"Trenger jeg en konto?","acceptedAnswer":{"@type":"Answer","text":"Nei. Det er valgfritt å logge inn; det beholder Assorta Pro på de andre enhetene dine."}},{"@type":"Question","name":"Virker Assorta uten forbindelse?","acceptedAnswer":{"@type":"Answer","text":"Notatene dine, gruppene dine og sammendragene du allerede har bedt om ligger på enheten, så du kan bla og søke offline. AI-sortering og AI-sammendrag trenger forbindelse; automatisk sortering gjør det ikke."}},{"@type":"Question","name":"Kan jeg flytte et notat til en annen gruppe senere?","acceptedAnswer":{"@type":"Answer","text":"Ja. Åpne notatets handlinger og velg Flytt."}},{"@type":"Question","name":"Kan jeg eksportere notatene mine?","acceptedAnswer":{"@type":"Answer","text":"Ikke ennå. Eksport og sikkerhetskopi står på veikartet for Assorta Pro."}},{"@type":"Question","name":"Hvilke enheter kjører Assorta på?","acceptedAnswer":{"@type":"Answer","text":"Android-telefoner og -nettbrett, iPhone og iPad."}},{"@type":"Question","name":"Hvilke språk snakker Assorta?","acceptedAnswer":{"@type":"Answer","text":"31, fra engelsk og ukrainsk til japansk, koreansk og arabisk. Assorta følger språket på enheten din, og du kan endre det i Innstillinger."}},{"@type":"Question","name":"Hvordan skiller Assorta seg fra bokmerker eller en notatapp?","acceptedAnswer":{"@type":"Answer","text":"En bokmerkemappe krever at du velger mappen, og en notatapp krever at du gir notatet et navn. Assorta leser det du lagrer og legger det bort selv - arbeidet du slipper, er sorteringen."}},{"@type":"Question","name":"Hvordan sletter jeg kontoen min og dataene mine?","acceptedAnswer":{"@type":"Answer","text":"Åpne Innstillinger og trykk Slett konto i appen, eller send oss en e-post, så gjør vi det. Siden om sletting av konto beskriver hva som fjernes og hva som beholdes."}}]},{"@type":"SoftwareApplication","name":"Assorta","applicationCategory":"ProductivityApplication","operatingSystem":"Android, iOS","inLanguage":"nb","url":"https://assorta.app/nb/","description":"Assorta er én rask innboks for lenker, notater og idéer. Slipp inn hva som helst - AI legger det i riktig gruppe, så du finner det på sekunder.","featureList":["Lagring fra delemenyen","30+ smarte grupper","Lenkeforhåndsvisninger","AI-sammendrag","Søk når du trenger det","Lagrer i bakgrunnen","Android og iOS","Sortering som aldri tar slutt"],"downloadUrl":["https://apps.apple.com/app/id6791126062","https://play.google.com/store/apps/details?id=com.troshchiy.assorta"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@id":"https://assorta.app/#operator"}},{"@type":"Organization","@id":"https://assorta.app/#operator","name":"Individual Entrepreneur Yevhen Troshchii","url":"https://assorta.app/","email":"contact@assorta.app","address":{"@type":"PostalAddress","addressLocality":"Odesa","addressCountry":"UA"}}]}</script>
 
 <script>window.__I18N__={"group.auto": "Bil", "group.beauty": "Skjønnhet", "group.books": "Bøker", "group.cooking": "Matlaging", "group.education": "Utdanning", "group.family": "Familie", "group.finance": "Økonomi", "group.health": "Helse", "group.hobby": "Hobby", "group.home": "Hjem", "group.ideas": "Idéer", "group.inspiration": "Inspirasjon", "group.movies": "Film &amp; TV", "group.music": "Musikk", "group.personal": "Personlig", "group.shopping": "Handleliste", "group.sport": "Sport", "group.tasks": "Oppgaver", "group.tech": "Teknologi", "group.travel": "Reise", "group.wishList": "Ønskeliste", "group.work": "Jobb", "js.or": "Eller:", "js.theme.toDark": "Bytt til mørkt tema", "js.theme.toLight": "Bytt til lyst tema", "js.video.title": "Assorta-demo"};</script>
 

@@ -44,21 +44,21 @@
 <meta name="theme-color" content="#131129">
 <style>
   /* Palette mirrors the app's semantic tokens (AssortaKMP ui/theme/SemanticColor.kt).
-     Dark is the default — it also survives JS being off; light overrides it via
+     Dark is the default - it also survives JS being off; light overrides it via
      data-theme="light" on <html>, stamped before first paint by the inline script
      at the end of <head>. Tag hues are shared by both app palettes, so they are
      declared once and never overridden. */
   :root {
     --bg: #131129;
-    --panel: #1e1b4b;            /* Indigo.v950 — bgAppGradientEnd */
+    --panel: #1e1b4b;            /* Indigo.v950 - bgAppGradientEnd */
     --panel-soft: #232052;
     --line: #34306b;
-    --indigo: #6366f1;           /* Indigo.v600 — accentPrimary, shared by both themes */
+    --indigo: #6366f1;           /* Indigo.v600 - accentPrimary, shared by both themes */
     --indigo-bright: #818cf8;
     /* accentPrimary is the brand hue but is too light to carry text: white on it is 4.46:1
        and it reads 3.1-3.8:1 as a glyph on its own tint. This mirrors the app's bgAccent -
        the fill that sits under white text. Borders, glows and tints keep --indigo. */
-    --accent-fill: #4f46e5;      /* Indigo.v700 — bgAccent */
+    --accent-fill: #4f46e5;      /* Indigo.v700 - bgAccent */
     --text: #eef0ff;
     --text-dim: #a3a6cc;
     /* The app's own screen background, verbatim from SemanticColors
@@ -121,17 +121,17 @@
     --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
   :root[data-theme="light"] {
-    --bg: #f8fafc;               /* Gray.v50   — bgAppGradientStart */
-    --panel: #eef2ff;            /* Indigo.v50 — bgAppGradientEnd */
+    --bg: #f8fafc;               /* Gray.v50   - bgAppGradientStart */
+    --panel: #eef2ff;            /* Indigo.v50 - bgAppGradientEnd */
     --panel-soft: #e3e9fb;
     --line: #d2dae9;             /* borderCard, lifted from Gray.v500a20 to stay visible on light */
-    --indigo-bright: #4f46e5;    /* Indigo.v700 — the accent that still reads on a light background */
-    --text: #0f172a;             /* Gray.v950 — fgPrimary */
+    --indigo-bright: #4f46e5;    /* Indigo.v700 - the accent that still reads on a light background */
+    --text: #0f172a;             /* Gray.v950 - fgPrimary */
     /* Still the app's fgSecondary, which moved to Gray.v700 for the same reason:
        the old Gray.v600 (#64748b) landed at 3.4-4.4:1 on the tinted panels this
        site invents (.cell, .step, section.alt) and on the app's own gradient end.
        v700 clears AA everywhere, worst case 5.4:1 on the .cell tints. */
-    --text-dim: #475569;         /* Gray.v700 — fgSecondary */
+    --text-dim: #475569;         /* Gray.v700 - fgSecondary */
     --app-grad-start: #f8fafc;   /* Gray.v50 */
     --app-grad-end:   #eef2ff;   /* Indigo.v50 */
     /* Mockup palette, light. Rows with an app token take it; the rest reproduce
@@ -525,6 +525,35 @@
   /* ---- sections ---- */
   section { padding: 64px 0; }
   section.alt { background: color-mix(in srgb, var(--panel) 32%, var(--bg)); }
+  /* ---- FAQ ---- */
+  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall. */
+  .faq { max-width: 760px; }
+  .faq .qa { padding: 17px 0; border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+  .faq > .qa:first-of-type { border-top: 0; padding-top: 4px; }
+  .faq h3 { font-family: var(--font-display); font-size: 17.5px; margin-bottom: 7px; }
+  .faq p { color: var(--text-dim); line-height: 1.65; }
+  .faq a { color: var(--indigo-bright); }
+  /* <details> and not a script: the thirteen collapsed answers stay in the page source, so a
+     crawler and an answer engine read all twenty however much a human unfolded. */
+  .faq-more { border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+  .faq-more > summary {
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 18px;
+    padding: 9px 18px; border: 1px solid var(--line); border-radius: 999px;
+    color: var(--text-dim); font-size: 14.5px; cursor: pointer; list-style: none;
+    transition: color .15s, border-color .15s;
+  }
+  .faq-more > summary::-webkit-details-marker { display: none; }
+  .faq-more > summary:hover { color: var(--text); border-color: var(--indigo); }
+  .faq-more > summary:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; }
+  .faq-more > summary::after {
+    content: ""; width: 7px; height: 7px; border-right: 1.6px solid currentColor;
+    border-bottom: 1.6px solid currentColor; transform: translateY(-2px) rotate(45deg);
+  }
+  .faq-more[open] > summary::after { transform: translateY(1px) rotate(225deg); }
+  .faq-more > summary .more-open { display: none; }
+  .faq-more[open] > summary .more-closed { display: none; }
+  .faq-more[open] > summary .more-open { display: inline; }
+  .faq-rest { margin-top: 4px; }
   .kicker {
     font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
     text-transform: uppercase; color: var(--indigo-bright); margin-bottom: 14px;
@@ -1071,31 +1100,31 @@
       </div>
       <div class="feature" style="--f-color: var(--amber)">
         <h3>30+ akıllı grup</h3>
-        <p>Yapay zekâ, siz kaydettiğiniz anda grubu seçer. Katılmıyor musunuz? Tek dokunuşla değiştirin - hem de onay ekranının üstünden.</p>
+        <p>Assorta her kaydı, siz eklediğiniz anda 30+ hazır gruptan birine yerleştirir - Seyahat, Yemek, İstek listesi, Spor. Katılmıyor musunuz? Tek dokunuşla, doğrudan onay ekranından değiştirin.</p>
       </div>
       <div class="feature" style="--f-color: var(--cyan)">
         <h3>Bağlantı önizlemeleri</h3>
-        <p>Kaydedilen bağlantılar küçük resmini ve başlığını korur - bir YouTube karesi, bir ürün fotoğrafı, bir makale kapağı - böylece onları bir bakışta tanırsınız.</p>
+        <p>Assorta, kaydedilen bir bağlantının küçük resmini ve başlığını korur - bir YouTube karesi, bir ürün fotoğrafı, bir makale kapağı - böylece onu bir bakışta tanırsınız.</p>
       </div>
       <div class="feature" style="--f-color: var(--indigo)">
         <h3>Yapay zekâ özeti</h3>
-        <p>Kaydedilmiş bir bağlantıda Yapay zekâ özeti’ne dokunun ve sayfayı açmadan birkaç satırda okuyun. Özet notla birlikte saklanır, böylece ikinci bakış anında olur ve çevrimdışı çalışır. Assorta Pro’ya dahildir.</p>
+        <p>Kaydedilmiş bir bağlantıda Yapay zekâ özeti’ne dokunun, Assorta sayfayı açmadan birkaç satırda geri getirsin. Özet notla birlikte saklanır, böylece ikinci bakış anında olur ve çevrimdışı çalışır. Assorta Pro’ya dahildir.</p>
       </div>
       <div class="feature" style="--f-color: var(--teal)">
         <h3>İhtiyacınız olduğunda arama</h3>
-        <p>Grup adları, bir notun kendi metni ve bir bağlantının başlığı üzerinde tek bir alan - ilk baktığınız yerde çıkmayan o tek kayıt için.</p>
+        <p>Assorta grup adlarını, bir notun kendi metnini ve bir bağlantının başlığını tek bir alandan arar - ilk baktığınız yerde çıkmayan o kayıt için.</p>
       </div>
       <div class="feature" style="--f-color: var(--emerald)">
         <h3>Arka planda kaydeder</h3>
-        <p>Kaydetmenin ortasında başka uygulamaya geçin - öğe yine güvenle grubuna iner. Uygulamalar arasında hiçbir şey kaybolmaz.</p>
+        <p>Assorta kaydetmeyi arka planda bitirir, böylece ortada başka uygulamaya geçseniz de öğe yine grubuna iner. Uygulamalar arasında hiçbir şey kaybolmaz.</p>
       </div>
       <div class="feature" style="--f-color: var(--purple)">
-        <h3>Olduğunuz her yerde</h3>
-        <p>Android ve iOS - kullandığınız her ekranda tek uygulama. Notlar kaydettiğiniz cihazda kalır; cihazlar arası eşitleme henüz yok.</p>
+        <h3>Android ve iOS</h3>
+        <p>Assorta; Android telefonlarda ve tabletlerde, iPhone ve iPad’de çalışır. Notlar kaydettiğiniz cihazda kalır; cihazlar arası eşitleme henüz yok.</p>
       </div>
       <div class="feature" style="--f-color: var(--sky)">
-        <h3>Bakması sizin zevkinize</h3>
-        <p>Açık ve koyu tema. İngilizce ve Ukraincadan Japonca, Korece ve Arapçaya kadar on üç dil.</p>
+        <h3>Hiç bitmeyen sıralama</h3>
+        <p>Assorta, ücretsiz sıralamalarınız sürdüğü sürece yapay zekâyla sıralar, sonra otomatik sıralamaya geçer; o da cihazda, yaklaşık 3.000 seçilmiş terime karşı çalışır. Her hâlükârda not bir gruba iner - kota bitince yerleştirme durmaz.</p>
       </div>
     </div>
   </div>
@@ -1128,6 +1157,100 @@
       <span class="chip" style="--c:#d946ef">Güzellik</span>
       <span class="chip" style="--c:#f43f5e">Kişisel</span>
       <span class="chip more">…ve bir düzine daha</span>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="faq">
+  <div class="wrap">
+    <p class="kicker">SSS</p>
+    <h2>Kurmadan önce herkesin sorduğu sorular</h2>
+    <div class="faq">
+      <div class="qa">
+        <h3>Assorta nedir?</h3>
+        <p>Assorta; Android ve iOS’ta bağlantılar, notlar ve fikirler için tek bir gelen kutusudur. Yapay zekâ kaydettiğinizi okur ve 30+ gruptan birine yerleştirir, böylece sonrasında klasör ya da etiket olmadan bulursunuz.</p>
+      </div>
+      <div class="qa">
+        <h3>Assorta bir şeyin hangi gruba gideceğine nasıl karar verir?</h3>
+        <p>Assorta metni ya da bağlantının arkasındaki sayfayı okur ve uyan grubu seçer - Seyahat, Yemek, İstek listesi, Spor ve diğerleri. Seçimi yapıldığı anda görürsünüz.</p>
+      </div>
+      <div class="qa">
+        <h3>Assorta’ya ne kaydedebilirim?</h3>
+        <p>Herhangi bir uygulamadan paylaşılan bağlantıları ve kendinizin yapıştırdığı metinleri. Kaydedilen bir bağlantı küçük resmini ve başlığını korur, böylece açmadan listede tanırsınız.</p>
+      </div>
+      <div class="qa">
+        <h3>Assorta ücretsiz mi?</h3>
+        <p>Assorta’nın kurulumu da kullanımı da ücretsizdir. İlk 15 yapay zekâ sıralaması ücretsizdir; sonrasında yerleştirme çalışmaya devam eder ve Assorta Pro’nun kaldırdığı şey yapay zekâ sıralama sınırıdır.</p>
+      </div>
+      <div class="qa">
+        <h3>Yapay zekâ özeti nedir?</h3>
+        <p>Kaydedilmiş bir bağlantıda Yapay zekâ özeti’ne dokunun, Assorta sayfayı birkaç satırda listenin içinde geri getirsin. Özet notla birlikte saklanır, böylece ikinci bakış anında olur ve çevrimdışı çalışır. Bir sayfa çalışacak bir şey vermiyorsa Assorta özet uydurmak yerine bunu söyler.</p>
+      </div>
+      <div class="qa">
+        <h3>Başka uygulamalardan kaydedebilir miyim?</h3>
+        <p>Evet. Assorta, Android ve iOS’ta sistem paylaşım menüsünde durur, böylece YouTube, TikTok, Instagram ya da bir tarayıcıdan gelen bir bağlantı iki dokunuş.</p>
+      </div>
+      <div class="qa">
+        <h3>Assorta cihazlar arasında eşitleme yapıyor mu?</h3>
+        <p>Henüz değil. Notlar kaydettiğiniz cihazda kalır; eşitleme Assorta Pro yol haritasında.</p>
+      </div>
+      <details class="faq-more">
+        <summary><span class="more-closed">Daha fazla soru</span><span class="more-open">Daha az göster</span></summary>
+        <div class="faq-rest">
+          <div class="qa">
+            <h3>Yapay zekâ yanlış grubu seçerse ne olur?</h3>
+            <p>Tek dokunuşla, doğrudan onay ekranından değiştirin - en yakın diğer gruplar hemen yanında durur.</p>
+          </div>
+          <div class="qa">
+            <h3>Ücretsiz yapay zekâ sıralamaları bitince ne olur?</h3>
+            <p>Yerleştirme çalışmaya devam eder. Assorta otomatik sıralamaya geçer; o da cihazda, yaklaşık 3.000 seçilmiş terime karşı çalışır ve hiç bitmez. Yapay zekâ sıralama sınırını kaldıran şey Assorta Pro’dur.</p>
+          </div>
+          <div class="qa">
+            <h3>Assorta Pro ne ekler?</h3>
+            <p>Assorta Pro, yapay zekâ sıralama sınırını kaldırır ve Yapay zekâ özeti’ni ekler. İsteğe bağlıdır ve faturalandırmayı Apple ya da Google yapar.</p>
+          </div>
+          <div class="qa">
+            <h3>Kaydettiklerimi arayabilir miyim?</h3>
+            <p>Evet. Tek bir alan grup adlarında, bir notun kendi metninde ve bir bağlantının başlığında arar; notlarınız cihazda olduğu için bağlantı olmadan da çalışır.</p>
+          </div>
+          <div class="qa">
+            <h3>Notlarım nerede saklanıyor?</h3>
+            <p>Cihazınızda. Assorta notlarınızı sunucularımızda tutmaz.</p>
+          </div>
+          <div class="qa">
+            <h3>Hesap açmam gerekiyor mu?</h3>
+            <p>Hayır. Giriş yapmak isteğe bağlıdır; Assorta Pro’yu diğer cihazlarınızda da tutar.</p>
+          </div>
+          <div class="qa">
+            <h3>Assorta bağlantı olmadan çalışır mı?</h3>
+            <p>Notlarınız, gruplarınız ve daha önce istediğiniz her özet cihazdadır, bu yüzden gezinme ve arama çevrimdışı çalışır. Yapay zekâ sıralaması ve Yapay zekâ özeti bağlantı ister; otomatik sıralama istemez.</p>
+          </div>
+          <div class="qa">
+            <h3>Bir notu sonradan başka bir gruba taşıyabilir miyim?</h3>
+            <p>Evet. Notun işlemlerini açıp Taşı’yı seçin.</p>
+          </div>
+          <div class="qa">
+            <h3>Notlarımı dışa aktarabilir miyim?</h3>
+            <p>Henüz değil. Dışa aktarma ve yedekleme Assorta Pro yol haritasında.</p>
+          </div>
+          <div class="qa">
+            <h3>Assorta hangi cihazlarda çalışıyor?</h3>
+            <p>Android telefonlar ve tabletler, iPhone ve iPad.</p>
+          </div>
+          <div class="qa">
+            <h3>Assorta hangi dilleri konuşuyor?</h3>
+            <p>31 dil; İngilizce ve Ukraincadan Japonca, Korece ve Arapçaya kadar. Assorta cihazınızın dilini izler ve dili Ayarlar’dan değiştirebilirsiniz.</p>
+          </div>
+          <div class="qa">
+            <h3>Assorta yer imlerinden ya da bir not uygulamasından nasıl farklı?</h3>
+            <p>Yer imlerinde klasörü sizin seçmeniz, bir not uygulamasında notu sizin adlandırmanız gerekir. Assorta kaydettiğinizi okur ve kendisi yerleştirir - atladığınız iş sıralamanın kendisidir.</p>
+          </div>
+          <div class="qa">
+            <h3>Hesabımı ve verilerimi nasıl silerim?</h3>
+            <p>Uygulamada Ayarlar’ı açıp Hesabı sil’e dokunun ya da bize e-posta gönderin, biz silelim. Nelerin kaldırıldığını ve nelerin saklandığını <a href="delete-account.html">hesap silme sayfası</a> anlatır.</p>
+          </div>
+        </div>
+      </details>
     </div>
   </div>
 </section>
@@ -1180,6 +1303,8 @@
     <p>Bu sayfadaki üçüncü taraf marka adları, logolar, bağlantılar ve önizleme görselleri, Assorta ile kaydedebileceğiniz içeriğin örnekleridir - insanların uygulamaya bıraktığı türden şeyler - uygulamanın yayımlandığı mağazalara bağlanan App&nbsp;Store ve Google&nbsp;Play rozetleri hariç. Hepsi sahiplerinin mülkiyetinde kalır. Assorta bağımsız bir uygulamadır: gösterilen markaların hiçbiriyle bağlantılı değildir, hiçbiri tarafından onaylanmamış ya da desteklenmemiştir, hiçbiri uygulamada yer almaz ve uygulama hiçbir zaman kendini onlardan biri gibi göstermez.</p>
   </div>
 </footer>
+
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"FAQPage","@id":"https://assorta.app/tr/#faq","inLanguage":"tr","mainEntity":[{"@type":"Question","name":"Assorta nedir?","acceptedAnswer":{"@type":"Answer","text":"Assorta; Android ve iOS’ta bağlantılar, notlar ve fikirler için tek bir gelen kutusudur. Yapay zekâ kaydettiğinizi okur ve 30+ gruptan birine yerleştirir, böylece sonrasında klasör ya da etiket olmadan bulursunuz."}},{"@type":"Question","name":"Assorta bir şeyin hangi gruba gideceğine nasıl karar verir?","acceptedAnswer":{"@type":"Answer","text":"Assorta metni ya da bağlantının arkasındaki sayfayı okur ve uyan grubu seçer - Seyahat, Yemek, İstek listesi, Spor ve diğerleri. Seçimi yapıldığı anda görürsünüz."}},{"@type":"Question","name":"Assorta’ya ne kaydedebilirim?","acceptedAnswer":{"@type":"Answer","text":"Herhangi bir uygulamadan paylaşılan bağlantıları ve kendinizin yapıştırdığı metinleri. Kaydedilen bir bağlantı küçük resmini ve başlığını korur, böylece açmadan listede tanırsınız."}},{"@type":"Question","name":"Assorta ücretsiz mi?","acceptedAnswer":{"@type":"Answer","text":"Assorta’nın kurulumu da kullanımı da ücretsizdir. İlk 15 yapay zekâ sıralaması ücretsizdir; sonrasında yerleştirme çalışmaya devam eder ve Assorta Pro’nun kaldırdığı şey yapay zekâ sıralama sınırıdır."}},{"@type":"Question","name":"Yapay zekâ özeti nedir?","acceptedAnswer":{"@type":"Answer","text":"Kaydedilmiş bir bağlantıda Yapay zekâ özeti’ne dokunun, Assorta sayfayı birkaç satırda listenin içinde geri getirsin. Özet notla birlikte saklanır, böylece ikinci bakış anında olur ve çevrimdışı çalışır. Bir sayfa çalışacak bir şey vermiyorsa Assorta özet uydurmak yerine bunu söyler."}},{"@type":"Question","name":"Başka uygulamalardan kaydedebilir miyim?","acceptedAnswer":{"@type":"Answer","text":"Evet. Assorta, Android ve iOS’ta sistem paylaşım menüsünde durur, böylece YouTube, TikTok, Instagram ya da bir tarayıcıdan gelen bir bağlantı iki dokunuş."}},{"@type":"Question","name":"Assorta cihazlar arasında eşitleme yapıyor mu?","acceptedAnswer":{"@type":"Answer","text":"Henüz değil. Notlar kaydettiğiniz cihazda kalır; eşitleme Assorta Pro yol haritasında."}},{"@type":"Question","name":"Yapay zekâ yanlış grubu seçerse ne olur?","acceptedAnswer":{"@type":"Answer","text":"Tek dokunuşla, doğrudan onay ekranından değiştirin - en yakın diğer gruplar hemen yanında durur."}},{"@type":"Question","name":"Ücretsiz yapay zekâ sıralamaları bitince ne olur?","acceptedAnswer":{"@type":"Answer","text":"Yerleştirme çalışmaya devam eder. Assorta otomatik sıralamaya geçer; o da cihazda, yaklaşık 3.000 seçilmiş terime karşı çalışır ve hiç bitmez. Yapay zekâ sıralama sınırını kaldıran şey Assorta Pro’dur."}},{"@type":"Question","name":"Assorta Pro ne ekler?","acceptedAnswer":{"@type":"Answer","text":"Assorta Pro, yapay zekâ sıralama sınırını kaldırır ve Yapay zekâ özeti’ni ekler. İsteğe bağlıdır ve faturalandırmayı Apple ya da Google yapar."}},{"@type":"Question","name":"Kaydettiklerimi arayabilir miyim?","acceptedAnswer":{"@type":"Answer","text":"Evet. Tek bir alan grup adlarında, bir notun kendi metninde ve bir bağlantının başlığında arar; notlarınız cihazda olduğu için bağlantı olmadan da çalışır."}},{"@type":"Question","name":"Notlarım nerede saklanıyor?","acceptedAnswer":{"@type":"Answer","text":"Cihazınızda. Assorta notlarınızı sunucularımızda tutmaz."}},{"@type":"Question","name":"Hesap açmam gerekiyor mu?","acceptedAnswer":{"@type":"Answer","text":"Hayır. Giriş yapmak isteğe bağlıdır; Assorta Pro’yu diğer cihazlarınızda da tutar."}},{"@type":"Question","name":"Assorta bağlantı olmadan çalışır mı?","acceptedAnswer":{"@type":"Answer","text":"Notlarınız, gruplarınız ve daha önce istediğiniz her özet cihazdadır, bu yüzden gezinme ve arama çevrimdışı çalışır. Yapay zekâ sıralaması ve Yapay zekâ özeti bağlantı ister; otomatik sıralama istemez."}},{"@type":"Question","name":"Bir notu sonradan başka bir gruba taşıyabilir miyim?","acceptedAnswer":{"@type":"Answer","text":"Evet. Notun işlemlerini açıp Taşı’yı seçin."}},{"@type":"Question","name":"Notlarımı dışa aktarabilir miyim?","acceptedAnswer":{"@type":"Answer","text":"Henüz değil. Dışa aktarma ve yedekleme Assorta Pro yol haritasında."}},{"@type":"Question","name":"Assorta hangi cihazlarda çalışıyor?","acceptedAnswer":{"@type":"Answer","text":"Android telefonlar ve tabletler, iPhone ve iPad."}},{"@type":"Question","name":"Assorta hangi dilleri konuşuyor?","acceptedAnswer":{"@type":"Answer","text":"31 dil; İngilizce ve Ukraincadan Japonca, Korece ve Arapçaya kadar. Assorta cihazınızın dilini izler ve dili Ayarlar’dan değiştirebilirsiniz."}},{"@type":"Question","name":"Assorta yer imlerinden ya da bir not uygulamasından nasıl farklı?","acceptedAnswer":{"@type":"Answer","text":"Yer imlerinde klasörü sizin seçmeniz, bir not uygulamasında notu sizin adlandırmanız gerekir. Assorta kaydettiğinizi okur ve kendisi yerleştirir - atladığınız iş sıralamanın kendisidir."}},{"@type":"Question","name":"Hesabımı ve verilerimi nasıl silerim?","acceptedAnswer":{"@type":"Answer","text":"Uygulamada Ayarlar’ı açıp Hesabı sil’e dokunun ya da bize e-posta gönderin, biz silelim. Nelerin kaldırıldığını ve nelerin saklandığını hesap silme sayfası anlatır."}}]},{"@type":"SoftwareApplication","name":"Assorta","applicationCategory":"ProductivityApplication","operatingSystem":"Android, iOS","inLanguage":"tr","url":"https://assorta.app/tr/","description":"Assorta, bağlantılar, notlar ve fikirler için tek ve hızlı bir gelen kutusu. İçine ne atarsanız atın - yapay zekâ doğru gruba koyar, saniyeler içinde bulun.","featureList":["Paylaşım menüsünden kaydetme","30+ akıllı grup","Bağlantı önizlemeleri","Yapay zekâ özeti","İhtiyacınız olduğunda arama","Arka planda kaydeder","Android ve iOS","Hiç bitmeyen sıralama"],"downloadUrl":["https://apps.apple.com/app/id6791126062","https://play.google.com/store/apps/details?id=com.troshchiy.assorta"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@id":"https://assorta.app/#operator"}},{"@type":"Organization","@id":"https://assorta.app/#operator","name":"Individual Entrepreneur Yevhen Troshchii","url":"https://assorta.app/","email":"contact@assorta.app","address":{"@type":"PostalAddress","addressLocality":"Odesa","addressCountry":"UA"}}]}</script>
 
 <script>window.__I18N__={"group.auto": "Otomobil", "group.beauty": "Güzellik", "group.books": "Kitaplar", "group.cooking": "Yemek", "group.education": "Eğitim", "group.family": "Aile", "group.finance": "Finans", "group.health": "Sağlık", "group.hobby": "Hobi", "group.home": "Ev", "group.ideas": "Fikirler", "group.inspiration": "İlham", "group.movies": "Filmler ve TV", "group.music": "Müzik", "group.personal": "Kişisel", "group.shopping": "Alışveriş listesi", "group.sport": "Spor", "group.tasks": "Görevler", "group.tech": "Teknoloji", "group.travel": "Seyahat", "group.wishList": "İstek listesi", "group.work": "İş", "js.or": "Veya:", "js.theme.toDark": "Koyu temaya geç", "js.theme.toLight": "Açık temaya geç", "js.video.title": "Assorta tanıtımı"};</script>
 

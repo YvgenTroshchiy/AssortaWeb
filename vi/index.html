@@ -44,21 +44,21 @@
 <meta name="theme-color" content="#131129">
 <style>
   /* Palette mirrors the app's semantic tokens (AssortaKMP ui/theme/SemanticColor.kt).
-     Dark is the default — it also survives JS being off; light overrides it via
+     Dark is the default - it also survives JS being off; light overrides it via
      data-theme="light" on <html>, stamped before first paint by the inline script
      at the end of <head>. Tag hues are shared by both app palettes, so they are
      declared once and never overridden. */
   :root {
     --bg: #131129;
-    --panel: #1e1b4b;            /* Indigo.v950 — bgAppGradientEnd */
+    --panel: #1e1b4b;            /* Indigo.v950 - bgAppGradientEnd */
     --panel-soft: #232052;
     --line: #34306b;
-    --indigo: #6366f1;           /* Indigo.v600 — accentPrimary, shared by both themes */
+    --indigo: #6366f1;           /* Indigo.v600 - accentPrimary, shared by both themes */
     --indigo-bright: #818cf8;
     /* accentPrimary is the brand hue but is too light to carry text: white on it is 4.46:1
        and it reads 3.1-3.8:1 as a glyph on its own tint. This mirrors the app's bgAccent -
        the fill that sits under white text. Borders, glows and tints keep --indigo. */
-    --accent-fill: #4f46e5;      /* Indigo.v700 — bgAccent */
+    --accent-fill: #4f46e5;      /* Indigo.v700 - bgAccent */
     --text: #eef0ff;
     --text-dim: #a3a6cc;
     /* The app's own screen background, verbatim from SemanticColors
@@ -121,17 +121,17 @@
     --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
   :root[data-theme="light"] {
-    --bg: #f8fafc;               /* Gray.v50   — bgAppGradientStart */
-    --panel: #eef2ff;            /* Indigo.v50 — bgAppGradientEnd */
+    --bg: #f8fafc;               /* Gray.v50   - bgAppGradientStart */
+    --panel: #eef2ff;            /* Indigo.v50 - bgAppGradientEnd */
     --panel-soft: #e3e9fb;
     --line: #d2dae9;             /* borderCard, lifted from Gray.v500a20 to stay visible on light */
-    --indigo-bright: #4f46e5;    /* Indigo.v700 — the accent that still reads on a light background */
-    --text: #0f172a;             /* Gray.v950 — fgPrimary */
+    --indigo-bright: #4f46e5;    /* Indigo.v700 - the accent that still reads on a light background */
+    --text: #0f172a;             /* Gray.v950 - fgPrimary */
     /* Still the app's fgSecondary, which moved to Gray.v700 for the same reason:
        the old Gray.v600 (#64748b) landed at 3.4-4.4:1 on the tinted panels this
        site invents (.cell, .step, section.alt) and on the app's own gradient end.
        v700 clears AA everywhere, worst case 5.4:1 on the .cell tints. */
-    --text-dim: #475569;         /* Gray.v700 — fgSecondary */
+    --text-dim: #475569;         /* Gray.v700 - fgSecondary */
     --app-grad-start: #f8fafc;   /* Gray.v50 */
     --app-grad-end:   #eef2ff;   /* Indigo.v50 */
     /* Mockup palette, light. Rows with an app token take it; the rest reproduce
@@ -525,6 +525,35 @@
   /* ---- sections ---- */
   section { padding: 64px 0; }
   section.alt { background: color-mix(in srgb, var(--panel) 32%, var(--bg)); }
+  /* ---- FAQ ---- */
+  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall. */
+  .faq { max-width: 760px; }
+  .faq .qa { padding: 17px 0; border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+  .faq > .qa:first-of-type { border-top: 0; padding-top: 4px; }
+  .faq h3 { font-family: var(--font-display); font-size: 17.5px; margin-bottom: 7px; }
+  .faq p { color: var(--text-dim); line-height: 1.65; }
+  .faq a { color: var(--indigo-bright); }
+  /* <details> and not a script: the thirteen collapsed answers stay in the page source, so a
+     crawler and an answer engine read all twenty however much a human unfolded. */
+  .faq-more { border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+  .faq-more > summary {
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 18px;
+    padding: 9px 18px; border: 1px solid var(--line); border-radius: 999px;
+    color: var(--text-dim); font-size: 14.5px; cursor: pointer; list-style: none;
+    transition: color .15s, border-color .15s;
+  }
+  .faq-more > summary::-webkit-details-marker { display: none; }
+  .faq-more > summary:hover { color: var(--text); border-color: var(--indigo); }
+  .faq-more > summary:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; }
+  .faq-more > summary::after {
+    content: ""; width: 7px; height: 7px; border-right: 1.6px solid currentColor;
+    border-bottom: 1.6px solid currentColor; transform: translateY(-2px) rotate(45deg);
+  }
+  .faq-more[open] > summary::after { transform: translateY(1px) rotate(225deg); }
+  .faq-more > summary .more-open { display: none; }
+  .faq-more[open] > summary .more-closed { display: none; }
+  .faq-more[open] > summary .more-open { display: inline; }
+  .faq-rest { margin-top: 4px; }
   .kicker {
     font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
     text-transform: uppercase; color: var(--indigo-bright); margin-bottom: 14px;
@@ -1075,35 +1104,31 @@
       </div>
       <div class="feature" style="--f-color: var(--amber)">
         <h3>Hơn 30 nhóm thông minh</h3>
-        <p>AI chọn nhóm ngay khi bạn lưu. Không đồng ý? Đổi bằng một lần chạm - ngay tại thông báo xác nhận.</p>
+        <p>Assorta xếp mỗi thứ bạn lưu vào một trong hơn 30 nhóm có sẵn ngay khi bạn thêm vào - Du lịch, Nấu ăn, Danh sách mong muốn, Thể thao. Không đồng ý? Đổi bằng một lần chạm, ngay tại thông báo xác nhận.</p>
       </div>
       <div class="feature" style="--f-color: var(--cyan)">
         <h3>Xem trước liên kết</h3>
-        <p>Liên kết đã lưu giữ nguyên ảnh thu nhỏ và tiêu đề - một khung hình YouTube, một tấm ảnh sản phẩm, một bìa bài viết - để bạn nhận ra chỉ trong một cái liếc.</p>
+        <p>Assorta giữ ảnh thu nhỏ và tiêu đề của liên kết đã lưu - một khung hình YouTube, một tấm ảnh sản phẩm, một bìa bài viết - để bạn nhận ra chỉ trong một cái liếc.</p>
       </div>
       <div class="feature" style="--f-color: var(--indigo)">
         <h3>Tóm tắt AI</h3>
-        <p>Chạm Tóm tắt AI trên một liên kết đã lưu và đọc trang đó trong vài dòng mà không cần mở. Bản
-          tóm tắt được lưu cùng ghi chú, nên mở lại là tức thì và dùng được ngoại tuyến. Bao gồm trong Assorta Pro.</p>
+        <p>Chạm Tóm tắt AI trên một liên kết đã lưu và Assorta đưa trang đó trở lại trong vài dòng, không cần mở. Bản tóm tắt được lưu cùng ghi chú, nên mở lại là tức thì và dùng được ngoại tuyến. Bao gồm trong Assorta Pro.</p>
       </div>
       <div class="feature" style="--f-color: var(--teal)">
         <h3>Tìm kiếm khi bạn cần</h3>
-        <p>Một ô tìm kiếm trên tên nhóm, nội dung ghi chú và tiêu đề liên kết - dành cho thứ đã lưu mà
-          không nằm ở nơi bạn tìm trước tiên.</p>
+        <p>Assorta tìm trên tên nhóm, nội dung ghi chú và tiêu đề liên kết chỉ từ một ô - dành cho thứ đã lưu mà không nằm ở nơi bạn tìm trước tiên.</p>
       </div>
       <div class="feature" style="--f-color: var(--emerald)">
         <h3>Lưu ở nền</h3>
-        <p>Chuyển sang ứng dụng khác giữa chừng - mục đó vẫn nằm an toàn trong nhóm của nó. Không có gì thất lạc giữa các ứng dụng.</p>
+        <p>Assorta hoàn tất việc lưu ở nền, nên chuyển sang ứng dụng khác giữa chừng thì mục đó vẫn nằm vào nhóm của nó. Không có gì thất lạc giữa các ứng dụng.</p>
       </div>
       <div class="feature" style="--f-color: var(--purple)">
-        <h3>Ở mọi nơi bạn có mặt</h3>
-        <p>Android và iOS - một ứng dụng trên mọi màn hình bạn dùng. Ghi chú nằm lại trên thiết bị
-          bạn đã lưu; đồng bộ giữa các thiết bị thì chưa có.</p>
+        <h3>Android và iOS</h3>
+        <p>Assorta chạy trên điện thoại và máy tính bảng Android, iPhone và iPad. Ghi chú nằm lại trên thiết bị bạn đã lưu; đồng bộ giữa các thiết bị thì chưa có.</p>
       </div>
       <div class="feature" style="--f-color: var(--sky)">
-        <h3>Nhìn theo ý bạn</h3>
-        <p>Giao diện sáng và tối. Mười ba ngôn ngữ, từ tiếng Anh và tiếng Ukraina đến tiếng Nhật,
-          tiếng Hàn và tiếng Ả Rập.</p>
+        <h3>Phân loại không bao giờ cạn</h3>
+        <p>Assorta phân loại bằng AI chừng nào lượt miễn phí của bạn còn, rồi chuyển sang phân loại tự động, chạy ngay trên thiết bị dựa trên khoảng 3.000 từ khóa được chọn lọc. Kiểu nào thì ghi chú cũng nằm vào một nhóm - việc phân loại không dừng lại khi hết hạn mức.</p>
       </div>
     </div>
   </div>
@@ -1136,6 +1161,100 @@
       <span class="chip" style="--c:#d946ef">Làm đẹp</span>
       <span class="chip" style="--c:#f43f5e">Cá nhân</span>
       <span class="chip more">…và cả chục nhóm nữa</span>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="faq">
+  <div class="wrap">
+    <p class="kicker">FAQ</p>
+    <h2>Những câu người ta hỏi trước khi cài</h2>
+    <div class="faq">
+      <div class="qa">
+        <h3>Assorta là gì?</h3>
+        <p>Assorta là một hộp thư đến duy nhất cho liên kết, ghi chú và ý tưởng trên Android và iOS. AI đọc thứ bạn lưu và xếp nó vào một trong hơn 30 nhóm, để bạn tìm lại sau này mà không cần thư mục hay thẻ.</p>
+      </div>
+      <div class="qa">
+        <h3>Assorta quyết định thế nào về việc một thứ thuộc nhóm nào?</h3>
+        <p>Assorta đọc văn bản, hoặc trang nằm sau một liên kết, rồi chọn nhóm phù hợp - Du lịch, Nấu ăn, Danh sách mong muốn, Thể thao và những nhóm còn lại. Bạn thấy lựa chọn đó ngay khi nó được đưa ra.</p>
+      </div>
+      <div class="qa">
+        <h3>Tôi có thể lưu những gì trong Assorta?</h3>
+        <p>Liên kết được chia sẻ từ bất kỳ ứng dụng nào, và văn bản bạn tự dán vào. Một liên kết đã lưu giữ nguyên ảnh thu nhỏ và tiêu đề, nên bạn nhận ra nó trong danh sách mà không cần mở.</p>
+      </div>
+      <div class="qa">
+        <h3>Assorta có miễn phí không?</h3>
+        <p>Assorta miễn phí cài đặt và miễn phí sử dụng. 15 lượt phân loại AI đầu tiên là miễn phí; sau đó việc phân loại vẫn chạy, và giới hạn phân loại AI chính là thứ Assorta Pro gỡ bỏ.</p>
+      </div>
+      <div class="qa">
+        <h3>Tóm tắt AI là gì?</h3>
+        <p>Chạm Tóm tắt AI trên một liên kết đã lưu và Assorta đưa trang đó trở lại trong vài dòng, ngay trong danh sách. Bản tóm tắt được lưu cùng ghi chú, nên mở lại là tức thì và dùng được ngoại tuyến. Khi một trang không có gì để tóm tắt, Assorta nói thẳng thay vì bịa ra một bản tóm tắt.</p>
+      </div>
+      <div class="qa">
+        <h3>Tôi có thể lưu từ các ứng dụng khác không?</h3>
+        <p>Có. Assorta nằm trong bảng chia sẻ của hệ thống trên Android và iOS, nên một liên kết từ YouTube, TikTok, Instagram hay trình duyệt chỉ là hai lần chạm.</p>
+      </div>
+      <div class="qa">
+        <h3>Assorta có đồng bộ giữa các thiết bị không?</h3>
+        <p>Chưa. Ghi chú nằm lại trên thiết bị bạn đã lưu; đồng bộ nằm trong lộ trình của Assorta Pro.</p>
+      </div>
+      <details class="faq-more">
+        <summary><span class="more-closed">Xem thêm câu hỏi</span><span class="more-open">Thu gọn</span></summary>
+        <div class="faq-rest">
+          <div class="qa">
+            <h3>Nếu AI chọn sai nhóm thì sao?</h3>
+            <p>Đổi bằng một lần chạm, ngay tại thông báo xác nhận - các nhóm gần đúng nhất nằm ngay bên cạnh.</p>
+          </div>
+          <div class="qa">
+            <h3>Điều gì xảy ra khi hết lượt phân loại AI miễn phí?</h3>
+            <p>Việc phân loại vẫn chạy. Assorta chuyển sang phân loại tự động, chạy ngay trên thiết bị dựa trên khoảng 3.000 từ khóa được chọn lọc và không bao giờ hết; Assorta Pro là thứ gỡ giới hạn phân loại AI.</p>
+          </div>
+          <div class="qa">
+            <h3>Assorta Pro thêm những gì?</h3>
+            <p>Assorta Pro gỡ giới hạn phân loại AI và thêm Tóm tắt AI. Đây là gói tùy chọn, do Apple hoặc Google thu phí.</p>
+          </div>
+          <div class="qa">
+            <h3>Tôi có thể tìm kiếm những thứ đã lưu không?</h3>
+            <p>Có. Một ô tìm trên tên nhóm, nội dung ghi chú và tiêu đề liên kết, và nó chạy được khi không có kết nối vì ghi chú của bạn nằm trên thiết bị.</p>
+          </div>
+          <div class="qa">
+            <h3>Ghi chú của tôi được lưu ở đâu?</h3>
+            <p>Trên thiết bị của bạn. Assorta không giữ ghi chú của bạn trên máy chủ của chúng tôi.</p>
+          </div>
+          <div class="qa">
+            <h3>Tôi có cần tài khoản không?</h3>
+            <p>Không. Đăng nhập là tùy chọn; nó giữ Assorta Pro trên các thiết bị khác của bạn.</p>
+          </div>
+          <div class="qa">
+            <h3>Assorta có hoạt động khi không có kết nối không?</h3>
+            <p>Ghi chú, nhóm và mọi bản tóm tắt bạn đã yêu cầu đều nằm trên thiết bị, nên việc xem và tìm kiếm chạy được ngoại tuyến. Phân loại AI và Tóm tắt AI cần kết nối; phân loại tự động thì không.</p>
+          </div>
+          <div class="qa">
+            <h3>Tôi có thể chuyển một ghi chú sang nhóm khác về sau không?</h3>
+            <p>Có. Mở các thao tác của ghi chú và chọn Chuyển.</p>
+          </div>
+          <div class="qa">
+            <h3>Tôi có thể xuất ghi chú của mình không?</h3>
+            <p>Chưa. Xuất dữ liệu và sao lưu nằm trong lộ trình của Assorta Pro.</p>
+          </div>
+          <div class="qa">
+            <h3>Assorta chạy trên những thiết bị nào?</h3>
+            <p>Điện thoại và máy tính bảng Android, iPhone và iPad.</p>
+          </div>
+          <div class="qa">
+            <h3>Assorta nói những ngôn ngữ nào?</h3>
+            <p>31, từ tiếng Anh và tiếng Ukraina đến tiếng Nhật, tiếng Hàn và tiếng Ả Rập. Assorta theo ngôn ngữ thiết bị của bạn, và bạn có thể đổi trong Cài đặt.</p>
+          </div>
+          <div class="qa">
+            <h3>Assorta khác gì so với dấu trang hay một ứng dụng ghi chú?</h3>
+            <p>Thư mục dấu trang bắt bạn chọn thư mục, còn ứng dụng ghi chú bắt bạn đặt tên cho ghi chú. Assorta đọc thứ bạn đã lưu và tự cất đi - phần việc bạn bỏ qua chính là việc phân loại.</p>
+          </div>
+          <div class="qa">
+            <h3>Làm sao để xóa tài khoản và dữ liệu của tôi?</h3>
+            <p>Mở Cài đặt trong ứng dụng và chạm Xóa tài khoản, hoặc gửi email cho chúng tôi và chúng tôi sẽ làm giúp. <a href="delete-account.html">Trang xóa tài khoản</a> nói rõ những gì bị xóa và những gì được giữ lại.</p>
+          </div>
+        </div>
+      </details>
     </div>
   </div>
 </section>
@@ -1194,6 +1313,8 @@
       là bất kỳ thương hiệu nào trong số đó.</p>
   </div>
 </footer>
+
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"FAQPage","@id":"https://assorta.app/vi/#faq","inLanguage":"vi","mainEntity":[{"@type":"Question","name":"Assorta là gì?","acceptedAnswer":{"@type":"Answer","text":"Assorta là một hộp thư đến duy nhất cho liên kết, ghi chú và ý tưởng trên Android và iOS. AI đọc thứ bạn lưu và xếp nó vào một trong hơn 30 nhóm, để bạn tìm lại sau này mà không cần thư mục hay thẻ."}},{"@type":"Question","name":"Assorta quyết định thế nào về việc một thứ thuộc nhóm nào?","acceptedAnswer":{"@type":"Answer","text":"Assorta đọc văn bản, hoặc trang nằm sau một liên kết, rồi chọn nhóm phù hợp - Du lịch, Nấu ăn, Danh sách mong muốn, Thể thao và những nhóm còn lại. Bạn thấy lựa chọn đó ngay khi nó được đưa ra."}},{"@type":"Question","name":"Tôi có thể lưu những gì trong Assorta?","acceptedAnswer":{"@type":"Answer","text":"Liên kết được chia sẻ từ bất kỳ ứng dụng nào, và văn bản bạn tự dán vào. Một liên kết đã lưu giữ nguyên ảnh thu nhỏ và tiêu đề, nên bạn nhận ra nó trong danh sách mà không cần mở."}},{"@type":"Question","name":"Assorta có miễn phí không?","acceptedAnswer":{"@type":"Answer","text":"Assorta miễn phí cài đặt và miễn phí sử dụng. 15 lượt phân loại AI đầu tiên là miễn phí; sau đó việc phân loại vẫn chạy, và giới hạn phân loại AI chính là thứ Assorta Pro gỡ bỏ."}},{"@type":"Question","name":"Tóm tắt AI là gì?","acceptedAnswer":{"@type":"Answer","text":"Chạm Tóm tắt AI trên một liên kết đã lưu và Assorta đưa trang đó trở lại trong vài dòng, ngay trong danh sách. Bản tóm tắt được lưu cùng ghi chú, nên mở lại là tức thì và dùng được ngoại tuyến. Khi một trang không có gì để tóm tắt, Assorta nói thẳng thay vì bịa ra một bản tóm tắt."}},{"@type":"Question","name":"Tôi có thể lưu từ các ứng dụng khác không?","acceptedAnswer":{"@type":"Answer","text":"Có. Assorta nằm trong bảng chia sẻ của hệ thống trên Android và iOS, nên một liên kết từ YouTube, TikTok, Instagram hay trình duyệt chỉ là hai lần chạm."}},{"@type":"Question","name":"Assorta có đồng bộ giữa các thiết bị không?","acceptedAnswer":{"@type":"Answer","text":"Chưa. Ghi chú nằm lại trên thiết bị bạn đã lưu; đồng bộ nằm trong lộ trình của Assorta Pro."}},{"@type":"Question","name":"Nếu AI chọn sai nhóm thì sao?","acceptedAnswer":{"@type":"Answer","text":"Đổi bằng một lần chạm, ngay tại thông báo xác nhận - các nhóm gần đúng nhất nằm ngay bên cạnh."}},{"@type":"Question","name":"Điều gì xảy ra khi hết lượt phân loại AI miễn phí?","acceptedAnswer":{"@type":"Answer","text":"Việc phân loại vẫn chạy. Assorta chuyển sang phân loại tự động, chạy ngay trên thiết bị dựa trên khoảng 3.000 từ khóa được chọn lọc và không bao giờ hết; Assorta Pro là thứ gỡ giới hạn phân loại AI."}},{"@type":"Question","name":"Assorta Pro thêm những gì?","acceptedAnswer":{"@type":"Answer","text":"Assorta Pro gỡ giới hạn phân loại AI và thêm Tóm tắt AI. Đây là gói tùy chọn, do Apple hoặc Google thu phí."}},{"@type":"Question","name":"Tôi có thể tìm kiếm những thứ đã lưu không?","acceptedAnswer":{"@type":"Answer","text":"Có. Một ô tìm trên tên nhóm, nội dung ghi chú và tiêu đề liên kết, và nó chạy được khi không có kết nối vì ghi chú của bạn nằm trên thiết bị."}},{"@type":"Question","name":"Ghi chú của tôi được lưu ở đâu?","acceptedAnswer":{"@type":"Answer","text":"Trên thiết bị của bạn. Assorta không giữ ghi chú của bạn trên máy chủ của chúng tôi."}},{"@type":"Question","name":"Tôi có cần tài khoản không?","acceptedAnswer":{"@type":"Answer","text":"Không. Đăng nhập là tùy chọn; nó giữ Assorta Pro trên các thiết bị khác của bạn."}},{"@type":"Question","name":"Assorta có hoạt động khi không có kết nối không?","acceptedAnswer":{"@type":"Answer","text":"Ghi chú, nhóm và mọi bản tóm tắt bạn đã yêu cầu đều nằm trên thiết bị, nên việc xem và tìm kiếm chạy được ngoại tuyến. Phân loại AI và Tóm tắt AI cần kết nối; phân loại tự động thì không."}},{"@type":"Question","name":"Tôi có thể chuyển một ghi chú sang nhóm khác về sau không?","acceptedAnswer":{"@type":"Answer","text":"Có. Mở các thao tác của ghi chú và chọn Chuyển."}},{"@type":"Question","name":"Tôi có thể xuất ghi chú của mình không?","acceptedAnswer":{"@type":"Answer","text":"Chưa. Xuất dữ liệu và sao lưu nằm trong lộ trình của Assorta Pro."}},{"@type":"Question","name":"Assorta chạy trên những thiết bị nào?","acceptedAnswer":{"@type":"Answer","text":"Điện thoại và máy tính bảng Android, iPhone và iPad."}},{"@type":"Question","name":"Assorta nói những ngôn ngữ nào?","acceptedAnswer":{"@type":"Answer","text":"31, từ tiếng Anh và tiếng Ukraina đến tiếng Nhật, tiếng Hàn và tiếng Ả Rập. Assorta theo ngôn ngữ thiết bị của bạn, và bạn có thể đổi trong Cài đặt."}},{"@type":"Question","name":"Assorta khác gì so với dấu trang hay một ứng dụng ghi chú?","acceptedAnswer":{"@type":"Answer","text":"Thư mục dấu trang bắt bạn chọn thư mục, còn ứng dụng ghi chú bắt bạn đặt tên cho ghi chú. Assorta đọc thứ bạn đã lưu và tự cất đi - phần việc bạn bỏ qua chính là việc phân loại."}},{"@type":"Question","name":"Làm sao để xóa tài khoản và dữ liệu của tôi?","acceptedAnswer":{"@type":"Answer","text":"Mở Cài đặt trong ứng dụng và chạm Xóa tài khoản, hoặc gửi email cho chúng tôi và chúng tôi sẽ làm giúp. Trang xóa tài khoản nói rõ những gì bị xóa và những gì được giữ lại."}}]},{"@type":"SoftwareApplication","name":"Assorta","applicationCategory":"ProductivityApplication","operatingSystem":"Android, iOS","inLanguage":"vi","url":"https://assorta.app/vi/","description":"Assorta là hộp thư đến nhanh cho liên kết, ghi chú và ý tưởng. Thả bất cứ thứ gì vào - AI xếp vào đúng nhóm, để bạn tìm lại trong vài giây.","featureList":["Lưu từ bảng chia sẻ","Hơn 30 nhóm thông minh","Xem trước liên kết","Tóm tắt AI","Tìm kiếm khi bạn cần","Lưu ở nền","Android và iOS","Phân loại không bao giờ cạn"],"downloadUrl":["https://apps.apple.com/app/id6791126062","https://play.google.com/store/apps/details?id=com.troshchiy.assorta"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@id":"https://assorta.app/#operator"}},{"@type":"Organization","@id":"https://assorta.app/#operator","name":"Individual Entrepreneur Yevhen Troshchii","url":"https://assorta.app/","email":"contact@assorta.app","address":{"@type":"PostalAddress","addressLocality":"Odesa","addressCountry":"UA"}}]}</script>
 
 <script>window.__I18N__={"group.auto": "Xe cộ", "group.beauty": "Làm đẹp", "group.books": "Sách", "group.cooking": "Nấu ăn", "group.education": "Học tập", "group.family": "Gia đình", "group.finance": "Tài chính", "group.health": "Sức khỏe", "group.hobby": "Sở thích", "group.home": "Nhà cửa", "group.ideas": "Ý tưởng", "group.inspiration": "Cảm hứng", "group.movies": "Phim &amp; TV", "group.music": "Âm nhạc", "group.personal": "Cá nhân", "group.shopping": "Danh sách mua sắm", "group.sport": "Thể thao", "group.tasks": "Việc cần làm", "group.tech": "Công nghệ", "group.travel": "Du lịch", "group.wishList": "Danh sách mong muốn", "group.work": "Công việc", "js.or": "Hoặc:", "js.theme.toDark": "Chuyển sang giao diện tối", "js.theme.toLight": "Chuyển sang giao diện sáng", "js.video.title": "Video demo Assorta"};</script>
 

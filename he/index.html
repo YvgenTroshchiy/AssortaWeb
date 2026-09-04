@@ -44,21 +44,21 @@
 <meta name="theme-color" content="#131129">
 <style>
   /* Palette mirrors the app's semantic tokens (AssortaKMP ui/theme/SemanticColor.kt).
-     Dark is the default — it also survives JS being off; light overrides it via
+     Dark is the default - it also survives JS being off; light overrides it via
      data-theme="light" on <html>, stamped before first paint by the inline script
      at the end of <head>. Tag hues are shared by both app palettes, so they are
      declared once and never overridden. */
   :root {
     --bg: #131129;
-    --panel: #1e1b4b;            /* Indigo.v950 — bgAppGradientEnd */
+    --panel: #1e1b4b;            /* Indigo.v950 - bgAppGradientEnd */
     --panel-soft: #232052;
     --line: #34306b;
-    --indigo: #6366f1;           /* Indigo.v600 — accentPrimary, shared by both themes */
+    --indigo: #6366f1;           /* Indigo.v600 - accentPrimary, shared by both themes */
     --indigo-bright: #818cf8;
     /* accentPrimary is the brand hue but is too light to carry text: white on it is 4.46:1
        and it reads 3.1-3.8:1 as a glyph on its own tint. This mirrors the app's bgAccent -
        the fill that sits under white text. Borders, glows and tints keep --indigo. */
-    --accent-fill: #4f46e5;      /* Indigo.v700 — bgAccent */
+    --accent-fill: #4f46e5;      /* Indigo.v700 - bgAccent */
     --text: #eef0ff;
     --text-dim: #a3a6cc;
     /* The app's own screen background, verbatim from SemanticColors
@@ -121,17 +121,17 @@
     --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
   :root[data-theme="light"] {
-    --bg: #f8fafc;               /* Gray.v50   — bgAppGradientStart */
-    --panel: #eef2ff;            /* Indigo.v50 — bgAppGradientEnd */
+    --bg: #f8fafc;               /* Gray.v50   - bgAppGradientStart */
+    --panel: #eef2ff;            /* Indigo.v50 - bgAppGradientEnd */
     --panel-soft: #e3e9fb;
     --line: #d2dae9;             /* borderCard, lifted from Gray.v500a20 to stay visible on light */
-    --indigo-bright: #4f46e5;    /* Indigo.v700 — the accent that still reads on a light background */
-    --text: #0f172a;             /* Gray.v950 — fgPrimary */
+    --indigo-bright: #4f46e5;    /* Indigo.v700 - the accent that still reads on a light background */
+    --text: #0f172a;             /* Gray.v950 - fgPrimary */
     /* Still the app's fgSecondary, which moved to Gray.v700 for the same reason:
        the old Gray.v600 (#64748b) landed at 3.4-4.4:1 on the tinted panels this
        site invents (.cell, .step, section.alt) and on the app's own gradient end.
        v700 clears AA everywhere, worst case 5.4:1 on the .cell tints. */
-    --text-dim: #475569;         /* Gray.v700 — fgSecondary */
+    --text-dim: #475569;         /* Gray.v700 - fgSecondary */
     --app-grad-start: #f8fafc;   /* Gray.v50 */
     --app-grad-end:   #eef2ff;   /* Indigo.v50 */
     /* Mockup palette, light. Rows with an app token take it; the rest reproduce
@@ -525,6 +525,35 @@
   /* ---- sections ---- */
   section { padding: 64px 0; }
   section.alt { background: color-mix(in srgb, var(--panel) 32%, var(--bg)); }
+  /* ---- FAQ ---- */
+  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall. */
+  .faq { max-width: 760px; }
+  .faq .qa { padding: 17px 0; border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+  .faq > .qa:first-of-type { border-top: 0; padding-top: 4px; }
+  .faq h3 { font-family: var(--font-display); font-size: 17.5px; margin-bottom: 7px; }
+  .faq p { color: var(--text-dim); line-height: 1.65; }
+  .faq a { color: var(--indigo-bright); }
+  /* <details> and not a script: the thirteen collapsed answers stay in the page source, so a
+     crawler and an answer engine read all twenty however much a human unfolded. */
+  .faq-more { border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+  .faq-more > summary {
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 18px;
+    padding: 9px 18px; border: 1px solid var(--line); border-radius: 999px;
+    color: var(--text-dim); font-size: 14.5px; cursor: pointer; list-style: none;
+    transition: color .15s, border-color .15s;
+  }
+  .faq-more > summary::-webkit-details-marker { display: none; }
+  .faq-more > summary:hover { color: var(--text); border-color: var(--indigo); }
+  .faq-more > summary:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; }
+  .faq-more > summary::after {
+    content: ""; width: 7px; height: 7px; border-right: 1.6px solid currentColor;
+    border-bottom: 1.6px solid currentColor; transform: translateY(-2px) rotate(45deg);
+  }
+  .faq-more[open] > summary::after { transform: translateY(1px) rotate(225deg); }
+  .faq-more > summary .more-open { display: none; }
+  .faq-more[open] > summary .more-closed { display: none; }
+  .faq-more[open] > summary .more-open { display: inline; }
+  .faq-rest { margin-top: 4px; }
   .kicker {
     font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
     text-transform: uppercase; color: var(--indigo-bright); margin-bottom: 14px;
@@ -1072,31 +1101,31 @@
       </div>
       <div class="feature" style="--f-color: var(--amber)">
         <h3>30+ קבוצות חכמות</h3>
-        <p>ה-AI בוחר את הקבוצה ברגע שאתם שומרים. לא מסכימים? מחליפים בהקשה אחת - ישר מאישור השמירה.</p>
+        <p>Assorta מכניסה כל שמירה לאחת מ-30+ הקבוצות המובנות ברגע שאתם מוסיפים אותה - טיולים, בישול, רשימת משאלות, ספורט. לא מסכימים? מחליפים בהקשה אחת, ישר מאישור השמירה.</p>
       </div>
       <div class="feature" style="--f-color: var(--cyan)">
         <h3>תצוגות מקדימות של קישורים</h3>
-        <p>קישורים שמורים שומרים על התמונה הממוזערת והכותרת - פריים מ-YouTube, תמונת מוצר, כריכת כתבה - כדי שתזהו אותם במבט אחד.</p>
+        <p>Assorta שומרת על התמונה הממוזערת והכותרת של קישור שמור - פריים מ-YouTube, תמונת מוצר, כריכת כתבה - כדי שתזהו אותו במבט אחד.</p>
       </div>
       <div class="feature" style="--f-color: var(--indigo)">
         <h3>סיכום AI</h3>
-        <p>הקישו על סיכום AI בקישור שמור וקראו את הדף בכמה שורות, בלי לפתוח אותו. הסיכום נשמר עם הפתק, ולכן המבט השני מיידי ועובד גם לא מקוון. כלול ב-Assorta Pro.</p>
+        <p>הקישו על סיכום AI בקישור שמור ו-Assorta מחזירה את הדף בכמה שורות, בלי לפתוח אותו. הסיכום נשמר עם הפתק, ולכן המבט השני מיידי ועובד גם לא מקוון. כלול ב-Assorta Pro.</p>
       </div>
       <div class="feature" style="--f-color: var(--teal)">
         <h3>חיפוש כשצריך</h3>
-        <p>שדה אחד על שמות הקבוצות, הטקסט של הפתק עצמו וכותרת הקישור - בשביל אותה שמירה אחת שלא נחתה במקום שחיפשתם בו קודם.</p>
+        <p>Assorta מחפשת בשמות הקבוצות, בטקסט של הפתק עצמו ובכותרת הקישור משדה אחד - בשביל אותה שמירה שלא נחתה במקום שחיפשתם בו קודם.</p>
       </div>
       <div class="feature" style="--f-color: var(--emerald)">
         <h3>השמירה מסתיימת ברקע</h3>
-        <p>החליפו אפליקציה באמצע השמירה - הפריט עדיין ינחת בבטחה בקבוצה שלו. שום דבר לא הולך לאיבוד בין אפליקציות.</p>
+        <p>Assorta מסיימת את השמירה ברקע, כך שגם החלפת אפליקציה באמצע עדיין מנחיתה את הפריט בקבוצה שלו. שום דבר לא הולך לאיבוד בין אפליקציות.</p>
       </div>
       <div class="feature" style="--f-color: var(--purple)">
-        <h3>בכל מקום שאתם בו</h3>
-        <p>Android ו-iOS - אפליקציה אחת בכל מסך שאתם משתמשים בו. הפתקים נשארים במכשיר ששמרתם בו, וסנכרון בין מכשירים עוד לא קיים.</p>
+        <h3>Android ו-iOS</h3>
+        <p>Assorta רצה על טלפונים וטאבלטים של Android, על iPhone ועל iPad. הפתקים נשארים במכשיר ששמרתם בו; סנכרון בין מכשירים עוד לא קיים.</p>
       </div>
       <div class="feature" style="--f-color: var(--sky)">
-        <h3>נראית כמו שבא לכם</h3>
-        <p>ערכת נושא בהירה וכהה. שלוש-עשרה שפות, מאנגלית ואוקראינית ועד יפנית, קוריאנית וערבית.</p>
+        <h3>מיון שלא נגמר</h3>
+        <p>Assorta ממיינת עם AI כל עוד נשארו לכם מיונים בחינם, ואז עוברת למיון אוטומטי שרץ על המכשיר לפי כ-3,000 מונחים נבחרים. כך או כך הפתק נוחת בקבוצה - הסידור לא נעצר כשהמכסה נגמרת.</p>
       </div>
     </div>
   </div>
@@ -1129,6 +1158,100 @@
       <span class="chip" style="--c:#d946ef">יופי</span>
       <span class="chip" style="--c:#f43f5e">אישי</span>
       <span class="chip more">…ועוד תריסר</span>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="faq">
+  <div class="wrap">
+    <p class="kicker">שאלות נפוצות</p>
+    <h2>שאלות ששואלים לפני שמתקינים</h2>
+    <div class="faq">
+      <div class="qa">
+        <h3>מה זה Assorta?</h3>
+        <p>Assorta היא תיבה אחת לקישורים, לפתקים ולרעיונות ב-Android וב-iOS. ה-AI קורא מה שאתם שומרים ומסדר אותו לאחת מ-30+ קבוצות, כך שתמצאו אותו אחר כך בלי תיקיות ובלי תגיות.</p>
+      </div>
+      <div class="qa">
+        <h3>איך Assorta מחליטה לאיזו קבוצה משהו שייך?</h3>
+        <p>Assorta קוראת את הטקסט, או את הדף שמאחורי הקישור, ובוחרת את הקבוצה שמתאימה - טיולים, בישול, רשימת משאלות, ספורט והשאר. אתם רואים את הבחירה ברגע שהיא נעשית.</p>
+      </div>
+      <div class="qa">
+        <h3>מה אפשר לשמור ב-Assorta?</h3>
+        <p>קישורים ששיתפתם מכל אפליקציה, וטקסט שאתם מדביקים בעצמכם. קישור שמור שומר על התמונה הממוזערת והכותרת שלו, כך שתזהו אותו ברשימה בלי לפתוח אותו.</p>
+      </div>
+      <div class="qa">
+        <h3>האם Assorta בחינם?</h3>
+        <p>Assorta חינם להתקנה וחינם לשימוש. 15 מיוני ה-AI הראשונים בחינם; אחר כך הסידור ממשיך לעבוד, ומגבלת מיון ה-AI היא מה ש-Assorta Pro מסירה.</p>
+      </div>
+      <div class="qa">
+        <h3>מה זה סיכום AI?</h3>
+        <p>הקישו על סיכום AI בקישור שמור ו-Assorta מחזירה את הדף בכמה שורות, שם ברשימה. הסיכום נשמר עם הפתק, ולכן המבט השני מיידי ועובד גם לא מקוון. כשאין בדף ממה לעבוד, Assorta אומרת את זה במקום להמציא סיכום.</p>
+      </div>
+      <div class="qa">
+        <h3>אפשר לשמור מאפליקציות אחרות?</h3>
+        <p>כן. Assorta יושבת בתפריט השיתוף של המערכת ב-Android וב-iOS, אז קישור מ-YouTube, מ-TikTok, מ-Instagram או מדפדפן הוא שתי הקשות.</p>
+      </div>
+      <div class="qa">
+        <h3>האם Assorta מסנכרנת בין מכשירים?</h3>
+        <p>עדיין לא. הפתקים נשארים במכשיר ששמרתם בו; סנכרון נמצא בתוכניות של Assorta Pro.</p>
+      </div>
+      <details class="faq-more">
+        <summary><span class="more-closed">הצגת עוד שאלות</span><span class="more-open">הצגת פחות</span></summary>
+        <div class="faq-rest">
+          <div class="qa">
+            <h3>ומה אם ה-AI בוחר קבוצה לא נכונה?</h3>
+            <p>מחליפים בהקשה אחת, ישר מאישור השמירה - הקבוצות הבאות בתור יושבות ממש לידה.</p>
+          </div>
+          <div class="qa">
+            <h3>מה קורה כשמיוני ה-AI בחינם נגמרים?</h3>
+            <p>הסידור ממשיך לעבוד. Assorta עוברת למיון אוטומטי, שרץ על המכשיר לפי כ-3,000 מונחים נבחרים ולעולם לא נגמר; Assorta Pro היא מה שמסיר את מגבלת מיון ה-AI.</p>
+          </div>
+          <div class="qa">
+            <h3>מה Assorta Pro מוסיפה?</h3>
+            <p>Assorta Pro מסירה את מגבלת מיון ה-AI ומוסיפה סיכום AI. היא אופציונלית, ומחויבת על ידי Apple או Google.</p>
+          </div>
+          <div class="qa">
+            <h3>אפשר לחפש במה ששמרתי?</h3>
+            <p>כן. שדה אחד מחפש בשמות הקבוצות, בטקסט של הפתק עצמו ובכותרת הקישור, והוא עובד בלי חיבור כי הפתקים שלכם על המכשיר.</p>
+          </div>
+          <div class="qa">
+            <h3>איפה הפתקים שלי נשמרים?</h3>
+            <p>על המכשיר שלכם. Assorta לא מחזיקה את הפתקים שלכם בשרתים שלנו.</p>
+          </div>
+          <div class="qa">
+            <h3>צריך חשבון?</h3>
+            <p>לא. ההתחברות אופציונלית; היא שומרת על Assorta Pro במכשירים האחרים שלכם.</p>
+          </div>
+          <div class="qa">
+            <h3>האם Assorta עובדת בלי חיבור?</h3>
+            <p>הפתקים שלכם, הקבוצות וכל סיכום שכבר ביקשתם נמצאים על המכשיר, ולכן עיון וחיפוש עובדים גם לא מקוון. מיון AI וסיכום AI צריכים חיבור; מיון אוטומטי לא.</p>
+          </div>
+          <div class="qa">
+            <h3>אפשר להעביר פתק לקבוצה אחרת אחר כך?</h3>
+            <p>כן. פתחו את הפעולות של הפתק ובחרו העברה.</p>
+          </div>
+          <div class="qa">
+            <h3>אפשר לייצא את הפתקים שלי?</h3>
+            <p>עדיין לא. ייצוא וגיבוי נמצאים בתוכניות של Assorta Pro.</p>
+          </div>
+          <div class="qa">
+            <h3>על אילו מכשירים Assorta רצה?</h3>
+            <p>טלפונים וטאבלטים של Android, iPhone ו-iPad.</p>
+          </div>
+          <div class="qa">
+            <h3>באילו שפות Assorta מדברת?</h3>
+            <p>31, מאנגלית ומאוקראינית ועד יפנית, קוריאנית וערבית. Assorta הולכת לפי שפת המכשיר שלכם, ואפשר לשנות אותה בהגדרות.</p>
+          </div>
+          <div class="qa">
+            <h3>במה Assorta שונה מסימניות או מאפליקציית פתקים?</h3>
+            <p>תיקיית סימניות דורשת מכם לבחור את התיקייה, ואפליקציית פתקים דורשת מכם לתת לפתק שם. Assorta קוראת מה ששמרתם ומסדרת אותו בעצמה - העבודה שאתם חוסכים היא המיון.</p>
+          </div>
+          <div class="qa">
+            <h3>איך למחוק את החשבון ואת הנתונים שלי?</h3>
+            <p>פתחו הגדרות והקישו על מחיקת חשבון באפליקציה, או כתבו לנו ואנחנו נעשה את זה. <a href="delete-account.html">דף מחיקת החשבון</a> מפרט מה נמחק ומה נשאר.</p>
+          </div>
+        </div>
+      </details>
     </div>
   </div>
 </section>
@@ -1181,6 +1304,8 @@
     <p>שמות מותגים, לוגואים, קישורים ותמונות תצוגה מקדימה של צד שלישי בדף הזה הם דוגמאות לתוכן שאפשר לשמור ב-Assorta - מהסוג שאדם זורק לאפליקציה - למעט התגים של App&nbsp;Store ושל Google&nbsp;Play, שמובילים לחנויות שבהן האפליקציה מפורסמת. כולם נשארים רכוש בעליהם. Assorta היא אפליקציה עצמאית: היא אינה מסונפת לאף אחד מהמותגים המוצגים, אינה מאושרת או ממומנת על ידם, אף אחד מהם אינו מעורב בה, והיא לעולם אינה מציגה את עצמה כאחד מהם.</p>
   </div>
 </footer>
+
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"FAQPage","@id":"https://assorta.app/he/#faq","inLanguage":"he","mainEntity":[{"@type":"Question","name":"מה זה Assorta?","acceptedAnswer":{"@type":"Answer","text":"Assorta היא תיבה אחת לקישורים, לפתקים ולרעיונות ב-Android וב-iOS. ה-AI קורא מה שאתם שומרים ומסדר אותו לאחת מ-30+ קבוצות, כך שתמצאו אותו אחר כך בלי תיקיות ובלי תגיות."}},{"@type":"Question","name":"איך Assorta מחליטה לאיזו קבוצה משהו שייך?","acceptedAnswer":{"@type":"Answer","text":"Assorta קוראת את הטקסט, או את הדף שמאחורי הקישור, ובוחרת את הקבוצה שמתאימה - טיולים, בישול, רשימת משאלות, ספורט והשאר. אתם רואים את הבחירה ברגע שהיא נעשית."}},{"@type":"Question","name":"מה אפשר לשמור ב-Assorta?","acceptedAnswer":{"@type":"Answer","text":"קישורים ששיתפתם מכל אפליקציה, וטקסט שאתם מדביקים בעצמכם. קישור שמור שומר על התמונה הממוזערת והכותרת שלו, כך שתזהו אותו ברשימה בלי לפתוח אותו."}},{"@type":"Question","name":"האם Assorta בחינם?","acceptedAnswer":{"@type":"Answer","text":"Assorta חינם להתקנה וחינם לשימוש. 15 מיוני ה-AI הראשונים בחינם; אחר כך הסידור ממשיך לעבוד, ומגבלת מיון ה-AI היא מה ש-Assorta Pro מסירה."}},{"@type":"Question","name":"מה זה סיכום AI?","acceptedAnswer":{"@type":"Answer","text":"הקישו על סיכום AI בקישור שמור ו-Assorta מחזירה את הדף בכמה שורות, שם ברשימה. הסיכום נשמר עם הפתק, ולכן המבט השני מיידי ועובד גם לא מקוון. כשאין בדף ממה לעבוד, Assorta אומרת את זה במקום להמציא סיכום."}},{"@type":"Question","name":"אפשר לשמור מאפליקציות אחרות?","acceptedAnswer":{"@type":"Answer","text":"כן. Assorta יושבת בתפריט השיתוף של המערכת ב-Android וב-iOS, אז קישור מ-YouTube, מ-TikTok, מ-Instagram או מדפדפן הוא שתי הקשות."}},{"@type":"Question","name":"האם Assorta מסנכרנת בין מכשירים?","acceptedAnswer":{"@type":"Answer","text":"עדיין לא. הפתקים נשארים במכשיר ששמרתם בו; סנכרון נמצא בתוכניות של Assorta Pro."}},{"@type":"Question","name":"ומה אם ה-AI בוחר קבוצה לא נכונה?","acceptedAnswer":{"@type":"Answer","text":"מחליפים בהקשה אחת, ישר מאישור השמירה - הקבוצות הבאות בתור יושבות ממש לידה."}},{"@type":"Question","name":"מה קורה כשמיוני ה-AI בחינם נגמרים?","acceptedAnswer":{"@type":"Answer","text":"הסידור ממשיך לעבוד. Assorta עוברת למיון אוטומטי, שרץ על המכשיר לפי כ-3,000 מונחים נבחרים ולעולם לא נגמר; Assorta Pro היא מה שמסיר את מגבלת מיון ה-AI."}},{"@type":"Question","name":"מה Assorta Pro מוסיפה?","acceptedAnswer":{"@type":"Answer","text":"Assorta Pro מסירה את מגבלת מיון ה-AI ומוסיפה סיכום AI. היא אופציונלית, ומחויבת על ידי Apple או Google."}},{"@type":"Question","name":"אפשר לחפש במה ששמרתי?","acceptedAnswer":{"@type":"Answer","text":"כן. שדה אחד מחפש בשמות הקבוצות, בטקסט של הפתק עצמו ובכותרת הקישור, והוא עובד בלי חיבור כי הפתקים שלכם על המכשיר."}},{"@type":"Question","name":"איפה הפתקים שלי נשמרים?","acceptedAnswer":{"@type":"Answer","text":"על המכשיר שלכם. Assorta לא מחזיקה את הפתקים שלכם בשרתים שלנו."}},{"@type":"Question","name":"צריך חשבון?","acceptedAnswer":{"@type":"Answer","text":"לא. ההתחברות אופציונלית; היא שומרת על Assorta Pro במכשירים האחרים שלכם."}},{"@type":"Question","name":"האם Assorta עובדת בלי חיבור?","acceptedAnswer":{"@type":"Answer","text":"הפתקים שלכם, הקבוצות וכל סיכום שכבר ביקשתם נמצאים על המכשיר, ולכן עיון וחיפוש עובדים גם לא מקוון. מיון AI וסיכום AI צריכים חיבור; מיון אוטומטי לא."}},{"@type":"Question","name":"אפשר להעביר פתק לקבוצה אחרת אחר כך?","acceptedAnswer":{"@type":"Answer","text":"כן. פתחו את הפעולות של הפתק ובחרו העברה."}},{"@type":"Question","name":"אפשר לייצא את הפתקים שלי?","acceptedAnswer":{"@type":"Answer","text":"עדיין לא. ייצוא וגיבוי נמצאים בתוכניות של Assorta Pro."}},{"@type":"Question","name":"על אילו מכשירים Assorta רצה?","acceptedAnswer":{"@type":"Answer","text":"טלפונים וטאבלטים של Android, iPhone ו-iPad."}},{"@type":"Question","name":"באילו שפות Assorta מדברת?","acceptedAnswer":{"@type":"Answer","text":"31, מאנגלית ומאוקראינית ועד יפנית, קוריאנית וערבית. Assorta הולכת לפי שפת המכשיר שלכם, ואפשר לשנות אותה בהגדרות."}},{"@type":"Question","name":"במה Assorta שונה מסימניות או מאפליקציית פתקים?","acceptedAnswer":{"@type":"Answer","text":"תיקיית סימניות דורשת מכם לבחור את התיקייה, ואפליקציית פתקים דורשת מכם לתת לפתק שם. Assorta קוראת מה ששמרתם ומסדרת אותו בעצמה - העבודה שאתם חוסכים היא המיון."}},{"@type":"Question","name":"איך למחוק את החשבון ואת הנתונים שלי?","acceptedAnswer":{"@type":"Answer","text":"פתחו הגדרות והקישו על מחיקת חשבון באפליקציה, או כתבו לנו ואנחנו נעשה את זה. דף מחיקת החשבון מפרט מה נמחק ומה נשאר."}}]},{"@type":"SoftwareApplication","name":"Assorta","applicationCategory":"ProductivityApplication","operatingSystem":"Android, iOS","inLanguage":"he","url":"https://assorta.app/he/","description":"Assorta היא תיבה אחת ומהירה לקישורים, לפתקים ולרעיונות. זרקו פנימה כל דבר - ה-AI יכניס אותו לקבוצה הנכונה, ותמצאו אותו תוך שניות.","featureList":["שמירה מתפריט השיתוף","30+ קבוצות חכמות","תצוגות מקדימות של קישורים","סיכום AI","חיפוש כשצריך","השמירה מסתיימת ברקע","Android ו-iOS","מיון שלא נגמר"],"downloadUrl":["https://apps.apple.com/app/id6791126062","https://play.google.com/store/apps/details?id=com.troshchiy.assorta"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@id":"https://assorta.app/#operator"}},{"@type":"Organization","@id":"https://assorta.app/#operator","name":"Individual Entrepreneur Yevhen Troshchii","url":"https://assorta.app/","email":"contact@assorta.app","address":{"@type":"PostalAddress","addressLocality":"Odesa","addressCountry":"UA"}}]}</script>
 
 <script>window.__I18N__={"group.auto": "רכב", "group.beauty": "יופי", "group.books": "ספרים", "group.cooking": "בישול", "group.education": "לימודים", "group.family": "משפחה", "group.finance": "כספים", "group.health": "בריאות", "group.hobby": "תחביבים", "group.home": "בית", "group.ideas": "רעיונות", "group.inspiration": "השראה", "group.movies": "סרטים וטלוויזיה", "group.music": "מוזיקה", "group.personal": "אישי", "group.shopping": "רשימת קניות", "group.sport": "ספורט", "group.tasks": "משימות", "group.tech": "טכנולוגיה", "group.travel": "טיולים", "group.wishList": "רשימת משאלות", "group.work": "עבודה", "js.or": "או:", "js.theme.toDark": "מעבר לערכת נושא כהה", "js.theme.toLight": "מעבר לערכת נושא בהירה", "js.video.title": "הדגמה של Assorta"};</script>
 

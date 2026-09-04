@@ -44,21 +44,21 @@
 <meta name="theme-color" content="#131129">
 <style>
   /* Palette mirrors the app's semantic tokens (AssortaKMP ui/theme/SemanticColor.kt).
-     Dark is the default — it also survives JS being off; light overrides it via
+     Dark is the default - it also survives JS being off; light overrides it via
      data-theme="light" on <html>, stamped before first paint by the inline script
      at the end of <head>. Tag hues are shared by both app palettes, so they are
      declared once and never overridden. */
   :root {
     --bg: #131129;
-    --panel: #1e1b4b;            /* Indigo.v950 — bgAppGradientEnd */
+    --panel: #1e1b4b;            /* Indigo.v950 - bgAppGradientEnd */
     --panel-soft: #232052;
     --line: #34306b;
-    --indigo: #6366f1;           /* Indigo.v600 — accentPrimary, shared by both themes */
+    --indigo: #6366f1;           /* Indigo.v600 - accentPrimary, shared by both themes */
     --indigo-bright: #818cf8;
     /* accentPrimary is the brand hue but is too light to carry text: white on it is 4.46:1
        and it reads 3.1-3.8:1 as a glyph on its own tint. This mirrors the app's bgAccent -
        the fill that sits under white text. Borders, glows and tints keep --indigo. */
-    --accent-fill: #4f46e5;      /* Indigo.v700 — bgAccent */
+    --accent-fill: #4f46e5;      /* Indigo.v700 - bgAccent */
     --text: #eef0ff;
     --text-dim: #a3a6cc;
     /* The app's own screen background, verbatim from SemanticColors
@@ -121,17 +121,17 @@
     --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
   :root[data-theme="light"] {
-    --bg: #f8fafc;               /* Gray.v50   — bgAppGradientStart */
-    --panel: #eef2ff;            /* Indigo.v50 — bgAppGradientEnd */
+    --bg: #f8fafc;               /* Gray.v50   - bgAppGradientStart */
+    --panel: #eef2ff;            /* Indigo.v50 - bgAppGradientEnd */
     --panel-soft: #e3e9fb;
     --line: #d2dae9;             /* borderCard, lifted from Gray.v500a20 to stay visible on light */
-    --indigo-bright: #4f46e5;    /* Indigo.v700 — the accent that still reads on a light background */
-    --text: #0f172a;             /* Gray.v950 — fgPrimary */
+    --indigo-bright: #4f46e5;    /* Indigo.v700 - the accent that still reads on a light background */
+    --text: #0f172a;             /* Gray.v950 - fgPrimary */
     /* Still the app's fgSecondary, which moved to Gray.v700 for the same reason:
        the old Gray.v600 (#64748b) landed at 3.4-4.4:1 on the tinted panels this
        site invents (.cell, .step, section.alt) and on the app's own gradient end.
        v700 clears AA everywhere, worst case 5.4:1 on the .cell tints. */
-    --text-dim: #475569;         /* Gray.v700 — fgSecondary */
+    --text-dim: #475569;         /* Gray.v700 - fgSecondary */
     --app-grad-start: #f8fafc;   /* Gray.v50 */
     --app-grad-end:   #eef2ff;   /* Indigo.v50 */
     /* Mockup palette, light. Rows with an app token take it; the rest reproduce
@@ -525,6 +525,35 @@
   /* ---- sections ---- */
   section { padding: 64px 0; }
   section.alt { background: color-mix(in srgb, var(--panel) 32%, var(--bg)); }
+  /* ---- FAQ ---- */
+  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall. */
+  .faq { max-width: 760px; }
+  .faq .qa { padding: 17px 0; border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+  .faq > .qa:first-of-type { border-top: 0; padding-top: 4px; }
+  .faq h3 { font-family: var(--font-display); font-size: 17.5px; margin-bottom: 7px; }
+  .faq p { color: var(--text-dim); line-height: 1.65; }
+  .faq a { color: var(--indigo-bright); }
+  /* <details> and not a script: the thirteen collapsed answers stay in the page source, so a
+     crawler and an answer engine read all twenty however much a human unfolded. */
+  .faq-more { border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+  .faq-more > summary {
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 18px;
+    padding: 9px 18px; border: 1px solid var(--line); border-radius: 999px;
+    color: var(--text-dim); font-size: 14.5px; cursor: pointer; list-style: none;
+    transition: color .15s, border-color .15s;
+  }
+  .faq-more > summary::-webkit-details-marker { display: none; }
+  .faq-more > summary:hover { color: var(--text); border-color: var(--indigo); }
+  .faq-more > summary:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; }
+  .faq-more > summary::after {
+    content: ""; width: 7px; height: 7px; border-right: 1.6px solid currentColor;
+    border-bottom: 1.6px solid currentColor; transform: translateY(-2px) rotate(45deg);
+  }
+  .faq-more[open] > summary::after { transform: translateY(1px) rotate(225deg); }
+  .faq-more > summary .more-open { display: none; }
+  .faq-more[open] > summary .more-closed { display: none; }
+  .faq-more[open] > summary .more-open { display: inline; }
+  .faq-rest { margin-top: 4px; }
   .kicker {
     font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
     text-transform: uppercase; color: var(--indigo-bright); margin-bottom: 14px;
@@ -1075,35 +1104,31 @@
       </div>
       <div class="feature" style="--f-color: var(--amber)">
         <h3>30+ กลุ่มอัจฉริยะ</h3>
-        <p>AI เลือกกลุ่มให้ทันทีที่คุณบันทึก ไม่เห็นด้วยใช่ไหม เปลี่ยนได้ด้วยแตะเดียว - จากกล่องยืนยันนั่นเลย</p>
+        <p>Assorta จัดทุกสิ่งที่คุณบันทึกลงหนึ่งใน 30+ กลุ่มที่มีให้ ทันทีที่คุณเพิ่มเข้ามา - ท่องเที่ยว ทำอาหาร สิ่งที่อยากได้ กีฬา ไม่เห็นด้วยใช่ไหม เปลี่ยนได้ด้วยแตะเดียว จากกล่องยืนยันนั่นเลย</p>
       </div>
       <div class="feature" style="--f-color: var(--cyan)">
         <h3>พรีวิวลิงก์</h3>
-        <p>ลิงก์ที่บันทึกไว้ยังมีภาพย่อและชื่อเรื่องติดมาด้วย - เฟรมจาก YouTube ภาพสินค้า ปกบทความ - คุณจึงจำได้ในพริบตา</p>
+        <p>Assorta เก็บภาพย่อและชื่อเรื่องของลิงก์ที่บันทึกไว้ - เฟรมจาก YouTube ภาพสินค้า ปกบทความ - คุณจึงจำมันได้ในพริบตา</p>
       </div>
       <div class="feature" style="--f-color: var(--indigo)">
         <h3>สรุปด้วย AI</h3>
-        <p>แตะสรุปด้วย AI บนลิงก์ที่บันทึกไว้ แล้วอ่านหน้านั้นในไม่กี่บรรทัดโดยไม่ต้องเปิด
-          สรุปถูกเก็บไว้กับโน้ต การดูอีกครั้งจึงทันทีและใช้ได้แบบออฟไลน์ รวมอยู่ใน Assorta Pro</p>
+        <p>แตะสรุปด้วย AI บนลิงก์ที่บันทึกไว้ แล้ว Assorta จะดึงหน้านั้นกลับมาในไม่กี่บรรทัดโดยไม่ต้องเปิด สรุปถูกเก็บไว้กับโน้ต การดูอีกครั้งจึงทันทีและใช้ได้แบบออฟไลน์ รวมอยู่ใน Assorta Pro</p>
       </div>
       <div class="feature" style="--f-color: var(--teal)">
         <h3>ค้นหาเมื่อคุณต้องการ</h3>
-        <p>ช่องเดียวที่ค้นทั้งชื่อกลุ่ม ข้อความในโน้ต และชื่อเรื่องของลิงก์ - เผื่อสิ่งที่บันทึกไว้
-          ชิ้นนั้นไม่ได้อยู่ตรงที่คุณมองก่อน</p>
+        <p>Assorta ค้นทั้งชื่อกลุ่ม ข้อความในโน้ต และชื่อเรื่องของลิงก์จากช่องเดียว - เผื่อสิ่งที่บันทึกไว้ชิ้นนั้นไม่ได้อยู่ตรงที่คุณมองก่อน</p>
       </div>
       <div class="feature" style="--f-color: var(--emerald)">
         <h3>บันทึกเบื้องหลัง</h3>
-        <p>สลับไปแอปอื่นกลางคันได้ - รายการนั้นก็ยังลงกลุ่มของมันอย่างปลอดภัย ไม่มีอะไรหายไประหว่างแอป</p>
+        <p>Assorta ทำการบันทึกให้เสร็จเบื้องหลัง สลับไปแอปอื่นกลางคันแล้วรายการนั้นก็ยังลงกลุ่มของมัน ไม่มีอะไรหายไประหว่างแอป</p>
       </div>
       <div class="feature" style="--f-color: var(--purple)">
-        <h3>อยู่ทุกที่ที่คุณอยู่</h3>
-        <p>Android และ iOS - แอปเดียวบนทุกหน้าจอที่คุณใช้ โน้ตอยู่บนเครื่องที่คุณ
-          บันทึกไว้ ส่วนการซิงก์ระหว่างเครื่องยังไม่มี</p>
+        <h3>Android และ iOS</h3>
+        <p>Assorta ใช้ได้บนโทรศัพท์และแท็บเล็ต Android, iPhone และ iPad โน้ตอยู่บนเครื่องที่คุณบันทึกไว้ ส่วนการซิงก์ระหว่างเครื่องยังไม่มี</p>
       </div>
       <div class="feature" style="--f-color: var(--sky)">
-        <h3>สวยในแบบของคุณ</h3>
-        <p>ธีมสว่างและมืด สิบสามภาษา ตั้งแต่อังกฤษและยูเครน ไปจนถึงญี่ปุ่น
-          เกาหลี และอาหรับ</p>
+        <h3>การจัดเรียงที่ไม่มีวันหมด</h3>
+        <p>Assorta จัดเรียงด้วย AI ตราบที่โควตาฟรีของคุณยังเหลือ จากนั้นจึงกลับไปใช้การจัดเรียงอัตโนมัติ ซึ่งทำงานบนเครื่องโดยใช้คำที่คัดมาราว 3,000 คำ ไม่ว่าทางไหนโน้ตก็ลงกลุ่มของมัน - การจัดเก็บไม่หยุดเมื่อโควตาหมด</p>
       </div>
     </div>
   </div>
@@ -1136,6 +1161,100 @@
       <span class="chip" style="--c:#d946ef">ความงาม</span>
       <span class="chip" style="--c:#f43f5e">ส่วนตัว</span>
       <span class="chip more">…และอีกเป็นสิบ</span>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="faq">
+  <div class="wrap">
+    <p class="kicker">FAQ</p>
+    <h2>คำถามที่คนถามก่อนติดตั้ง</h2>
+    <div class="faq">
+      <div class="qa">
+        <h3>Assorta คืออะไร</h3>
+        <p>Assorta คือกล่องขาเข้าเดียวสำหรับลิงก์ โน้ต และไอเดีย บน Android และ iOS โดย AI จะอ่านสิ่งที่คุณบันทึกแล้วจัดลงหนึ่งใน 30+ กลุ่ม คุณจึงหามันเจอทีหลังได้โดยไม่ต้องมีโฟลเดอร์หรือแท็ก</p>
+      </div>
+      <div class="qa">
+        <h3>Assorta ตัดสินอย่างไรว่าอะไรควรอยู่กลุ่มไหน</h3>
+        <p>Assorta อ่านข้อความ หรือหน้าเว็บที่อยู่หลังลิงก์ แล้วเลือกกลุ่มที่เหมาะ - ท่องเที่ยว ทำอาหาร สิ่งที่อยากได้ กีฬา และอื่น ๆ คุณเห็นตัวเลือกนั้นทันทีที่มันถูกเลือก</p>
+      </div>
+      <div class="qa">
+        <h3>บันทึกอะไรใน Assorta ได้บ้าง</h3>
+        <p>ลิงก์ที่แชร์มาจากแอปไหนก็ได้ และข้อความที่คุณวางเข้ามาเอง ลิงก์ที่บันทึกไว้ยังมีภาพย่อและชื่อเรื่องติดมาด้วย คุณจึงจำมันได้ในรายการโดยไม่ต้องเปิด</p>
+      </div>
+      <div class="qa">
+        <h3>Assorta ฟรีไหม</h3>
+        <p>Assorta ติดตั้งฟรีและใช้ฟรี จัดเรียงด้วย AI 15 ครั้งแรกฟรี หลังจากนั้นการจัดเก็บก็ยังทำงานต่อ และลิมิตการจัดเรียงด้วย AI คือสิ่งที่ Assorta Pro ปลดให้</p>
+      </div>
+      <div class="qa">
+        <h3>สรุปด้วย AI คืออะไร</h3>
+        <p>แตะสรุปด้วย AI บนลิงก์ที่บันทึกไว้ แล้ว Assorta จะดึงหน้านั้นกลับมาในไม่กี่บรรทัด ตรงนั้นในรายการเลย สรุปถูกเก็บไว้กับโน้ต การดูอีกครั้งจึงทันทีและใช้ได้แบบออฟไลน์ เมื่อหน้าเว็บไม่มีอะไรให้ทำงานด้วย Assorta จะบอกตรง ๆ แทนที่จะแต่งสรุปขึ้นมา</p>
+      </div>
+      <div class="qa">
+        <h3>บันทึกจากแอปอื่นได้ไหม</h3>
+        <p>ได้ Assorta อยู่ในเมนูแชร์ของระบบทั้งบน Android และ iOS ลิงก์จาก YouTube, TikTok, Instagram หรือเบราว์เซอร์จึงใช้แค่สองแตะ</p>
+      </div>
+      <div class="qa">
+        <h3>Assorta ซิงก์ระหว่างเครื่องไหม</h3>
+        <p>ยังไม่ซิงก์ โน้ตอยู่บนเครื่องที่คุณบันทึกไว้ ส่วนการซิงก์อยู่ในแผนของ Assorta Pro</p>
+      </div>
+      <details class="faq-more">
+        <summary><span class="more-closed">ดูคำถามเพิ่ม</span><span class="more-open">ดูน้อยลง</span></summary>
+        <div class="faq-rest">
+          <div class="qa">
+            <h3>ถ้า AI เลือกกลุ่มผิดล่ะ</h3>
+            <p>เปลี่ยนได้ด้วยแตะเดียว จากกล่องยืนยันนั่นเลย - กลุ่มรองที่ใกล้เคียงอยู่ถัดไปตรงนั้น</p>
+          </div>
+          <div class="qa">
+            <h3>เกิดอะไรขึ้นเมื่อการจัดเรียงด้วย AI แบบฟรีหมด</h3>
+            <p>การจัดเก็บยังทำงานต่อ Assorta จะกลับไปใช้การจัดเรียงอัตโนมัติ ซึ่งทำงานบนเครื่องโดยใช้คำที่คัดมาราว 3,000 คำ และไม่มีวันหมด ส่วนตัวที่ปลดลิมิตการจัดเรียงด้วย AI คือ Assorta Pro</p>
+          </div>
+          <div class="qa">
+            <h3>Assorta Pro เพิ่มอะไรบ้าง</h3>
+            <p>Assorta Pro ปลดลิมิตการจัดเรียงด้วย AI และเพิ่มสรุปด้วย AI เป็นทางเลือก ไม่บังคับ และเรียกเก็บเงินผ่าน Apple หรือ Google</p>
+          </div>
+          <div class="qa">
+            <h3>ค้นหาสิ่งที่บันทึกไว้ได้ไหม</h3>
+            <p>ได้ ช่องเดียวค้นทั้งชื่อกลุ่ม ข้อความในโน้ต และชื่อเรื่องของลิงก์ และใช้ได้โดยไม่ต้องต่ออินเทอร์เน็ต เพราะโน้ตของคุณอยู่บนเครื่อง</p>
+          </div>
+          <div class="qa">
+            <h3>โน้ตของฉันถูกเก็บไว้ที่ไหน</h3>
+            <p>บนเครื่องของคุณ Assorta ไม่ได้เก็บโน้ตของคุณไว้บนเซิร์ฟเวอร์ของเรา</p>
+          </div>
+          <div class="qa">
+            <h3>ต้องมีบัญชีไหม</h3>
+            <p>ไม่ต้อง การลงชื่อเข้าใช้เป็นทางเลือก มันช่วยให้ Assorta Pro ติดไปกับเครื่องอื่นของคุณ</p>
+          </div>
+          <div class="qa">
+            <h3>Assorta ใช้งานได้ไหมเมื่อไม่มีการเชื่อมต่อ</h3>
+            <p>โน้ต กลุ่ม และสรุปที่คุณขอไปแล้วอยู่บนเครื่อง การเปิดดูและการค้นหาจึงทำได้แบบออฟไลน์ ส่วนการจัดเรียงด้วย AI และสรุปด้วย AI ต้องมีการเชื่อมต่อ การจัดเรียงอัตโนมัติไม่ต้อง</p>
+          </div>
+          <div class="qa">
+            <h3>ย้ายโน้ตไปกลุ่มอื่นทีหลังได้ไหม</h3>
+            <p>ได้ เปิดเมนูการกระทำของโน้ตแล้วเลือกย้าย</p>
+          </div>
+          <div class="qa">
+            <h3>ส่งออกโน้ตได้ไหม</h3>
+            <p>ยังไม่ได้ การส่งออกและการสำรองข้อมูลอยู่ในแผนของ Assorta Pro</p>
+          </div>
+          <div class="qa">
+            <h3>Assorta ใช้ได้บนอุปกรณ์ไหนบ้าง</h3>
+            <p>โทรศัพท์และแท็บเล็ต Android รวมถึง iPhone และ iPad</p>
+          </div>
+          <div class="qa">
+            <h3>Assorta รองรับภาษาอะไรบ้าง</h3>
+            <p>31 ภาษา ตั้งแต่อังกฤษและยูเครนไปจนถึงญี่ปุ่น เกาหลี และอาหรับ Assorta ใช้ภาษาตามเครื่องของคุณ และคุณเปลี่ยนได้ในการตั้งค่า</p>
+          </div>
+          <div class="qa">
+            <h3>Assorta ต่างจากบุ๊กมาร์กหรือแอปโน้ตอย่างไร</h3>
+            <p>โฟลเดอร์บุ๊กมาร์กต้องให้คุณเลือกโฟลเดอร์ และแอปโน้ตต้องให้คุณตั้งชื่อโน้ต ส่วน Assorta อ่านสิ่งที่คุณบันทึกแล้วเก็บเข้าที่ให้เอง - งานที่คุณไม่ต้องทำคือการจัดเรียง</p>
+          </div>
+          <div class="qa">
+            <h3>ลบบัญชีและข้อมูลของฉันอย่างไร</h3>
+            <p>เปิดการตั้งค่าในแอปแล้วแตะลบบัญชี หรืออีเมลหาเราแล้วเราจะจัดการให้ <a href="delete-account.html">หน้าลบบัญชี</a> อธิบายว่าอะไรถูกลบและอะไรถูกเก็บไว้</p>
+          </div>
+        </div>
+      </details>
     </div>
   </div>
 </section>
@@ -1195,6 +1314,8 @@
       ที่แสดงไว้ ไม่มีแบรนด์ใดมีส่วนร่วมกับแอปนี้ และแอปนี้ไม่เคยแอบอ้างเป็นแบรนด์เหล่านั้น</p>
   </div>
 </footer>
+
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"FAQPage","@id":"https://assorta.app/th/#faq","inLanguage":"th","mainEntity":[{"@type":"Question","name":"Assorta คืออะไร","acceptedAnswer":{"@type":"Answer","text":"Assorta คือกล่องขาเข้าเดียวสำหรับลิงก์ โน้ต และไอเดีย บน Android และ iOS โดย AI จะอ่านสิ่งที่คุณบันทึกแล้วจัดลงหนึ่งใน 30+ กลุ่ม คุณจึงหามันเจอทีหลังได้โดยไม่ต้องมีโฟลเดอร์หรือแท็ก"}},{"@type":"Question","name":"Assorta ตัดสินอย่างไรว่าอะไรควรอยู่กลุ่มไหน","acceptedAnswer":{"@type":"Answer","text":"Assorta อ่านข้อความ หรือหน้าเว็บที่อยู่หลังลิงก์ แล้วเลือกกลุ่มที่เหมาะ - ท่องเที่ยว ทำอาหาร สิ่งที่อยากได้ กีฬา และอื่น ๆ คุณเห็นตัวเลือกนั้นทันทีที่มันถูกเลือก"}},{"@type":"Question","name":"บันทึกอะไรใน Assorta ได้บ้าง","acceptedAnswer":{"@type":"Answer","text":"ลิงก์ที่แชร์มาจากแอปไหนก็ได้ และข้อความที่คุณวางเข้ามาเอง ลิงก์ที่บันทึกไว้ยังมีภาพย่อและชื่อเรื่องติดมาด้วย คุณจึงจำมันได้ในรายการโดยไม่ต้องเปิด"}},{"@type":"Question","name":"Assorta ฟรีไหม","acceptedAnswer":{"@type":"Answer","text":"Assorta ติดตั้งฟรีและใช้ฟรี จัดเรียงด้วย AI 15 ครั้งแรกฟรี หลังจากนั้นการจัดเก็บก็ยังทำงานต่อ และลิมิตการจัดเรียงด้วย AI คือสิ่งที่ Assorta Pro ปลดให้"}},{"@type":"Question","name":"สรุปด้วย AI คืออะไร","acceptedAnswer":{"@type":"Answer","text":"แตะสรุปด้วย AI บนลิงก์ที่บันทึกไว้ แล้ว Assorta จะดึงหน้านั้นกลับมาในไม่กี่บรรทัด ตรงนั้นในรายการเลย สรุปถูกเก็บไว้กับโน้ต การดูอีกครั้งจึงทันทีและใช้ได้แบบออฟไลน์ เมื่อหน้าเว็บไม่มีอะไรให้ทำงานด้วย Assorta จะบอกตรง ๆ แทนที่จะแต่งสรุปขึ้นมา"}},{"@type":"Question","name":"บันทึกจากแอปอื่นได้ไหม","acceptedAnswer":{"@type":"Answer","text":"ได้ Assorta อยู่ในเมนูแชร์ของระบบทั้งบน Android และ iOS ลิงก์จาก YouTube, TikTok, Instagram หรือเบราว์เซอร์จึงใช้แค่สองแตะ"}},{"@type":"Question","name":"Assorta ซิงก์ระหว่างเครื่องไหม","acceptedAnswer":{"@type":"Answer","text":"ยังไม่ซิงก์ โน้ตอยู่บนเครื่องที่คุณบันทึกไว้ ส่วนการซิงก์อยู่ในแผนของ Assorta Pro"}},{"@type":"Question","name":"ถ้า AI เลือกกลุ่มผิดล่ะ","acceptedAnswer":{"@type":"Answer","text":"เปลี่ยนได้ด้วยแตะเดียว จากกล่องยืนยันนั่นเลย - กลุ่มรองที่ใกล้เคียงอยู่ถัดไปตรงนั้น"}},{"@type":"Question","name":"เกิดอะไรขึ้นเมื่อการจัดเรียงด้วย AI แบบฟรีหมด","acceptedAnswer":{"@type":"Answer","text":"การจัดเก็บยังทำงานต่อ Assorta จะกลับไปใช้การจัดเรียงอัตโนมัติ ซึ่งทำงานบนเครื่องโดยใช้คำที่คัดมาราว 3,000 คำ และไม่มีวันหมด ส่วนตัวที่ปลดลิมิตการจัดเรียงด้วย AI คือ Assorta Pro"}},{"@type":"Question","name":"Assorta Pro เพิ่มอะไรบ้าง","acceptedAnswer":{"@type":"Answer","text":"Assorta Pro ปลดลิมิตการจัดเรียงด้วย AI และเพิ่มสรุปด้วย AI เป็นทางเลือก ไม่บังคับ และเรียกเก็บเงินผ่าน Apple หรือ Google"}},{"@type":"Question","name":"ค้นหาสิ่งที่บันทึกไว้ได้ไหม","acceptedAnswer":{"@type":"Answer","text":"ได้ ช่องเดียวค้นทั้งชื่อกลุ่ม ข้อความในโน้ต และชื่อเรื่องของลิงก์ และใช้ได้โดยไม่ต้องต่ออินเทอร์เน็ต เพราะโน้ตของคุณอยู่บนเครื่อง"}},{"@type":"Question","name":"โน้ตของฉันถูกเก็บไว้ที่ไหน","acceptedAnswer":{"@type":"Answer","text":"บนเครื่องของคุณ Assorta ไม่ได้เก็บโน้ตของคุณไว้บนเซิร์ฟเวอร์ของเรา"}},{"@type":"Question","name":"ต้องมีบัญชีไหม","acceptedAnswer":{"@type":"Answer","text":"ไม่ต้อง การลงชื่อเข้าใช้เป็นทางเลือก มันช่วยให้ Assorta Pro ติดไปกับเครื่องอื่นของคุณ"}},{"@type":"Question","name":"Assorta ใช้งานได้ไหมเมื่อไม่มีการเชื่อมต่อ","acceptedAnswer":{"@type":"Answer","text":"โน้ต กลุ่ม และสรุปที่คุณขอไปแล้วอยู่บนเครื่อง การเปิดดูและการค้นหาจึงทำได้แบบออฟไลน์ ส่วนการจัดเรียงด้วย AI และสรุปด้วย AI ต้องมีการเชื่อมต่อ การจัดเรียงอัตโนมัติไม่ต้อง"}},{"@type":"Question","name":"ย้ายโน้ตไปกลุ่มอื่นทีหลังได้ไหม","acceptedAnswer":{"@type":"Answer","text":"ได้ เปิดเมนูการกระทำของโน้ตแล้วเลือกย้าย"}},{"@type":"Question","name":"ส่งออกโน้ตได้ไหม","acceptedAnswer":{"@type":"Answer","text":"ยังไม่ได้ การส่งออกและการสำรองข้อมูลอยู่ในแผนของ Assorta Pro"}},{"@type":"Question","name":"Assorta ใช้ได้บนอุปกรณ์ไหนบ้าง","acceptedAnswer":{"@type":"Answer","text":"โทรศัพท์และแท็บเล็ต Android รวมถึง iPhone และ iPad"}},{"@type":"Question","name":"Assorta รองรับภาษาอะไรบ้าง","acceptedAnswer":{"@type":"Answer","text":"31 ภาษา ตั้งแต่อังกฤษและยูเครนไปจนถึงญี่ปุ่น เกาหลี และอาหรับ Assorta ใช้ภาษาตามเครื่องของคุณ และคุณเปลี่ยนได้ในการตั้งค่า"}},{"@type":"Question","name":"Assorta ต่างจากบุ๊กมาร์กหรือแอปโน้ตอย่างไร","acceptedAnswer":{"@type":"Answer","text":"โฟลเดอร์บุ๊กมาร์กต้องให้คุณเลือกโฟลเดอร์ และแอปโน้ตต้องให้คุณตั้งชื่อโน้ต ส่วน Assorta อ่านสิ่งที่คุณบันทึกแล้วเก็บเข้าที่ให้เอง - งานที่คุณไม่ต้องทำคือการจัดเรียง"}},{"@type":"Question","name":"ลบบัญชีและข้อมูลของฉันอย่างไร","acceptedAnswer":{"@type":"Answer","text":"เปิดการตั้งค่าในแอปแล้วแตะลบบัญชี หรืออีเมลหาเราแล้วเราจะจัดการให้ หน้าลบบัญชี อธิบายว่าอะไรถูกลบและอะไรถูกเก็บไว้"}}]},{"@type":"SoftwareApplication","name":"Assorta","applicationCategory":"ProductivityApplication","operatingSystem":"Android, iOS","inLanguage":"th","url":"https://assorta.app/th/","description":"Assorta คือกล่องขาเข้าเดียวที่เร็วสำหรับลิงก์ โน้ต และไอเดีย ใส่อะไรเข้ามาก็ได้ - AI จัดมันลงกลุ่มที่ถูกต้อง คุณจึงหาเจอในไม่กี่วินาที","featureList":["บันทึกจากเมนูแชร์","30+ กลุ่มอัจฉริยะ","พรีวิวลิงก์","สรุปด้วย AI","ค้นหาเมื่อคุณต้องการ","บันทึกเบื้องหลัง","Android และ iOS","การจัดเรียงที่ไม่มีวันหมด"],"downloadUrl":["https://apps.apple.com/app/id6791126062","https://play.google.com/store/apps/details?id=com.troshchiy.assorta"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@id":"https://assorta.app/#operator"}},{"@type":"Organization","@id":"https://assorta.app/#operator","name":"Individual Entrepreneur Yevhen Troshchii","url":"https://assorta.app/","email":"contact@assorta.app","address":{"@type":"PostalAddress","addressLocality":"Odesa","addressCountry":"UA"}}]}</script>
 
 <script>window.__I18N__={"group.auto": "รถยนต์", "group.beauty": "ความงาม", "group.books": "หนังสือ", "group.cooking": "ทำอาหาร", "group.education": "การเรียน", "group.family": "ครอบครัว", "group.finance": "การเงิน", "group.health": "สุขภาพ", "group.hobby": "งานอดิเรก", "group.home": "บ้าน", "group.ideas": "ไอเดีย", "group.inspiration": "แรงบันดาลใจ", "group.movies": "หนังและทีวี", "group.music": "เพลง", "group.personal": "ส่วนตัว", "group.shopping": "รายการซื้อของ", "group.sport": "กีฬา", "group.tasks": "สิ่งที่ต้องทำ", "group.tech": "เทคโนโลยี", "group.travel": "ท่องเที่ยว", "group.wishList": "สิ่งที่อยากได้", "group.work": "งาน", "js.or": "หรือ:", "js.theme.toDark": "สลับเป็นธีมมืด", "js.theme.toLight": "สลับเป็นธีมสว่าง", "js.video.title": "เดโม Assorta"};</script>
 

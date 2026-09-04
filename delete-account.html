@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="How to delete your Assorta account and data — the steps in the app, deletion by email, and what is deleted or kept.">
+<meta name="description" content="How to delete your Assorta account and data - the steps in the app, deletion by email, and what is deleted or kept.">
 <meta name="robots" content="index, follow">
-<title>Delete your account — Assorta</title>
+<title>Delete your account - Assorta</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
@@ -44,13 +44,13 @@
 <link rel="alternate" hreflang="x-default" href="https://assorta.app/delete-account.html">
 <meta name="theme-color" content="#131129">
 <style>
-  /* Palette and theme switching mirror index.html — keep the three in sync. */
+  /* Palette and theme switching mirror index.html - keep the three in sync. */
   :root {
     --bg: #131129;
     --panel: #1e1b4b;            /* Indigo.v950 */
     --panel-soft: #232052;
     --line: #34306b;
-    --indigo: #6366f1;           /* Indigo.v600 — accentPrimary, shared by both themes */
+    --indigo: #6366f1;           /* Indigo.v600 - accentPrimary, shared by both themes */
     --indigo-bright: #818cf8;
     --text: #eef0ff;
     --text-dim: #a3a6cc;
@@ -61,14 +61,14 @@
     --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
   :root[data-theme="light"] {
-    --bg: #f8fafc;               /* Gray.v50   — bgAppGradientStart */
-    --panel: #eef2ff;            /* Indigo.v50 — bgAppGradientEnd */
+    --bg: #f8fafc;               /* Gray.v50   - bgAppGradientStart */
+    --panel: #eef2ff;            /* Indigo.v50 - bgAppGradientEnd */
     --panel-soft: #e3e9fb;
     --line: #d2dae9;
-    --indigo-bright: #4f46e5;    /* Indigo.v700 — the accent that still reads on a light background */
-    --text: #0f172a;             /* Gray.v950 — fgPrimary */
+    --indigo-bright: #4f46e5;    /* Indigo.v700 - the accent that still reads on a light background */
+    --text: #0f172a;             /* Gray.v950 - fgPrimary */
     /* The app's fgSecondary - see the note in index.html for why it moved to v700. */
-    --text-dim: #475569;         /* Gray.v700 — fgSecondary */
+    --text-dim: #475569;         /* Gray.v700 - fgSecondary */
     color-scheme: light;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -281,7 +281,7 @@
       In short: open <strong>Settings → Delete account</strong> in the app. Your account, your
       saved notes on that device, and the purchase record tied to that account are removed; a
       subscription bought without an account can stay behind, under an anonymous identifier.
-      Deleting the account does <strong>not</strong> cancel a paid subscription — cancel that in
+      Deleting the account does <strong>not</strong> cancel a paid subscription - cancel that in
       Google Play or the App Store.
     </div>
 
@@ -302,7 +302,7 @@
     <p>This is the fastest route and it takes effect immediately.</p>
     <ul>
       <li>Open <strong>Assorta</strong> and sign in, if you are not signed in already.</li>
-      <li>Go to <strong>Settings</strong> — the gear icon at the top of the main screen.</li>
+      <li>Go to <strong>Settings</strong> - the gear icon at the top of the main screen.</li>
       <li>Scroll to <strong>Delete account</strong> at the bottom and tap it.</li>
       <li>Read the confirmation dialog and tap <strong>Delete</strong>.</li>
       <li>If you signed in a while ago, the app asks for your password (or for Google sign-in
@@ -310,7 +310,7 @@
         lost phone cannot erase your account.</li>
     </ul>
     <p class="dim">Guest users have no account to delete. If you never signed in, removing the app
-      removes everything you saved on that device — except a subscription bought without an
+      removes everything you saved on that device - except a subscription bought without an
       account, which stays with RevenueCat under an anonymous identifier (see
       <a href="#kept">what is kept</a>).</p>
 
@@ -324,9 +324,9 @@
 
     <h2 id="deleted">3. What is deleted</h2>
     <ul>
-      <li><strong>Your account</strong> — email address, name and account identifier, held by
+      <li><strong>Your account</strong> - email address, name and account identifier, held by
         Google Firebase, together with your password if you signed up with one.</li>
-      <li><strong>Your purchase record</strong> — subscription status and purchase identifier,
+      <li><strong>Your purchase record</strong> - subscription status and purchase identifier,
         held by RevenueCat. A subscription bought <em>without</em> an account is the exception: it
         hangs on an anonymous installation identifier that no account owns, so the in-app deletion
         cannot reach it. Signing in before you delete asks RevenueCat to attach that purchase to
@@ -348,18 +348,18 @@
 
     <h2 id="kept">4. What is kept</h2>
     <ul>
-      <li><strong>A purchase made without an account</strong> — the subscription status and
+      <li><strong>A purchase made without an account</strong> - the subscription status and
         purchase identifier of a subscription bought as a guest, held by RevenueCat under an
         anonymous installation identifier. No account owns it, so there is nothing we can look up
         on your behalf that points at it, and removing it would break your ability to restore a
         subscription you are still paying for. It carries no name, email address or payment
-        details. To be rid of it, cancel the subscription in Google Play or the App Store — see
+        details. To be rid of it, cancel the subscription in Google Play or the App Store - see
         <a href="#subscription">Your subscription</a>.</li>
-      <li><strong>Diagnostics and usage analytics</strong> — crash reports and app-usage events
+      <li><strong>Diagnostics and usage analytics</strong> - crash reports and app-usage events
         collected through Firebase Crashlytics and Firebase Analytics. These are not deleted by
-        the in-app flow. They are held by Google under Firebase's own retention windows and are
+        the in-app flow. They are held by Google under Firebase’s own retention windows and are
         not linked to the notes you saved. Email us if you want them removed as well.</li>
-      <li><strong>Records we are required to keep</strong> — for example transaction records that
+      <li><strong>Records we are required to keep</strong> - for example transaction records that
         tax or accounting law obliges us to retain. Apple and Google keep their own records of any
         purchase; we cannot delete those.</li>
       <li><strong>Anonymised or aggregated data</strong> that can no longer be connected to you.</li>
@@ -370,9 +370,9 @@
       billed by Google Play or the App Store, not by us, and only you can cancel it. If you delete
       the account without cancelling, the store keeps charging you.</p>
     <ul>
-      <li><strong>Android</strong> — Google Play app → profile picture → Payments &amp;
+      <li><strong>Android</strong> - Google Play app → profile picture → Payments &amp;
         subscriptions → Subscriptions → Assorta → Cancel subscription.</li>
-      <li><strong>iOS</strong> — Settings app → your name → Subscriptions → Assorta → Cancel
+      <li><strong>iOS</strong> - Settings app → your name → Subscriptions → Assorta → Cancel
         subscription.</li>
     </ul>
     <p>Cancel the subscription first, then delete the account.</p>
@@ -381,7 +381,7 @@
     <p>You do not have to delete the account to delete what you saved. Any note can be removed on
       its own: open the group, tap the actions button on the note and choose <strong>Delete</strong>.
       Doing that for every note clears your content while the account stays.</p>
-    <p>For anything you cannot remove yourself — diagnostics, for instance — email us and say which
+    <p>For anything you cannot remove yourself - diagnostics, for instance - email us and say which
       data you mean.</p>
 
     <h2 id="contact">7. Contact</h2>
@@ -410,7 +410,7 @@
 </footer>
 
 <script>
-// THEME TOGGLE — same behaviour and storage key as index.html, so the choice carries
+// THEME TOGGLE - same behaviour and storage key as index.html, so the choice carries
 // across the pages.
 (function () {
   var btn = document.getElementById("theme-btn");

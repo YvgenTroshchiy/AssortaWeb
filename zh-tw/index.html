@@ -44,21 +44,21 @@
 <meta name="theme-color" content="#131129">
 <style>
   /* Palette mirrors the app's semantic tokens (AssortaKMP ui/theme/SemanticColor.kt).
-     Dark is the default — it also survives JS being off; light overrides it via
+     Dark is the default - it also survives JS being off; light overrides it via
      data-theme="light" on <html>, stamped before first paint by the inline script
      at the end of <head>. Tag hues are shared by both app palettes, so they are
      declared once and never overridden. */
   :root {
     --bg: #131129;
-    --panel: #1e1b4b;            /* Indigo.v950 — bgAppGradientEnd */
+    --panel: #1e1b4b;            /* Indigo.v950 - bgAppGradientEnd */
     --panel-soft: #232052;
     --line: #34306b;
-    --indigo: #6366f1;           /* Indigo.v600 — accentPrimary, shared by both themes */
+    --indigo: #6366f1;           /* Indigo.v600 - accentPrimary, shared by both themes */
     --indigo-bright: #818cf8;
     /* accentPrimary is the brand hue but is too light to carry text: white on it is 4.46:1
        and it reads 3.1-3.8:1 as a glyph on its own tint. This mirrors the app's bgAccent -
        the fill that sits under white text. Borders, glows and tints keep --indigo. */
-    --accent-fill: #4f46e5;      /* Indigo.v700 — bgAccent */
+    --accent-fill: #4f46e5;      /* Indigo.v700 - bgAccent */
     --text: #eef0ff;
     --text-dim: #a3a6cc;
     /* The app's own screen background, verbatim from SemanticColors
@@ -121,17 +121,17 @@
     --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
   :root[data-theme="light"] {
-    --bg: #f8fafc;               /* Gray.v50   — bgAppGradientStart */
-    --panel: #eef2ff;            /* Indigo.v50 — bgAppGradientEnd */
+    --bg: #f8fafc;               /* Gray.v50   - bgAppGradientStart */
+    --panel: #eef2ff;            /* Indigo.v50 - bgAppGradientEnd */
     --panel-soft: #e3e9fb;
     --line: #d2dae9;             /* borderCard, lifted from Gray.v500a20 to stay visible on light */
-    --indigo-bright: #4f46e5;    /* Indigo.v700 — the accent that still reads on a light background */
-    --text: #0f172a;             /* Gray.v950 — fgPrimary */
+    --indigo-bright: #4f46e5;    /* Indigo.v700 - the accent that still reads on a light background */
+    --text: #0f172a;             /* Gray.v950 - fgPrimary */
     /* Still the app's fgSecondary, which moved to Gray.v700 for the same reason:
        the old Gray.v600 (#64748b) landed at 3.4-4.4:1 on the tinted panels this
        site invents (.cell, .step, section.alt) and on the app's own gradient end.
        v700 clears AA everywhere, worst case 5.4:1 on the .cell tints. */
-    --text-dim: #475569;         /* Gray.v700 — fgSecondary */
+    --text-dim: #475569;         /* Gray.v700 - fgSecondary */
     --app-grad-start: #f8fafc;   /* Gray.v50 */
     --app-grad-end:   #eef2ff;   /* Indigo.v50 */
     /* Mockup palette, light. Rows with an app token take it; the rest reproduce
@@ -525,6 +525,35 @@
   /* ---- sections ---- */
   section { padding: 64px 0; }
   section.alt { background: color-mix(in srgb, var(--panel) 32%, var(--bg)); }
+  /* ---- FAQ ---- */
+  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall. */
+  .faq { max-width: 760px; }
+  .faq .qa { padding: 17px 0; border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+  .faq > .qa:first-of-type { border-top: 0; padding-top: 4px; }
+  .faq h3 { font-family: var(--font-display); font-size: 17.5px; margin-bottom: 7px; }
+  .faq p { color: var(--text-dim); line-height: 1.65; }
+  .faq a { color: var(--indigo-bright); }
+  /* <details> and not a script: the thirteen collapsed answers stay in the page source, so a
+     crawler and an answer engine read all twenty however much a human unfolded. */
+  .faq-more { border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+  .faq-more > summary {
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 18px;
+    padding: 9px 18px; border: 1px solid var(--line); border-radius: 999px;
+    color: var(--text-dim); font-size: 14.5px; cursor: pointer; list-style: none;
+    transition: color .15s, border-color .15s;
+  }
+  .faq-more > summary::-webkit-details-marker { display: none; }
+  .faq-more > summary:hover { color: var(--text); border-color: var(--indigo); }
+  .faq-more > summary:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; }
+  .faq-more > summary::after {
+    content: ""; width: 7px; height: 7px; border-right: 1.6px solid currentColor;
+    border-bottom: 1.6px solid currentColor; transform: translateY(-2px) rotate(45deg);
+  }
+  .faq-more[open] > summary::after { transform: translateY(1px) rotate(225deg); }
+  .faq-more > summary .more-open { display: none; }
+  .faq-more[open] > summary .more-closed { display: none; }
+  .faq-more[open] > summary .more-open { display: inline; }
+  .faq-rest { margin-top: 4px; }
   .kicker {
     font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
     text-transform: uppercase; color: var(--indigo-bright); margin-bottom: 14px;
@@ -1071,31 +1100,31 @@
       </div>
       <div class="feature" style="--f-color: var(--amber)">
         <h3>30 多個聰明群組</h3>
-        <p>你一儲存，AI 就挑好群組。不同意？點一下就能改 - 就在確認那一步。</p>
+        <p>你一儲存，Assorta 就把它歸進 30 多個內建群組之一 - 旅遊、烹飪、願望清單、運動。不同意？點一下就能改，就在確認那一步。</p>
       </div>
       <div class="feature" style="--f-color: var(--cyan)">
         <h3>連結預覽</h3>
-        <p>儲存的連結會帶上縮圖和標題 - 一格 YouTube 畫面、一張商品照、一張文章封面 - 一眼就認得出來。</p>
+        <p>Assorta 會為儲存的連結保留縮圖和標題 - 一格 YouTube 畫面、一張商品照、一張文章封面 - 讓你一眼就認得出來。</p>
       </div>
       <div class="feature" style="--f-color: var(--indigo)">
         <h3>AI 摘要</h3>
-        <p>在儲存的連結上點一下 AI 摘要，不開啟就能用幾行讀完那一頁。摘要與筆記一起儲存，所以再看一次是立即的，離線也看得到。包含在 Assorta Pro 中。</p>
+        <p>在儲存的連結上點一下 AI 摘要，Assorta 就用幾行文字把那一頁帶回來，不用開啟它。摘要與筆記一起儲存，所以再看一次是立即的，離線也看得到。包含在 Assorta Pro 中。</p>
       </div>
       <div class="feature" style="--f-color: var(--teal)">
         <h3>需要時就搜尋</h3>
-        <p>一個輸入框，同時搜群組名稱、筆記內文和連結標題 - 專門對付那則沒落在你第一眼去找的地方的收藏。</p>
+        <p>Assorta 用一個輸入框同時搜群組名稱、筆記內文和連結標題 - 專門對付那則沒落在你第一眼去找的地方的收藏。</p>
       </div>
       <div class="feature" style="--f-color: var(--emerald)">
         <h3>儲存在背景完成</h3>
-        <p>儲存到一半切走也沒關係 - 這一則照樣穩穩落進它的群組。不會有東西在 App 之間搞丟。</p>
+        <p>Assorta 會在背景把儲存做完，所以中途切換 App，這一則照樣穩穩落進它的群組。不會有東西在 App 之間搞丟。</p>
       </div>
       <div class="feature" style="--f-color: var(--purple)">
-        <h3>你在哪裡，它就在哪裡</h3>
-        <p>Android 和 iOS - 你用的每一塊螢幕上都是同一個 App。筆記留在你儲存它的那台裝置上；裝置之間的同步還沒上線。</p>
+        <h3>Android 和 iOS</h3>
+        <p>Assorta 可以在 Android 手機和平板、iPhone 和 iPad 上執行。筆記留在你儲存它的那台裝置上；裝置之間的同步還沒上線。</p>
       </div>
       <div class="feature" style="--f-color: var(--sky)">
-        <h3>看著順眼</h3>
-        <p>淺色與深色主題。十三種語言，從英文、烏克蘭文到日文、韓文和阿拉伯文。</p>
+        <h3>永遠用不完的分類</h3>
+        <p>免費的 AI 分類還有額度時，Assorta 用 AI 分類；用完之後改為自動分類，在裝置上用大約 3,000 個精選詞彙判斷。無論哪一種，這則筆記都會落進一個群組 - 額度用完了，歸整也不會停。</p>
       </div>
     </div>
   </div>
@@ -1128,6 +1157,100 @@
       <span class="chip" style="--c:#d946ef">美妝</span>
       <span class="chip" style="--c:#f43f5e">個人</span>
       <span class="chip more">…還有十幾個</span>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="faq">
+  <div class="wrap">
+    <p class="kicker">常見問題</p>
+    <h2>裝之前，大家都會問的問題</h2>
+    <div class="faq">
+      <div class="qa">
+        <h3>Assorta 是什麼？</h3>
+        <p>Assorta 是 Android 和 iOS 上裝下連結、筆記與點子的一個收件匣。AI 會讀懂你儲存的內容，把它歸進 30 多個群組之一，之後不用資料夾也不用標籤就找得到。</p>
+      </div>
+      <div class="qa">
+        <h3>Assorta 怎麼決定一則內容該進哪個群組？</h3>
+        <p>Assorta 會讀文字，或連結背後的頁面，然後挑出合適的群組 - 旅遊、烹飪、願望清單、運動等等。判斷做出的那一刻你就看得到。</p>
+      </div>
+      <div class="qa">
+        <h3>Assorta 能儲存什麼？</h3>
+        <p>從任何 App 分享來的連結，以及你自己貼上的文字。儲存的連結會帶上縮圖和標題，不用開啟就能在清單裡認出它。</p>
+      </div>
+      <div class="qa">
+        <h3>Assorta 免費嗎？</h3>
+        <p>Assorta 免費安裝，免費使用。前 15 次 AI 分類免費；之後歸整照常運作，而 Assorta Pro 拿掉的正是 AI 分類的上限。</p>
+      </div>
+      <div class="qa">
+        <h3>AI 摘要是什麼？</h3>
+        <p>在儲存的連結上點一下 AI 摘要，Assorta 就把那一頁用幾行文字帶回清單裡。摘要與筆記一起儲存，所以再看一次是立即的，離線也看得到。若某個頁面實在沒什麼可讀，Assorta 會直說，而不是編一段摘要。</p>
+      </div>
+      <div class="qa">
+        <h3>能從別的 App 裡儲存嗎？</h3>
+        <p>可以。Assorta 就在 Android 和 iOS 的系統分享選單裡，來自 YouTube、TikTok、Instagram 或瀏覽器的連結，點兩下就存好。</p>
+      </div>
+      <div class="qa">
+        <h3>Assorta 會在裝置之間同步嗎？</h3>
+        <p>還沒有。筆記留在你儲存它的那台裝置上；同步在 Assorta Pro 的規劃裡。</p>
+      </div>
+      <details class="faq-more">
+        <summary><span class="more-closed">顯示更多問題</span><span class="more-open">收起</span></summary>
+        <div class="faq-rest">
+          <div class="qa">
+            <h3>如果 AI 選錯了群組怎麼辦？</h3>
+            <p>點一下就能改，就在確認那一步 - 備選群組就排在旁邊。</p>
+          </div>
+          <div class="qa">
+            <h3>免費的 AI 分類用完之後會怎樣？</h3>
+            <p>歸整照常運作。Assorta 會改用自動分類，它在裝置上用大約 3,000 個精選詞彙判斷，永遠不會用完；而拿掉 AI 分類上限的是 Assorta Pro。</p>
+          </div>
+          <div class="qa">
+            <h3>Assorta Pro 多了什麼？</h3>
+            <p>Assorta Pro 拿掉 AI 分類的上限，並加入 AI 摘要。它是選用的，由 Apple 或 Google 收費。</p>
+          </div>
+          <div class="qa">
+            <h3>能搜尋我儲存過的內容嗎？</h3>
+            <p>可以。一個輸入框同時搜群組名稱、筆記內文和連結標題，而且不用連線也能用，因為你的筆記就在裝置上。</p>
+          </div>
+          <div class="qa">
+            <h3>我的筆記存在哪裡？</h3>
+            <p>在你的裝置上。Assorta 不會把你的筆記放在我們的伺服器上。</p>
+          </div>
+          <div class="qa">
+            <h3>我需要帳號嗎？</h3>
+            <p>不用。登入是選用的；它的作用是讓 Assorta Pro 在你的其他裝置上也在。</p>
+          </div>
+          <div class="qa">
+            <h3>沒有網路時 Assorta 能用嗎？</h3>
+            <p>你的筆記、你的群組，以及你已經產生過的摘要都在裝置上，所以瀏覽和搜尋離線也能用。AI 分類和 AI 摘要需要連線；自動分類不用。</p>
+          </div>
+          <div class="qa">
+            <h3>之後還能把筆記搬到別的群組嗎？</h3>
+            <p>可以。打開筆記的操作選單，選擇「搬移」。</p>
+          </div>
+          <div class="qa">
+            <h3>能匯出我的筆記嗎？</h3>
+            <p>還沒有。匯出和備份在 Assorta Pro 的規劃裡。</p>
+          </div>
+          <div class="qa">
+            <h3>Assorta 能在哪些裝置上執行？</h3>
+            <p>Android 手機和平板、iPhone 和 iPad。</p>
+          </div>
+          <div class="qa">
+            <h3>Assorta 支援哪些語言？</h3>
+            <p>31 種，從英文、烏克蘭文到日文、韓文和阿拉伯文。Assorta 跟隨你裝置的語言，你也可以在「設定」裡更改。</p>
+          </div>
+          <div class="qa">
+            <h3>Assorta 和書籤或筆記 App 有什麼不同？</h3>
+            <p>書籤資料夾要你自己挑資料夾，筆記 App 要你自己給筆記取名字。Assorta 會讀懂你儲存的內容，自己把它收好 - 你省下的那份工，正是分類。</p>
+          </div>
+          <div class="qa">
+            <h3>怎麼刪除我的帳號和資料？</h3>
+            <p>在 App 裡打開「設定」並點一下「刪除帳號」，或寫信給我們，由我們來做。<a href="delete-account.html">刪除帳號頁面</a>說明了哪些會被刪除、哪些會保留。</p>
+          </div>
+        </div>
+      </details>
     </div>
   </div>
 </section>
@@ -1180,6 +1303,8 @@
     <p>本頁出現的第三方品牌名稱、標誌、連結和預覽圖，都是你可以用 Assorta 儲存的內容範例 - 也就是人們會隨手丟進 App 裡的那類東西 - App&nbsp;Store 與 Google&nbsp;Play 徽章除外，它們連往本 App 上架的商店。這些全都仍屬於各自的擁有者。Assorta 是一款獨立 App：它與所示的任何品牌都沒有從屬關係，未獲得它們背書或贊助，它們也沒有參與其中，而且它從不以它們的名義自稱。</p>
   </div>
 </footer>
+
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"FAQPage","@id":"https://assorta.app/zh-tw/#faq","inLanguage":"zh-TW","mainEntity":[{"@type":"Question","name":"Assorta 是什麼？","acceptedAnswer":{"@type":"Answer","text":"Assorta 是 Android 和 iOS 上裝下連結、筆記與點子的一個收件匣。AI 會讀懂你儲存的內容，把它歸進 30 多個群組之一，之後不用資料夾也不用標籤就找得到。"}},{"@type":"Question","name":"Assorta 怎麼決定一則內容該進哪個群組？","acceptedAnswer":{"@type":"Answer","text":"Assorta 會讀文字，或連結背後的頁面，然後挑出合適的群組 - 旅遊、烹飪、願望清單、運動等等。判斷做出的那一刻你就看得到。"}},{"@type":"Question","name":"Assorta 能儲存什麼？","acceptedAnswer":{"@type":"Answer","text":"從任何 App 分享來的連結，以及你自己貼上的文字。儲存的連結會帶上縮圖和標題，不用開啟就能在清單裡認出它。"}},{"@type":"Question","name":"Assorta 免費嗎？","acceptedAnswer":{"@type":"Answer","text":"Assorta 免費安裝，免費使用。前 15 次 AI 分類免費；之後歸整照常運作，而 Assorta Pro 拿掉的正是 AI 分類的上限。"}},{"@type":"Question","name":"AI 摘要是什麼？","acceptedAnswer":{"@type":"Answer","text":"在儲存的連結上點一下 AI 摘要，Assorta 就把那一頁用幾行文字帶回清單裡。摘要與筆記一起儲存，所以再看一次是立即的，離線也看得到。若某個頁面實在沒什麼可讀，Assorta 會直說，而不是編一段摘要。"}},{"@type":"Question","name":"能從別的 App 裡儲存嗎？","acceptedAnswer":{"@type":"Answer","text":"可以。Assorta 就在 Android 和 iOS 的系統分享選單裡，來自 YouTube、TikTok、Instagram 或瀏覽器的連結，點兩下就存好。"}},{"@type":"Question","name":"Assorta 會在裝置之間同步嗎？","acceptedAnswer":{"@type":"Answer","text":"還沒有。筆記留在你儲存它的那台裝置上；同步在 Assorta Pro 的規劃裡。"}},{"@type":"Question","name":"如果 AI 選錯了群組怎麼辦？","acceptedAnswer":{"@type":"Answer","text":"點一下就能改，就在確認那一步 - 備選群組就排在旁邊。"}},{"@type":"Question","name":"免費的 AI 分類用完之後會怎樣？","acceptedAnswer":{"@type":"Answer","text":"歸整照常運作。Assorta 會改用自動分類，它在裝置上用大約 3,000 個精選詞彙判斷，永遠不會用完；而拿掉 AI 分類上限的是 Assorta Pro。"}},{"@type":"Question","name":"Assorta Pro 多了什麼？","acceptedAnswer":{"@type":"Answer","text":"Assorta Pro 拿掉 AI 分類的上限，並加入 AI 摘要。它是選用的，由 Apple 或 Google 收費。"}},{"@type":"Question","name":"能搜尋我儲存過的內容嗎？","acceptedAnswer":{"@type":"Answer","text":"可以。一個輸入框同時搜群組名稱、筆記內文和連結標題，而且不用連線也能用，因為你的筆記就在裝置上。"}},{"@type":"Question","name":"我的筆記存在哪裡？","acceptedAnswer":{"@type":"Answer","text":"在你的裝置上。Assorta 不會把你的筆記放在我們的伺服器上。"}},{"@type":"Question","name":"我需要帳號嗎？","acceptedAnswer":{"@type":"Answer","text":"不用。登入是選用的；它的作用是讓 Assorta Pro 在你的其他裝置上也在。"}},{"@type":"Question","name":"沒有網路時 Assorta 能用嗎？","acceptedAnswer":{"@type":"Answer","text":"你的筆記、你的群組，以及你已經產生過的摘要都在裝置上，所以瀏覽和搜尋離線也能用。AI 分類和 AI 摘要需要連線；自動分類不用。"}},{"@type":"Question","name":"之後還能把筆記搬到別的群組嗎？","acceptedAnswer":{"@type":"Answer","text":"可以。打開筆記的操作選單，選擇「搬移」。"}},{"@type":"Question","name":"能匯出我的筆記嗎？","acceptedAnswer":{"@type":"Answer","text":"還沒有。匯出和備份在 Assorta Pro 的規劃裡。"}},{"@type":"Question","name":"Assorta 能在哪些裝置上執行？","acceptedAnswer":{"@type":"Answer","text":"Android 手機和平板、iPhone 和 iPad。"}},{"@type":"Question","name":"Assorta 支援哪些語言？","acceptedAnswer":{"@type":"Answer","text":"31 種，從英文、烏克蘭文到日文、韓文和阿拉伯文。Assorta 跟隨你裝置的語言，你也可以在「設定」裡更改。"}},{"@type":"Question","name":"Assorta 和書籤或筆記 App 有什麼不同？","acceptedAnswer":{"@type":"Answer","text":"書籤資料夾要你自己挑資料夾，筆記 App 要你自己給筆記取名字。Assorta 會讀懂你儲存的內容，自己把它收好 - 你省下的那份工，正是分類。"}},{"@type":"Question","name":"怎麼刪除我的帳號和資料？","acceptedAnswer":{"@type":"Answer","text":"在 App 裡打開「設定」並點一下「刪除帳號」，或寫信給我們，由我們來做。刪除帳號頁面說明了哪些會被刪除、哪些會保留。"}}]},{"@type":"SoftwareApplication","name":"Assorta","applicationCategory":"ProductivityApplication","operatingSystem":"Android, iOS","inLanguage":"zh-TW","url":"https://assorta.app/zh-tw/","description":"Assorta 是一個裝下連結、筆記與點子的快速收件匣。什麼都能丟進來 - AI 會把它歸進正確的群組，幾秒就找得回來。","featureList":["從分享選單儲存","30 多個聰明群組","連結預覽","AI 摘要","需要時就搜尋","儲存在背景完成","Android 和 iOS","永遠用不完的分類"],"downloadUrl":["https://apps.apple.com/app/id6791126062","https://play.google.com/store/apps/details?id=com.troshchiy.assorta"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@id":"https://assorta.app/#operator"}},{"@type":"Organization","@id":"https://assorta.app/#operator","name":"Individual Entrepreneur Yevhen Troshchii","url":"https://assorta.app/","email":"contact@assorta.app","address":{"@type":"PostalAddress","addressLocality":"Odesa","addressCountry":"UA"}}]}</script>
 
 <script>window.__I18N__={"group.auto": "汽車", "group.beauty": "美妝", "group.books": "書籍", "group.cooking": "烹飪", "group.education": "學習", "group.family": "家庭", "group.finance": "財務", "group.health": "健康", "group.hobby": "興趣", "group.home": "居家", "group.ideas": "點子", "group.inspiration": "靈感", "group.movies": "影劇", "group.music": "音樂", "group.personal": "個人", "group.shopping": "購物清單", "group.sport": "運動", "group.tasks": "待辦", "group.tech": "科技", "group.travel": "旅遊", "group.wishList": "願望清單", "group.work": "工作", "js.or": "或者：", "js.theme.toDark": "切換到深色主題", "js.theme.toLight": "切換到淺色主題", "js.video.title": "Assorta 示範"};</script>
 

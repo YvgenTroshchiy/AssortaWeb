@@ -44,21 +44,21 @@
 <meta name="theme-color" content="#131129">
 <style>
   /* Palette mirrors the app's semantic tokens (AssortaKMP ui/theme/SemanticColor.kt).
-     Dark is the default — it also survives JS being off; light overrides it via
+     Dark is the default - it also survives JS being off; light overrides it via
      data-theme="light" on <html>, stamped before first paint by the inline script
      at the end of <head>. Tag hues are shared by both app palettes, so they are
      declared once and never overridden. */
   :root {
     --bg: #131129;
-    --panel: #1e1b4b;            /* Indigo.v950 — bgAppGradientEnd */
+    --panel: #1e1b4b;            /* Indigo.v950 - bgAppGradientEnd */
     --panel-soft: #232052;
     --line: #34306b;
-    --indigo: #6366f1;           /* Indigo.v600 — accentPrimary, shared by both themes */
+    --indigo: #6366f1;           /* Indigo.v600 - accentPrimary, shared by both themes */
     --indigo-bright: #818cf8;
     /* accentPrimary is the brand hue but is too light to carry text: white on it is 4.46:1
        and it reads 3.1-3.8:1 as a glyph on its own tint. This mirrors the app's bgAccent -
        the fill that sits under white text. Borders, glows and tints keep --indigo. */
-    --accent-fill: #4f46e5;      /* Indigo.v700 — bgAccent */
+    --accent-fill: #4f46e5;      /* Indigo.v700 - bgAccent */
     --text: #eef0ff;
     --text-dim: #a3a6cc;
     /* The app's own screen background, verbatim from SemanticColors
@@ -121,17 +121,17 @@
     --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
   :root[data-theme="light"] {
-    --bg: #f8fafc;               /* Gray.v50   — bgAppGradientStart */
-    --panel: #eef2ff;            /* Indigo.v50 — bgAppGradientEnd */
+    --bg: #f8fafc;               /* Gray.v50   - bgAppGradientStart */
+    --panel: #eef2ff;            /* Indigo.v50 - bgAppGradientEnd */
     --panel-soft: #e3e9fb;
     --line: #d2dae9;             /* borderCard, lifted from Gray.v500a20 to stay visible on light */
-    --indigo-bright: #4f46e5;    /* Indigo.v700 — the accent that still reads on a light background */
-    --text: #0f172a;             /* Gray.v950 — fgPrimary */
+    --indigo-bright: #4f46e5;    /* Indigo.v700 - the accent that still reads on a light background */
+    --text: #0f172a;             /* Gray.v950 - fgPrimary */
     /* Still the app's fgSecondary, which moved to Gray.v700 for the same reason:
        the old Gray.v600 (#64748b) landed at 3.4-4.4:1 on the tinted panels this
        site invents (.cell, .step, section.alt) and on the app's own gradient end.
        v700 clears AA everywhere, worst case 5.4:1 on the .cell tints. */
-    --text-dim: #475569;         /* Gray.v700 — fgSecondary */
+    --text-dim: #475569;         /* Gray.v700 - fgSecondary */
     --app-grad-start: #f8fafc;   /* Gray.v50 */
     --app-grad-end:   #eef2ff;   /* Indigo.v50 */
     /* Mockup palette, light. Rows with an app token take it; the rest reproduce
@@ -525,6 +525,35 @@
   /* ---- sections ---- */
   section { padding: 64px 0; }
   section.alt { background: color-mix(in srgb, var(--panel) 32%, var(--bg)); }
+  /* ---- FAQ ---- */
+  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall. */
+  .faq { max-width: 760px; }
+  .faq .qa { padding: 17px 0; border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+  .faq > .qa:first-of-type { border-top: 0; padding-top: 4px; }
+  .faq h3 { font-family: var(--font-display); font-size: 17.5px; margin-bottom: 7px; }
+  .faq p { color: var(--text-dim); line-height: 1.65; }
+  .faq a { color: var(--indigo-bright); }
+  /* <details> and not a script: the thirteen collapsed answers stay in the page source, so a
+     crawler and an answer engine read all twenty however much a human unfolded. */
+  .faq-more { border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+  .faq-more > summary {
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 18px;
+    padding: 9px 18px; border: 1px solid var(--line); border-radius: 999px;
+    color: var(--text-dim); font-size: 14.5px; cursor: pointer; list-style: none;
+    transition: color .15s, border-color .15s;
+  }
+  .faq-more > summary::-webkit-details-marker { display: none; }
+  .faq-more > summary:hover { color: var(--text); border-color: var(--indigo); }
+  .faq-more > summary:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; }
+  .faq-more > summary::after {
+    content: ""; width: 7px; height: 7px; border-right: 1.6px solid currentColor;
+    border-bottom: 1.6px solid currentColor; transform: translateY(-2px) rotate(45deg);
+  }
+  .faq-more[open] > summary::after { transform: translateY(1px) rotate(225deg); }
+  .faq-more > summary .more-open { display: none; }
+  .faq-more[open] > summary .more-closed { display: none; }
+  .faq-more[open] > summary .more-open { display: inline; }
+  .faq-rest { margin-top: 4px; }
   .kicker {
     font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
     text-transform: uppercase; color: var(--indigo-bright); margin-bottom: 14px;
@@ -1075,35 +1104,37 @@
       </div>
       <div class="feature" style="--f-color: var(--amber)">
         <h3>30+ chytrých skupin</h3>
-        <p>AI vybere skupinu ve chvíli, kdy ukládáte. Nesouhlasíte? Změňte ji jedním klepnutím - rovnou z potvrzení.</p>
+        <p>Assorta zatřídí každé uložení do jedné z 30+ vestavěných skupin ve chvíli, kdy ho přidáte - Cestování, Vaření, Seznam přání, Sport. Nesouhlasíte? Změňte ji jedním klepnutím, rovnou z potvrzení.</p>
       </div>
       <div class="feature" style="--f-color: var(--cyan)">
         <h3>Náhledy odkazů</h3>
-        <p>Uložené odkazy si nechávají miniaturu a titulek - snímek z YouTube, foto produktu, obálku článku - takže je poznáte na první pohled.</p>
+        <p>Assorta si u uloženého odkazu nechává miniaturu a titulek - snímek z YouTube, foto produktu, obálku článku - takže ho poznáte na první pohled.</p>
       </div>
       <div class="feature" style="--f-color: var(--indigo)">
         <h3>AI shrnutí</h3>
-        <p>Klepněte u uloženého odkazu na AI shrnutí a přečtěte si stránku v pár řádcích, aniž byste ji otvírali. Shrnutí
-          se ukládá s poznámkou, takže druhý pohled je okamžitý a funguje offline. Součást Assorta Pro.</p>
+        <p>Klepněte u uloženého odkazu na AI shrnutí a Assorta vrátí stránku v pár řádcích, aniž
+          byste ji otvírali. Shrnutí se ukládá s poznámkou, takže druhý pohled je okamžitý
+          a funguje offline. Součást Assorta Pro.</p>
       </div>
       <div class="feature" style="--f-color: var(--teal)">
         <h3>Hledání, když ho potřebujete</h3>
-        <p>Jedno pole přes názvy skupin, text poznámky i titulek odkazu - pro to jedno uložení, které
-          nepřistálo tam, kam jste se podívali první.</p>
+        <p>Assorta prohledá názvy skupin, text poznámky i titulek odkazu z jednoho pole - pro to jedno
+          uložení, které nepřistálo tam, kam jste se podívali první.</p>
       </div>
       <div class="feature" style="--f-color: var(--emerald)">
         <h3>Ukládá na pozadí</h3>
-        <p>Přepněte se uprostřed ukládání - položka stejně bezpečně přistane ve své skupině. Nic se mezi aplikacemi neztratí.</p>
+        <p>Assorta dokončí ukládání na pozadí, takže i když v půlce přepnete aplikaci, položka stejně přistane ve své skupině. Nic se mezi aplikacemi neztratí.</p>
       </div>
       <div class="feature" style="--f-color: var(--purple)">
-        <h3>Všude, kde jste vy</h3>
-        <p>Android a iOS - jedna aplikace na každé obrazovce, kterou používáte. Poznámky
-          zůstávají na zařízení, kam jste je uložili; synchronizace mezi zařízeními zatím není.</p>
+        <h3>Android a iOS</h3>
+        <p>Assorta běží na telefonech a tabletech s Androidem, na iPhonu a iPadu. Poznámky zůstávají
+          na zařízení, kam jste je uložili; synchronizace mezi zařízeními zatím není.</p>
       </div>
       <div class="feature" style="--f-color: var(--sky)">
-        <h3>Ať se na to dobře dívá</h3>
-        <p>Světlý a tmavý motiv. Třináct jazyků, od angličtiny a ukrajinštiny po japonštinu,
-          korejštinu a arabštinu.</p>
+        <h3>Třídění, které nikdy nedojde</h3>
+        <p>Assorta třídí pomocí AI, dokud vám vydrží bezplatná třídění, a pak přejde na automatické
+          třídění, které běží na zařízení proti zhruba 3 000 vybraným výrazům. Tak či tak poznámka
+          přistane ve skupině - třídit se nepřestane, když dojde kvóta.</p>
       </div>
     </div>
   </div>
@@ -1136,6 +1167,100 @@
       <span class="chip" style="--c:#d946ef">Krása</span>
       <span class="chip" style="--c:#f43f5e">Osobní</span>
       <span class="chip more">…a tucet dalších</span>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="faq">
+  <div class="wrap">
+    <p class="kicker">FAQ</p>
+    <h2>Otázky, které lidé řeší před instalací</h2>
+    <div class="faq">
+      <div class="qa">
+        <h3>Co je Assorta?</h3>
+        <p>Assorta je jedna schránka na odkazy, poznámky a nápady pro Android a iOS. AI přečte, co uložíte, a zatřídí to do jedné z 30+ skupin, takže to později najdete bez složek a tagů.</p>
+      </div>
+      <div class="qa">
+        <h3>Jak Assorta pozná, do které skupiny co patří?</h3>
+        <p>Assorta přečte text nebo stránku za odkazem a vybere skupinu, která sedí - Cestování, Vaření, Seznam přání, Sport a další. Volbu vidíte ve chvíli, kdy padne.</p>
+      </div>
+      <div class="qa">
+        <h3>Co můžu do Assorty uložit?</h3>
+        <p>Odkazy sdílené z jakékoli aplikace a text, který vložíte sami. Uložený odkaz si nechává miniaturu a titulek, takže ho v seznamu poznáte, aniž byste ho otvírali.</p>
+      </div>
+      <div class="qa">
+        <h3>Je Assorta zdarma?</h3>
+        <p>Assorta je zdarma k instalaci i k používání. Prvních 15 AI třídění je zdarma; potom se třídí dál a limit AI třídění je to, co Assorta Pro sundá.</p>
+      </div>
+      <div class="qa">
+        <h3>Co je AI shrnutí?</h3>
+        <p>Klepněte u uloženého odkazu na AI shrnutí a Assorta vrátí stránku v pár řádcích, rovnou v seznamu. Shrnutí se ukládá s poznámkou, takže druhý pohled je okamžitý a funguje offline. Když stránka nedá nic, z čeho vyjít, Assorta to řekne, místo aby si shrnutí vymyslela.</p>
+      </div>
+      <div class="qa">
+        <h3>Můžu ukládat z jiných aplikací?</h3>
+        <p>Ano. Assorta sedí v systémové nabídce sdílení na Androidu i iOS, takže odkaz z YouTube, TikToku, Instagramu nebo prohlížeče jsou dvě klepnutí.</p>
+      </div>
+      <div class="qa">
+        <h3>Synchronizuje Assorta mezi zařízeními?</h3>
+        <p>Zatím ne. Poznámky zůstávají na zařízení, kam jste je uložili; synchronizace je v plánu pro Assorta Pro.</p>
+      </div>
+      <details class="faq-more">
+        <summary><span class="more-closed">Zobrazit další otázky</span><span class="more-open">Zobrazit méně</span></summary>
+        <div class="faq-rest">
+          <div class="qa">
+            <h3>Co když AI vybere špatnou skupinu?</h3>
+            <p>Změníte ji jedním klepnutím, rovnou z potvrzení - skupiny na druhém místě jsou hned vedle.</p>
+          </div>
+          <div class="qa">
+            <h3>Co se stane, až dojdou bezplatná AI třídění?</h3>
+            <p>Třídí se dál. Assorta přejde na automatické třídění, které běží na zařízení proti zhruba 3 000 vybraným výrazům a nikdy nedojde; limit AI třídění odstraní Assorta Pro.</p>
+          </div>
+          <div class="qa">
+            <h3>Co přidává Assorta Pro?</h3>
+            <p>Assorta Pro sundá limit AI třídění a přidá AI shrnutí. Je volitelné a účtuje ho Apple nebo Google.</p>
+          </div>
+          <div class="qa">
+            <h3>Můžu v uloženém hledat?</h3>
+            <p>Ano. Jedno pole prohledá názvy skupin, text poznámky i titulek odkazu a funguje bez připojení, protože vaše poznámky jsou na zařízení.</p>
+          </div>
+          <div class="qa">
+            <h3>Kde jsou moje poznámky uložené?</h3>
+            <p>Na vašem zařízení. Assorta vaše poznámky na našich serverech nedrží.</p>
+          </div>
+          <div class="qa">
+            <h3>Potřebuju účet?</h3>
+            <p>Ne. Přihlášení je volitelné; drží Assorta Pro i na vašich dalších zařízeních.</p>
+          </div>
+          <div class="qa">
+            <h3>Funguje Assorta bez připojení?</h3>
+            <p>Vaše poznámky, vaše skupiny i každé shrnutí, o které jste už požádali, jsou na zařízení, takže procházení a hledání fungují offline. AI třídění a AI shrnutí potřebují připojení; automatické třídění ne.</p>
+          </div>
+          <div class="qa">
+            <h3>Můžu poznámku později přesunout do jiné skupiny?</h3>
+            <p>Ano. Otevřete akce poznámky a vyberte Přesunout.</p>
+          </div>
+          <div class="qa">
+            <h3>Můžu své poznámky exportovat?</h3>
+            <p>Zatím ne. Export a zálohování jsou v plánu pro Assorta Pro.</p>
+          </div>
+          <div class="qa">
+            <h3>Na kterých zařízeních Assorta běží?</h3>
+            <p>Telefony a tablety s Androidem, iPhone a iPad.</p>
+          </div>
+          <div class="qa">
+            <h3>Jakými jazyky Assorta mluví?</h3>
+            <p>31, od angličtiny a ukrajinštiny po japonštinu, korejštinu a arabštinu. Assorta se řídí jazykem vašeho zařízení a změníte ho v Nastavení.</p>
+          </div>
+          <div class="qa">
+            <h3>Čím se Assorta liší od záložek nebo aplikace na poznámky?</h3>
+            <p>Složka záložek po vás chce, abyste vybrali složku, a aplikace na poznámky, abyste poznámku pojmenovali. Assorta přečte, co jste uložili, a zatřídí to sama - práce, kterou vynecháte, je právě to třídění.</p>
+          </div>
+          <div class="qa">
+            <h3>Jak smažu svůj účet a svoje data?</h3>
+            <p>Otevřete v aplikaci Nastavení a klepněte na Smazat účet, nebo nám napište a smažeme je my. <a href="delete-account.html">Stránka o smazání účtu</a> popisuje, co se maže a co zůstává.</p>
+          </div>
+        </div>
+      </details>
     </div>
   </div>
 </section>
@@ -1196,6 +1321,8 @@
       nikdy se za žádnou z nich nevydává.</p>
   </div>
 </footer>
+
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"FAQPage","@id":"https://assorta.app/cs/#faq","inLanguage":"cs","mainEntity":[{"@type":"Question","name":"Co je Assorta?","acceptedAnswer":{"@type":"Answer","text":"Assorta je jedna schránka na odkazy, poznámky a nápady pro Android a iOS. AI přečte, co uložíte, a zatřídí to do jedné z 30+ skupin, takže to později najdete bez složek a tagů."}},{"@type":"Question","name":"Jak Assorta pozná, do které skupiny co patří?","acceptedAnswer":{"@type":"Answer","text":"Assorta přečte text nebo stránku za odkazem a vybere skupinu, která sedí - Cestování, Vaření, Seznam přání, Sport a další. Volbu vidíte ve chvíli, kdy padne."}},{"@type":"Question","name":"Co můžu do Assorty uložit?","acceptedAnswer":{"@type":"Answer","text":"Odkazy sdílené z jakékoli aplikace a text, který vložíte sami. Uložený odkaz si nechává miniaturu a titulek, takže ho v seznamu poznáte, aniž byste ho otvírali."}},{"@type":"Question","name":"Je Assorta zdarma?","acceptedAnswer":{"@type":"Answer","text":"Assorta je zdarma k instalaci i k používání. Prvních 15 AI třídění je zdarma; potom se třídí dál a limit AI třídění je to, co Assorta Pro sundá."}},{"@type":"Question","name":"Co je AI shrnutí?","acceptedAnswer":{"@type":"Answer","text":"Klepněte u uloženého odkazu na AI shrnutí a Assorta vrátí stránku v pár řádcích, rovnou v seznamu. Shrnutí se ukládá s poznámkou, takže druhý pohled je okamžitý a funguje offline. Když stránka nedá nic, z čeho vyjít, Assorta to řekne, místo aby si shrnutí vymyslela."}},{"@type":"Question","name":"Můžu ukládat z jiných aplikací?","acceptedAnswer":{"@type":"Answer","text":"Ano. Assorta sedí v systémové nabídce sdílení na Androidu i iOS, takže odkaz z YouTube, TikToku, Instagramu nebo prohlížeče jsou dvě klepnutí."}},{"@type":"Question","name":"Synchronizuje Assorta mezi zařízeními?","acceptedAnswer":{"@type":"Answer","text":"Zatím ne. Poznámky zůstávají na zařízení, kam jste je uložili; synchronizace je v plánu pro Assorta Pro."}},{"@type":"Question","name":"Co když AI vybere špatnou skupinu?","acceptedAnswer":{"@type":"Answer","text":"Změníte ji jedním klepnutím, rovnou z potvrzení - skupiny na druhém místě jsou hned vedle."}},{"@type":"Question","name":"Co se stane, až dojdou bezplatná AI třídění?","acceptedAnswer":{"@type":"Answer","text":"Třídí se dál. Assorta přejde na automatické třídění, které běží na zařízení proti zhruba 3 000 vybraným výrazům a nikdy nedojde; limit AI třídění odstraní Assorta Pro."}},{"@type":"Question","name":"Co přidává Assorta Pro?","acceptedAnswer":{"@type":"Answer","text":"Assorta Pro sundá limit AI třídění a přidá AI shrnutí. Je volitelné a účtuje ho Apple nebo Google."}},{"@type":"Question","name":"Můžu v uloženém hledat?","acceptedAnswer":{"@type":"Answer","text":"Ano. Jedno pole prohledá názvy skupin, text poznámky i titulek odkazu a funguje bez připojení, protože vaše poznámky jsou na zařízení."}},{"@type":"Question","name":"Kde jsou moje poznámky uložené?","acceptedAnswer":{"@type":"Answer","text":"Na vašem zařízení. Assorta vaše poznámky na našich serverech nedrží."}},{"@type":"Question","name":"Potřebuju účet?","acceptedAnswer":{"@type":"Answer","text":"Ne. Přihlášení je volitelné; drží Assorta Pro i na vašich dalších zařízeních."}},{"@type":"Question","name":"Funguje Assorta bez připojení?","acceptedAnswer":{"@type":"Answer","text":"Vaše poznámky, vaše skupiny i každé shrnutí, o které jste už požádali, jsou na zařízení, takže procházení a hledání fungují offline. AI třídění a AI shrnutí potřebují připojení; automatické třídění ne."}},{"@type":"Question","name":"Můžu poznámku později přesunout do jiné skupiny?","acceptedAnswer":{"@type":"Answer","text":"Ano. Otevřete akce poznámky a vyberte Přesunout."}},{"@type":"Question","name":"Můžu své poznámky exportovat?","acceptedAnswer":{"@type":"Answer","text":"Zatím ne. Export a zálohování jsou v plánu pro Assorta Pro."}},{"@type":"Question","name":"Na kterých zařízeních Assorta běží?","acceptedAnswer":{"@type":"Answer","text":"Telefony a tablety s Androidem, iPhone a iPad."}},{"@type":"Question","name":"Jakými jazyky Assorta mluví?","acceptedAnswer":{"@type":"Answer","text":"31, od angličtiny a ukrajinštiny po japonštinu, korejštinu a arabštinu. Assorta se řídí jazykem vašeho zařízení a změníte ho v Nastavení."}},{"@type":"Question","name":"Čím se Assorta liší od záložek nebo aplikace na poznámky?","acceptedAnswer":{"@type":"Answer","text":"Složka záložek po vás chce, abyste vybrali složku, a aplikace na poznámky, abyste poznámku pojmenovali. Assorta přečte, co jste uložili, a zatřídí to sama - práce, kterou vynecháte, je právě to třídění."}},{"@type":"Question","name":"Jak smažu svůj účet a svoje data?","acceptedAnswer":{"@type":"Answer","text":"Otevřete v aplikaci Nastavení a klepněte na Smazat účet, nebo nám napište a smažeme je my. Stránka o smazání účtu popisuje, co se maže a co zůstává."}}]},{"@type":"SoftwareApplication","name":"Assorta","applicationCategory":"ProductivityApplication","operatingSystem":"Android, iOS","inLanguage":"cs","url":"https://assorta.app/cs/","description":"Assorta je jedna rychlá schránka na odkazy, poznámky a nápady. Vhoďte tam cokoli - AI to zatřídí do správné skupiny, takže to najdete za pár vteřin.","featureList":["Ukládání z nabídky sdílení","30+ chytrých skupin","Náhledy odkazů","AI shrnutí","Hledání, když ho potřebujete","Ukládá na pozadí","Android a iOS","Třídění, které nikdy nedojde"],"downloadUrl":["https://apps.apple.com/app/id6791126062","https://play.google.com/store/apps/details?id=com.troshchiy.assorta"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@id":"https://assorta.app/#operator"}},{"@type":"Organization","@id":"https://assorta.app/#operator","name":"Individual Entrepreneur Yevhen Troshchii","url":"https://assorta.app/","email":"contact@assorta.app","address":{"@type":"PostalAddress","addressLocality":"Odesa","addressCountry":"UA"}}]}</script>
 
 <script>window.__I18N__={"group.auto": "Auto", "group.beauty": "Krása", "group.books": "Knihy", "group.cooking": "Vaření", "group.education": "Vzdělávání", "group.family": "Rodina", "group.finance": "Finance", "group.health": "Zdraví", "group.hobby": "Koníčky", "group.home": "Domácnost", "group.ideas": "Nápady", "group.inspiration": "Inspirace", "group.movies": "Filmy a TV", "group.music": "Hudba", "group.personal": "Osobní", "group.shopping": "Nákupní seznam", "group.sport": "Sport", "group.tasks": "Úkoly", "group.tech": "Technika", "group.travel": "Cestování", "group.wishList": "Seznam přání", "group.work": "Práce", "js.or": "Nebo:", "js.theme.toDark": "Přepnout na tmavý motiv", "js.theme.toLight": "Přepnout na světlý motiv", "js.video.title": "Demo Assorty"};</script>
 

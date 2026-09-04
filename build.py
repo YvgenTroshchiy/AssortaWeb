@@ -35,7 +35,7 @@ SITE = "https://assorta.app"
 # the app's own decisions rather than a second copy that drifts away from them. The two
 # region overlays the app carries (values-es-rES, values-fr-rCA) are deltas over es and fr
 # and get no row there, which is also right here: their marketing copy would be identical.
-with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "i18n", "languages.json"),
+with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "src", "languages.json"),
           encoding="utf-8") as _f:
     LANGUAGES = json.load(_f)["languages"]
 
@@ -265,11 +265,93 @@ def runtime_strings(strings):
     return "<script>window.__I18N__=%s;</script>" % json.dumps(wanted, ensure_ascii=False)
 
 
+APP_STORE = "https://apps.apple.com/app/id6791126062"
+PLAY_STORE = "https://play.google.com/store/apps/details?id=com.troshchiy.assorta"
+TAGS = re.compile(r"<[^>]+>")
+
+
+def plain(html):
+    """Structured data carries text, not markup - an entity or an <a> inside a value is what
+    makes Google drop the whole block as invalid rather than warn about it."""
+    text = TAGS.sub("", html)
+    for entity, char in (("&nbsp;", "\u00a0"), ("&amp;", "&"), ("&lt;", "<"), ("&gt;", ">")):
+        text = text.replace(entity, char)
+    return " ".join(text.split())
+
+
+def ordered_slugs(template, prefix, suffix):
+    """The slugs as the page lists them, read back out of the template so the machine-readable
+    copy cannot drift out of step with the visible one."""
+    pattern = re.compile(r'data-i18n="%s\.([\w]+)\.%s"' % (re.escape(prefix), re.escape(suffix)))
+    seen, out = set(), []
+    for slug in pattern.findall(template):
+        if slug not in seen:
+            seen.add(slug)
+            out.append(slug)
+    return out
+
+
+def structured_data(template, locale, strings, base):
+    """FAQPage, SoftwareApplication and Organization, built from the very keys the page shows.
+
+    No aggregateRating: there is no rating to point at yet, and an invented one is the fastest
+    way to lose the rich result altogether.
+    """
+    def text(key):
+        return plain(strings.get(key, base.get(key, "")))
+
+    faq = [
+        {
+            "@type": "Question",
+            "name": text("faq.%s.q" % slug),
+            "acceptedAnswer": {"@type": "Answer", "text": text("faq.%s.a" % slug)},
+        }
+        for slug in ordered_slugs(template, "faq", "q")
+    ]
+    features = [text("features.%s.title" % slug)
+                for slug in ordered_slugs(template, "features", "title")]
+
+    graph = [
+        {
+            "@type": "FAQPage",
+            "@id": page_url(locale, "index.html") + "#faq",
+            "inLanguage": locale,
+            "mainEntity": faq,
+        },
+        {
+            "@type": "SoftwareApplication",
+            "name": "Assorta",
+            "applicationCategory": "ProductivityApplication",
+            "operatingSystem": "Android, iOS",
+            "inLanguage": locale,
+            "url": page_url(locale, "index.html"),
+            "description": text("meta.description"),
+            "featureList": features,
+            "downloadUrl": [APP_STORE, PLAY_STORE],
+            "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+            "author": {"@id": SITE + "/#operator"},
+        },
+        {
+            "@type": "Organization",
+            "@id": SITE + "/#operator",
+            "name": "Individual Entrepreneur Yevhen Troshchii",
+            "url": SITE + "/",
+            "email": "contact@assorta.app",
+            "address": {"@type": "PostalAddress", "addressLocality": "Odesa", "addressCountry": "UA"},
+        },
+    ]
+    payload = json.dumps({"@context": "https://schema.org", "@graph": graph},
+                         ensure_ascii=False, separators=(",", ":"))
+    return '<script type="application/ld+json">%s</script>' % payload
+
+
 def build_page(template, locale, page, strings):
     html = render(template, strings)
     html = html.replace("<!--i18n:head-->", head_links(locale, page))
     html = html.replace("<!--i18n:picker-->", picker(locale, page, strings))
     html = html.replace("<!--i18n:runtime-->", runtime_strings(strings))
+    if "<!--i18n:jsonld-->" in html:
+        html = html.replace("<!--i18n:jsonld-->", structured_data(template, locale, strings, load_base()))
     lang_attr = 'lang="%s"' % locale
     if locale in RTL:
         lang_attr += ' dir="rtl"'

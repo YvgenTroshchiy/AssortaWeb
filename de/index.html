@@ -44,21 +44,21 @@
 <meta name="theme-color" content="#131129">
 <style>
   /* Palette mirrors the app's semantic tokens (AssortaKMP ui/theme/SemanticColor.kt).
-     Dark is the default — it also survives JS being off; light overrides it via
+     Dark is the default - it also survives JS being off; light overrides it via
      data-theme="light" on <html>, stamped before first paint by the inline script
      at the end of <head>. Tag hues are shared by both app palettes, so they are
      declared once and never overridden. */
   :root {
     --bg: #131129;
-    --panel: #1e1b4b;            /* Indigo.v950 — bgAppGradientEnd */
+    --panel: #1e1b4b;            /* Indigo.v950 - bgAppGradientEnd */
     --panel-soft: #232052;
     --line: #34306b;
-    --indigo: #6366f1;           /* Indigo.v600 — accentPrimary, shared by both themes */
+    --indigo: #6366f1;           /* Indigo.v600 - accentPrimary, shared by both themes */
     --indigo-bright: #818cf8;
     /* accentPrimary is the brand hue but is too light to carry text: white on it is 4.46:1
        and it reads 3.1-3.8:1 as a glyph on its own tint. This mirrors the app's bgAccent -
        the fill that sits under white text. Borders, glows and tints keep --indigo. */
-    --accent-fill: #4f46e5;      /* Indigo.v700 — bgAccent */
+    --accent-fill: #4f46e5;      /* Indigo.v700 - bgAccent */
     --text: #eef0ff;
     --text-dim: #a3a6cc;
     /* The app's own screen background, verbatim from SemanticColors
@@ -121,17 +121,17 @@
     --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
   :root[data-theme="light"] {
-    --bg: #f8fafc;               /* Gray.v50   — bgAppGradientStart */
-    --panel: #eef2ff;            /* Indigo.v50 — bgAppGradientEnd */
+    --bg: #f8fafc;               /* Gray.v50   - bgAppGradientStart */
+    --panel: #eef2ff;            /* Indigo.v50 - bgAppGradientEnd */
     --panel-soft: #e3e9fb;
     --line: #d2dae9;             /* borderCard, lifted from Gray.v500a20 to stay visible on light */
-    --indigo-bright: #4f46e5;    /* Indigo.v700 — the accent that still reads on a light background */
-    --text: #0f172a;             /* Gray.v950 — fgPrimary */
+    --indigo-bright: #4f46e5;    /* Indigo.v700 - the accent that still reads on a light background */
+    --text: #0f172a;             /* Gray.v950 - fgPrimary */
     /* Still the app's fgSecondary, which moved to Gray.v700 for the same reason:
        the old Gray.v600 (#64748b) landed at 3.4-4.4:1 on the tinted panels this
        site invents (.cell, .step, section.alt) and on the app's own gradient end.
        v700 clears AA everywhere, worst case 5.4:1 on the .cell tints. */
-    --text-dim: #475569;         /* Gray.v700 — fgSecondary */
+    --text-dim: #475569;         /* Gray.v700 - fgSecondary */
     --app-grad-start: #f8fafc;   /* Gray.v50 */
     --app-grad-end:   #eef2ff;   /* Indigo.v50 */
     /* Mockup palette, light. Rows with an app token take it; the rest reproduce
@@ -525,6 +525,35 @@
   /* ---- sections ---- */
   section { padding: 64px 0; }
   section.alt { background: color-mix(in srgb, var(--panel) 32%, var(--bg)); }
+  /* ---- FAQ ---- */
+  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall. */
+  .faq { max-width: 760px; }
+  .faq .qa { padding: 17px 0; border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+  .faq > .qa:first-of-type { border-top: 0; padding-top: 4px; }
+  .faq h3 { font-family: var(--font-display); font-size: 17.5px; margin-bottom: 7px; }
+  .faq p { color: var(--text-dim); line-height: 1.65; }
+  .faq a { color: var(--indigo-bright); }
+  /* <details> and not a script: the thirteen collapsed answers stay in the page source, so a
+     crawler and an answer engine read all twenty however much a human unfolded. */
+  .faq-more { border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+  .faq-more > summary {
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 18px;
+    padding: 9px 18px; border: 1px solid var(--line); border-radius: 999px;
+    color: var(--text-dim); font-size: 14.5px; cursor: pointer; list-style: none;
+    transition: color .15s, border-color .15s;
+  }
+  .faq-more > summary::-webkit-details-marker { display: none; }
+  .faq-more > summary:hover { color: var(--text); border-color: var(--indigo); }
+  .faq-more > summary:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; }
+  .faq-more > summary::after {
+    content: ""; width: 7px; height: 7px; border-right: 1.6px solid currentColor;
+    border-bottom: 1.6px solid currentColor; transform: translateY(-2px) rotate(45deg);
+  }
+  .faq-more[open] > summary::after { transform: translateY(1px) rotate(225deg); }
+  .faq-more > summary .more-open { display: none; }
+  .faq-more[open] > summary .more-closed { display: none; }
+  .faq-more[open] > summary .more-open { display: inline; }
+  .faq-rest { margin-top: 4px; }
   .kicker {
     font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
     text-transform: uppercase; color: var(--indigo-bright); margin-bottom: 14px;
@@ -1071,31 +1100,31 @@
       </div>
       <div class="feature" style="--f-color: var(--amber)">
         <h3>30+ smarte Gruppen</h3>
-        <p>Die KI wählt die Gruppe in dem Moment, in dem du speicherst. Anderer Meinung? Ändere sie mit einem Fingertipp - direkt in der Bestätigung.</p>
+        <p>Assorta legt jeden Eintrag in dem Moment, in dem du ihn hinzufügst, in eine von 30+ fertigen Gruppen - Reisen, Kochen, Wunschliste, Sport. Anderer Meinung? Ändere sie mit einem Fingertipp, direkt in der Bestätigung.</p>
       </div>
       <div class="feature" style="--f-color: var(--cyan)">
         <h3>Linkvorschauen</h3>
-        <p>Gespeicherte Links behalten Vorschaubild und Titel - ein YouTube-Standbild, ein Produktfoto, ein Artikelbild -, damit du sie auf einen Blick erkennst.</p>
+        <p>Assorta behält Vorschaubild und Titel eines gespeicherten Links - ein YouTube-Standbild, ein Produktfoto, ein Artikelbild -, damit du ihn auf einen Blick erkennst.</p>
       </div>
       <div class="feature" style="--f-color: var(--indigo)">
         <h3>KI-Zusammenfassung</h3>
-        <p>Tippe bei einem gespeicherten Link auf KI-Zusammenfassung und lies die Seite in ein paar Zeilen, ohne sie zu öffnen. Die Zusammenfassung wird bei der Notiz gespeichert: Der zweite Blick geht sofort und auch offline. In Assorta Pro enthalten.</p>
+        <p>Tippe bei einem gespeicherten Link auf KI-Zusammenfassung, und Assorta bringt die Seite in ein paar Zeilen zurück, ohne sie zu öffnen. Die Zusammenfassung wird bei der Notiz gespeichert: Der zweite Blick geht sofort und auch offline. In Assorta Pro enthalten.</p>
       </div>
       <div class="feature" style="--f-color: var(--teal)">
         <h3>Suche, wenn du sie brauchst</h3>
-        <p>Ein Feld über Gruppennamen, den Text einer Notiz und den Titel eines Links - für den einen Eintrag, der nicht dort gelandet ist, wo du zuerst geschaut hast.</p>
+        <p>Assorta durchsucht Gruppennamen, den Text einer Notiz und den Titel eines Links aus einem Feld - für den einen Eintrag, der nicht dort gelandet ist, wo du zuerst geschaut hast.</p>
       </div>
       <div class="feature" style="--f-color: var(--emerald)">
         <h3>Speichert im Hintergrund</h3>
-        <p>Wechsle mitten im Speichern die App - der Eintrag landet trotzdem sicher in seiner Gruppe. Zwischen zwei Apps geht nichts verloren.</p>
+        <p>Assorta bringt das Speichern im Hintergrund zu Ende: Wechselst du mittendrin die App, landet der Eintrag trotzdem in seiner Gruppe. Zwischen zwei Apps geht nichts verloren.</p>
       </div>
       <div class="feature" style="--f-color: var(--purple)">
-        <h3>Überall, wo du bist</h3>
-        <p>Android und iOS - eine App auf jedem Bildschirm, den du nutzt. Notizen bleiben auf dem Gerät, auf dem du sie gespeichert hast; eine Synchronisierung zwischen Geräten gibt es noch nicht.</p>
+        <h3>Android und iOS</h3>
+        <p>Assorta läuft auf Android-Smartphones und -Tablets, iPhone und iPad. Notizen bleiben auf dem Gerät, auf dem du sie gespeichert hast; eine Synchronisierung zwischen Geräten gibt es noch nicht.</p>
       </div>
       <div class="feature" style="--f-color: var(--sky)">
-        <h3>Sieht aus, wie du willst</h3>
-        <p>Helles und dunkles Design. Dreizehn Sprachen, von Englisch und Ukrainisch bis Japanisch, Koreanisch und Arabisch.</p>
+        <h3>Sortieren, das nie ausgeht</h3>
+        <p>Assorta sortiert mit KI, solange deine kostenlosen Sortierungen reichen, und greift danach auf die automatische Sortierung zurück, die auf dem Gerät anhand von rund 3.000 kuratierten Begriffen läuft. So oder so landet die Notiz in einer Gruppe - das Ablegen hört nicht auf, wenn das Kontingent aufgebraucht ist.</p>
       </div>
     </div>
   </div>
@@ -1128,6 +1157,100 @@
       <span class="chip" style="--c:#d946ef">Beauty</span>
       <span class="chip" style="--c:#f43f5e">Persönlich</span>
       <span class="chip more">…und ein Dutzend mehr</span>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="faq">
+  <div class="wrap">
+    <p class="kicker">FAQ</p>
+    <h2>Fragen, die Leute vor dem Installieren stellen</h2>
+    <div class="faq">
+      <div class="qa">
+        <h3>Was ist Assorta?</h3>
+        <p>Assorta ist eine Ablage für Links, Notizen und Ideen unter Android und iOS. Die KI liest, was du speicherst, und legt es in eine von 30+ Gruppen - so findest du es später ohne Ordner und ohne Tags.</p>
+      </div>
+      <div class="qa">
+        <h3>Wie entscheidet Assorta, in welche Gruppe etwas kommt?</h3>
+        <p>Assorta liest den Text oder die Seite hinter einem Link und wählt die passende Gruppe - Reisen, Kochen, Wunschliste, Sport und die anderen. Du siehst die Wahl in dem Moment, in dem sie getroffen wird.</p>
+      </div>
+      <div class="qa">
+        <h3>Was kann ich in Assorta speichern?</h3>
+        <p>Links, die du aus einer beliebigen App teilst, und Text, den du selbst einfügst. Ein gespeicherter Link behält Vorschaubild und Titel, damit du ihn in der Liste erkennst, ohne ihn zu öffnen.</p>
+      </div>
+      <div class="qa">
+        <h3>Ist Assorta kostenlos?</h3>
+        <p>Assorta ist kostenlos zu installieren und kostenlos zu nutzen. Die ersten 15 KI-Sortierungen sind kostenlos; danach wird weiter abgelegt, und das Limit für das KI-Sortieren ist das, was Assorta Pro aufhebt.</p>
+      </div>
+      <div class="qa">
+        <h3>Was ist die KI-Zusammenfassung?</h3>
+        <p>Tippe bei einem gespeicherten Link auf KI-Zusammenfassung, und Assorta bringt die Seite in ein paar Zeilen zurück, direkt in der Liste. Die Zusammenfassung wird bei der Notiz gespeichert: Der zweite Blick geht sofort und auch offline. Gibt eine Seite nichts her, sagt Assorta das, statt eine Zusammenfassung zu erfinden.</p>
+      </div>
+      <div class="qa">
+        <h3>Kann ich aus anderen Apps speichern?</h3>
+        <p>Ja. Assorta sitzt im Teilen-Menü von Android und iOS, ein Link aus YouTube, TikTok, Instagram oder einem Browser sind also zwei Fingertipps.</p>
+      </div>
+      <div class="qa">
+        <h3>Synchronisiert Assorta zwischen Geräten?</h3>
+        <p>Noch nicht. Notizen bleiben auf dem Gerät, auf dem du sie gespeichert hast; die Synchronisierung steht auf der Roadmap von Assorta Pro.</p>
+      </div>
+      <details class="faq-more">
+        <summary><span class="more-closed">Mehr Fragen anzeigen</span><span class="more-open">Weniger anzeigen</span></summary>
+        <div class="faq-rest">
+          <div class="qa">
+            <h3>Was, wenn die KI die falsche Gruppe wählt?</h3>
+            <p>Ändere sie mit einem Fingertipp, direkt in der Bestätigung - die nächstbesten Gruppen stehen gleich daneben.</p>
+          </div>
+          <div class="qa">
+            <h3>Was passiert, wenn die kostenlosen KI-Sortierungen aufgebraucht sind?</h3>
+            <p>Abgelegt wird weiter. Assorta greift auf die automatische Sortierung zurück, die auf dem Gerät anhand von rund 3.000 kuratierten Begriffen läuft und nie aufgebraucht ist; Assorta Pro ist das, was das Limit für das KI-Sortieren aufhebt.</p>
+          </div>
+          <div class="qa">
+            <h3>Was bringt Assorta Pro?</h3>
+            <p>Assorta Pro hebt das Limit für das KI-Sortieren auf und gibt die KI-Zusammenfassung dazu. Es ist optional und wird über Apple oder Google abgerechnet.</p>
+          </div>
+          <div class="qa">
+            <h3>Kann ich Gespeichertes durchsuchen?</h3>
+            <p>Ja. Ein Feld durchsucht Gruppennamen, den Text einer Notiz und den Titel eines Links, und es funktioniert ohne Verbindung, weil deine Notizen auf dem Gerät liegen.</p>
+          </div>
+          <div class="qa">
+            <h3>Wo werden meine Notizen gespeichert?</h3>
+            <p>Auf deinem Gerät. Assorta bewahrt deine Notizen nicht auf unseren Servern auf.</p>
+          </div>
+          <div class="qa">
+            <h3>Brauche ich ein Konto?</h3>
+            <p>Nein. Das Anmelden ist optional; es sorgt dafür, dass Assorta Pro auch auf deinen anderen Geräten da ist.</p>
+          </div>
+          <div class="qa">
+            <h3>Funktioniert Assorta ohne Verbindung?</h3>
+            <p>Deine Notizen, deine Gruppen und jede schon erstellte Zusammenfassung liegen auf dem Gerät, Stöbern und Suchen funktionieren also offline. Das KI-Sortieren und die KI-Zusammenfassung brauchen eine Verbindung, die automatische Sortierung nicht.</p>
+          </div>
+          <div class="qa">
+            <h3>Kann ich eine Notiz später in eine andere Gruppe verschieben?</h3>
+            <p>Ja. Öffne die Aktionen der Notiz und wähle Verschieben.</p>
+          </div>
+          <div class="qa">
+            <h3>Kann ich meine Notizen exportieren?</h3>
+            <p>Noch nicht. Export und Backup stehen auf der Roadmap von Assorta Pro.</p>
+          </div>
+          <div class="qa">
+            <h3>Auf welchen Geräten läuft Assorta?</h3>
+            <p>Android-Smartphones und -Tablets, iPhone und iPad.</p>
+          </div>
+          <div class="qa">
+            <h3>Welche Sprachen spricht Assorta?</h3>
+            <p>31, von Englisch und Ukrainisch bis Japanisch, Koreanisch und Arabisch. Assorta folgt der Sprache deines Geräts, und in den Einstellungen kannst du sie ändern.</p>
+          </div>
+          <div class="qa">
+            <h3>Was macht Assorta anders als Lesezeichen oder eine Notizen-App?</h3>
+            <p>Ein Lesezeichen-Ordner verlangt, dass du den Ordner wählst, und eine Notizen-App, dass du die Notiz benennst. Assorta liest, was du gespeichert hast, und legt es selbst ab - die Arbeit, die du sparst, ist das Sortieren.</p>
+          </div>
+          <div class="qa">
+            <h3>Wie lösche ich mein Konto und meine Daten?</h3>
+            <p>Öffne in der App die Einstellungen und tippe auf Konto löschen, oder schreib uns und wir erledigen es. Die <a href="delete-account.html">Seite zum Löschen des Kontos</a> erklärt, was entfernt und was aufbewahrt wird.</p>
+          </div>
+        </div>
+      </details>
     </div>
   </div>
 </section>
@@ -1180,6 +1303,8 @@
     <p>Fremde Markennamen, Logos, Links und Vorschaubilder auf dieser Seite sind Beispiele für Inhalte, die du mit Assorta speichern kannst - eben das, was jemand in die App wirft -, ausgenommen die Badges von App&nbsp;Store und Google&nbsp;Play, die zu den Stores führen, in denen die App veröffentlicht ist. Sie alle bleiben Eigentum ihrer jeweiligen Inhaber. Assorta ist eine unabhängige App: Sie ist mit keiner der gezeigten Marken verbunden, wird von keiner unterstützt und von keiner gesponsert, keine von ihnen ist daran beteiligt, und sie gibt sich nie als eine von ihnen aus.</p>
   </div>
 </footer>
+
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"FAQPage","@id":"https://assorta.app/de/#faq","inLanguage":"de","mainEntity":[{"@type":"Question","name":"Was ist Assorta?","acceptedAnswer":{"@type":"Answer","text":"Assorta ist eine Ablage für Links, Notizen und Ideen unter Android und iOS. Die KI liest, was du speicherst, und legt es in eine von 30+ Gruppen - so findest du es später ohne Ordner und ohne Tags."}},{"@type":"Question","name":"Wie entscheidet Assorta, in welche Gruppe etwas kommt?","acceptedAnswer":{"@type":"Answer","text":"Assorta liest den Text oder die Seite hinter einem Link und wählt die passende Gruppe - Reisen, Kochen, Wunschliste, Sport und die anderen. Du siehst die Wahl in dem Moment, in dem sie getroffen wird."}},{"@type":"Question","name":"Was kann ich in Assorta speichern?","acceptedAnswer":{"@type":"Answer","text":"Links, die du aus einer beliebigen App teilst, und Text, den du selbst einfügst. Ein gespeicherter Link behält Vorschaubild und Titel, damit du ihn in der Liste erkennst, ohne ihn zu öffnen."}},{"@type":"Question","name":"Ist Assorta kostenlos?","acceptedAnswer":{"@type":"Answer","text":"Assorta ist kostenlos zu installieren und kostenlos zu nutzen. Die ersten 15 KI-Sortierungen sind kostenlos; danach wird weiter abgelegt, und das Limit für das KI-Sortieren ist das, was Assorta Pro aufhebt."}},{"@type":"Question","name":"Was ist die KI-Zusammenfassung?","acceptedAnswer":{"@type":"Answer","text":"Tippe bei einem gespeicherten Link auf KI-Zusammenfassung, und Assorta bringt die Seite in ein paar Zeilen zurück, direkt in der Liste. Die Zusammenfassung wird bei der Notiz gespeichert: Der zweite Blick geht sofort und auch offline. Gibt eine Seite nichts her, sagt Assorta das, statt eine Zusammenfassung zu erfinden."}},{"@type":"Question","name":"Kann ich aus anderen Apps speichern?","acceptedAnswer":{"@type":"Answer","text":"Ja. Assorta sitzt im Teilen-Menü von Android und iOS, ein Link aus YouTube, TikTok, Instagram oder einem Browser sind also zwei Fingertipps."}},{"@type":"Question","name":"Synchronisiert Assorta zwischen Geräten?","acceptedAnswer":{"@type":"Answer","text":"Noch nicht. Notizen bleiben auf dem Gerät, auf dem du sie gespeichert hast; die Synchronisierung steht auf der Roadmap von Assorta Pro."}},{"@type":"Question","name":"Was, wenn die KI die falsche Gruppe wählt?","acceptedAnswer":{"@type":"Answer","text":"Ändere sie mit einem Fingertipp, direkt in der Bestätigung - die nächstbesten Gruppen stehen gleich daneben."}},{"@type":"Question","name":"Was passiert, wenn die kostenlosen KI-Sortierungen aufgebraucht sind?","acceptedAnswer":{"@type":"Answer","text":"Abgelegt wird weiter. Assorta greift auf die automatische Sortierung zurück, die auf dem Gerät anhand von rund 3.000 kuratierten Begriffen läuft und nie aufgebraucht ist; Assorta Pro ist das, was das Limit für das KI-Sortieren aufhebt."}},{"@type":"Question","name":"Was bringt Assorta Pro?","acceptedAnswer":{"@type":"Answer","text":"Assorta Pro hebt das Limit für das KI-Sortieren auf und gibt die KI-Zusammenfassung dazu. Es ist optional und wird über Apple oder Google abgerechnet."}},{"@type":"Question","name":"Kann ich Gespeichertes durchsuchen?","acceptedAnswer":{"@type":"Answer","text":"Ja. Ein Feld durchsucht Gruppennamen, den Text einer Notiz und den Titel eines Links, und es funktioniert ohne Verbindung, weil deine Notizen auf dem Gerät liegen."}},{"@type":"Question","name":"Wo werden meine Notizen gespeichert?","acceptedAnswer":{"@type":"Answer","text":"Auf deinem Gerät. Assorta bewahrt deine Notizen nicht auf unseren Servern auf."}},{"@type":"Question","name":"Brauche ich ein Konto?","acceptedAnswer":{"@type":"Answer","text":"Nein. Das Anmelden ist optional; es sorgt dafür, dass Assorta Pro auch auf deinen anderen Geräten da ist."}},{"@type":"Question","name":"Funktioniert Assorta ohne Verbindung?","acceptedAnswer":{"@type":"Answer","text":"Deine Notizen, deine Gruppen und jede schon erstellte Zusammenfassung liegen auf dem Gerät, Stöbern und Suchen funktionieren also offline. Das KI-Sortieren und die KI-Zusammenfassung brauchen eine Verbindung, die automatische Sortierung nicht."}},{"@type":"Question","name":"Kann ich eine Notiz später in eine andere Gruppe verschieben?","acceptedAnswer":{"@type":"Answer","text":"Ja. Öffne die Aktionen der Notiz und wähle Verschieben."}},{"@type":"Question","name":"Kann ich meine Notizen exportieren?","acceptedAnswer":{"@type":"Answer","text":"Noch nicht. Export und Backup stehen auf der Roadmap von Assorta Pro."}},{"@type":"Question","name":"Auf welchen Geräten läuft Assorta?","acceptedAnswer":{"@type":"Answer","text":"Android-Smartphones und -Tablets, iPhone und iPad."}},{"@type":"Question","name":"Welche Sprachen spricht Assorta?","acceptedAnswer":{"@type":"Answer","text":"31, von Englisch und Ukrainisch bis Japanisch, Koreanisch und Arabisch. Assorta folgt der Sprache deines Geräts, und in den Einstellungen kannst du sie ändern."}},{"@type":"Question","name":"Was macht Assorta anders als Lesezeichen oder eine Notizen-App?","acceptedAnswer":{"@type":"Answer","text":"Ein Lesezeichen-Ordner verlangt, dass du den Ordner wählst, und eine Notizen-App, dass du die Notiz benennst. Assorta liest, was du gespeichert hast, und legt es selbst ab - die Arbeit, die du sparst, ist das Sortieren."}},{"@type":"Question","name":"Wie lösche ich mein Konto und meine Daten?","acceptedAnswer":{"@type":"Answer","text":"Öffne in der App die Einstellungen und tippe auf Konto löschen, oder schreib uns und wir erledigen es. Die Seite zum Löschen des Kontos erklärt, was entfernt und was aufbewahrt wird."}}]},{"@type":"SoftwareApplication","name":"Assorta","applicationCategory":"ProductivityApplication","operatingSystem":"Android, iOS","inLanguage":"de","url":"https://assorta.app/de/","description":"Assorta ist eine schnelle Ablage für Links, Notizen und Ideen. Wirf alles hinein - die KI legt es in die richtige Gruppe, und du findest es in Sekunden.","featureList":["Speichern aus dem Teilen-Menü","30+ smarte Gruppen","Linkvorschauen","KI-Zusammenfassung","Suche, wenn du sie brauchst","Speichert im Hintergrund","Android und iOS","Sortieren, das nie ausgeht"],"downloadUrl":["https://apps.apple.com/app/id6791126062","https://play.google.com/store/apps/details?id=com.troshchiy.assorta"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@id":"https://assorta.app/#operator"}},{"@type":"Organization","@id":"https://assorta.app/#operator","name":"Individual Entrepreneur Yevhen Troshchii","url":"https://assorta.app/","email":"contact@assorta.app","address":{"@type":"PostalAddress","addressLocality":"Odesa","addressCountry":"UA"}}]}</script>
 
 <script>window.__I18N__={"group.auto": "Auto", "group.beauty": "Beauty", "group.books": "Bücher", "group.cooking": "Kochen", "group.education": "Bildung", "group.family": "Familie", "group.finance": "Finanzen", "group.health": "Gesundheit", "group.hobby": "Hobbys", "group.home": "Zuhause", "group.ideas": "Ideen", "group.inspiration": "Inspiration", "group.movies": "Filme &amp; TV", "group.music": "Musik", "group.personal": "Persönlich", "group.shopping": "Einkaufsliste", "group.sport": "Sport", "group.tasks": "Aufgaben", "group.tech": "Technik", "group.travel": "Reisen", "group.wishList": "Wunschliste", "group.work": "Arbeit", "js.or": "Oder:", "js.theme.toDark": "Zu dunklem Design wechseln", "js.theme.toLight": "Zu hellem Design wechseln", "js.video.title": "Assorta-Demo"};</script>
 

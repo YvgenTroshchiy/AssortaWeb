@@ -44,21 +44,21 @@
 <meta name="theme-color" content="#131129">
 <style>
   /* Palette mirrors the app's semantic tokens (AssortaKMP ui/theme/SemanticColor.kt).
-     Dark is the default — it also survives JS being off; light overrides it via
+     Dark is the default - it also survives JS being off; light overrides it via
      data-theme="light" on <html>, stamped before first paint by the inline script
      at the end of <head>. Tag hues are shared by both app palettes, so they are
      declared once and never overridden. */
   :root {
     --bg: #131129;
-    --panel: #1e1b4b;            /* Indigo.v950 — bgAppGradientEnd */
+    --panel: #1e1b4b;            /* Indigo.v950 - bgAppGradientEnd */
     --panel-soft: #232052;
     --line: #34306b;
-    --indigo: #6366f1;           /* Indigo.v600 — accentPrimary, shared by both themes */
+    --indigo: #6366f1;           /* Indigo.v600 - accentPrimary, shared by both themes */
     --indigo-bright: #818cf8;
     /* accentPrimary is the brand hue but is too light to carry text: white on it is 4.46:1
        and it reads 3.1-3.8:1 as a glyph on its own tint. This mirrors the app's bgAccent -
        the fill that sits under white text. Borders, glows and tints keep --indigo. */
-    --accent-fill: #4f46e5;      /* Indigo.v700 — bgAccent */
+    --accent-fill: #4f46e5;      /* Indigo.v700 - bgAccent */
     --text: #eef0ff;
     --text-dim: #a3a6cc;
     /* The app's own screen background, verbatim from SemanticColors
@@ -121,17 +121,17 @@
     --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
   :root[data-theme="light"] {
-    --bg: #f8fafc;               /* Gray.v50   — bgAppGradientStart */
-    --panel: #eef2ff;            /* Indigo.v50 — bgAppGradientEnd */
+    --bg: #f8fafc;               /* Gray.v50   - bgAppGradientStart */
+    --panel: #eef2ff;            /* Indigo.v50 - bgAppGradientEnd */
     --panel-soft: #e3e9fb;
     --line: #d2dae9;             /* borderCard, lifted from Gray.v500a20 to stay visible on light */
-    --indigo-bright: #4f46e5;    /* Indigo.v700 — the accent that still reads on a light background */
-    --text: #0f172a;             /* Gray.v950 — fgPrimary */
+    --indigo-bright: #4f46e5;    /* Indigo.v700 - the accent that still reads on a light background */
+    --text: #0f172a;             /* Gray.v950 - fgPrimary */
     /* Still the app's fgSecondary, which moved to Gray.v700 for the same reason:
        the old Gray.v600 (#64748b) landed at 3.4-4.4:1 on the tinted panels this
        site invents (.cell, .step, section.alt) and on the app's own gradient end.
        v700 clears AA everywhere, worst case 5.4:1 on the .cell tints. */
-    --text-dim: #475569;         /* Gray.v700 — fgSecondary */
+    --text-dim: #475569;         /* Gray.v700 - fgSecondary */
     --app-grad-start: #f8fafc;   /* Gray.v50 */
     --app-grad-end:   #eef2ff;   /* Indigo.v50 */
     /* Mockup palette, light. Rows with an app token take it; the rest reproduce
@@ -525,6 +525,35 @@
   /* ---- sections ---- */
   section { padding: 64px 0; }
   section.alt { background: color-mix(in srgb, var(--panel) 32%, var(--bg)); }
+  /* ---- FAQ ---- */
+  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall. */
+  .faq { max-width: 760px; }
+  .faq .qa { padding: 17px 0; border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+  .faq > .qa:first-of-type { border-top: 0; padding-top: 4px; }
+  .faq h3 { font-family: var(--font-display); font-size: 17.5px; margin-bottom: 7px; }
+  .faq p { color: var(--text-dim); line-height: 1.65; }
+  .faq a { color: var(--indigo-bright); }
+  /* <details> and not a script: the thirteen collapsed answers stay in the page source, so a
+     crawler and an answer engine read all twenty however much a human unfolded. */
+  .faq-more { border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+  .faq-more > summary {
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 18px;
+    padding: 9px 18px; border: 1px solid var(--line); border-radius: 999px;
+    color: var(--text-dim); font-size: 14.5px; cursor: pointer; list-style: none;
+    transition: color .15s, border-color .15s;
+  }
+  .faq-more > summary::-webkit-details-marker { display: none; }
+  .faq-more > summary:hover { color: var(--text); border-color: var(--indigo); }
+  .faq-more > summary:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; }
+  .faq-more > summary::after {
+    content: ""; width: 7px; height: 7px; border-right: 1.6px solid currentColor;
+    border-bottom: 1.6px solid currentColor; transform: translateY(-2px) rotate(45deg);
+  }
+  .faq-more[open] > summary::after { transform: translateY(1px) rotate(225deg); }
+  .faq-more > summary .more-open { display: none; }
+  .faq-more[open] > summary .more-closed { display: none; }
+  .faq-more[open] > summary .more-open { display: inline; }
+  .faq-rest { margin-top: 4px; }
   .kicker {
     font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
     text-transform: uppercase; color: var(--indigo-bright); margin-bottom: 14px;
@@ -1075,36 +1104,38 @@
       </div>
       <div class="feature" style="--f-color: var(--amber)">
         <h3>30+ groupes intelligents</h3>
-        <p>L’IA choisit le groupe au moment où vous enregistrez. Pas d’accord ? Changez-en d’un seul toucher - directement depuis la confirmation.</p>
+        <p>Assorta range chaque enregistrement dans l’un des 30+ groupes intégrés au moment où vous l’ajoutez - Voyages, Cuisine, Liste d’envies, Sport. Pas d’accord ? Changez-en d’un seul toucher, directement depuis la confirmation.</p>
       </div>
       <div class="feature" style="--f-color: var(--cyan)">
         <h3>Aperçus de liens</h3>
-        <p>Les liens enregistrés gardent leur vignette et leur titre - une image YouTube, une photo de produit, la couverture d’un article - pour les reconnaître d’un coup d’œil.</p>
+        <p>Assorta garde la vignette et le titre d’un lien enregistré - une image YouTube, une photo de produit, la couverture d’un article - pour le reconnaître d’un coup d’œil.</p>
       </div>
       <div class="feature" style="--f-color: var(--indigo)">
         <h3>Résumé par IA</h3>
-        <p>Touchez Résumé par IA sur un lien enregistré et lisez la page en quelques lignes, sans l’ouvrir. Le résumé
-          est gardé avec la note : le rouvrir est instantané et fonctionne hors ligne. Inclus avec Assorta Pro.</p>
+        <p>Touchez Résumé par IA sur un lien enregistré et Assorta ramène la page en quelques lignes,
+          sans l’ouvrir. Le résumé est gardé avec la note : le rouvrir est instantané et fonctionne
+          hors ligne. Inclus avec Assorta Pro.</p>
       </div>
       <div class="feature" style="--f-color: var(--teal)">
         <h3>La recherche quand il la faut</h3>
-        <p>Un seul champ sur les noms de groupes, le texte d’une note et le titre d’un lien - pour
-          cet enregistrement qui n’était pas là où vous avez cherché en premier.</p>
+        <p>Assorta cherche dans les noms de groupes, le texte d’une note et le titre d’un lien depuis
+          un seul champ - pour cet enregistrement qui n’était pas là où vous avez cherché en premier.</p>
       </div>
       <div class="feature" style="--f-color: var(--emerald)">
         <h3>Enregistrement en arrière-plan</h3>
-        <p>Changez d’app en plein enregistrement - l’élément arrive quand même dans son groupe. Rien ne se perd entre deux apps.</p>
+        <p>Assorta termine l’enregistrement en arrière-plan : changer d’app en plein ajout laisse quand même l’élément arriver dans son groupe. Rien ne se perd entre deux apps.</p>
       </div>
       <div class="feature" style="--f-color: var(--purple)">
-        <h3>Partout où vous êtes</h3>
-        <p>Android et iOS - une seule app sur tous les écrans que vous utilisez. Les notes
-          restent sur l’appareil où vous les avez enregistrées ; la synchronisation entre appareils
-          n’est pas encore là.</p>
+        <h3>Android et iOS</h3>
+        <p>Assorta fonctionne sur les téléphones et tablettes Android, sur iPhone et sur iPad. Les
+          notes restent sur l’appareil où vous les avez enregistrées ; la synchronisation entre
+          appareils n’est pas encore là.</p>
       </div>
       <div class="feature" style="--f-color: var(--sky)">
-        <h3>À votre goût</h3>
-        <p>Thèmes clair et sombre. Treize langues, de l’anglais et l’ukrainien au japonais,
-          au coréen et à l’arabe.</p>
+        <h3>Un tri qui ne s’épuise jamais</h3>
+        <p>Assorta trie avec l’IA tant qu’il vous reste des tris gratuits, puis bascule sur le tri
+          automatique, qui tourne sur l’appareil avec environ 3 000 termes sélectionnés. Dans les
+          deux cas la note arrive dans un groupe - le rangement ne s’arrête pas quand le quota s’arrête.</p>
       </div>
     </div>
   </div>
@@ -1137,6 +1168,100 @@
       <span class="chip" style="--c:#d946ef">Beauté</span>
       <span class="chip" style="--c:#f43f5e">Personnel</span>
       <span class="chip more">…et une douzaine d’autres</span>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="faq">
+  <div class="wrap">
+    <p class="kicker">FAQ</p>
+    <h2>Les questions qu’on se pose avant d’installer</h2>
+    <div class="faq">
+      <div class="qa">
+        <h3>Qu’est-ce qu’Assorta ?</h3>
+        <p>Assorta est une boîte de réception unique pour vos liens, vos notes et vos idées, sur Android et iOS. L’IA lit ce que vous enregistrez et le range dans l’un des 30+ groupes, pour le retrouver ensuite sans dossiers ni tags.</p>
+      </div>
+      <div class="qa">
+        <h3>Comment Assorta décide-t-elle dans quel groupe ranger un élément ?</h3>
+        <p>Assorta lit le texte, ou la page derrière un lien, et choisit le groupe qui convient - Voyages, Cuisine, Liste d’envies, Sport et les autres. Vous voyez le choix au moment où il est fait.</p>
+      </div>
+      <div class="qa">
+        <h3>Que peut-on enregistrer dans Assorta ?</h3>
+        <p>Les liens partagés depuis n’importe quelle app, et le texte que vous collez vous-même. Un lien enregistré garde sa vignette et son titre, pour le reconnaître dans la liste sans l’ouvrir.</p>
+      </div>
+      <div class="qa">
+        <h3>Assorta est-elle gratuite ?</h3>
+        <p>Assorta est gratuite à installer et gratuite à utiliser. Les 15 premiers tris par IA sont gratuits ; ensuite le tri continue de fonctionner, et c’est la limite de tri par IA qu’Assorta Pro supprime.</p>
+      </div>
+      <div class="qa">
+        <h3>Qu’est-ce que le Résumé par IA ?</h3>
+        <p>Touchez Résumé par IA sur un lien enregistré et Assorta ramène la page en quelques lignes, directement dans la liste. Le résumé est gardé avec la note : le rouvrir est instantané et fonctionne hors ligne. Quand une page ne donne pas de quoi travailler, Assorta le dit au lieu d’inventer un résumé.</p>
+      </div>
+      <div class="qa">
+        <h3>Peut-on enregistrer depuis d’autres apps ?</h3>
+        <p>Oui. Assorta est dans le menu Partager du système, sur Android comme sur iOS : un lien depuis YouTube, TikTok, Instagram ou un navigateur, c’est deux touchers.</p>
+      </div>
+      <div class="qa">
+        <h3>Assorta se synchronise-t-elle entre appareils ?</h3>
+        <p>Pas encore. Les notes restent sur l’appareil où vous les avez enregistrées ; la synchronisation est prévue dans la feuille de route d’Assorta Pro.</p>
+      </div>
+      <details class="faq-more">
+        <summary><span class="more-closed">Voir plus de questions</span><span class="more-open">Voir moins</span></summary>
+        <div class="faq-rest">
+          <div class="qa">
+            <h3>Et si l’IA se trompe de groupe ?</h3>
+            <p>Changez-en d’un seul toucher, directement depuis la confirmation - les groupes arrivés juste derrière sont là, à côté.</p>
+          </div>
+          <div class="qa">
+            <h3>Que se passe-t-il quand les tris par IA gratuits sont épuisés ?</h3>
+            <p>Le tri continue de fonctionner. Assorta bascule sur le tri automatique, qui tourne sur l’appareil avec environ 3 000 termes sélectionnés et ne s’épuise jamais ; c’est Assorta Pro qui supprime la limite de tri par IA.</p>
+          </div>
+          <div class="qa">
+            <h3>Qu’apporte Assorta Pro ?</h3>
+            <p>Assorta Pro supprime la limite de tri par IA et ajoute le Résumé par IA. C’est facultatif, et c’est facturé par Apple ou Google.</p>
+          </div>
+          <div class="qa">
+            <h3>Peut-on chercher ce qu’on a enregistré ?</h3>
+            <p>Oui. Un seul champ cherche dans les noms de groupes, le texte d’une note et le titre d’un lien, et il fonctionne sans connexion parce que vos notes sont sur l’appareil.</p>
+          </div>
+          <div class="qa">
+            <h3>Où mes notes sont-elles stockées ?</h3>
+            <p>Sur votre appareil. Assorta ne garde pas vos notes sur nos serveurs.</p>
+          </div>
+          <div class="qa">
+            <h3>Faut-il un compte ?</h3>
+            <p>Non. La connexion est facultative ; elle sert à garder Assorta Pro sur vos autres appareils.</p>
+          </div>
+          <div class="qa">
+            <h3>Assorta fonctionne-t-elle sans connexion ?</h3>
+            <p>Vos notes, vos groupes et tout résumé déjà demandé sont sur l’appareil : parcourir et chercher fonctionnent hors ligne. Le tri par IA et le Résumé par IA ont besoin d’une connexion ; le tri automatique, non.</p>
+          </div>
+          <div class="qa">
+            <h3>Peut-on déplacer une note vers un autre groupe plus tard ?</h3>
+            <p>Oui. Ouvrez les actions de la note et choisissez Déplacer.</p>
+          </div>
+          <div class="qa">
+            <h3>Peut-on exporter ses notes ?</h3>
+            <p>Pas encore. L’export et la sauvegarde sont prévus dans la feuille de route d’Assorta Pro.</p>
+          </div>
+          <div class="qa">
+            <h3>Sur quels appareils Assorta fonctionne-t-elle ?</h3>
+            <p>Les téléphones et tablettes Android, l’iPhone et l’iPad.</p>
+          </div>
+          <div class="qa">
+            <h3>Quelles langues Assorta parle-t-elle ?</h3>
+            <p>31, de l’anglais et l’ukrainien au japonais, au coréen et à l’arabe. Assorta suit la langue de votre appareil, et vous pouvez la changer dans Paramètres.</p>
+          </div>
+          <div class="qa">
+            <h3>En quoi Assorta est-elle différente des favoris ou d’une app de notes ?</h3>
+            <p>Un dossier de favoris vous demande de choisir le dossier, et une app de notes vous demande de nommer la note. Assorta lit ce que vous avez enregistré et le range elle-même - le travail que vous vous épargnez, c’est le tri.</p>
+          </div>
+          <div class="qa">
+            <h3>Comment supprimer mon compte et mes données ?</h3>
+            <p>Ouvrez Paramètres et touchez Supprimer le compte dans l’app, ou écrivez-nous et nous nous en chargerons. La <a href="delete-account.html">page de suppression de compte</a> détaille ce qui est supprimé et ce qui est conservé.</p>
+          </div>
+        </div>
+      </details>
     </div>
   </div>
 </section>
@@ -1198,6 +1323,8 @@
       d’elles.</p>
   </div>
 </footer>
+
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"FAQPage","@id":"https://assorta.app/fr/#faq","inLanguage":"fr","mainEntity":[{"@type":"Question","name":"Qu’est-ce qu’Assorta ?","acceptedAnswer":{"@type":"Answer","text":"Assorta est une boîte de réception unique pour vos liens, vos notes et vos idées, sur Android et iOS. L’IA lit ce que vous enregistrez et le range dans l’un des 30+ groupes, pour le retrouver ensuite sans dossiers ni tags."}},{"@type":"Question","name":"Comment Assorta décide-t-elle dans quel groupe ranger un élément ?","acceptedAnswer":{"@type":"Answer","text":"Assorta lit le texte, ou la page derrière un lien, et choisit le groupe qui convient - Voyages, Cuisine, Liste d’envies, Sport et les autres. Vous voyez le choix au moment où il est fait."}},{"@type":"Question","name":"Que peut-on enregistrer dans Assorta ?","acceptedAnswer":{"@type":"Answer","text":"Les liens partagés depuis n’importe quelle app, et le texte que vous collez vous-même. Un lien enregistré garde sa vignette et son titre, pour le reconnaître dans la liste sans l’ouvrir."}},{"@type":"Question","name":"Assorta est-elle gratuite ?","acceptedAnswer":{"@type":"Answer","text":"Assorta est gratuite à installer et gratuite à utiliser. Les 15 premiers tris par IA sont gratuits ; ensuite le tri continue de fonctionner, et c’est la limite de tri par IA qu’Assorta Pro supprime."}},{"@type":"Question","name":"Qu’est-ce que le Résumé par IA ?","acceptedAnswer":{"@type":"Answer","text":"Touchez Résumé par IA sur un lien enregistré et Assorta ramène la page en quelques lignes, directement dans la liste. Le résumé est gardé avec la note : le rouvrir est instantané et fonctionne hors ligne. Quand une page ne donne pas de quoi travailler, Assorta le dit au lieu d’inventer un résumé."}},{"@type":"Question","name":"Peut-on enregistrer depuis d’autres apps ?","acceptedAnswer":{"@type":"Answer","text":"Oui. Assorta est dans le menu Partager du système, sur Android comme sur iOS : un lien depuis YouTube, TikTok, Instagram ou un navigateur, c’est deux touchers."}},{"@type":"Question","name":"Assorta se synchronise-t-elle entre appareils ?","acceptedAnswer":{"@type":"Answer","text":"Pas encore. Les notes restent sur l’appareil où vous les avez enregistrées ; la synchronisation est prévue dans la feuille de route d’Assorta Pro."}},{"@type":"Question","name":"Et si l’IA se trompe de groupe ?","acceptedAnswer":{"@type":"Answer","text":"Changez-en d’un seul toucher, directement depuis la confirmation - les groupes arrivés juste derrière sont là, à côté."}},{"@type":"Question","name":"Que se passe-t-il quand les tris par IA gratuits sont épuisés ?","acceptedAnswer":{"@type":"Answer","text":"Le tri continue de fonctionner. Assorta bascule sur le tri automatique, qui tourne sur l’appareil avec environ 3 000 termes sélectionnés et ne s’épuise jamais ; c’est Assorta Pro qui supprime la limite de tri par IA."}},{"@type":"Question","name":"Qu’apporte Assorta Pro ?","acceptedAnswer":{"@type":"Answer","text":"Assorta Pro supprime la limite de tri par IA et ajoute le Résumé par IA. C’est facultatif, et c’est facturé par Apple ou Google."}},{"@type":"Question","name":"Peut-on chercher ce qu’on a enregistré ?","acceptedAnswer":{"@type":"Answer","text":"Oui. Un seul champ cherche dans les noms de groupes, le texte d’une note et le titre d’un lien, et il fonctionne sans connexion parce que vos notes sont sur l’appareil."}},{"@type":"Question","name":"Où mes notes sont-elles stockées ?","acceptedAnswer":{"@type":"Answer","text":"Sur votre appareil. Assorta ne garde pas vos notes sur nos serveurs."}},{"@type":"Question","name":"Faut-il un compte ?","acceptedAnswer":{"@type":"Answer","text":"Non. La connexion est facultative ; elle sert à garder Assorta Pro sur vos autres appareils."}},{"@type":"Question","name":"Assorta fonctionne-t-elle sans connexion ?","acceptedAnswer":{"@type":"Answer","text":"Vos notes, vos groupes et tout résumé déjà demandé sont sur l’appareil : parcourir et chercher fonctionnent hors ligne. Le tri par IA et le Résumé par IA ont besoin d’une connexion ; le tri automatique, non."}},{"@type":"Question","name":"Peut-on déplacer une note vers un autre groupe plus tard ?","acceptedAnswer":{"@type":"Answer","text":"Oui. Ouvrez les actions de la note et choisissez Déplacer."}},{"@type":"Question","name":"Peut-on exporter ses notes ?","acceptedAnswer":{"@type":"Answer","text":"Pas encore. L’export et la sauvegarde sont prévus dans la feuille de route d’Assorta Pro."}},{"@type":"Question","name":"Sur quels appareils Assorta fonctionne-t-elle ?","acceptedAnswer":{"@type":"Answer","text":"Les téléphones et tablettes Android, l’iPhone et l’iPad."}},{"@type":"Question","name":"Quelles langues Assorta parle-t-elle ?","acceptedAnswer":{"@type":"Answer","text":"31, de l’anglais et l’ukrainien au japonais, au coréen et à l’arabe. Assorta suit la langue de votre appareil, et vous pouvez la changer dans Paramètres."}},{"@type":"Question","name":"En quoi Assorta est-elle différente des favoris ou d’une app de notes ?","acceptedAnswer":{"@type":"Answer","text":"Un dossier de favoris vous demande de choisir le dossier, et une app de notes vous demande de nommer la note. Assorta lit ce que vous avez enregistré et le range elle-même - le travail que vous vous épargnez, c’est le tri."}},{"@type":"Question","name":"Comment supprimer mon compte et mes données ?","acceptedAnswer":{"@type":"Answer","text":"Ouvrez Paramètres et touchez Supprimer le compte dans l’app, ou écrivez-nous et nous nous en chargerons. La page de suppression de compte détaille ce qui est supprimé et ce qui est conservé."}}]},{"@type":"SoftwareApplication","name":"Assorta","applicationCategory":"ProductivityApplication","operatingSystem":"Android, iOS","inLanguage":"fr","url":"https://assorta.app/fr/","description":"Assorta, une boîte de réception rapide pour liens, notes et idées. Déposez n’importe quoi - l’IA le range dans le bon groupe, et vous le retrouvez vite.","featureList":["Enregistrement depuis le menu Partager","30+ groupes intelligents","Aperçus de liens","Résumé par IA","La recherche quand il la faut","Enregistrement en arrière-plan","Android et iOS","Un tri qui ne s’épuise jamais"],"downloadUrl":["https://apps.apple.com/app/id6791126062","https://play.google.com/store/apps/details?id=com.troshchiy.assorta"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@id":"https://assorta.app/#operator"}},{"@type":"Organization","@id":"https://assorta.app/#operator","name":"Individual Entrepreneur Yevhen Troshchii","url":"https://assorta.app/","email":"contact@assorta.app","address":{"@type":"PostalAddress","addressLocality":"Odesa","addressCountry":"UA"}}]}</script>
 
 <script>window.__I18N__={"group.auto": "Auto", "group.beauty": "Beauté", "group.books": "Livres", "group.cooking": "Cuisine", "group.education": "Éducation", "group.family": "Famille", "group.finance": "Finances", "group.health": "Santé", "group.hobby": "Loisirs", "group.home": "Maison", "group.ideas": "Idées", "group.inspiration": "Inspiration", "group.movies": "Films et TV", "group.music": "Musique", "group.personal": "Personnel", "group.shopping": "Liste de courses", "group.sport": "Sport", "group.tasks": "Tâches", "group.tech": "Technologie", "group.travel": "Voyages", "group.wishList": "Liste d’envies", "group.work": "Travail", "js.or": "Ou :", "js.theme.toDark": "Passer au thème sombre", "js.theme.toLight": "Passer au thème clair", "js.video.title": "Démo Assorta"};</script>
 

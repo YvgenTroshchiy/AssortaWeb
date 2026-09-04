@@ -44,21 +44,21 @@
 <meta name="theme-color" content="#131129">
 <style>
   /* Palette mirrors the app's semantic tokens (AssortaKMP ui/theme/SemanticColor.kt).
-     Dark is the default — it also survives JS being off; light overrides it via
+     Dark is the default - it also survives JS being off; light overrides it via
      data-theme="light" on <html>, stamped before first paint by the inline script
      at the end of <head>. Tag hues are shared by both app palettes, so they are
      declared once and never overridden. */
   :root {
     --bg: #131129;
-    --panel: #1e1b4b;            /* Indigo.v950 — bgAppGradientEnd */
+    --panel: #1e1b4b;            /* Indigo.v950 - bgAppGradientEnd */
     --panel-soft: #232052;
     --line: #34306b;
-    --indigo: #6366f1;           /* Indigo.v600 — accentPrimary, shared by both themes */
+    --indigo: #6366f1;           /* Indigo.v600 - accentPrimary, shared by both themes */
     --indigo-bright: #818cf8;
     /* accentPrimary is the brand hue but is too light to carry text: white on it is 4.46:1
        and it reads 3.1-3.8:1 as a glyph on its own tint. This mirrors the app's bgAccent -
        the fill that sits under white text. Borders, glows and tints keep --indigo. */
-    --accent-fill: #4f46e5;      /* Indigo.v700 — bgAccent */
+    --accent-fill: #4f46e5;      /* Indigo.v700 - bgAccent */
     --text: #eef0ff;
     --text-dim: #a3a6cc;
     /* The app's own screen background, verbatim from SemanticColors
@@ -121,17 +121,17 @@
     --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
   :root[data-theme="light"] {
-    --bg: #f8fafc;               /* Gray.v50   — bgAppGradientStart */
-    --panel: #eef2ff;            /* Indigo.v50 — bgAppGradientEnd */
+    --bg: #f8fafc;               /* Gray.v50   - bgAppGradientStart */
+    --panel: #eef2ff;            /* Indigo.v50 - bgAppGradientEnd */
     --panel-soft: #e3e9fb;
     --line: #d2dae9;             /* borderCard, lifted from Gray.v500a20 to stay visible on light */
-    --indigo-bright: #4f46e5;    /* Indigo.v700 — the accent that still reads on a light background */
-    --text: #0f172a;             /* Gray.v950 — fgPrimary */
+    --indigo-bright: #4f46e5;    /* Indigo.v700 - the accent that still reads on a light background */
+    --text: #0f172a;             /* Gray.v950 - fgPrimary */
     /* Still the app's fgSecondary, which moved to Gray.v700 for the same reason:
        the old Gray.v600 (#64748b) landed at 3.4-4.4:1 on the tinted panels this
        site invents (.cell, .step, section.alt) and on the app's own gradient end.
        v700 clears AA everywhere, worst case 5.4:1 on the .cell tints. */
-    --text-dim: #475569;         /* Gray.v700 — fgSecondary */
+    --text-dim: #475569;         /* Gray.v700 - fgSecondary */
     --app-grad-start: #f8fafc;   /* Gray.v50 */
     --app-grad-end:   #eef2ff;   /* Indigo.v50 */
     /* Mockup palette, light. Rows with an app token take it; the rest reproduce
@@ -525,6 +525,35 @@
   /* ---- sections ---- */
   section { padding: 64px 0; }
   section.alt { background: color-mix(in srgb, var(--panel) 32%, var(--bg)); }
+  /* ---- FAQ ---- */
+  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall. */
+  .faq { max-width: 760px; }
+  .faq .qa { padding: 17px 0; border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+  .faq > .qa:first-of-type { border-top: 0; padding-top: 4px; }
+  .faq h3 { font-family: var(--font-display); font-size: 17.5px; margin-bottom: 7px; }
+  .faq p { color: var(--text-dim); line-height: 1.65; }
+  .faq a { color: var(--indigo-bright); }
+  /* <details> and not a script: the thirteen collapsed answers stay in the page source, so a
+     crawler and an answer engine read all twenty however much a human unfolded. */
+  .faq-more { border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+  .faq-more > summary {
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 18px;
+    padding: 9px 18px; border: 1px solid var(--line); border-radius: 999px;
+    color: var(--text-dim); font-size: 14.5px; cursor: pointer; list-style: none;
+    transition: color .15s, border-color .15s;
+  }
+  .faq-more > summary::-webkit-details-marker { display: none; }
+  .faq-more > summary:hover { color: var(--text); border-color: var(--indigo); }
+  .faq-more > summary:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; }
+  .faq-more > summary::after {
+    content: ""; width: 7px; height: 7px; border-right: 1.6px solid currentColor;
+    border-bottom: 1.6px solid currentColor; transform: translateY(-2px) rotate(45deg);
+  }
+  .faq-more[open] > summary::after { transform: translateY(1px) rotate(225deg); }
+  .faq-more > summary .more-open { display: none; }
+  .faq-more[open] > summary .more-closed { display: none; }
+  .faq-more[open] > summary .more-open { display: inline; }
+  .faq-rest { margin-top: 4px; }
   .kicker {
     font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
     text-transform: uppercase; color: var(--indigo-bright); margin-bottom: 14px;
@@ -1071,31 +1100,31 @@
       </div>
       <div class="feature" style="--f-color: var(--amber)">
         <h3>30+ розумних груп</h3>
-        <p>AI обирає групу в мить збереження. Не згодні? Змініть її одним дотиком - просто з підтвердження.</p>
+        <p>Assorta кладе кожне збереження в одну з 30+ вбудованих груп у мить, коли ви його додаєте, - Подорожі, Кулінарія, Список бажань, Спорт. Не згодні? Змініть групу одним дотиком, просто з підтвердження.</p>
       </div>
       <div class="feature" style="--f-color: var(--cyan)">
         <h3>Прев’ю посилань</h3>
-        <p>Збережені посилання лишаються зі своїм зображенням і заголовком - кадр з YouTube, фото товару, обкладинка статті, - щоб упізнавати їх з одного погляду.</p>
+        <p>Assorta зберігає в посилання його зображення і заголовок - кадр з YouTube, фото товару, обкладинку статті, - щоб ви впізнавали його з одного погляду.</p>
       </div>
       <div class="feature" style="--f-color: var(--indigo)">
         <h3>AI-підсумок</h3>
-        <p>Натисніть AI-підсумок на збереженому посиланні й прочитайте сторінку кількома рядками, не відкриваючи її. Підсумок зберігається разом із нотаткою, тож удруге відкривається миттєво й без мережі. Входить в Assorta Pro.</p>
+        <p>Натисніть AI-підсумок на збереженому посиланні, і Assorta поверне сторінку кількома рядками, не відкриваючи її. Підсумок зберігається разом із нотаткою, тож удруге відкривається миттєво й працює без мережі. Входить в Assorta Pro.</p>
       </div>
       <div class="feature" style="--f-color: var(--teal)">
         <h3>Пошук, коли він потрібен</h3>
-        <p>Одне поле за назвами груп, текстом самої нотатки й заголовком посилання - для того одного запису, який ліг не туди, де ви шукали спершу.</p>
+        <p>Assorta шукає за назвами груп, текстом самої нотатки й заголовком посилання з одного поля - для того запису, який ліг не туди, де ви шукали спершу.</p>
       </div>
       <div class="feature" style="--f-color: var(--emerald)">
         <h3>Зберігає у фоні</h3>
-        <p>Перемкнулися посеред збереження - запис усе одно безпечно ляже у свою групу. Нічого не губиться між застосунками.</p>
+        <p>Assorta дописує збереження у фоні, тож навіть якщо перемкнутися посеред нього, запис усе одно ляже у свою групу. Нічого не губиться між застосунками.</p>
       </div>
       <div class="feature" style="--f-color: var(--purple)">
-        <h3>Скрізь, де ви є</h3>
-        <p>Android та iOS - один застосунок на кожному екрані, яким ви користуєтесь. Нотатки лишаються на тому пристрої, де ви їх зберегли; синхронізації між пристроями поки що немає.</p>
+        <h3>Android та iOS</h3>
+        <p>Assorta працює на телефонах і планшетах Android, на iPhone та iPad. Нотатки лишаються на тому пристрої, де ви їх зберегли; синхронізації між пристроями поки що немає.</p>
       </div>
       <div class="feature" style="--f-color: var(--sky)">
-        <h3>Приємно дивитися</h3>
-        <p>Світла й темна теми. Тринадцять мов - від англійської та української до японської, корейської й арабської.</p>
+        <h3>Сортування, яке не закінчується</h3>
+        <p>Assorta сортує за допомогою AI, поки тримаються безкоштовні сортування, а потім переходить на автосортування, яке працює на пристрої за приблизно 3 000 дібраних термінів. Так чи так нотатка лягає у групу - розкладання не спиняється, коли закінчується ліміт.</p>
       </div>
     </div>
   </div>
@@ -1128,6 +1157,100 @@
       <span class="chip" style="--c:#d946ef">Краса</span>
       <span class="chip" style="--c:#f43f5e">Особисте</span>
       <span class="chip more">…і ще з десяток</span>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="faq">
+  <div class="wrap">
+    <p class="kicker">FAQ</p>
+    <h2>Питання, які ставлять перед встановленням</h2>
+    <div class="faq">
+      <div class="qa">
+        <h3>Що таке Assorta?</h3>
+        <p>Assorta - одна вхідна скринька для посилань, нотаток та ідей на Android та iOS. AI читає те, що ви зберігаєте, і кладе це в одну з 30+ груп, щоб ви знаходили це потім без тек і тегів.</p>
+      </div>
+      <div class="qa">
+        <h3>Як Assorta вирішує, у яку групу щось покласти?</h3>
+        <p>Assorta читає текст або сторінку за посиланням і обирає групу, яка пасує, - Подорожі, Кулінарія, Список бажань, Спорт та інші. Вибір видно одразу, щойно його зроблено.</p>
+      </div>
+      <div class="qa">
+        <h3>Що можна зберігати в Assorta?</h3>
+        <p>Посилання, якими ви ділитеся з будь-якого застосунку, і текст, який вставляєте самі. Збережене посилання лишається зі своїм зображенням і заголовком, тож ви впізнаєте його у списку, не відкриваючи.</p>
+      </div>
+      <div class="qa">
+        <h3>Assorta безкоштовна?</h3>
+        <p>Assorta безкоштовна для встановлення й безкоштовна для користування. Перші 15 AI-сортувань безкоштовні; далі розкладання працює й надалі, а ліміт AI-сортування знімає Assorta Pro.</p>
+      </div>
+      <div class="qa">
+        <h3>Що таке AI-підсумок?</h3>
+        <p>Натисніть AI-підсумок на збереженому посиланні, і Assorta поверне сторінку кількома рядками, просто у списку. Підсумок зберігається разом із нотаткою, тож удруге відкривається миттєво й працює без мережі. Якщо на сторінці немає з чого зробити підсумок, Assorta так і скаже, а не вигадає його.</p>
+      </div>
+      <div class="qa">
+        <h3>Чи можна зберігати з інших застосунків?</h3>
+        <p>Так. Assorta стоїть у системному меню «Поділитися» на Android та iOS, тож посилання з YouTube, TikTok, Instagram чи браузера - це два дотики.</p>
+      </div>
+      <div class="qa">
+        <h3>Чи синхронізує Assorta між пристроями?</h3>
+        <p>Поки що ні. Нотатки лишаються на тому пристрої, де ви їх зберегли; синхронізація - у планах Assorta Pro.</p>
+      </div>
+      <details class="faq-more">
+        <summary><span class="more-closed">Показати ще питання</span><span class="more-open">Показати менше</span></summary>
+        <div class="faq-rest">
+          <div class="qa">
+            <h3>А якщо AI обере не ту групу?</h3>
+            <p>Змініть її одним дотиком, просто з підтвердження, - запасні групи стоять поруч.</p>
+          </div>
+          <div class="qa">
+            <h3>Що буде, коли безкоштовні AI-сортування закінчаться?</h3>
+            <p>Розкладання працює далі. Assorta переходить на автосортування, яке працює на пристрої за приблизно 3 000 дібраних термінів і ніколи не закінчується; ліміт AI-сортування знімає Assorta Pro.</p>
+          </div>
+          <div class="qa">
+            <h3>Що дає Assorta Pro?</h3>
+            <p>Assorta Pro знімає ліміт AI-сортування й додає AI-підсумок. Підписка необов’язкова, і її тарифікують Apple або Google.</p>
+          </div>
+          <div class="qa">
+            <h3>Чи можна шукати серед збереженого?</h3>
+            <p>Так. Одне поле шукає за назвами груп, текстом самої нотатки й заголовком посилання, і працює без мережі, бо ваші нотатки лежать на пристрої.</p>
+          </div>
+          <div class="qa">
+            <h3>Де зберігаються мої нотатки?</h3>
+            <p>На вашому пристрої. Assorta не тримає ваші нотатки на наших серверах.</p>
+          </div>
+          <div class="qa">
+            <h3>Чи потрібен обліковий запис?</h3>
+            <p>Ні. Вхід необов’язковий; він зберігає Assorta Pro на інших ваших пристроях.</p>
+          </div>
+          <div class="qa">
+            <h3>Чи працює Assorta без інтернету?</h3>
+            <p>Ваші нотатки, ваші групи й уже зроблені підсумки лежать на пристрої, тож перегляд і пошук працюють офлайн. AI-сортуванню та AI-підсумку потрібна мережа; автосортуванню - ні.</p>
+          </div>
+          <div class="qa">
+            <h3>Чи можна потім перемістити нотатку в іншу групу?</h3>
+            <p>Так. Відкрийте дії на нотатці й виберіть «Перемістити».</p>
+          </div>
+          <div class="qa">
+            <h3>Чи можна експортувати нотатки?</h3>
+            <p>Поки що ні. Експорт і резервна копія - у планах Assorta Pro.</p>
+          </div>
+          <div class="qa">
+            <h3>На яких пристроях працює Assorta?</h3>
+            <p>На телефонах і планшетах Android, на iPhone та iPad.</p>
+          </div>
+          <div class="qa">
+            <h3>Скількома мовами говорить Assorta?</h3>
+            <p>31 мовою, від англійської та української до японської, корейської й арабської. Assorta слідує мові вашого пристрою, і її можна змінити в «Налаштуваннях».</p>
+          </div>
+          <div class="qa">
+            <h3>Чим Assorta відрізняється від закладок чи застосунку для нотаток?</h3>
+            <p>У теці закладок ви самі обираєте теку, а в застосунку для нотаток самі вигадуєте назву. Assorta читає те, що ви зберегли, і прибирає це на місце сама - ви пропускаєте саме сортування.</p>
+          </div>
+          <div class="qa">
+            <h3>Як видалити обліковий запис і мої дані?</h3>
+            <p>Відкрийте «Налаштування» і натисніть «Видалити обліковий запис» у застосунку - або напишіть нам, і це зробимо ми. <a href="delete-account.html">Сторінка видалення облікового запису</a> описує, що видаляється, а що лишається.</p>
+          </div>
+        </div>
+      </details>
     </div>
   </div>
 </section>
@@ -1180,6 +1303,8 @@
     <p>Чужі назви брендів, логотипи, посилання та зображення прев’ю на цій сторінці - приклади того, що можна зберігати в Assorta, тобто того, що людина кидає у застосунок, - окрім значків App&nbsp;Store і Google&nbsp;Play, які ведуть у магазини, де опубліковано застосунок. Усі вони лишаються власністю своїх власників. Assorta - незалежний застосунок: він не пов’язаний із показаними брендами, не схвалений і не спонсорований ними, жоден з них до нього не причетний, і він ніколи не видає себе за когось із них.</p>
   </div>
 </footer>
+
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"FAQPage","@id":"https://assorta.app/uk/#faq","inLanguage":"uk","mainEntity":[{"@type":"Question","name":"Що таке Assorta?","acceptedAnswer":{"@type":"Answer","text":"Assorta - одна вхідна скринька для посилань, нотаток та ідей на Android та iOS. AI читає те, що ви зберігаєте, і кладе це в одну з 30+ груп, щоб ви знаходили це потім без тек і тегів."}},{"@type":"Question","name":"Як Assorta вирішує, у яку групу щось покласти?","acceptedAnswer":{"@type":"Answer","text":"Assorta читає текст або сторінку за посиланням і обирає групу, яка пасує, - Подорожі, Кулінарія, Список бажань, Спорт та інші. Вибір видно одразу, щойно його зроблено."}},{"@type":"Question","name":"Що можна зберігати в Assorta?","acceptedAnswer":{"@type":"Answer","text":"Посилання, якими ви ділитеся з будь-якого застосунку, і текст, який вставляєте самі. Збережене посилання лишається зі своїм зображенням і заголовком, тож ви впізнаєте його у списку, не відкриваючи."}},{"@type":"Question","name":"Assorta безкоштовна?","acceptedAnswer":{"@type":"Answer","text":"Assorta безкоштовна для встановлення й безкоштовна для користування. Перші 15 AI-сортувань безкоштовні; далі розкладання працює й надалі, а ліміт AI-сортування знімає Assorta Pro."}},{"@type":"Question","name":"Що таке AI-підсумок?","acceptedAnswer":{"@type":"Answer","text":"Натисніть AI-підсумок на збереженому посиланні, і Assorta поверне сторінку кількома рядками, просто у списку. Підсумок зберігається разом із нотаткою, тож удруге відкривається миттєво й працює без мережі. Якщо на сторінці немає з чого зробити підсумок, Assorta так і скаже, а не вигадає його."}},{"@type":"Question","name":"Чи можна зберігати з інших застосунків?","acceptedAnswer":{"@type":"Answer","text":"Так. Assorta стоїть у системному меню «Поділитися» на Android та iOS, тож посилання з YouTube, TikTok, Instagram чи браузера - це два дотики."}},{"@type":"Question","name":"Чи синхронізує Assorta між пристроями?","acceptedAnswer":{"@type":"Answer","text":"Поки що ні. Нотатки лишаються на тому пристрої, де ви їх зберегли; синхронізація - у планах Assorta Pro."}},{"@type":"Question","name":"А якщо AI обере не ту групу?","acceptedAnswer":{"@type":"Answer","text":"Змініть її одним дотиком, просто з підтвердження, - запасні групи стоять поруч."}},{"@type":"Question","name":"Що буде, коли безкоштовні AI-сортування закінчаться?","acceptedAnswer":{"@type":"Answer","text":"Розкладання працює далі. Assorta переходить на автосортування, яке працює на пристрої за приблизно 3 000 дібраних термінів і ніколи не закінчується; ліміт AI-сортування знімає Assorta Pro."}},{"@type":"Question","name":"Що дає Assorta Pro?","acceptedAnswer":{"@type":"Answer","text":"Assorta Pro знімає ліміт AI-сортування й додає AI-підсумок. Підписка необов’язкова, і її тарифікують Apple або Google."}},{"@type":"Question","name":"Чи можна шукати серед збереженого?","acceptedAnswer":{"@type":"Answer","text":"Так. Одне поле шукає за назвами груп, текстом самої нотатки й заголовком посилання, і працює без мережі, бо ваші нотатки лежать на пристрої."}},{"@type":"Question","name":"Де зберігаються мої нотатки?","acceptedAnswer":{"@type":"Answer","text":"На вашому пристрої. Assorta не тримає ваші нотатки на наших серверах."}},{"@type":"Question","name":"Чи потрібен обліковий запис?","acceptedAnswer":{"@type":"Answer","text":"Ні. Вхід необов’язковий; він зберігає Assorta Pro на інших ваших пристроях."}},{"@type":"Question","name":"Чи працює Assorta без інтернету?","acceptedAnswer":{"@type":"Answer","text":"Ваші нотатки, ваші групи й уже зроблені підсумки лежать на пристрої, тож перегляд і пошук працюють офлайн. AI-сортуванню та AI-підсумку потрібна мережа; автосортуванню - ні."}},{"@type":"Question","name":"Чи можна потім перемістити нотатку в іншу групу?","acceptedAnswer":{"@type":"Answer","text":"Так. Відкрийте дії на нотатці й виберіть «Перемістити»."}},{"@type":"Question","name":"Чи можна експортувати нотатки?","acceptedAnswer":{"@type":"Answer","text":"Поки що ні. Експорт і резервна копія - у планах Assorta Pro."}},{"@type":"Question","name":"На яких пристроях працює Assorta?","acceptedAnswer":{"@type":"Answer","text":"На телефонах і планшетах Android, на iPhone та iPad."}},{"@type":"Question","name":"Скількома мовами говорить Assorta?","acceptedAnswer":{"@type":"Answer","text":"31 мовою, від англійської та української до японської, корейської й арабської. Assorta слідує мові вашого пристрою, і її можна змінити в «Налаштуваннях»."}},{"@type":"Question","name":"Чим Assorta відрізняється від закладок чи застосунку для нотаток?","acceptedAnswer":{"@type":"Answer","text":"У теці закладок ви самі обираєте теку, а в застосунку для нотаток самі вигадуєте назву. Assorta читає те, що ви зберегли, і прибирає це на місце сама - ви пропускаєте саме сортування."}},{"@type":"Question","name":"Як видалити обліковий запис і мої дані?","acceptedAnswer":{"@type":"Answer","text":"Відкрийте «Налаштування» і натисніть «Видалити обліковий запис» у застосунку - або напишіть нам, і це зробимо ми. Сторінка видалення облікового запису описує, що видаляється, а що лишається."}}]},{"@type":"SoftwareApplication","name":"Assorta","applicationCategory":"ProductivityApplication","operatingSystem":"Android, iOS","inLanguage":"uk","url":"https://assorta.app/uk/","description":"Assorta - одна швидка вхідна скринька для посилань, нотаток та ідей. Киньте сюди будь-що, і AI покладе це у потрібну групу, щоб ви знайшли її за секунди.","featureList":["Збереження з меню «Поділитися»","30+ розумних груп","Прев’ю посилань","AI-підсумок","Пошук, коли він потрібен","Зберігає у фоні","Android та iOS","Сортування, яке не закінчується"],"downloadUrl":["https://apps.apple.com/app/id6791126062","https://play.google.com/store/apps/details?id=com.troshchiy.assorta"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@id":"https://assorta.app/#operator"}},{"@type":"Organization","@id":"https://assorta.app/#operator","name":"Individual Entrepreneur Yevhen Troshchii","url":"https://assorta.app/","email":"contact@assorta.app","address":{"@type":"PostalAddress","addressLocality":"Odesa","addressCountry":"UA"}}]}</script>
 
 <script>window.__I18N__={"group.auto": "Авто", "group.beauty": "Краса", "group.books": "Книги", "group.cooking": "Кулінарія", "group.education": "Освіта", "group.family": "Сім’я", "group.finance": "Фінанси", "group.health": "Здоров’я", "group.hobby": "Хобі", "group.home": "Дім", "group.ideas": "Ідеї", "group.inspiration": "Натхнення", "group.movies": "Фільми й ТБ", "group.music": "Музика", "group.personal": "Особисте", "group.shopping": "Список покупок", "group.sport": "Спорт", "group.tasks": "Завдання", "group.tech": "Технології", "group.travel": "Подорожі", "group.wishList": "Список бажань", "group.work": "Робота", "js.or": "Або:", "js.theme.toDark": "Перейти на темну тему", "js.theme.toLight": "Перейти на світлу тему", "js.video.title": "Демо Assorta"};</script>
 

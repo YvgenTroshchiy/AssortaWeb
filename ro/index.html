@@ -44,21 +44,21 @@
 <meta name="theme-color" content="#131129">
 <style>
   /* Palette mirrors the app's semantic tokens (AssortaKMP ui/theme/SemanticColor.kt).
-     Dark is the default — it also survives JS being off; light overrides it via
+     Dark is the default - it also survives JS being off; light overrides it via
      data-theme="light" on <html>, stamped before first paint by the inline script
      at the end of <head>. Tag hues are shared by both app palettes, so they are
      declared once and never overridden. */
   :root {
     --bg: #131129;
-    --panel: #1e1b4b;            /* Indigo.v950 — bgAppGradientEnd */
+    --panel: #1e1b4b;            /* Indigo.v950 - bgAppGradientEnd */
     --panel-soft: #232052;
     --line: #34306b;
-    --indigo: #6366f1;           /* Indigo.v600 — accentPrimary, shared by both themes */
+    --indigo: #6366f1;           /* Indigo.v600 - accentPrimary, shared by both themes */
     --indigo-bright: #818cf8;
     /* accentPrimary is the brand hue but is too light to carry text: white on it is 4.46:1
        and it reads 3.1-3.8:1 as a glyph on its own tint. This mirrors the app's bgAccent -
        the fill that sits under white text. Borders, glows and tints keep --indigo. */
-    --accent-fill: #4f46e5;      /* Indigo.v700 — bgAccent */
+    --accent-fill: #4f46e5;      /* Indigo.v700 - bgAccent */
     --text: #eef0ff;
     --text-dim: #a3a6cc;
     /* The app's own screen background, verbatim from SemanticColors
@@ -121,17 +121,17 @@
     --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
   :root[data-theme="light"] {
-    --bg: #f8fafc;               /* Gray.v50   — bgAppGradientStart */
-    --panel: #eef2ff;            /* Indigo.v50 — bgAppGradientEnd */
+    --bg: #f8fafc;               /* Gray.v50   - bgAppGradientStart */
+    --panel: #eef2ff;            /* Indigo.v50 - bgAppGradientEnd */
     --panel-soft: #e3e9fb;
     --line: #d2dae9;             /* borderCard, lifted from Gray.v500a20 to stay visible on light */
-    --indigo-bright: #4f46e5;    /* Indigo.v700 — the accent that still reads on a light background */
-    --text: #0f172a;             /* Gray.v950 — fgPrimary */
+    --indigo-bright: #4f46e5;    /* Indigo.v700 - the accent that still reads on a light background */
+    --text: #0f172a;             /* Gray.v950 - fgPrimary */
     /* Still the app's fgSecondary, which moved to Gray.v700 for the same reason:
        the old Gray.v600 (#64748b) landed at 3.4-4.4:1 on the tinted panels this
        site invents (.cell, .step, section.alt) and on the app's own gradient end.
        v700 clears AA everywhere, worst case 5.4:1 on the .cell tints. */
-    --text-dim: #475569;         /* Gray.v700 — fgSecondary */
+    --text-dim: #475569;         /* Gray.v700 - fgSecondary */
     --app-grad-start: #f8fafc;   /* Gray.v50 */
     --app-grad-end:   #eef2ff;   /* Indigo.v50 */
     /* Mockup palette, light. Rows with an app token take it; the rest reproduce
@@ -525,6 +525,35 @@
   /* ---- sections ---- */
   section { padding: 64px 0; }
   section.alt { background: color-mix(in srgb, var(--panel) 32%, var(--bg)); }
+  /* ---- FAQ ---- */
+  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall. */
+  .faq { max-width: 760px; }
+  .faq .qa { padding: 17px 0; border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+  .faq > .qa:first-of-type { border-top: 0; padding-top: 4px; }
+  .faq h3 { font-family: var(--font-display); font-size: 17.5px; margin-bottom: 7px; }
+  .faq p { color: var(--text-dim); line-height: 1.65; }
+  .faq a { color: var(--indigo-bright); }
+  /* <details> and not a script: the thirteen collapsed answers stay in the page source, so a
+     crawler and an answer engine read all twenty however much a human unfolded. */
+  .faq-more { border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+  .faq-more > summary {
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 18px;
+    padding: 9px 18px; border: 1px solid var(--line); border-radius: 999px;
+    color: var(--text-dim); font-size: 14.5px; cursor: pointer; list-style: none;
+    transition: color .15s, border-color .15s;
+  }
+  .faq-more > summary::-webkit-details-marker { display: none; }
+  .faq-more > summary:hover { color: var(--text); border-color: var(--indigo); }
+  .faq-more > summary:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; }
+  .faq-more > summary::after {
+    content: ""; width: 7px; height: 7px; border-right: 1.6px solid currentColor;
+    border-bottom: 1.6px solid currentColor; transform: translateY(-2px) rotate(45deg);
+  }
+  .faq-more[open] > summary::after { transform: translateY(1px) rotate(225deg); }
+  .faq-more > summary .more-open { display: none; }
+  .faq-more[open] > summary .more-closed { display: none; }
+  .faq-more[open] > summary .more-open { display: inline; }
+  .faq-rest { margin-top: 4px; }
   .kicker {
     font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
     text-transform: uppercase; color: var(--indigo-bright); margin-bottom: 14px;
@@ -1075,35 +1104,31 @@
       </div>
       <div class="feature" style="--f-color: var(--amber)">
         <h3>30+ grupuri inteligente</h3>
-        <p>AI alege grupul chiar în clipa în care salvezi. Nu ești de acord? Îl schimbi dintr-o atingere - direct din confirmare.</p>
+        <p>Assorta pune fiecare salvare în unul dintre cele 30+ grupuri predefinite chiar în clipa în care o adaugi - Călătorii, Gătit, Listă de dorințe, Sport. Nu ești de acord? Îl schimbi dintr-o atingere, direct din confirmare.</p>
       </div>
       <div class="feature" style="--f-color: var(--cyan)">
         <h3>Previzualizări de linkuri</h3>
-        <p>Linkurile salvate își păstrează miniatura și titlul - un cadru din YouTube, o poză de produs, coperta unui articol - ca să le recunoști dintr-o privire.</p>
+        <p>Assorta păstrează miniatura și titlul unui link salvat - un cadru din YouTube, o poză de produs, coperta unui articol - ca să îl recunoști dintr-o privire.</p>
       </div>
       <div class="feature" style="--f-color: var(--indigo)">
         <h3>Rezumat AI</h3>
-        <p>Atinge Rezumat AI pe un link salvat și citește pagina în câteva rânduri, fără s-o deschizi.
-          Rezumatul se păstrează cu notița, așa că a doua privire e instantanee și merge offline. Inclus în Assorta Pro.</p>
+        <p>Atinge Rezumat AI pe un link salvat, iar Assorta îți aduce pagina înapoi în câteva rânduri, fără s-o deschidă. Rezumatul se păstrează cu notița, așa că a doua privire e instantanee și merge offline. Inclus în Assorta Pro.</p>
       </div>
       <div class="feature" style="--f-color: var(--teal)">
         <h3>Căutare când ai nevoie</h3>
-        <p>Un singur câmp peste numele grupurilor, textul notiței și titlul linkului - pentru acea
-          salvare care nu a ajuns unde ai căutat prima dată.</p>
+        <p>Assorta caută în numele grupurilor, în textul notiței și în titlul linkului dintr-un singur câmp - pentru salvarea care nu a ajuns unde ai căutat prima dată.</p>
       </div>
       <div class="feature" style="--f-color: var(--emerald)">
         <h3>Salvează în fundal</h3>
-        <p>Schimbi aplicația în timpul salvării - elementul tot ajunge în siguranță în grupul lui. Nu se pierde nimic între aplicații.</p>
+        <p>Assorta termină salvarea în fundal, așa că, dacă schimbi aplicația pe la jumătate, elementul tot ajunge în grupul lui. Nu se pierde nimic între aplicații.</p>
       </div>
       <div class="feature" style="--f-color: var(--purple)">
-        <h3>Oriunde ești</h3>
-        <p>Android și iOS - o singură aplicație pe fiecare ecran pe care îl folosești. Notițele
-          rămân pe dispozitivul pe care le-ai salvat; sincronizarea între dispozitive nu există încă.</p>
+        <h3>Android și iOS</h3>
+        <p>Assorta merge pe telefoane și tablete Android, pe iPhone și pe iPad. Notițele rămân pe dispozitivul pe care le-ai salvat; sincronizarea între dispozitive nu există încă.</p>
       </div>
       <div class="feature" style="--f-color: var(--sky)">
-        <h3>Arată cum vrei tu</h3>
-        <p>Temă deschisă și întunecată. Treisprezece limbi, de la engleză și ucraineană până la
-          japoneză, coreeană și arabă.</p>
+        <h3>Sortare care nu se termină niciodată</h3>
+        <p>Assorta sortează cu AI cât îți țin sortările gratuite, apoi trece pe sortarea automată, care rulează pe dispozitiv folosind aproximativ 3.000 de termeni selectați. Oricum ar fi, notița ajunge într-un grup - clasificarea nu se oprește când se termină cota.</p>
       </div>
     </div>
   </div>
@@ -1136,6 +1161,100 @@
       <span class="chip" style="--c:#d946ef">Frumusețe</span>
       <span class="chip" style="--c:#f43f5e">Personal</span>
       <span class="chip more">…și încă vreo duzină</span>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="faq">
+  <div class="wrap">
+    <p class="kicker">FAQ</p>
+    <h2>Întrebările pe care oamenii le pun înainte să instaleze</h2>
+    <div class="faq">
+      <div class="qa">
+        <h3>Ce este Assorta?</h3>
+        <p>Assorta este o singură cutie pentru linkuri, notițe și idei, pe Android și pe iOS. AI citește ce salvezi și îl pune în unul dintre cele 30+ grupuri, ca să îl găsești mai târziu fără foldere și fără etichete.</p>
+      </div>
+      <div class="qa">
+        <h3>Cum decide Assorta în ce grup ajunge ceva?</h3>
+        <p>Assorta citește textul, sau pagina din spatele unui link, și alege grupul potrivit - Călătorii, Gătit, Listă de dorințe, Sport și celelalte. Vezi alegerea chiar în clipa în care e făcută.</p>
+      </div>
+      <div class="qa">
+        <h3>Ce pot salva în Assorta?</h3>
+        <p>Linkuri distribuite din orice aplicație și text pe care îl lipești tu. Un link salvat își păstrează miniatura și titlul, așa că îl recunoști în listă fără să îl deschizi.</p>
+      </div>
+      <div class="qa">
+        <h3>Assorta este gratuită?</h3>
+        <p>Assorta este gratuită la instalare și gratuită la folosire. Primele 15 sortări AI sunt gratuite; după aceea clasificarea merge înainte, iar limita sortărilor AI este cea pe care o scoate Assorta Pro.</p>
+      </div>
+      <div class="qa">
+        <h3>Ce este Rezumat AI?</h3>
+        <p>Atinge Rezumat AI pe un link salvat, iar Assorta îți aduce pagina înapoi în câteva rânduri, chiar în listă. Rezumatul se păstrează cu notița, așa că a doua privire e instantanee și merge offline. Când o pagină nu îi dă nimic de lucru, Assorta spune asta în loc să inventeze un rezumat.</p>
+      </div>
+      <div class="qa">
+        <h3>Pot salva din alte aplicații?</h3>
+        <p>Da. Assorta stă în meniul de distribuire al sistemului, pe Android și pe iOS, așa că un link din YouTube, TikTok, Instagram sau din browser înseamnă două atingeri.</p>
+      </div>
+      <div class="qa">
+        <h3>Assorta se sincronizează între dispozitive?</h3>
+        <p>Încă nu. Notițele rămân pe dispozitivul pe care le-ai salvat; sincronizarea este pe lista de planuri Assorta Pro.</p>
+      </div>
+      <details class="faq-more">
+        <summary><span class="more-closed">Arată mai multe întrebări</span><span class="more-open">Arată mai puține</span></summary>
+        <div class="faq-rest">
+          <div class="qa">
+            <h3>Ce fac dacă AI alege grupul greșit?</h3>
+            <p>Îl schimbi dintr-o atingere, direct din confirmare - grupurile de rezervă stau chiar lângă el.</p>
+          </div>
+          <div class="qa">
+            <h3>Ce se întâmplă când se termină sortările AI gratuite?</h3>
+            <p>Clasificarea merge înainte. Assorta trece pe sortarea automată, care rulează pe dispozitiv folosind aproximativ 3.000 de termeni selectați și nu se termină niciodată; Assorta Pro este cea care scoate limita sortărilor AI.</p>
+          </div>
+          <div class="qa">
+            <h3>Ce aduce Assorta Pro?</h3>
+            <p>Assorta Pro scoate limita sortărilor AI și adaugă Rezumat AI. Este opțional și este facturat de Apple sau de Google.</p>
+          </div>
+          <div class="qa">
+            <h3>Pot căuta ce am salvat?</h3>
+            <p>Da. Un singur câmp caută în numele grupurilor, în textul notiței și în titlul linkului, și merge fără conexiune, pentru că notițele tale sunt pe dispozitiv.</p>
+          </div>
+          <div class="qa">
+            <h3>Unde sunt păstrate notițele mele?</h3>
+            <p>Pe dispozitivul tău. Assorta nu îți ține notițele pe serverele noastre.</p>
+          </div>
+          <div class="qa">
+            <h3>Am nevoie de cont?</h3>
+            <p>Nu. Autentificarea este opțională; ea îți păstrează Assorta Pro pe celelalte dispozitive.</p>
+          </div>
+          <div class="qa">
+            <h3>Assorta funcționează fără conexiune?</h3>
+            <p>Notițele tale, grupurile tale și orice rezumat cerut deja sunt pe dispozitiv, așa că răsfoirea și căutarea merg offline. Sortarea AI și Rezumatul AI au nevoie de conexiune; sortarea automată nu.</p>
+          </div>
+          <div class="qa">
+            <h3>Pot muta mai târziu o notiță în alt grup?</h3>
+            <p>Da. Deschide acțiunile notiței și alege Mută.</p>
+          </div>
+          <div class="qa">
+            <h3>Îmi pot exporta notițele?</h3>
+            <p>Încă nu. Exportul și copia de siguranță sunt pe lista de planuri Assorta Pro.</p>
+          </div>
+          <div class="qa">
+            <h3>Pe ce dispozitive merge Assorta?</h3>
+            <p>Pe telefoane și tablete Android, pe iPhone și pe iPad.</p>
+          </div>
+          <div class="qa">
+            <h3>Ce limbi vorbește Assorta?</h3>
+            <p>31, de la engleză și ucraineană la japoneză, coreeană și arabă. Assorta urmează limba dispozitivului tău, iar tu o poți schimba din Setări.</p>
+          </div>
+          <div class="qa">
+            <h3>Prin ce este Assorta diferită de marcaje sau de o aplicație de notițe?</h3>
+            <p>Un folder de marcaje îți cere să alegi folderul, iar o aplicație de notițe îți cere să denumești notița. Assorta citește ce ai salvat și îl pune deoparte singură - munca pe care o sari este sortarea.</p>
+          </div>
+          <div class="qa">
+            <h3>Cum îmi șterg contul și datele?</h3>
+            <p>Deschide Setări și atinge Șterge contul în aplicație, sau scrie-ne și o facem noi. <a href="delete-account.html">Pagina de ștergere a contului</a> spune ce se șterge și ce se păstrează.</p>
+          </div>
+        </div>
+      </details>
     </div>
   </div>
 </section>
@@ -1197,6 +1316,8 @@
       și nu se prezintă niciodată drept vreuna dintre ele.</p>
   </div>
 </footer>
+
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"FAQPage","@id":"https://assorta.app/ro/#faq","inLanguage":"ro","mainEntity":[{"@type":"Question","name":"Ce este Assorta?","acceptedAnswer":{"@type":"Answer","text":"Assorta este o singură cutie pentru linkuri, notițe și idei, pe Android și pe iOS. AI citește ce salvezi și îl pune în unul dintre cele 30+ grupuri, ca să îl găsești mai târziu fără foldere și fără etichete."}},{"@type":"Question","name":"Cum decide Assorta în ce grup ajunge ceva?","acceptedAnswer":{"@type":"Answer","text":"Assorta citește textul, sau pagina din spatele unui link, și alege grupul potrivit - Călătorii, Gătit, Listă de dorințe, Sport și celelalte. Vezi alegerea chiar în clipa în care e făcută."}},{"@type":"Question","name":"Ce pot salva în Assorta?","acceptedAnswer":{"@type":"Answer","text":"Linkuri distribuite din orice aplicație și text pe care îl lipești tu. Un link salvat își păstrează miniatura și titlul, așa că îl recunoști în listă fără să îl deschizi."}},{"@type":"Question","name":"Assorta este gratuită?","acceptedAnswer":{"@type":"Answer","text":"Assorta este gratuită la instalare și gratuită la folosire. Primele 15 sortări AI sunt gratuite; după aceea clasificarea merge înainte, iar limita sortărilor AI este cea pe care o scoate Assorta Pro."}},{"@type":"Question","name":"Ce este Rezumat AI?","acceptedAnswer":{"@type":"Answer","text":"Atinge Rezumat AI pe un link salvat, iar Assorta îți aduce pagina înapoi în câteva rânduri, chiar în listă. Rezumatul se păstrează cu notița, așa că a doua privire e instantanee și merge offline. Când o pagină nu îi dă nimic de lucru, Assorta spune asta în loc să inventeze un rezumat."}},{"@type":"Question","name":"Pot salva din alte aplicații?","acceptedAnswer":{"@type":"Answer","text":"Da. Assorta stă în meniul de distribuire al sistemului, pe Android și pe iOS, așa că un link din YouTube, TikTok, Instagram sau din browser înseamnă două atingeri."}},{"@type":"Question","name":"Assorta se sincronizează între dispozitive?","acceptedAnswer":{"@type":"Answer","text":"Încă nu. Notițele rămân pe dispozitivul pe care le-ai salvat; sincronizarea este pe lista de planuri Assorta Pro."}},{"@type":"Question","name":"Ce fac dacă AI alege grupul greșit?","acceptedAnswer":{"@type":"Answer","text":"Îl schimbi dintr-o atingere, direct din confirmare - grupurile de rezervă stau chiar lângă el."}},{"@type":"Question","name":"Ce se întâmplă când se termină sortările AI gratuite?","acceptedAnswer":{"@type":"Answer","text":"Clasificarea merge înainte. Assorta trece pe sortarea automată, care rulează pe dispozitiv folosind aproximativ 3.000 de termeni selectați și nu se termină niciodată; Assorta Pro este cea care scoate limita sortărilor AI."}},{"@type":"Question","name":"Ce aduce Assorta Pro?","acceptedAnswer":{"@type":"Answer","text":"Assorta Pro scoate limita sortărilor AI și adaugă Rezumat AI. Este opțional și este facturat de Apple sau de Google."}},{"@type":"Question","name":"Pot căuta ce am salvat?","acceptedAnswer":{"@type":"Answer","text":"Da. Un singur câmp caută în numele grupurilor, în textul notiței și în titlul linkului, și merge fără conexiune, pentru că notițele tale sunt pe dispozitiv."}},{"@type":"Question","name":"Unde sunt păstrate notițele mele?","acceptedAnswer":{"@type":"Answer","text":"Pe dispozitivul tău. Assorta nu îți ține notițele pe serverele noastre."}},{"@type":"Question","name":"Am nevoie de cont?","acceptedAnswer":{"@type":"Answer","text":"Nu. Autentificarea este opțională; ea îți păstrează Assorta Pro pe celelalte dispozitive."}},{"@type":"Question","name":"Assorta funcționează fără conexiune?","acceptedAnswer":{"@type":"Answer","text":"Notițele tale, grupurile tale și orice rezumat cerut deja sunt pe dispozitiv, așa că răsfoirea și căutarea merg offline. Sortarea AI și Rezumatul AI au nevoie de conexiune; sortarea automată nu."}},{"@type":"Question","name":"Pot muta mai târziu o notiță în alt grup?","acceptedAnswer":{"@type":"Answer","text":"Da. Deschide acțiunile notiței și alege Mută."}},{"@type":"Question","name":"Îmi pot exporta notițele?","acceptedAnswer":{"@type":"Answer","text":"Încă nu. Exportul și copia de siguranță sunt pe lista de planuri Assorta Pro."}},{"@type":"Question","name":"Pe ce dispozitive merge Assorta?","acceptedAnswer":{"@type":"Answer","text":"Pe telefoane și tablete Android, pe iPhone și pe iPad."}},{"@type":"Question","name":"Ce limbi vorbește Assorta?","acceptedAnswer":{"@type":"Answer","text":"31, de la engleză și ucraineană la japoneză, coreeană și arabă. Assorta urmează limba dispozitivului tău, iar tu o poți schimba din Setări."}},{"@type":"Question","name":"Prin ce este Assorta diferită de marcaje sau de o aplicație de notițe?","acceptedAnswer":{"@type":"Answer","text":"Un folder de marcaje îți cere să alegi folderul, iar o aplicație de notițe îți cere să denumești notița. Assorta citește ce ai salvat și îl pune deoparte singură - munca pe care o sari este sortarea."}},{"@type":"Question","name":"Cum îmi șterg contul și datele?","acceptedAnswer":{"@type":"Answer","text":"Deschide Setări și atinge Șterge contul în aplicație, sau scrie-ne și o facem noi. Pagina de ștergere a contului spune ce se șterge și ce se păstrează."}}]},{"@type":"SoftwareApplication","name":"Assorta","applicationCategory":"ProductivityApplication","operatingSystem":"Android, iOS","inLanguage":"ro","url":"https://assorta.app/ro/","description":"Assorta este o cutie rapidă pentru linkuri, notițe și idei. Pune orice înăuntru - AI îl pune în grupul potrivit, ca să-l găsești în câteva secunde.","featureList":["Salvare din meniul de distribuire","30+ grupuri inteligente","Previzualizări de linkuri","Rezumat AI","Căutare când ai nevoie","Salvează în fundal","Android și iOS","Sortare care nu se termină niciodată"],"downloadUrl":["https://apps.apple.com/app/id6791126062","https://play.google.com/store/apps/details?id=com.troshchiy.assorta"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@id":"https://assorta.app/#operator"}},{"@type":"Organization","@id":"https://assorta.app/#operator","name":"Individual Entrepreneur Yevhen Troshchii","url":"https://assorta.app/","email":"contact@assorta.app","address":{"@type":"PostalAddress","addressLocality":"Odesa","addressCountry":"UA"}}]}</script>
 
 <script>window.__I18N__={"group.auto": "Auto", "group.beauty": "Frumusețe", "group.books": "Cărți", "group.cooking": "Gătit", "group.education": "Educație", "group.family": "Familie", "group.finance": "Finanțe", "group.health": "Sănătate", "group.hobby": "Pasiuni", "group.home": "Casă", "group.ideas": "Idei", "group.inspiration": "Inspirație", "group.movies": "Filme și TV", "group.music": "Muzică", "group.personal": "Personal", "group.shopping": "Listă de cumpărături", "group.sport": "Sport", "group.tasks": "Sarcini", "group.tech": "Tehnologie", "group.travel": "Călătorii", "group.wishList": "Listă de dorințe", "group.work": "Muncă", "js.or": "Sau:", "js.theme.toDark": "Comută la tema întunecată", "js.theme.toLight": "Comută la tema luminoasă", "js.video.title": "Demonstrație Assorta"};</script>
 

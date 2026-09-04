@@ -44,21 +44,21 @@
 <meta name="theme-color" content="#131129">
 <style>
   /* Palette mirrors the app's semantic tokens (AssortaKMP ui/theme/SemanticColor.kt).
-     Dark is the default — it also survives JS being off; light overrides it via
+     Dark is the default - it also survives JS being off; light overrides it via
      data-theme="light" on <html>, stamped before first paint by the inline script
      at the end of <head>. Tag hues are shared by both app palettes, so they are
      declared once and never overridden. */
   :root {
     --bg: #131129;
-    --panel: #1e1b4b;            /* Indigo.v950 — bgAppGradientEnd */
+    --panel: #1e1b4b;            /* Indigo.v950 - bgAppGradientEnd */
     --panel-soft: #232052;
     --line: #34306b;
-    --indigo: #6366f1;           /* Indigo.v600 — accentPrimary, shared by both themes */
+    --indigo: #6366f1;           /* Indigo.v600 - accentPrimary, shared by both themes */
     --indigo-bright: #818cf8;
     /* accentPrimary is the brand hue but is too light to carry text: white on it is 4.46:1
        and it reads 3.1-3.8:1 as a glyph on its own tint. This mirrors the app's bgAccent -
        the fill that sits under white text. Borders, glows and tints keep --indigo. */
-    --accent-fill: #4f46e5;      /* Indigo.v700 — bgAccent */
+    --accent-fill: #4f46e5;      /* Indigo.v700 - bgAccent */
     --text: #eef0ff;
     --text-dim: #a3a6cc;
     /* The app's own screen background, verbatim from SemanticColors
@@ -121,17 +121,17 @@
     --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   }
   :root[data-theme="light"] {
-    --bg: #f8fafc;               /* Gray.v50   — bgAppGradientStart */
-    --panel: #eef2ff;            /* Indigo.v50 — bgAppGradientEnd */
+    --bg: #f8fafc;               /* Gray.v50   - bgAppGradientStart */
+    --panel: #eef2ff;            /* Indigo.v50 - bgAppGradientEnd */
     --panel-soft: #e3e9fb;
     --line: #d2dae9;             /* borderCard, lifted from Gray.v500a20 to stay visible on light */
-    --indigo-bright: #4f46e5;    /* Indigo.v700 — the accent that still reads on a light background */
-    --text: #0f172a;             /* Gray.v950 — fgPrimary */
+    --indigo-bright: #4f46e5;    /* Indigo.v700 - the accent that still reads on a light background */
+    --text: #0f172a;             /* Gray.v950 - fgPrimary */
     /* Still the app's fgSecondary, which moved to Gray.v700 for the same reason:
        the old Gray.v600 (#64748b) landed at 3.4-4.4:1 on the tinted panels this
        site invents (.cell, .step, section.alt) and on the app's own gradient end.
        v700 clears AA everywhere, worst case 5.4:1 on the .cell tints. */
-    --text-dim: #475569;         /* Gray.v700 — fgSecondary */
+    --text-dim: #475569;         /* Gray.v700 - fgSecondary */
     --app-grad-start: #f8fafc;   /* Gray.v50 */
     --app-grad-end:   #eef2ff;   /* Indigo.v50 */
     /* Mockup palette, light. Rows with an app token take it; the rest reproduce
@@ -525,6 +525,35 @@
   /* ---- sections ---- */
   section { padding: 64px 0; }
   section.alt { background: color-mix(in srgb, var(--panel) 32%, var(--bg)); }
+  /* ---- FAQ ---- */
+  /* A reading column, not the full 1060px grid: twenty answers at that width are a wall. */
+  .faq { max-width: 760px; }
+  .faq .qa { padding: 17px 0; border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+  .faq > .qa:first-of-type { border-top: 0; padding-top: 4px; }
+  .faq h3 { font-family: var(--font-display); font-size: 17.5px; margin-bottom: 7px; }
+  .faq p { color: var(--text-dim); line-height: 1.65; }
+  .faq a { color: var(--indigo-bright); }
+  /* <details> and not a script: the thirteen collapsed answers stay in the page source, so a
+     crawler and an answer engine read all twenty however much a human unfolded. */
+  .faq-more { border-top: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+  .faq-more > summary {
+    display: inline-flex; align-items: center; gap: 7px; margin-top: 18px;
+    padding: 9px 18px; border: 1px solid var(--line); border-radius: 999px;
+    color: var(--text-dim); font-size: 14.5px; cursor: pointer; list-style: none;
+    transition: color .15s, border-color .15s;
+  }
+  .faq-more > summary::-webkit-details-marker { display: none; }
+  .faq-more > summary:hover { color: var(--text); border-color: var(--indigo); }
+  .faq-more > summary:focus-visible { outline: 2px solid var(--indigo-bright); outline-offset: 2px; }
+  .faq-more > summary::after {
+    content: ""; width: 7px; height: 7px; border-right: 1.6px solid currentColor;
+    border-bottom: 1.6px solid currentColor; transform: translateY(-2px) rotate(45deg);
+  }
+  .faq-more[open] > summary::after { transform: translateY(1px) rotate(225deg); }
+  .faq-more > summary .more-open { display: none; }
+  .faq-more[open] > summary .more-closed { display: none; }
+  .faq-more[open] > summary .more-open { display: inline; }
+  .faq-rest { margin-top: 4px; }
   .kicker {
     font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .14em;
     text-transform: uppercase; color: var(--indigo-bright); margin-bottom: 14px;
@@ -1071,31 +1100,31 @@
       </div>
       <div class="feature" style="--f-color: var(--amber)">
         <h3>30+ έξυπνες ομάδες</h3>
-        <p>Η AI διαλέγει την ομάδα τη στιγμή που αποθηκεύετε. Διαφωνείτε; Αλλάξτε την με ένα πάτημα - μέσα από την ίδια την επιβεβαίωση.</p>
+        <p>Το Assorta τακτοποιεί κάθε αποθήκευση σε μία από τις 30+ έτοιμες ομάδες τη στιγμή που την προσθέτετε - Ταξίδια, Μαγειρική, Λίστα επιθυμιών, Αθλητισμός. Διαφωνείτε; Αλλάξτε την με ένα πάτημα, μέσα από την ίδια την επιβεβαίωση.</p>
       </div>
       <div class="feature" style="--f-color: var(--cyan)">
         <h3>Προεπισκοπήσεις συνδέσμων</h3>
-        <p>Οι αποθηκευμένοι σύνδεσμοι κρατούν τη μικρογραφία και τον τίτλο τους - ένα καρέ από YouTube, μια φωτογραφία προϊόντος, ένα εξώφυλλο άρθρου - ώστε να τους αναγνωρίζετε με μια ματιά.</p>
+        <p>Το Assorta κρατά τη μικρογραφία και τον τίτλο ενός αποθηκευμένου συνδέσμου - ένα καρέ από YouTube, μια φωτογραφία προϊόντος, ένα εξώφυλλο άρθρου - ώστε να τον αναγνωρίζετε με μια ματιά.</p>
       </div>
       <div class="feature" style="--f-color: var(--indigo)">
         <h3>Σύνοψη AI</h3>
-        <p>Πατήστε Σύνοψη AI σε έναν αποθηκευμένο σύνδεσμο και διαβάστε τη σελίδα σε λίγες γραμμές, χωρίς να την ανοίξετε. Η σύνοψη αποθηκεύεται μαζί με τη σημείωση, οπότε η δεύτερη ματιά είναι άμεση και λειτουργεί εκτός σύνδεσης. Περιλαμβάνεται στο Assorta Pro.</p>
+        <p>Πατήστε Σύνοψη AI σε έναν αποθηκευμένο σύνδεσμο και το Assorta επαναφέρει τη σελίδα σε λίγες γραμμές, χωρίς να την ανοίξετε. Η σύνοψη αποθηκεύεται μαζί με τη σημείωση, οπότε η δεύτερη ματιά είναι άμεση και λειτουργεί εκτός σύνδεσης. Περιλαμβάνεται στο Assorta Pro.</p>
       </div>
       <div class="feature" style="--f-color: var(--teal)">
         <h3>Αναζήτηση όταν τη χρειάζεστε</h3>
-        <p>Ένα πεδίο πάνω από τα ονόματα των ομάδων, το κείμενο μιας σημείωσης και τον τίτλο ενός συνδέσμου - για τη μία αποθήκευση που δεν βρέθηκε εκεί που κοιτάξατε πρώτα.</p>
+        <p>Το Assorta ψάχνει στα ονόματα των ομάδων, στο κείμενο μιας σημείωσης και στον τίτλο ενός συνδέσμου από ένα πεδίο - για τη μία αποθήκευση που δεν βρέθηκε εκεί που κοιτάξατε πρώτα.</p>
       </div>
       <div class="feature" style="--f-color: var(--emerald)">
         <h3>Αποθηκεύει στο παρασκήνιο</h3>
-        <p>Αλλάξτε εφαρμογή στη μέση της αποθήκευσης - το στοιχείο καταλήγει με ασφάλεια στην ομάδα του. Τίποτα δεν χάνεται ανάμεσα στις εφαρμογές.</p>
+        <p>Το Assorta ολοκληρώνει την αποθήκευση στο παρασκήνιο, οπότε ακόμη κι αν αλλάξετε εφαρμογή στη μέση, το στοιχείο καταλήγει στην ομάδα του. Τίποτα δεν χάνεται ανάμεσα στις εφαρμογές.</p>
       </div>
       <div class="feature" style="--f-color: var(--purple)">
-        <h3>Παντού όπου είστε</h3>
-        <p>Android και iOS - μία εφαρμογή σε κάθε οθόνη που χρησιμοποιείτε. Οι σημειώσεις μένουν στη συσκευή όπου τις αποθηκεύσατε· ο συγχρονισμός μεταξύ συσκευών δεν υπάρχει ακόμη.</p>
+        <h3>Android και iOS</h3>
+        <p>Το Assorta τρέχει σε τηλέφωνα και tablet Android, σε iPhone και iPad. Οι σημειώσεις μένουν στη συσκευή όπου τις αποθηκεύσατε· ο συγχρονισμός μεταξύ συσκευών δεν υπάρχει ακόμη.</p>
       </div>
       <div class="feature" style="--f-color: var(--sky)">
-        <h3>Όπως σας αρέσει</h3>
-        <p>Φωτεινό και σκούρο θέμα. Δεκατρείς γλώσσες, από αγγλικά και ουκρανικά μέχρι ιαπωνικά, κορεατικά και αραβικά.</p>
+        <h3>Ταξινόμηση που δεν εξαντλείται</h3>
+        <p>Το Assorta ταξινομεί με AI όσο κρατούν οι δωρεάν ταξινομήσεις σας και μετά περνά στην αυτόματη ταξινόμηση, που τρέχει στη συσκευή με περίπου 3.000 επιλεγμένους όρους. Έτσι κι αλλιώς η σημείωση καταλήγει σε μια ομάδα - η τακτοποίηση δεν σταματά όταν εξαντληθεί το όριο.</p>
       </div>
     </div>
   </div>
@@ -1128,6 +1157,100 @@
       <span class="chip" style="--c:#d946ef">Ομορφιά</span>
       <span class="chip" style="--c:#f43f5e">Προσωπικά</span>
       <span class="chip more">…και καμιά δεκαριά ακόμη</span>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="faq">
+  <div class="wrap">
+    <p class="kicker">FAQ</p>
+    <h2>Οι ερωτήσεις που κάνουν όλοι πριν εγκαταστήσουν την εφαρμογή</h2>
+    <div class="faq">
+      <div class="qa">
+        <h3>Τι είναι το Assorta;</h3>
+        <p>Το Assorta είναι ένα ενιαίο εισερχόμενο για συνδέσμους, σημειώσεις και ιδέες σε Android και iOS. Η AI διαβάζει ό,τι αποθηκεύετε και το τακτοποιεί σε μία από 30+ ομάδες, ώστε να το βρίσκετε αργότερα χωρίς φακέλους και ετικέτες.</p>
+      </div>
+      <div class="qa">
+        <h3>Πώς αποφασίζει το Assorta σε ποια ομάδα πάει κάτι;</h3>
+        <p>Το Assorta διαβάζει το κείμενο, ή τη σελίδα πίσω από έναν σύνδεσμο, και διαλέγει την ομάδα που ταιριάζει - Ταξίδια, Μαγειρική, Λίστα επιθυμιών, Αθλητισμός και τις υπόλοιπες. Βλέπετε την επιλογή τη στιγμή που γίνεται.</p>
+      </div>
+      <div class="qa">
+        <h3>Τι μπορώ να αποθηκεύσω στο Assorta;</h3>
+        <p>Συνδέσμους που μοιράζεστε από οποιαδήποτε εφαρμογή και κείμενο που επικολλάτε εσείς. Ένας αποθηκευμένος σύνδεσμος κρατά τη μικρογραφία και τον τίτλο του, ώστε να τον αναγνωρίζετε μέσα στη λίστα χωρίς να τον ανοίξετε.</p>
+      </div>
+      <div class="qa">
+        <h3>Είναι δωρεάν το Assorta;</h3>
+        <p>Το Assorta είναι δωρεάν στην εγκατάσταση και δωρεάν στη χρήση. Οι πρώτες 15 ταξινομήσεις AI είναι δωρεάν· μετά η τακτοποίηση συνεχίζεται, και το όριο ταξινόμησης AI είναι αυτό που βγάζει το Assorta Pro.</p>
+      </div>
+      <div class="qa">
+        <h3>Τι είναι η Σύνοψη AI;</h3>
+        <p>Πατήστε Σύνοψη AI σε έναν αποθηκευμένο σύνδεσμο και το Assorta επαναφέρει τη σελίδα σε λίγες γραμμές, εκεί στη λίστα. Η σύνοψη αποθηκεύεται μαζί με τη σημείωση, οπότε η δεύτερη ματιά είναι άμεση και λειτουργεί εκτός σύνδεσης. Όταν μια σελίδα δεν δίνει τίποτα για δουλειά, το Assorta το λέει αντί να επινοήσει σύνοψη.</p>
+      </div>
+      <div class="qa">
+        <h3>Μπορώ να αποθηκεύω από άλλες εφαρμογές;</h3>
+        <p>Ναι. Το Assorta βρίσκεται στο μενού κοινής χρήσης του συστήματος σε Android και iOS, οπότε ένας σύνδεσμος από YouTube, TikTok, Instagram ή ένα πρόγραμμα περιήγησης είναι δύο πατήματα.</p>
+      </div>
+      <div class="qa">
+        <h3>Συγχρονίζει το Assorta μεταξύ συσκευών;</h3>
+        <p>Όχι ακόμη. Οι σημειώσεις μένουν στη συσκευή όπου τις αποθηκεύσατε· ο συγχρονισμός βρίσκεται στα σχέδια για το Assorta Pro.</p>
+      </div>
+      <details class="faq-more">
+        <summary><span class="more-closed">Περισσότερες ερωτήσεις</span><span class="more-open">Λιγότερες ερωτήσεις</span></summary>
+        <div class="faq-rest">
+          <div class="qa">
+            <h3>Κι αν η AI διαλέξει λάθος ομάδα;</h3>
+            <p>Αλλάξτε την με ένα πάτημα, μέσα από την ίδια την επιβεβαίωση - οι επόμενες πιθανές ομάδες βρίσκονται ακριβώς δίπλα.</p>
+          </div>
+          <div class="qa">
+            <h3>Τι γίνεται όταν εξαντληθούν οι δωρεάν ταξινομήσεις AI;</h3>
+            <p>Η τακτοποίηση συνεχίζεται. Το Assorta περνά στην αυτόματη ταξινόμηση, που τρέχει στη συσκευή με περίπου 3.000 επιλεγμένους όρους και δεν εξαντλείται ποτέ· το Assorta Pro είναι αυτό που αφαιρεί το όριο ταξινόμησης AI.</p>
+          </div>
+          <div class="qa">
+            <h3>Τι προσθέτει το Assorta Pro;</h3>
+            <p>Το Assorta Pro βγάζει το όριο ταξινόμησης AI και προσθέτει τη Σύνοψη AI. Είναι προαιρετικό, και η χρέωση γίνεται από την Apple ή την Google.</p>
+          </div>
+          <div class="qa">
+            <h3>Μπορώ να αναζητήσω ό,τι αποθήκευσα;</h3>
+            <p>Ναι. Ένα πεδίο ψάχνει στα ονόματα των ομάδων, στο κείμενο μιας σημείωσης και στον τίτλο ενός συνδέσμου, και λειτουργεί χωρίς σύνδεση, επειδή οι σημειώσεις σας βρίσκονται στη συσκευή.</p>
+          </div>
+          <div class="qa">
+            <h3>Πού αποθηκεύονται οι σημειώσεις μου;</h3>
+            <p>Στη συσκευή σας. Το Assorta δεν κρατά τις σημειώσεις σας στους διακομιστές μας.</p>
+          </div>
+          <div class="qa">
+            <h3>Χρειάζομαι λογαριασμό;</h3>
+            <p>Όχι. Η σύνδεση είναι προαιρετική· κρατά το Assorta Pro και στις άλλες σας συσκευές.</p>
+          </div>
+          <div class="qa">
+            <h3>Λειτουργεί το Assorta χωρίς σύνδεση;</h3>
+            <p>Οι σημειώσεις σας, οι ομάδες σας και όποια σύνοψη έχετε ήδη ζητήσει βρίσκονται στη συσκευή, οπότε η περιήγηση και η αναζήτηση λειτουργούν εκτός σύνδεσης. Η ταξινόμηση AI και η Σύνοψη AI χρειάζονται σύνδεση· η αυτόματη ταξινόμηση όχι.</p>
+          </div>
+          <div class="qa">
+            <h3>Μπορώ να μετακινήσω μια σημείωση σε άλλη ομάδα αργότερα;</h3>
+            <p>Ναι. Ανοίξτε τις ενέργειες της σημείωσης και επιλέξτε Μετακίνηση.</p>
+          </div>
+          <div class="qa">
+            <h3>Μπορώ να εξαγάγω τις σημειώσεις μου;</h3>
+            <p>Όχι ακόμη. Η εξαγωγή και το αντίγραφο ασφαλείας βρίσκονται στα σχέδια για το Assorta Pro.</p>
+          </div>
+          <div class="qa">
+            <h3>Σε ποιες συσκευές τρέχει το Assorta;</h3>
+            <p>Τηλέφωνα και tablet Android, iPhone και iPad.</p>
+          </div>
+          <div class="qa">
+            <h3>Σε ποιες γλώσσες μιλάει το Assorta;</h3>
+            <p>Σε 31, από τα αγγλικά και τα ουκρανικά ως τα ιαπωνικά, τα κορεατικά και τα αραβικά. Το Assorta ακολουθεί τη γλώσσα της συσκευής σας, και μπορείτε να την αλλάξετε στις Ρυθμίσεις.</p>
+          </div>
+          <div class="qa">
+            <h3>Σε τι διαφέρει το Assorta από τους σελιδοδείκτες ή μια εφαρμογή σημειώσεων;</h3>
+            <p>Ένας φάκελος σελιδοδεικτών θέλει να διαλέξετε εσείς τον φάκελο, και μια εφαρμογή σημειώσεων θέλει να ονομάσετε εσείς τη σημείωση. Το Assorta διαβάζει ό,τι αποθηκεύσατε και το τακτοποιεί μόνο του - η δουλειά που γλιτώνετε είναι η ταξινόμηση.</p>
+          </div>
+          <div class="qa">
+            <h3>Πώς διαγράφω τον λογαριασμό και τα δεδομένα μου;</h3>
+            <p>Ανοίξτε τις Ρυθμίσεις και πατήστε Διαγραφή λογαριασμού μέσα στην εφαρμογή, ή στείλτε μας email και το κάνουμε εμείς. Η <a href="delete-account.html">σελίδα διαγραφής λογαριασμού</a> εξηγεί τι αφαιρείται και τι διατηρείται.</p>
+          </div>
+        </div>
+      </details>
     </div>
   </div>
 </section>
@@ -1180,6 +1303,8 @@
     <p>Τα ονόματα, τα λογότυπα, οι σύνδεσμοι και οι εικόνες προεπισκόπησης τρίτων σε αυτή τη σελίδα είναι παραδείγματα του περιεχομένου που μπορείτε να αποθηκεύσετε με το Assorta - από αυτά που ρίχνει κανείς μέσα στην εφαρμογή - με εξαίρεση τα σήματα App&nbsp;Store και Google&nbsp;Play, που οδηγούν στα καταστήματα όπου κυκλοφορεί η εφαρμογή. Όλα παραμένουν ιδιοκτησία των κατόχων τους. Το Assorta είναι ανεξάρτητη εφαρμογή: δεν συνδέεται, δεν υποστηρίζεται και δεν χορηγείται από καμία από τις μάρκες που εμφανίζονται, καμία τους δεν συμμετέχει σε αυτήν και ποτέ δεν παρουσιάζεται ως κάποια από αυτές.</p>
   </div>
 </footer>
+
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"FAQPage","@id":"https://assorta.app/el/#faq","inLanguage":"el","mainEntity":[{"@type":"Question","name":"Τι είναι το Assorta;","acceptedAnswer":{"@type":"Answer","text":"Το Assorta είναι ένα ενιαίο εισερχόμενο για συνδέσμους, σημειώσεις και ιδέες σε Android και iOS. Η AI διαβάζει ό,τι αποθηκεύετε και το τακτοποιεί σε μία από 30+ ομάδες, ώστε να το βρίσκετε αργότερα χωρίς φακέλους και ετικέτες."}},{"@type":"Question","name":"Πώς αποφασίζει το Assorta σε ποια ομάδα πάει κάτι;","acceptedAnswer":{"@type":"Answer","text":"Το Assorta διαβάζει το κείμενο, ή τη σελίδα πίσω από έναν σύνδεσμο, και διαλέγει την ομάδα που ταιριάζει - Ταξίδια, Μαγειρική, Λίστα επιθυμιών, Αθλητισμός και τις υπόλοιπες. Βλέπετε την επιλογή τη στιγμή που γίνεται."}},{"@type":"Question","name":"Τι μπορώ να αποθηκεύσω στο Assorta;","acceptedAnswer":{"@type":"Answer","text":"Συνδέσμους που μοιράζεστε από οποιαδήποτε εφαρμογή και κείμενο που επικολλάτε εσείς. Ένας αποθηκευμένος σύνδεσμος κρατά τη μικρογραφία και τον τίτλο του, ώστε να τον αναγνωρίζετε μέσα στη λίστα χωρίς να τον ανοίξετε."}},{"@type":"Question","name":"Είναι δωρεάν το Assorta;","acceptedAnswer":{"@type":"Answer","text":"Το Assorta είναι δωρεάν στην εγκατάσταση και δωρεάν στη χρήση. Οι πρώτες 15 ταξινομήσεις AI είναι δωρεάν· μετά η τακτοποίηση συνεχίζεται, και το όριο ταξινόμησης AI είναι αυτό που βγάζει το Assorta Pro."}},{"@type":"Question","name":"Τι είναι η Σύνοψη AI;","acceptedAnswer":{"@type":"Answer","text":"Πατήστε Σύνοψη AI σε έναν αποθηκευμένο σύνδεσμο και το Assorta επαναφέρει τη σελίδα σε λίγες γραμμές, εκεί στη λίστα. Η σύνοψη αποθηκεύεται μαζί με τη σημείωση, οπότε η δεύτερη ματιά είναι άμεση και λειτουργεί εκτός σύνδεσης. Όταν μια σελίδα δεν δίνει τίποτα για δουλειά, το Assorta το λέει αντί να επινοήσει σύνοψη."}},{"@type":"Question","name":"Μπορώ να αποθηκεύω από άλλες εφαρμογές;","acceptedAnswer":{"@type":"Answer","text":"Ναι. Το Assorta βρίσκεται στο μενού κοινής χρήσης του συστήματος σε Android και iOS, οπότε ένας σύνδεσμος από YouTube, TikTok, Instagram ή ένα πρόγραμμα περιήγησης είναι δύο πατήματα."}},{"@type":"Question","name":"Συγχρονίζει το Assorta μεταξύ συσκευών;","acceptedAnswer":{"@type":"Answer","text":"Όχι ακόμη. Οι σημειώσεις μένουν στη συσκευή όπου τις αποθηκεύσατε· ο συγχρονισμός βρίσκεται στα σχέδια για το Assorta Pro."}},{"@type":"Question","name":"Κι αν η AI διαλέξει λάθος ομάδα;","acceptedAnswer":{"@type":"Answer","text":"Αλλάξτε την με ένα πάτημα, μέσα από την ίδια την επιβεβαίωση - οι επόμενες πιθανές ομάδες βρίσκονται ακριβώς δίπλα."}},{"@type":"Question","name":"Τι γίνεται όταν εξαντληθούν οι δωρεάν ταξινομήσεις AI;","acceptedAnswer":{"@type":"Answer","text":"Η τακτοποίηση συνεχίζεται. Το Assorta περνά στην αυτόματη ταξινόμηση, που τρέχει στη συσκευή με περίπου 3.000 επιλεγμένους όρους και δεν εξαντλείται ποτέ· το Assorta Pro είναι αυτό που αφαιρεί το όριο ταξινόμησης AI."}},{"@type":"Question","name":"Τι προσθέτει το Assorta Pro;","acceptedAnswer":{"@type":"Answer","text":"Το Assorta Pro βγάζει το όριο ταξινόμησης AI και προσθέτει τη Σύνοψη AI. Είναι προαιρετικό, και η χρέωση γίνεται από την Apple ή την Google."}},{"@type":"Question","name":"Μπορώ να αναζητήσω ό,τι αποθήκευσα;","acceptedAnswer":{"@type":"Answer","text":"Ναι. Ένα πεδίο ψάχνει στα ονόματα των ομάδων, στο κείμενο μιας σημείωσης και στον τίτλο ενός συνδέσμου, και λειτουργεί χωρίς σύνδεση, επειδή οι σημειώσεις σας βρίσκονται στη συσκευή."}},{"@type":"Question","name":"Πού αποθηκεύονται οι σημειώσεις μου;","acceptedAnswer":{"@type":"Answer","text":"Στη συσκευή σας. Το Assorta δεν κρατά τις σημειώσεις σας στους διακομιστές μας."}},{"@type":"Question","name":"Χρειάζομαι λογαριασμό;","acceptedAnswer":{"@type":"Answer","text":"Όχι. Η σύνδεση είναι προαιρετική· κρατά το Assorta Pro και στις άλλες σας συσκευές."}},{"@type":"Question","name":"Λειτουργεί το Assorta χωρίς σύνδεση;","acceptedAnswer":{"@type":"Answer","text":"Οι σημειώσεις σας, οι ομάδες σας και όποια σύνοψη έχετε ήδη ζητήσει βρίσκονται στη συσκευή, οπότε η περιήγηση και η αναζήτηση λειτουργούν εκτός σύνδεσης. Η ταξινόμηση AI και η Σύνοψη AI χρειάζονται σύνδεση· η αυτόματη ταξινόμηση όχι."}},{"@type":"Question","name":"Μπορώ να μετακινήσω μια σημείωση σε άλλη ομάδα αργότερα;","acceptedAnswer":{"@type":"Answer","text":"Ναι. Ανοίξτε τις ενέργειες της σημείωσης και επιλέξτε Μετακίνηση."}},{"@type":"Question","name":"Μπορώ να εξαγάγω τις σημειώσεις μου;","acceptedAnswer":{"@type":"Answer","text":"Όχι ακόμη. Η εξαγωγή και το αντίγραφο ασφαλείας βρίσκονται στα σχέδια για το Assorta Pro."}},{"@type":"Question","name":"Σε ποιες συσκευές τρέχει το Assorta;","acceptedAnswer":{"@type":"Answer","text":"Τηλέφωνα και tablet Android, iPhone και iPad."}},{"@type":"Question","name":"Σε ποιες γλώσσες μιλάει το Assorta;","acceptedAnswer":{"@type":"Answer","text":"Σε 31, από τα αγγλικά και τα ουκρανικά ως τα ιαπωνικά, τα κορεατικά και τα αραβικά. Το Assorta ακολουθεί τη γλώσσα της συσκευής σας, και μπορείτε να την αλλάξετε στις Ρυθμίσεις."}},{"@type":"Question","name":"Σε τι διαφέρει το Assorta από τους σελιδοδείκτες ή μια εφαρμογή σημειώσεων;","acceptedAnswer":{"@type":"Answer","text":"Ένας φάκελος σελιδοδεικτών θέλει να διαλέξετε εσείς τον φάκελο, και μια εφαρμογή σημειώσεων θέλει να ονομάσετε εσείς τη σημείωση. Το Assorta διαβάζει ό,τι αποθηκεύσατε και το τακτοποιεί μόνο του - η δουλειά που γλιτώνετε είναι η ταξινόμηση."}},{"@type":"Question","name":"Πώς διαγράφω τον λογαριασμό και τα δεδομένα μου;","acceptedAnswer":{"@type":"Answer","text":"Ανοίξτε τις Ρυθμίσεις και πατήστε Διαγραφή λογαριασμού μέσα στην εφαρμογή, ή στείλτε μας email και το κάνουμε εμείς. Η σελίδα διαγραφής λογαριασμού εξηγεί τι αφαιρείται και τι διατηρείται."}}]},{"@type":"SoftwareApplication","name":"Assorta","applicationCategory":"ProductivityApplication","operatingSystem":"Android, iOS","inLanguage":"el","url":"https://assorta.app/el/","description":"Το Assorta είναι ένα γρήγορο εισερχόμενο για συνδέσμους και σημειώσεις. Η AI βάζει ό,τι ρίχνετε μέσα στη σωστή ομάδα, ώστε να το βρίσκετε σε δευτερόλεπτα.","featureList":["Αποθήκευση από το μενού κοινής χρήσης","30+ έξυπνες ομάδες","Προεπισκοπήσεις συνδέσμων","Σύνοψη AI","Αναζήτηση όταν τη χρειάζεστε","Αποθηκεύει στο παρασκήνιο","Android και iOS","Ταξινόμηση που δεν εξαντλείται"],"downloadUrl":["https://apps.apple.com/app/id6791126062","https://play.google.com/store/apps/details?id=com.troshchiy.assorta"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@id":"https://assorta.app/#operator"}},{"@type":"Organization","@id":"https://assorta.app/#operator","name":"Individual Entrepreneur Yevhen Troshchii","url":"https://assorta.app/","email":"contact@assorta.app","address":{"@type":"PostalAddress","addressLocality":"Odesa","addressCountry":"UA"}}]}</script>
 
 <script>window.__I18N__={"group.auto": "Αυτοκίνητο", "group.beauty": "Ομορφιά", "group.books": "Βιβλία", "group.cooking": "Μαγειρική", "group.education": "Εκπαίδευση", "group.family": "Οικογένεια", "group.finance": "Οικονομικά", "group.health": "Υγεία", "group.hobby": "Χόμπι", "group.home": "Σπίτι", "group.ideas": "Ιδέες", "group.inspiration": "Έμπνευση", "group.movies": "Ταινίες &amp; TV", "group.music": "Μουσική", "group.personal": "Προσωπικά", "group.shopping": "Λίστα αγορών", "group.sport": "Αθλητισμός", "group.tasks": "Εργασίες", "group.tech": "Τεχνολογία", "group.travel": "Ταξίδια", "group.wishList": "Λίστα επιθυμιών", "group.work": "Δουλειά", "js.or": "Ή:", "js.theme.toDark": "Εναλλαγή σε σκούρο θέμα", "js.theme.toLight": "Εναλλαγή σε φωτεινό θέμα", "js.video.title": "Επίδειξη του Assorta"};</script>
 
